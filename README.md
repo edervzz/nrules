@@ -49,9 +49,6 @@ Contenedor de Workflows. Luego de terminar con un workflow pasa al siguiente.
 ### Resultado
 - Data Business Collector
 
-
-
-
 ## 1. Crear enviroment
 En caso de trabajar con un monorepo y VSCODE, será necesario hacer esta instalación abriendo la carpeta asignada al proyecto en Python, y luego cambiar a la carpeta del proyecto principal. Para confirmar que venv esta corriendo en la consola, abrir una terminar dentro de VSCODE y poner el mouse encima de la terminal seleccionada. 
 ```bash

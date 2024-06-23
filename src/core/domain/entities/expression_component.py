@@ -1,10 +1,8 @@
-"""_summary_
-    """
+"""_summary_"""
 
 
 class ExpressionComponent:
-
-    def __init__(self, variable: str, operator: str, value):
-        self.variable = variable
-        self.operator = operator
-        self.value = value
+    """ Expression component """
+    variable: str
+    operator: str
+    value: object

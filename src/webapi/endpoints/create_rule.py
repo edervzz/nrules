@@ -4,6 +4,7 @@ from flask import Blueprint, request
 from webapi.models.new_rule import NewRule, NewRuleResult
 
 
+
 new_rule = Blueprint("New Rule", __name__)
 
 

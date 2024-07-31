@@ -1,15 +1,14 @@
 """ entry point """
 from flask import Flask
-from webapi.endpoints.create_rule import new_rule
 from flask_swagger_ui import get_swaggerui_blueprint
-
+from webapi.endpoints import new_workflow, new_rule
 
 app = Flask(__name__)
-
 app.register_blueprint(new_rule)
+app.register_blueprint(new_workflow)
 
-SWAGGER_URL="/swagger"
-API_URL="/static/swagger.json"
+SWAGGER_URL = "/swagger"
+API_URL = "/static/swagger.json"
 
 swagger_ui_blueprint = get_swaggerui_blueprint(
     SWAGGER_URL,

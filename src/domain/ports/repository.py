@@ -10,7 +10,7 @@ class WorkflowRepository(Writer):
 
 
 class RuleRepository(Writer, Updater):
-    """ Rule repository """
+    """ Rule repository add more information """
 
 
 class Repository(ABC):

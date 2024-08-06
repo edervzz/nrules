@@ -17,12 +17,13 @@ $ pip install flask
 
 ## 2.1 Requirements
 ```bash
-$ pip freeze > requirements.txt
+pip freeze > requirements.txt
 ```
 
 ## 2.2 Requirements
 ```bash
-$ pip install -r .\requirements.txt
+pip install -r .\requirements.txt
+pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org -r .\requirements.txt
 ```
 
 ## 2.3 Otros paquetes
@@ -31,6 +32,11 @@ $ pip install -r .\requirements.txt
 ## 2.4 Testing
 ```bash
 python -m unittest -v 
+```
+
+## 2.5 selft signed
+```bash
+pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org <package-name>
 ```
 
 Este paquete permite usar variables de entorno en el siguiente orden jerarquico: envars(machine), settings(file), default(code)

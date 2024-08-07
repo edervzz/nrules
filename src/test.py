@@ -1,8 +1,8 @@
 """ for testing purpose """
 
 from sqlalchemy import create_engine, MetaData
-from infrastructure import migrations, tables
 from sqlalchemy.orm import Session
+from infrastructure import migrations, tables
 from domain.entities.workflow import Workflow
 
 

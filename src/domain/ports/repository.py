@@ -1,19 +1,25 @@
 """_summary_
     """
-from abc import ABC
+from typing import TypeVar
+from abc import ABC, abstractmethod
 from sqlalchemy.orm import Session
-from toolkit import Writer, Updater
 
-
-class WorkflowRepository(Writer):
-    """ Workflow repository """
-
-
-class RuleRepository(Writer, Updater):
-    """ Rule repository add more information """
+T = TypeVar("T")
 
 
 class Repository(ABC):
     """ Repository container """
-    __session__: Session
-    workflowRepository: WorkflowRepository
+
+    def __init__(self):
+        """ session (Session): used for sql transactions
+            workflow_repository (WorkflowRepository): workflow entity-table
+        """
+        self.session: Session = None
+
+    @abstractmethod
+    def create(self, entity: T):
+        """ Create a new entity """
+
+    @abstractmethod
+    def update(self, entity: T):
+        """ Update an entity """

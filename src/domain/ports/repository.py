@@ -1,25 +1,30 @@
 """_summary_
     """
-from typing import TypeVar
-from abc import ABC, abstractmethod
-from sqlalchemy.orm import Session
-
-T = TypeVar("T")
+from abc import ABC
+from domain.entities import Workflow
 
 
 class Repository(ABC):
     """ Repository container """
 
+    # "mysql+pymysql://root:my-secret-pw@localhost/nrule-core", echo=True)
     def __init__(self):
-        """ session (Session): used for sql transactions
-            workflow_repository (WorkflowRepository): workflow entity-table
-        """
-        self.session: Session = None
+        pass
 
-    @abstractmethod
-    def create(self, entity: T):
+    def create(self, entity: any):
         """ Create a new entity """
 
-    @abstractmethod
-    def update(self, entity: T):
+    def update(self, entity: any):
         """ Update an entity """
+
+    def workflow_read_by_external_id(self, external_id: str) -> Workflow:
+        """ read an entity by id """
+
+    def begin(self):
+        """ Begin transaction """
+
+    def commit_work(self):
+        """ Commit transaction """
+
+    def rollback_work(self):
+        """ Rollback transaction """

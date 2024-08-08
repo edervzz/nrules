@@ -1,0 +1,78 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "pyrule - A Python Rule Engine API",
+        "version": "1.0.0",
+        "description": "Rule Engine built for Gentera"
+    },
+    "paths": {
+        "/engine/api/v1/hello": {
+            "get": {
+                "tags": [
+                    "Healt Check"
+                ],
+                "description": "Hello world for health check.",
+                "produces": [
+                    "application/text"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/engine/api/v1/workflows": {
+            "post": {
+                "tags": [
+                    "Workflows"
+                ],
+                "description": "Create a new Workflow base.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "workflow data",
+                        "in": "body",
+                        "description": "JSON data for the api",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NewWorkflow"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Workflow created"
+                    },
+                    "400": {
+                        "description": "Invalid request data"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "NewWorkflow": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "is_node": {
+                    "type": "boolean"
+                },
+                "success_action_id": {
+                    "type": "integer"
+                },
+                "failure_action_id": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}

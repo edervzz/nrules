@@ -14,7 +14,8 @@ def tables(metadata_obj: MetaData):
         metadata_obj,
         Column("id", BigInteger, primary_key=True,
                autoincrement=True, comment="Workflow ID."),
-        Column("name", String(50), nullable=False, comment="Workflow Name."),
+        Column("name", String(50), nullable=False,
+               comment="Workflow Name.", unique=True),
         Column("is_node", Boolean, comment="Workflow works likes decision node."),
         Column("variant_id", BigInteger, comment="Variant ID."),
         Column("success_action_id", BigInteger,
@@ -30,7 +31,8 @@ def tables(metadata_obj: MetaData):
         metadata_obj,
         Column("id", BigInteger, primary_key=True,
                autoincrement=True, comment="Workflow ID."),
-        Column("name", String(50), nullable=False, comment="Rule Name."),
+        Column("name", String(50), nullable=False,
+               comment="Rule Name.", unique=True),
         Column("operator", String(3), CheckConstraint(
             "operator = 'AND' OR operator = 'OR'", name="rules_chk_operator"), comment="Operator."),
         Column("expression", String(1024), comment="Variant ID.")

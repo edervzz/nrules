@@ -1,11 +1,8 @@
 """ Create a new workflow """
-import os
 from flask import Blueprint, request, Response
-from webapi.models import NewWorkflow
 from application.messages import CreateWorkflowRequest
 from application.commands import CreateWorkflowHandler
 from toolkit import get_logger, get_repository
-from infrastructure.adapters import RepositoryAdapter
 
 new_workflow_blueprint = Blueprint("New Workflow", __name__)
 

@@ -17,18 +17,17 @@ class CreateWorkflowValidator:
     def validate(self):
         """Validate request"""
         if self.request.name == "":
-            raise ValueError("Workflow Name must not be empty.")
+            raise ValueError("WF-CREA-001")
 
         if len(self.request.name) < 5 or len(self.request.name) > 50:
-            raise ValueError(
-                "Workflow Name must be between 5 and 50 characters.")
+            raise ValueError("WF-CREA-002")
 
     def biz_validate(self, repository: Repository):
         """Validate request"""
+        # repository.migrate()
         workflow = repository.workflow_read_by_external_id(self.request.name)
         if workflow is not None:
-            raise ValueError(
-                f"A Workflow already exists with same name {self.request.name}.")
+            raise ValueError("WF-CREA-003")
 
         self.request.workflow = Workflow()
         self.request.workflow.name = self.request.name

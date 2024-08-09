@@ -28,3 +28,6 @@ class Repository(ABC):
 
     def rollback_work(self):
         """ Rollback transaction """
+
+    def migrate(self):
+        """ Run Migration """

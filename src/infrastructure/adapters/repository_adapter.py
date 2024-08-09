@@ -1,9 +1,10 @@
 """_summary_
     """
-from sqlalchemy import Engine, create_engine, select
+from sqlalchemy import Engine, MetaData, create_engine, select
 from sqlalchemy.orm import Session
 from domain.entities import Workflow
 from domain.ports import Repository
+from infrastructure.data import migrations, tables
 
 
 class RepositoryAdapter(Repository):
@@ -40,3 +41,21 @@ class RepositoryAdapter(Repository):
     def rollback_work(self):
         if self.session is not None:
             self.session.rollback()
+
+    def migrate(self):
+        metadata_obj = MetaData()
+        migrations(metadata_obj=metadata_obj)
+        tables(metadata_obj)
+
+        metadata_obj.create_all(self.engine)
+
+        with Session(self.engine) as session:
+            wf = Workflow()
+            wf.name = "WF_test"
+            # wf.variant_id = 0
+            # wf.is_node = False
+            # wf.success_action_id = 0
+            # wf.failure_action_id = 0
+
+            session.add(wf)
+            session.commit()

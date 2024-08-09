@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": "pyrule - A Python Rule Engine API",
+        "title": " pyre - Python Rule Engine API",
         "version": "1.0.0",
         "description": "Rule Engine built for Gentera"
     },
@@ -36,9 +36,9 @@
                 ],
                 "parameters": [
                     {
-                        "name": "workflow data",
+                        "name": "Workflow Data",
                         "in": "body",
-                        "description": "JSON data for the api",
+                        "description": "Workflow definition.",
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/NewWorkflow"
@@ -61,15 +61,24 @@
             "type": "object",
             "properties": {
                 "name": {
-                    "type": "string"
+                    "description": "Workflow name.",
+                    "type": "string",
+                    "minLength": 5,
+                    "maxLength": 50,
+                    "required": true,
+                    "example": "wf.account.products"
                 },
                 "is_node": {
-                    "type": "boolean"
+                    "description": "Means if workflow can derivate in many routes.",
+                    "type": "boolean",
+                    "required": true
                 },
                 "success_action_id": {
+                    "description": "Action ID for success result.",
                     "type": "integer"
                 },
                 "failure_action_id": {
+                    "description": "Action ID for failure result.",
                     "type": "integer"
                 }
             }

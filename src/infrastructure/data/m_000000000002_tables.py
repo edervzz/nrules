@@ -26,16 +26,23 @@ def tables(metadata_obj: MetaData):
 
     set_auditable(workflows)
 
-    rule = Table(
-        "rules",
-        metadata_obj,
-        Column("id", BigInteger, primary_key=True,
-               autoincrement=True, comment="Workflow ID."),
-        Column("name", String(50), nullable=False,
-               comment="Rule Name.", unique=True),
-        Column("operator", String(3), CheckConstraint(
-            "operator = 'AND' OR operator = 'OR'", name="rules_chk_operator"), comment="Operator."),
-        Column("expression", String(1024), comment="Variant ID.")
-    )
+    # rule = Table(
+    #     "rules",
+    #     metadata_obj,
+    #     Column("id", BigInteger, primary_key=True,
+    #            autoincrement=True, comment="Rule ID."),
+    #     Column("name", String(50), nullable=False,
+    #            comment="Rule Name.", unique=True),
+    #     Column("operator", String(3), CheckConstraint(
+    #         "operator = 'AND' OR operator = 'OR'", name="rules_chk_operator"),
+    #         nullable=True,
+    #         comment="Operator."),
+    #     Column("expression", String(1024),
+    #            nullable=False, comment="Expression."),
+    #     Column("order", int,
+    #            nullable=True, comment="Order."),
+    #     Column("is_multi_assignment", bool,
+    #            nullable=False, comment="Can be assign to multiple Workflows. Default: false.")
+    # )
 
-    set_auditable(rule)
+    # set_auditable(rule)

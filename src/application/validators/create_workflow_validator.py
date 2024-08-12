@@ -1,7 +1,4 @@
-"""_summary_
-    """
-
-
+"""_summary_"""
 from application.messages import CreateWorkflowRequest
 from domain.ports import Repository
 from domain.entities import Workflow

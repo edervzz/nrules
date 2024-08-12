@@ -2,7 +2,7 @@
 
 from flask import Flask, Response
 from flask_swagger_ui import get_swaggerui_blueprint
-from webapi.endpoints import new_workflow_blueprint, hello_blueprint
+from webapi.endpoints import map_endpoints
 from toolkit import get_message
 
 
@@ -19,10 +19,10 @@ def bad_request(error):
 
 
 app.register_error_handler(400, bad_request)
-# blueprints
-app.register_blueprint(blueprint=new_workflow_blueprint,
-                       url_prefix=URL_API_PREFIX)
-app.register_blueprint(blueprint=hello_blueprint, url_prefix=URL_API_PREFIX)
+
+# map endpoints based on blueprints
+map_endpoints(app, URL_API_PREFIX)
+
 # swagger
 app.register_blueprint(
     get_swaggerui_blueprint(

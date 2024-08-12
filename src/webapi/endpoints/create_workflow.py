@@ -1,6 +1,6 @@
 """ Create a new workflow """
 import json
-from flask import Blueprint, request, Response, abort, jsonify
+from flask import Blueprint, request, Response, abort
 from webapi.models import NewWorkflow
 from application.messages import CreateWorkflowRequest
 from application.commands import CreateWorkflowHandler

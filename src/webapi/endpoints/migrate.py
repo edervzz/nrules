@@ -1,15 +1,15 @@
 """ Run Migration """
 from flask import Blueprint, Response, abort
-from toolkit import get_repository
+from toolkit import Services
 
-run_migration_blueprint = Blueprint("Run Migration", __name__)
+migration_bp = Blueprint("Run Migration", __name__)
 
 
-@run_migration_blueprint.post("/workflows")
+@migration_bp.post("/workflows")
 def run_migration_endpoint():
     """ Migration Endpoint """
     try:
-        repository = get_repository()
+        repository = Services.repository
         repository.migrate()
 
         response = Response("", status=200, mimetype='application/json')

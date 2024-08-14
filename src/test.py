@@ -19,6 +19,8 @@ def test01(repository: Repository):
 
 
 r = RepositoryAdapter("root", "my-secret-pw", "localhost", "nrule-core")
+datatype = type(r)
+print(datatype.__name__)
 logging.basicConfig()
 logger = logging.getLogger(__name__)
 

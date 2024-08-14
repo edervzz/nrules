@@ -1,7 +1,8 @@
 """_summary_
     """
 from abc import ABC
-from domain.entities import Workflow
+from typing import List
+from domain.entities import Workflow, Rule
 
 
 class Repository(ABC):
@@ -19,6 +20,9 @@ class Repository(ABC):
 
     def workflow_read_by_external_id(self, external_id: str) -> Workflow:
         """ read an entity by id """
+
+    def rules_read_by_parent_id(self, parent_id: int) -> List[Rule]:
+        """ read rules by parent id """
 
     def begin(self):
         """ Begin transaction """

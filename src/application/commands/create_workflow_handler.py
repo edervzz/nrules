@@ -2,7 +2,7 @@
     """
 import logging
 from application.messages import CreateWorkflowRequest, CreateWorkflowResponse
-from application.validators import CreateWorkflowValidator
+from application.validators import CreateWorkflowValidator, CreateWorkflowBizValidator
 from domain.ports import Repository
 from domain.entities import Workflow
 
@@ -22,11 +22,13 @@ class CreateWorkflowHandler:
         validator.validate()
         self.logger.info("request validated")
         # 2. business rule validation
-        validator.biz_validate(self.repository)
+        biz_validator = CreateWorkflowBizValidator(request)
+        biz_validator.validate(self.repository)
         self.logger.info("business rules validated")
 
         self.repository.begin()
         self.repository.create(request.workflow)
+        self.repository.create(request.rules)
         self.repository.commit_work()
         self.logger.info(request.workflow.id)
 

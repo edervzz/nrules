@@ -11,19 +11,18 @@ class RepositoryAdapter(Repository):
     """ Repository Adapter """
 
     def __init__(self, username: str, password: str, server: str, dbname: str):
-        self.username = username
-        self.password = password
-        self.server = server
-        self.dbname = dbname
-
         self.session: Session = None
         self.engine: Engine = create_engine(
-            f"mysql+pymysql://{self.username}:{
-                self.password}@{self.server}/{self.dbname}",
-            echo=True)
+            f"mysql+pymysql://{username}:{
+                password}@{server}/{dbname}", echo=True
+        )
 
     def create(self, entity: any):
-        self.session.add(entity)
+        if isinstance(entity, list):
+            for e in entity:
+                self.session.add(e)
+        else:
+            self.session.add(entity)
 
     def workflow_read_by_external_id(self, external_id: str) -> Workflow:
         with Session(self.engine) as session:

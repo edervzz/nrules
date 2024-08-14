@@ -2,3 +2,4 @@
     """
 from .workflow import Workflow
 from .rule import Rule
+from .workflow_rule import WorkflowRule

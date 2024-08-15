@@ -1,8 +1,10 @@
 """_summary_
     """
-from sqlalchemy import Engine, MetaData, create_engine, select
+from typing import List
+from datetime import datetime
+from sqlalchemy import Engine, MetaData, create_engine, select, event
 from sqlalchemy.orm import Session
-from domain.entities import Workflow
+from domain.entities import WorkflowRule, Rule, Workflow, Auditable
 from domain.ports import Repository
 from infrastructure.data import migrations, tables
 
@@ -16,13 +18,22 @@ class RepositoryAdapter(Repository):
             f"mysql+pymysql://{username}:{
                 password}@{server}/{dbname}", echo=True
         )
+        event.listen(Workflow, 'before_insert', self.__before_insert)
+        event.listen(Rule, 'before_insert', self.__before_insert)
+        event.listen(WorkflowRule, 'before_insert', self.__before_insert)
 
-    def create(self, entity: any):
-        if isinstance(entity, list):
-            for e in entity:
-                self.session.add(e)
-        else:
-            self.session.add(entity)
+    def rules_read_by_parent_id(self, parent_id: int) -> List[Rule]:
+        with Session(self.engine) as session:
+            stms = select(Rule).join(WorkflowRule, Rule.id == WorkflowRule.rule_id).where(
+                WorkflowRule.workflow_id == parent_id)
+            rule = session.scalars(stms).all()
+            return rule
+
+    def workflow_read(self, _id: int) -> Workflow:
+        with Session(self.engine) as session:
+            stmt = select(Workflow).where(Workflow.id == _id)
+            workflow = session.scalar(stmt)
+            return workflow
 
     def workflow_read_by_external_id(self, external_id: str) -> Workflow:
         with Session(self.engine) as session:
@@ -30,8 +41,13 @@ class RepositoryAdapter(Repository):
             workflow = session.scalar(stmt)
             return workflow
 
-    def begin(self):
-        self.session = Session(self.engine)
+    def create(self, entity: any):
+        self.session.add(entity)
+        if not self.session.autoflush:
+            self.session.flush()
+
+    def begin(self, autoflush=False):
+        self.session = Session(self.engine, autoflush=autoflush)
 
     def commit_work(self):
         if self.session is not None:
@@ -48,13 +64,10 @@ class RepositoryAdapter(Repository):
 
         metadata_obj.create_all(self.engine)
 
-        with Session(self.engine) as session:
-            wf = Workflow()
-            wf.name = "WF_test"
-            # wf.variant_id = 0
-            # wf.is_node = False
-            # wf.success_action_id = 0
-            # wf.failure_action_id = 0
-
-            session.add(wf)
-            session.commit()
+    def __before_insert(self, mapper, connection, target):
+        """ Hook """
+        if isinstance(target, Auditable):
+            target.created_by = "system"
+            target.updated_by = "system"
+            target.created_at = datetime.now()
+            target.updated_at = datetime.now()

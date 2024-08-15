@@ -1,9 +1,11 @@
 """ workflow rule """
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
+from .base import Base
+from .auditable import Auditable
 
 
-class WorkflowRule:
+class WorkflowRule(Base, Auditable):
     """ Workflow-Rule entity """
 
     __tablename__ = "workflow_rules"

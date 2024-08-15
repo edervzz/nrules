@@ -11,9 +11,10 @@ def migrations(metadata_obj: MetaData):
     Table(
         "__migrations",
         metadata_obj,
-        Column("id", String(50), primary_key=True, comment="Migration ID."),
-        Column("exec_date", DateTime, nullable=False,
-               comment="Execution Date."),
+        Column(
+            "id", String(50), primary_key=True, comment="Migration ID."),
+        Column(
+            "exec_date", DateTime, nullable=False, comment="Execution Date."),
     )
 
 

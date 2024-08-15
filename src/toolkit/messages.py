@@ -1,5 +1,9 @@
-"""  """
+""" Message catalog """
+
 en_messages = {
+    "WF-READ-002": "Workflow not found.",
+    "WF-READ-001": "Workflow ID or name is mandatory.",
+
     "WF-CREA-008": "All Rule Names must be unique.",
     "WF-CREA-006": "Rules. Operator must be 'AND', 'OR' or empty value.",
     "WF-CREA-004": "At least one rule must be defined.",

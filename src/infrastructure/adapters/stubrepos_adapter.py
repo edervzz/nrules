@@ -19,24 +19,18 @@ class StubRepositoryAdapter(Repository):
             case "WorkflowRule":
                 self.workflow_rules.append(entity)
             case "Rule":
+                entity.id = len(self.rules) + 1
                 self.rules.append(entity)
             case "Workflow":
                 entity.id = len(self.workflows) + 1
                 self.workflows.append(entity)
 
-    def create(self, entity: any):
-        if isinstance(entity, list):
-            for e in entity:
-                self.__create(e)
-        else:
-            self.__create(entity)
-
-    def workflow_read_by_external_id(self, external_id: str) -> Workflow:
+    def workflow_read(self, _id: int) -> Workflow:
         if len(self.workflows) == 0:
             return None
 
         for w in self.workflows:
-            if w.name == external_id:
+            if w.id == _id:
                 return w
 
     def rules_read_by_parent_id(self, parent_id: int) -> List[Rule]:
@@ -51,6 +45,21 @@ class StubRepositoryAdapter(Repository):
                         rules.append(r)
                         break
         return rules
+
+    def workflow_read_by_external_id(self, external_id: str) -> Workflow:
+        if len(self.workflows) == 0:
+            return None
+
+        for w in self.workflows:
+            if w.name == external_id:
+                return w
+
+    def create(self, entity: any):
+        if isinstance(entity, list):
+            for e in entity:
+                self.__create(e)
+        else:
+            self.__create(entity)
 
     def begin(self):
         pass

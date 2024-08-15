@@ -1,4 +1,4 @@
-""" global variables """
+""" services available in all app """
 import logging
 import os
 from domain.ports import Repository

@@ -12,10 +12,10 @@
             "env": {
                 "FLASK_APP": "src\\app.py",
                 "FLASK_DEBUG": "1",
-                // "DBUSER": "root",
-                // "DBPWD": "my-secret-pw",
-                // "DBSERVER": "localhost",
-                // "DBNAME": "nrule-core"
+                "DBUSER": "root",
+                "DBPWD": "my-secret-pw",
+                "DBSERVER": "localhost",
+                "DBNAME": "nrule-core"
             },
             "args": [
                 "run",

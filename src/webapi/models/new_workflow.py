@@ -18,7 +18,7 @@ class NewWorkflow(object):
             "rules", [])
 
         if len(rules) > 0:
-            ruless: List[NewWorkflowRule] = []
+            rule_collector: List[NewWorkflowRule] = []
             for r in rules:
                 name = ""
                 operator = ""
@@ -30,5 +30,5 @@ class NewWorkflow(object):
                 if "expression" in r:
                     expression = r["expression"]
                 rule = NewWorkflowRule(name, operator, expression)
-                ruless.append(rule)
-            self.rules = ruless
+                rule_collector.append(rule)
+            self.rules = rule_collector

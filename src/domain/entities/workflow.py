@@ -2,14 +2,12 @@
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
 from .base import Base
+from .auditable import Auditable
 
 
-class Workflow(Base):
-    """_summary_
+class Workflow(Base, Auditable):
+    """ Workflow entity """
 
-    Args:
-        Base (_type_): _description_
-    """
     __tablename__ = "workflows"
 
     id: Mapped[int] = mapped_column(

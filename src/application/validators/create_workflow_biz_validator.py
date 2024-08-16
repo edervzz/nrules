@@ -2,13 +2,13 @@
 from application.messages import CreateWorkflowRequest
 from domain.ports import Repository
 from domain.entities import Workflow
-from toolkit import CustomError
+from toolkit import Validator, Localizer
 
 
-class CreateWorkflowBizValidator(CustomError):
+class CreateWorkflowBizValidator(Validator):
     """_summary_ """
 
-    def __init__(self, repository: Repository):
+    def __init__(self, repository: Repository, localizer: Localizer):
         super().__init__()
         self.__repository = repository
 
@@ -17,7 +17,12 @@ class CreateWorkflowBizValidator(CustomError):
 
         workflow = self.__repository.workflow_read_by_external_id(request.name)
         if workflow is not None:
-            self.__raise_duplicated__("WF-CREA-003")
+            self.__duplicated__("WF-CREA-003")
+
+        for r in request.rules:
+            rule = self.__repository.rule_read_by_external_id(r.name)
+            if rule is not None:
+                self.__duplicated__("WF-CREA-009")
 
         request.workflow = Workflow()
         request.workflow.name = request.name

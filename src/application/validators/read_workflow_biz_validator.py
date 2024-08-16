@@ -1,10 +1,10 @@
 """_summary_"""
 from application.messages import ReadWorkflowRequest
 from domain.ports import Repository
-from toolkit import CustomError
+from toolkit import Validator
 
 
-class ReadWorkflowBizValidator(CustomError):
+class ReadWorkflowBizValidator(Validator):
     """ Validator for workflow reading """
 
     def __init__(self, repository: Repository):
@@ -22,9 +22,9 @@ class ReadWorkflowBizValidator(CustomError):
                 request.workflow_name)
 
         if wf is None:
-            raise self.__raise_not_found__("WF-READ-002")
+            raise self.__not_found__("WF-READ-002")
 
         request.workflow = wf
 
-        request.rules = self.repository.rules_read_by_parent_id(
+        request.rules = self.repository.rule_read_by_parent_id(
             request.workflow.id)

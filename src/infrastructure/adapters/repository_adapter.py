@@ -2,11 +2,11 @@
     """
 from typing import List
 from datetime import datetime
-from sqlalchemy import Engine, MetaData, create_engine, select, event
+from sqlalchemy import Engine, create_engine, select, event
 from sqlalchemy.orm import Session
 from domain.entities import WorkflowRule, Rule, Workflow, Auditable
 from domain.ports import Repository
-from infrastructure.data import migrations, tables
+from infrastructure.data import initial, tables_base
 
 
 class RepositoryAdapter(Repository):
@@ -22,7 +22,7 @@ class RepositoryAdapter(Repository):
         event.listen(Rule, 'before_insert', self.__before_insert)
         event.listen(WorkflowRule, 'before_insert', self.__before_insert)
 
-    def rules_read_by_parent_id(self, parent_id: int) -> List[Rule]:
+    def rule_read_by_parent_id(self, parent_id: int) -> List[Rule]:
         with Session(self.engine) as session:
             stms = select(Rule).join(WorkflowRule, Rule.id == WorkflowRule.rule_id).where(
                 WorkflowRule.workflow_id == parent_id)
@@ -58,11 +58,8 @@ class RepositoryAdapter(Repository):
             self.session.rollback()
 
     def migrate(self):
-        metadata_obj = MetaData()
-        migrations(metadata_obj=metadata_obj)
-        tables(metadata_obj)
-
-        metadata_obj.create_all(self.engine)
+        initial(self.engine)
+        tables_base(self.engine)
 
     def __before_insert(self, mapper, connection, target):
         """ Hook """

@@ -1,14 +1,17 @@
 """ services available in all app """
-import logging
+
 import os
+import logging
 from domain.ports import Repository
 from infrastructure.adapters import RepositoryAdapter, StubRepositoryAdapter
+from toolkit import Localizer
 
 
 class Services():
     """ Services container """
     repository: Repository
     logger: logging.Logger
+    localizer: Localizer
 
     @classmethod
     def prepare(cls) -> None:
@@ -28,3 +31,6 @@ class Services():
         # logger
         logging.basicConfig()
         Services.logger = logging.getLogger(__name__)
+
+        # localizer
+        Services.localizer = Localizer()

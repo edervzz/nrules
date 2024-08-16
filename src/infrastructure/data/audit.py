@@ -1,21 +1,5 @@
 """ migration file """
-from sqlalchemy import MetaData, Table, Column, String, DateTime
-
-
-def migrations(metadata_obj: MetaData):
-    """_summary_
-
-    Args:
-        metadata_obj (MetaData): _description_
-    """
-    Table(
-        "__migrations",
-        metadata_obj,
-        Column(
-            "id", String(50), primary_key=True, comment="Migration ID."),
-        Column(
-            "exec_date", DateTime, nullable=False, comment="Execution Date."),
-    )
+from sqlalchemy import Table, Column, String, DateTime
 
 
 def set_auditable(table: Table):

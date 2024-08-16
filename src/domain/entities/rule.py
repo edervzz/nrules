@@ -1,8 +1,8 @@
 """ Entities """
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
-from .base import Base
 from .auditable import Auditable
+from .base import Base
 
 
 class Rule(Base, Auditable):

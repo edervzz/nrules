@@ -1,14 +1,26 @@
 """ migration file """
-from sqlalchemy import MetaData, Table, Column, Boolean, Integer, BigInteger, String, CheckConstraint
-from .m_000000000001_init import set_auditable
+
+from datetime import datetime
+from sqlalchemy import Column, Boolean, Integer, BigInteger, String
+from sqlalchemy import MetaData, Table,  CheckConstraint, Engine, select
+from sqlalchemy.orm import Session
+from domain.entities import Migrations
+from .audit import set_auditable
 
 
-def tables(metadata_obj: MetaData):
-    """_summary_
+def tables_base(engine: Engine):
+    """_summary_ """
 
-    Args:
-        metadata_obj (MetaData): _description_
-    """
+    name = "000000000001_tables_base"
+
+    metadata_obj = MetaData()
+
+    stms = select(Migrations).where(Migrations.id == name)
+    with Session(engine) as session:
+        result = session.scalar(stms)
+        if result is not None:
+            return
+
     workflow_rule = Table(
         "workflow_rules",
         metadata_obj,
@@ -54,3 +66,12 @@ def tables(metadata_obj: MetaData):
             "failure_action_id", BigInteger, comment="Action ID for failure result."),
     )
     set_auditable(workflows)
+
+    metadata_obj.create_all(engine)
+
+    with Session(engine) as session:
+        m = Migrations()
+        m.id = name
+        m.exec_date = datetime.now()
+        session.add(m)
+        session.commit()

@@ -1,7 +1,7 @@
 """ endpoints """
 from flask import Flask, Response
 from flask_swagger_ui import get_swaggerui_blueprint
-from toolkit.exceptions import ValidationError, DuplicatedError, NotFoundError
+from werkzeug.exceptions import Conflict, BadRequest, NotFound
 from .hello import hello_bp
 from .create_workflow import new_workflow_bp
 from .read_workflow import read_workflow_bp
@@ -31,19 +31,19 @@ def map_endpoints(app: Flask, prefix: str):
     )
 
     app.register_error_handler(
-        ValidationError,
+        BadRequest,
         lambda error: Response(
             response=error.description, status=400)
     )
 
     app.register_error_handler(
-        DuplicatedError,
+        Conflict,
         lambda error: Response(
             response=error.description, status=409)
     )
 
     app.register_error_handler(
-        NotFoundError,
+        NotFound,
         lambda error: Response(
             response=error.description, status=404)
     )

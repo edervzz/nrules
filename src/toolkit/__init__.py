@@ -1,6 +1,12 @@
-""" toolkit """
+""" Toolkit 
 
-from .messages import get_message
-from .exceptions import DuplicatedError, ValidationError, NotFoundError, CustomError
+    - Localizer
+    - Validator
+    - Service (pseudo-dependency-injection)
+    - Identification
+"""
+
+from .localization import Localizer
+from .validator import Validator
 from .services import Services
-from .identification import get_identification
+from .identification import Identification

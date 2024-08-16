@@ -38,7 +38,8 @@ def new_workflow_endpoint():
 
     handler = CreateWorkflowHandler(
         Services.repository,
-        Services.logger
+        Services.logger,
+        Services.localizer
     )
 
     result = handler.handler(command)

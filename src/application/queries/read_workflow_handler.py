@@ -4,19 +4,21 @@ import logging
 from application.messages import ReadWorkflowRequest, ReadWorkflowResponse
 from application.validators import ReadWorkflowValidator, ReadWorkflowBizValidator
 from domain.ports import Repository
+from toolkit import Localizer
 
 
 class ReadWorkflowHandler:
     """ _summary_ """
 
-    def __init__(self, repository: Repository, logger: logging):
+    def __init__(self, repository: Repository, logger: logging, localizer: Localizer):
         self.repository = repository
         self.logger = logger
+        self.localizer = localizer
 
     def handler(self, request: ReadWorkflowRequest) -> ReadWorkflowResponse:
         """ Handler """
         # 1. request validation
-        validator = ReadWorkflowValidator()
+        validator = ReadWorkflowValidator(self.localizer)
         validator.validate_and_throw(request)
         self.logger.info("request validated")
 

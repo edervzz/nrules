@@ -33,7 +33,7 @@ class StubRepositoryAdapter(Repository):
             if w.id == _id:
                 return w
 
-    def rules_read_by_parent_id(self, parent_id: int) -> List[Rule]:
+    def rule_read_by_parent_id(self, parent_id: int) -> List[Rule]:
         if len(self.workflow_rules) == 0 or len(self.rules) == 0:
             return None
 

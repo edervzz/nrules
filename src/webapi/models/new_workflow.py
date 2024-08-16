@@ -1,7 +1,7 @@
 """ _module_ """
 import json
 from typing import List
-from .new_workflow_rule import NewWorkflowRule
+from domain.entities import Rule
 
 
 class NewWorkflow(object):
@@ -11,24 +11,14 @@ class NewWorkflow(object):
         self.__dict__ = json.loads(j)
         self.name = self.__dict__.get("name", "")
         self.is_node = self.__dict__.get("is_node", False)
-        self.success_action_id = self.__dict__.get("success_action_id", 0)
-        self.failure_action_id = self.__dict__.get("failure_action_id", 0)
+        self.rules = self.__dict__.get("rules", [])
 
-        rules = self.__dict__.get(
-            "rules", [])
-
-        if len(rules) > 0:
-            rule_collector: List[NewWorkflowRule] = []
-            for r in rules:
-                name = ""
-                operator = ""
-                expression = ""
-                if "name" in r:
-                    name = r["name"]
-                if "operator" in r:
-                    operator = r["operator"]
-                if "expression" in r:
-                    expression = r["expression"]
-                rule = NewWorkflowRule(name, operator, expression)
+        if len(self.rules) > 0:
+            rule_collector: List[Rule] = []
+            for r in self.rules:
+                rule = Rule()
+                rule.name = r["name"] if "name" in r else ""
+                rule.operator = r["operator"] if "operator" in r else ""
+                rule.expression = r["expression"] if "expression" in r else ""
                 rule_collector.append(rule)
             self.rules = rule_collector

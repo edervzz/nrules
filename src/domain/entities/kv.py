@@ -1,7 +1,16 @@
-from typing import List
-from kv_item import KVItem
+""" _summry_ """
+from sqlalchemy.orm import Mapped
+from sqlalchemy.orm import mapped_column
+from .auditable import Auditable
+from .base import Base
 
 
-class KVS:
-    """ Key Value Storage """
-    key_value: List[KVItem]
+class KV(Base, Auditable):
+    """ Key-Value Item entity """
+
+    __tablename__ = "kvs"
+
+    id: Mapped[int] = mapped_column(
+        primary_key=True, autoincrement="auto", nullable=False)
+
+    name: Mapped[str] = mapped_column(nullable=False)

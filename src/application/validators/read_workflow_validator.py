@@ -1,7 +1,7 @@
 """_summary_"""
 from application.messages import ReadWorkflowRequest
 from toolkit import Validator
-from toolkit.localization import Localizer
+from toolkit.localization import Localizer, Codes
 
 
 class ReadWorkflowValidator(Validator):
@@ -15,4 +15,6 @@ class ReadWorkflowValidator(Validator):
         """ Validate request format """
 
         if request.workflow_id == 0 and request.workflow_name == "":
-            self.__error__(*self.localizer.get("WF-READ-001"))
+            raise self.as_error(
+                Codes.WF_READ_001,
+                self.localizer.get(Codes.WF_READ_001))

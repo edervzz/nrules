@@ -1,7 +1,7 @@
 """_summary_"""
 from application.messages import CreateWorkflowRequest
 from toolkit import Validator
-from toolkit.localization import Localizer
+from toolkit.localization import Localizer, Codes
 
 
 class CreateWorkflowValidator(Validator):
@@ -9,21 +9,25 @@ class CreateWorkflowValidator(Validator):
 
     def __init__(self, localizer: Localizer):
         super().__init__()
-        self.__localizer = localizer
+        self._localizer = localizer
 
     def __validate__(self, request: CreateWorkflowRequest):
         """ Validate request format """
 
         if request.name == "":
-            self.__error__(*self.__localizer.get("WF-CREA-001"))
+            raise self.as_error(
+                Codes.WF_CREA_001,
+                self._localizer.get(Codes.WF_CREA_001))
 
         if len(request.name) < 5 or len(request.name) > 50:
-            self.__addcode__(
-                *self.__localizer.get("WF-CREA-002"))
+            self.add_failure(
+                Codes.WF_CREA_002,
+                self._localizer.get(Codes.WF_CREA_002))
 
         if len(request.rules) == 0:
-            self.__addcode__(
-                *self.__localizer.get("WF-CREA-004"))
+            self.add_failure(
+                Codes.WF_CREA_004,
+                self._localizer.get(Codes.WF_CREA_004))
 
         rule_names = []
         if len(request.rules) > 0:
@@ -31,22 +35,26 @@ class CreateWorkflowValidator(Validator):
             for r in request.rules:
                 idx += 1
                 if r.name == "" or r.expression == "":
-                    self.__addcode__(
-                        *self.__localizer.get("WF-CREA-005"))
+                    self.add_failure(
+                        Codes.WF_CREA_005,
+                        self._localizer.get(Codes.WF_CREA_005))
                 if len(r.name) < 5 or len(r.name) > 50:
-                    self.__addcode__(
-                        *self.__localizer.get("WF-CREA-007"))
+                    self.add_failure(
+                        Codes.WF_CREA_007,
+                        self._localizer.get(Codes.WF_CREA_007))
                 if r.operator != "":
                     if r.operator != "AND" or r.operator != "OR":
-                        self.__addcode__(
-                            *self.__localizer.get("WF-CREA-006"))
+                        self.add_failure(
+                            Codes.WF_CREA_006,
+                            self._localizer.get(Codes.WF_CREA_006))
                 else:
                     r.operator = "AND"
                 r.order = idx
-                r.is_multi_assignment = False
+                r.is_exclusive = False
                 rule_names.append(r.name)
 
         rule_name_set = set(rule_names)
         if len(rule_name_set) != len(rule_names):
-            self.__addcode__(
-                *self.__localizer.get("WF-CREA-008"))
+            self.add_failure(
+                Codes.WF_CREA_008,
+                self._localizer.get(Codes.WF_CREA_008))

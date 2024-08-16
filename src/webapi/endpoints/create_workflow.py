@@ -31,9 +31,7 @@ def new_workflow_endpoint():
     command = CreateWorkflowRequest(
         new_workflow.name,
         new_workflow.is_node,
-        new_workflow.failure_action_id,
-        new_workflow.failure_action_id,
-        [rule_factory(x) for x in new_workflow.rules]
+        new_workflow.rules
     )
 
     handler = CreateWorkflowHandler(

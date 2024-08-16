@@ -19,6 +19,6 @@ class Workflow(Base, Auditable):
 
     is_node: Mapped[bool] = mapped_column(nullable=True)
 
-    success_action_id: Mapped[int] = mapped_column(nullable=True)
+    action_on_success: Mapped[int] = mapped_column(nullable=True)
 
-    failure_action_id: Mapped[int] = mapped_column(nullable=True)
+    action_on_failure: Mapped[int] = mapped_column(nullable=True)

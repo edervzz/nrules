@@ -15,10 +15,6 @@ class Rule(Base, Auditable):
 
     name: Mapped[str] = mapped_column(nullable=False, unique=True)
 
-    operator: Mapped[str] = mapped_column(nullable=True)
-
     expression: Mapped[str] = mapped_column(nullable=False)
 
-    order: Mapped[int] = mapped_column(nullable=True)
-
-    is_multi_assignment: Mapped[bool] = mapped_column(nullable=True)
+    is_exclusive: Mapped[bool] = mapped_column(nullable=True)

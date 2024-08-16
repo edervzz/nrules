@@ -18,21 +18,21 @@ class Validator(ABC):
         if len(self.__messages_codes) > 0:
             raise BadRequest(json.dumps(self.__messages_codes))
 
-    def __addcode__(self, code: str, message: str):
+    def add_failure(self, code: str, message: str):
         """ Add a message code into collection. """
         self.__messages_codes.append({'code': code, 'message': message})
 
-    def __error__(self, code: str, message: str):
+    def as_error(self, code: str, message: str):
         """ Raise a single Validation Error """
-        raise BadRequest(json.dumps({'code': code, 'message': message}))
+        return BadRequest(json.dumps({'code': code, 'message': message}))
 
-    def __not_found__(self, description: str):
+    def as_not_found(self, code: str, message: str):
         """ Raise a single Not Found Error """
-        raise NotFound(description)
+        return NotFound(json.dumps({'code': code, 'message': message}))
 
-    def __duplicated__(self, description: str, fields=None):
+    def as_duplicated(self,  code: str, message: str):
         """ Raise a single  Duplicated Error """
-        raise Conflict(description)
+        return Conflict(json.dumps({'code': code, 'message': message}))
 
     @abstractmethod
     def __validate__(self, request):

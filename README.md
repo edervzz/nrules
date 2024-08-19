@@ -1,5 +1,22 @@
 # gentera-nrule
 
+## Runner
+
+- Load Workflow
+    - Load Variant
+    - Load Rules
+    - Is Node
+
+- Perfom Validation(Variant, Rules, Is Node, Payload)
+    - If Is Node: retrieve Rule Action
+    - Return: Success/Failure + (Rule Action)
+
+- Performe Action
+    - If Is node: execute Rule Action
+    - else: 
+        - Load Workflow Action (from Validation Success/Failure)
+            - Execute Workflow Action 
+
 DataDog
 
 

@@ -22,6 +22,19 @@ class RepositoryAdapter(Repository):
         event.listen(Rule, 'before_insert', self.__before_insert)
         event.listen(WorkflowRule, 'before_insert', self.__before_insert)
 
+    # Rule
+    def rule_read(self, _id: int) -> Rule:
+        with Session(self.engine) as session:
+            stmt = select(Rule).where(Rule.id == _id)
+            rule = session.scalar(stmt)
+            return rule
+
+    def rule_read_by_external_id(self, external_id: str) -> Rule:
+        with Session(self.engine) as session:
+            stmt = select(Rule).where(Rule.name == external_id)
+            rule = session.scalar(stmt)
+            return rule
+
     def rule_read_by_parent_id(self, parent_id: int) -> List[Rule]:
         with Session(self.engine) as session:
             stms = select(Rule).join(WorkflowRule, Rule.id == WorkflowRule.rule_id).where(
@@ -29,6 +42,7 @@ class RepositoryAdapter(Repository):
             rule = session.scalars(stms).all()
             return rule
 
+    # Workflow
     def workflow_read(self, _id: int) -> Workflow:
         with Session(self.engine) as session:
             stmt = select(Workflow).where(Workflow.id == _id)

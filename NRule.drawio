@@ -1,97 +1,103 @@
 <mxfile host="65bd71144e" pages="5">
-    <diagram id="qVmFlD-CBX-ErY51zL73" name="Componentes">
-        <mxGraphModel dx="1002" dy="576" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <diagram id="LyjKLWT2vN5_jiygnvpO" name="Connections">
+        <mxGraphModel dx="1040" dy="792" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="bjiYlyuOcnUPF-QniSUH-1" value="Rule&lt;br&gt;&amp;nbsp;- ID&lt;br&gt;&amp;nbsp;- Name&lt;br&gt;&amp;nbsp;- Expression" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;" parent="1" vertex="1">
-                    <mxGeometry x="40" y="40" width="120" height="120" as="geometry"/>
+                <mxCell id="AVZ-X2Hg58o_VEa4zs1Z-9" value="" style="edgeStyle=none;html=1;dashed=1;endArrow=open;endFill=0;dashPattern=8 8;" parent="1" source="Qy_hjdB-Wre0WD_cC9GE-2" target="gyh5iQZbHvoaphFOzq5q-1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="M0G8iHwndG0JGeVJzw94-1" value="&lt;h1&gt;Rule&lt;/h1&gt;&lt;p&gt;Las reglas son el corazón del workflow, es posible asignar una o mas reglas a un workflow y pueden ser exclusivas o asignadas a multiples workflows.&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;verticalAlign=middle;" parent="1" vertex="1">
-                    <mxGeometry x="190" y="40" width="600" height="120" as="geometry"/>
+                <mxCell id="AVZ-X2Hg58o_VEa4zs1Z-12" style="edgeStyle=none;html=1;entryX=0.995;entryY=0.815;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryPerimeter=0;endArrow=open;endFill=0;dashed=1;dashPattern=8 8;" parent="1" source="Qy_hjdB-Wre0WD_cC9GE-2" target="Qy_hjdB-Wre0WD_cC9GE-5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="9t1VKK2ffKOIMdsSbyct-1" value="Action&lt;br&gt;&lt;br&gt;&amp;nbsp;- ID&lt;br&gt;&amp;nbsp;- Name&lt;br&gt;&amp;nbsp;- Workflow&lt;br&gt;&amp;nbsp;- KVS" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#d79b00;fillColor=none;gradientColor=#ffa500;align=left;verticalAlign=top;" parent="1" vertex="1">
-                    <mxGeometry x="40" y="210" width="120" height="120" as="geometry"/>
+                <mxCell id="Qy_hjdB-Wre0WD_cC9GE-2" value="Action&lt;br&gt;&lt;br&gt;&amp;nbsp;- ID&lt;br&gt;&amp;nbsp;- Name&lt;br&gt;&amp;nbsp;- Workflow&lt;br&gt;&amp;nbsp;- KVS" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#d79b00;fillColor=none;gradientColor=#ffa500;align=left;verticalAlign=top;" parent="1" vertex="1">
+                    <mxGeometry x="250" y="550" width="120" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="9H1VtXnv4Iau77OwVuIz-1" value="&lt;h1&gt;Action&lt;/h1&gt;&lt;p&gt;Una Acción contiene la invocación a un workflow o la recuperación de un KVS.&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;verticalAlign=middle;" parent="1" vertex="1">
-                    <mxGeometry x="190" y="210" width="600" height="120" as="geometry"/>
+                <mxCell id="Qy_hjdB-Wre0WD_cC9GE-4" value="Variant&lt;br&gt;&lt;br&gt;&amp;nbsp;- ID&lt;br&gt;&amp;nbsp;- Value&lt;br&gt;&amp;nbsp;- Type" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#FFFF33;fillColor=none;gradientColor=#ffd966;align=left;verticalAlign=top;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="160" width="120" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="6Q-tKtWB3H9LdQR2WDUa-1" value="KVS&lt;br&gt;&lt;br&gt;&amp;nbsp;- ID&lt;br&gt;&amp;nbsp;- Name" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#99FFFF;fillColor=none;gradientColor=#ffa500;align=left;verticalAlign=top;" parent="1" vertex="1">
-                    <mxGeometry x="40" y="370" width="120" height="120" as="geometry"/>
+                <mxCell id="AVZ-X2Hg58o_VEa4zs1Z-11" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0.998;exitY=0.191;exitDx=0;exitDy=0;exitPerimeter=0;endArrow=open;endFill=0;" parent="1" source="Qy_hjdB-Wre0WD_cC9GE-5" target="WbnDZtWvCEgxXb2GhZYb-2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="rRaJ8Djq7bLL1KoQF5-8-1" value="&lt;h1&gt;KVS&lt;/h1&gt;&lt;p&gt;Contener de multiples Llave-Valor usado como resultado de un Workflow o Regla.&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;verticalAlign=middle;" parent="1" vertex="1">
-                    <mxGeometry x="190" y="370" width="600" height="120" as="geometry"/>
+                <mxCell id="AVZ-X2Hg58o_VEa4zs1Z-14" style="edgeStyle=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=open;endFill=0;dashed=1;dashPattern=8 8;" parent="1" source="Qy_hjdB-Wre0WD_cC9GE-5" target="Qy_hjdB-Wre0WD_cC9GE-4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="5Z8WgemuzADRJWirdBL6-1" value="Variant&lt;br&gt;&lt;br&gt;&amp;nbsp;- ID&lt;br&gt;&amp;nbsp;- Value&lt;br&gt;&amp;nbsp;- Type" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#FFFF33;fillColor=none;gradientColor=#ffd966;align=left;verticalAlign=top;" parent="1" vertex="1">
-                    <mxGeometry x="40" y="700" width="120" height="120" as="geometry"/>
+                <mxCell id="AVZ-X2Hg58o_VEa4zs1Z-19" style="edgeStyle=none;html=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;dashed=1;dashPattern=8 8;endArrow=open;endFill=0;exitX=1;exitY=0.719;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="Qy_hjdB-Wre0WD_cC9GE-5" target="Qy_hjdB-Wre0WD_cC9GE-2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="Mwn-F3GZqTvZM4NrYZBQ-1" value="&lt;h1&gt;Variante&lt;/h1&gt;&lt;p&gt;Las variantes es un Key-Value que alimenta y llena los &quot;huecos&quot; de las reglas, permitiendo multiples configuraciones en el mismo workflow y reglas. Las variantes estan asignadas a un único workflow.&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;verticalAlign=middle;" parent="1" vertex="1">
-                    <mxGeometry x="190" y="700" width="600" height="120" as="geometry"/>
+                <mxCell id="Qy_hjdB-Wre0WD_cC9GE-5" value="Workflow&lt;br&gt;&lt;br&gt;&amp;nbsp;- ID&lt;br&gt;&amp;nbsp;- Name&lt;br&gt;&amp;nbsp;- Variant&lt;br&gt;&amp;nbsp;- Is Node&lt;br&gt;&amp;nbsp;- Action on Success&lt;br&gt;&amp;nbsp;- Action on Failure" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=left;fillColor=none;strokeColor=#B266FF;gradientDirection=south;gradientColor=#7ea6e0;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="350" width="120" height="320" as="geometry"/>
                 </mxCell>
-                <mxCell id="p1ZofG-8nUMUW4NEJUrA-1" value="Workflow&lt;br&gt;&lt;br&gt;&amp;nbsp;- ID&lt;br&gt;&amp;nbsp;- Name&lt;br&gt;&amp;nbsp;- Variant&lt;br&gt;&amp;nbsp;- Is Node&lt;br&gt;&amp;nbsp;- Action on Success&lt;br&gt;&amp;nbsp;- Action on Failure" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=left;fillColor=none;strokeColor=#B266FF;gradientDirection=south;gradientColor=#7ea6e0;" parent="1" vertex="1">
-                    <mxGeometry x="40" y="860" width="120" height="120" as="geometry"/>
+                <mxCell id="Qy_hjdB-Wre0WD_cC9GE-7" value="1) Rule&lt;br&gt;&lt;br&gt;&amp;nbsp;- ID&lt;br&gt;&amp;nbsp;- Name&lt;br&gt;&amp;nbsp;- Expression&lt;br&gt;&amp;nbsp;- Is Exclusive" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;" parent="1" vertex="1">
+                    <mxGeometry x="450" y="350" width="120" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="sz_G_n_lGGJKNQ2YcUNv-1" value="&lt;h1&gt;Workflow&lt;/h1&gt;&lt;p&gt;Actua como una función que invoca diferentes reglas previamente definidas. Se alimenta de un Input y una Variante. Como resultado puede invocar otro workflow o devolver un KVS previamente definido.&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;verticalAlign=middle;" parent="1" vertex="1">
-                    <mxGeometry x="190" y="860" width="600" height="120" as="geometry"/>
+                <mxCell id="AVZ-X2Hg58o_VEa4zs1Z-7" value="1...N" style="edgeStyle=none;html=1;fontStyle=1;endArrow=open;endFill=0;" parent="1" source="WbnDZtWvCEgxXb2GhZYb-2" target="Qy_hjdB-Wre0WD_cC9GE-7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="mjt-Pqi9qiivTSin8wFP-1" value="KV Item&lt;br&gt;&lt;br&gt;&amp;nbsp;- KVS&lt;br&gt;&amp;nbsp;- ID&lt;br&gt;&amp;nbsp;- Value&lt;br&gt;&amp;nbsp;- Type" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#00CCCC;fillColor=none;gradientColor=#ffa500;align=left;verticalAlign=top;" parent="1" vertex="1">
-                    <mxGeometry x="40" y="530" width="120" height="120" as="geometry"/>
+                <mxCell id="AVZ-X2Hg58o_VEa4zs1Z-8" style="edgeStyle=none;html=1;endArrow=open;endFill=0;dashed=1;dashPattern=8 8;" parent="1" source="WbnDZtWvCEgxXb2GhZYb-2" target="Qy_hjdB-Wre0WD_cC9GE-2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="mjt-Pqi9qiivTSin8wFP-2" value="&lt;h1&gt;KVS&lt;/h1&gt;&lt;p&gt;Cátalogo Llave-Valor.&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;verticalAlign=middle;" parent="1" vertex="1">
-                    <mxGeometry x="190" y="530" width="600" height="120" as="geometry"/>
+                <mxCell id="WbnDZtWvCEgxXb2GhZYb-2" value="Workflow - Rules&lt;br&gt;&lt;br&gt;&amp;nbsp;- Workflow&lt;br&gt;&amp;nbsp;- Rule&lt;br&gt;&amp;nbsp;- Operator&lt;br&gt;&amp;nbsp;- Order&lt;br&gt;&amp;nbsp;- Action on Sucess" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#FF99CC;fillColor=none;gradientColor=#ffa500;align=left;verticalAlign=top;" parent="1" vertex="1">
+                    <mxGeometry x="250" y="350" width="120" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="AVZ-X2Hg58o_VEa4zs1Z-10" value="" style="edgeStyle=none;html=1;" parent="1" source="gyh5iQZbHvoaphFOzq5q-1" target="gyh5iQZbHvoaphFOzq5q-2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="gyh5iQZbHvoaphFOzq5q-1" value="KVS&lt;br&gt;&lt;br&gt;&amp;nbsp;- ID&lt;br&gt;&amp;nbsp;- Name" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#99FFFF;fillColor=none;gradientColor=#ffa500;align=left;verticalAlign=top;" parent="1" vertex="1">
+                    <mxGeometry x="450" y="550" width="120" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="gyh5iQZbHvoaphFOzq5q-2" value="KV Item&lt;br&gt;&lt;br&gt;&amp;nbsp;- KVS&lt;br&gt;&amp;nbsp;- ID&lt;br&gt;&amp;nbsp;- Value&lt;br&gt;&amp;nbsp;- Type" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#00CCCC;fillColor=none;gradientColor=#ffa500;align=left;verticalAlign=top;" parent="1" vertex="1">
+                    <mxGeometry x="650" y="550" width="120" height="120" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
     </diagram>
-    <diagram id="LyjKLWT2vN5_jiygnvpO" name="Page-3">
-        <mxGraphModel dx="1386" dy="792" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <diagram id="qVmFlD-CBX-ErY51zL73" name="Componentes">
+        <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="AVZ-X2Hg58o_VEa4zs1Z-9" value="" style="edgeStyle=none;html=1;dashed=1;endArrow=open;endFill=0;dashPattern=8 8;" edge="1" parent="1" source="Qy_hjdB-Wre0WD_cC9GE-2" target="gyh5iQZbHvoaphFOzq5q-1">
-                    <mxGeometry relative="1" as="geometry"/>
+                <mxCell id="bjiYlyuOcnUPF-QniSUH-1" value="Rule&lt;br&gt;&lt;br&gt;&amp;nbsp;- ID&lt;br&gt;&amp;nbsp;- Name&lt;br&gt;&amp;nbsp;- Expression&lt;br&gt;&amp;nbsp;- Is Exclusive" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;strokeColor=default;" parent="1" vertex="1">
+                    <mxGeometry x="30" y="300" width="120" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="AVZ-X2Hg58o_VEa4zs1Z-12" style="edgeStyle=none;html=1;entryX=0.995;entryY=0.815;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryPerimeter=0;endArrow=open;endFill=0;dashed=1;dashPattern=8 8;" edge="1" parent="1" source="Qy_hjdB-Wre0WD_cC9GE-2" target="Qy_hjdB-Wre0WD_cC9GE-5">
-                    <mxGeometry relative="1" as="geometry"/>
+                <mxCell id="M0G8iHwndG0JGeVJzw94-1" value="&lt;h1&gt;Rule&lt;/h1&gt;&lt;p&gt;Las reglas son el corazón del workflow, es posible asignar una o mas reglas a un workflow y pueden ser exclusivas o asignadas a multiples workflows.&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="180" y="300" width="600" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="Qy_hjdB-Wre0WD_cC9GE-2" value="Action&lt;br&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#d79b00;fillColor=none;gradientColor=#ffa500;align=left;verticalAlign=top;" vertex="1" parent="1">
-                    <mxGeometry x="240" y="550" width="120" height="120" as="geometry"/>
+                <mxCell id="9t1VKK2ffKOIMdsSbyct-1" value="Action&lt;br&gt;&lt;br&gt;&amp;nbsp;- ID&lt;br&gt;&amp;nbsp;- Name&lt;br&gt;&amp;nbsp;- Workflow&lt;br&gt;&amp;nbsp;- KVS" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#d79b00;fillColor=none;gradientColor=#ffa500;align=left;verticalAlign=top;" parent="1" vertex="1">
+                    <mxGeometry x="30" y="910" width="120" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="Qy_hjdB-Wre0WD_cC9GE-4" value="Variant&lt;br&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#FFFF33;fillColor=none;gradientColor=#ffd966;align=left;verticalAlign=top;" vertex="1" parent="1">
-                    <mxGeometry x="40" y="160" width="120" height="120" as="geometry"/>
+                <mxCell id="9H1VtXnv4Iau77OwVuIz-1" value="&lt;h1&gt;Action&lt;/h1&gt;&lt;p&gt;Una Acción contiene la invocación a un workflow o la recuperación de un KVS.&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="180" y="910" width="600" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="AVZ-X2Hg58o_VEa4zs1Z-11" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0.998;exitY=0.191;exitDx=0;exitDy=0;exitPerimeter=0;endArrow=open;endFill=0;" edge="1" parent="1" source="Qy_hjdB-Wre0WD_cC9GE-5" target="WbnDZtWvCEgxXb2GhZYb-2">
-                    <mxGeometry relative="1" as="geometry"/>
+                <mxCell id="6Q-tKtWB3H9LdQR2WDUa-1" value="KVS&lt;br&gt;&lt;br&gt;&amp;nbsp;- ID&lt;br&gt;&amp;nbsp;- Name" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#99FFFF;fillColor=none;gradientColor=#ffa500;align=left;verticalAlign=top;" parent="1" vertex="1">
+                    <mxGeometry x="30" y="600" width="120" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="AVZ-X2Hg58o_VEa4zs1Z-14" style="edgeStyle=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=open;endFill=0;dashed=1;dashPattern=8 8;" edge="1" parent="1" source="Qy_hjdB-Wre0WD_cC9GE-5" target="Qy_hjdB-Wre0WD_cC9GE-4">
-                    <mxGeometry relative="1" as="geometry"/>
+                <mxCell id="rRaJ8Djq7bLL1KoQF5-8-1" value="&lt;h1&gt;KVS&lt;/h1&gt;&lt;p&gt;Contener de multiples Llave-Valor usado como resultado de un Workflow o Regla.&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="180" y="600" width="600" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="AVZ-X2Hg58o_VEa4zs1Z-19" style="edgeStyle=none;html=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;dashed=1;dashPattern=8 8;endArrow=open;endFill=0;exitX=1;exitY=0.719;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="Qy_hjdB-Wre0WD_cC9GE-5" target="Qy_hjdB-Wre0WD_cC9GE-2">
-                    <mxGeometry relative="1" as="geometry"/>
+                <mxCell id="5Z8WgemuzADRJWirdBL6-1" value="Variant&lt;br&gt;&lt;br&gt;&amp;nbsp;- ID&lt;br&gt;&amp;nbsp;- Value&lt;br&gt;&amp;nbsp;- Type" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#FFFF33;fillColor=none;gradientColor=#ffd966;align=left;verticalAlign=top;" parent="1" vertex="1">
+                    <mxGeometry x="30" y="20" width="120" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="Qy_hjdB-Wre0WD_cC9GE-5" value="Workflow&lt;br&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=left;fillColor=none;strokeColor=#B266FF;gradientDirection=south;gradientColor=#7ea6e0;" vertex="1" parent="1">
-                    <mxGeometry x="40" y="350" width="120" height="320" as="geometry"/>
+                <mxCell id="Mwn-F3GZqTvZM4NrYZBQ-1" value="&lt;h1&gt;Variante&lt;/h1&gt;&lt;p&gt;Las variantes es un Key-Value que alimenta y llena los &quot;huecos&quot; de las reglas, permitiendo multiples configuraciones en el mismo workflow y reglas. Las variantes estan asignadas a un único workflow.&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="180" y="20" width="600" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="Qy_hjdB-Wre0WD_cC9GE-7" value="Rule&lt;br&gt;&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;" vertex="1" parent="1">
-                    <mxGeometry x="440" y="350" width="120" height="120" as="geometry"/>
+                <mxCell id="p1ZofG-8nUMUW4NEJUrA-1" value="Workflow&lt;br&gt;&lt;br&gt;&amp;nbsp;- ID&lt;br&gt;&amp;nbsp;- Name&lt;br&gt;&amp;nbsp;- Variant&lt;br&gt;&amp;nbsp;- Is Node&lt;br&gt;&amp;nbsp;- Action on Success&lt;br&gt;&amp;nbsp;- Action on Failure" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=left;fillColor=none;strokeColor=#B266FF;gradientDirection=south;gradientColor=#7ea6e0;" parent="1" vertex="1">
+                    <mxGeometry x="30" y="160" width="120" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="AVZ-X2Hg58o_VEa4zs1Z-7" value="1...N" style="edgeStyle=none;html=1;fontStyle=1;endArrow=open;endFill=0;" edge="1" parent="1" source="WbnDZtWvCEgxXb2GhZYb-2" target="Qy_hjdB-Wre0WD_cC9GE-7">
-                    <mxGeometry relative="1" as="geometry"/>
+                <mxCell id="sz_G_n_lGGJKNQ2YcUNv-1" value="&lt;h1&gt;Workflow&lt;/h1&gt;&lt;p&gt;Actua como una función que invoca diferentes reglas previamente definidas. Se alimenta de un Input y una Variante. Como resultado puede invocar otro workflow o devolver un KVS previamente definido.&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="180" y="160" width="600" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="AVZ-X2Hg58o_VEa4zs1Z-8" style="edgeStyle=none;html=1;endArrow=open;endFill=0;dashed=1;dashPattern=8 8;" edge="1" parent="1" source="WbnDZtWvCEgxXb2GhZYb-2" target="Qy_hjdB-Wre0WD_cC9GE-2">
-                    <mxGeometry relative="1" as="geometry"/>
+                <mxCell id="mjt-Pqi9qiivTSin8wFP-1" value="KV Item&lt;br&gt;&lt;br&gt;&amp;nbsp;- KVS&lt;br&gt;&amp;nbsp;- ID&lt;br&gt;&amp;nbsp;- Value&lt;br&gt;&amp;nbsp;- Type Value" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#00CCCC;fillColor=none;gradientColor=#ffa500;align=left;verticalAlign=top;" parent="1" vertex="1">
+                    <mxGeometry x="30" y="760" width="120" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="WbnDZtWvCEgxXb2GhZYb-2" value="Workflow - Rules&lt;br&gt;&lt;br&gt;&amp;nbsp;- Workflow&lt;br&gt;&amp;nbsp;- Rule&lt;br&gt;&amp;nbsp;- Operator&lt;br&gt;&amp;nbsp;- Order&lt;br&gt;&amp;nbsp;- Action on Sucess" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#66FF66;fillColor=none;gradientColor=#ffa500;align=left;verticalAlign=top;" vertex="1" parent="1">
-                    <mxGeometry x="240" y="350" width="120" height="120" as="geometry"/>
+                <mxCell id="mjt-Pqi9qiivTSin8wFP-2" value="&lt;h1&gt;KVS&lt;/h1&gt;&lt;p&gt;Cátalogo Llave-Valor.&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="180" y="760" width="600" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="AVZ-X2Hg58o_VEa4zs1Z-10" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="gyh5iQZbHvoaphFOzq5q-1" target="gyh5iQZbHvoaphFOzq5q-2">
-                    <mxGeometry relative="1" as="geometry"/>
+                <mxCell id="bayfGbgVO0qqfXD9BsNV-1" value="Workflow Rule&lt;br&gt;&lt;br&gt;&amp;nbsp;- Workflow ID&lt;br&gt;&amp;nbsp;- Rule ID&lt;br&gt;&amp;nbsp;- Operator&lt;br&gt;&amp;nbsp;- Order&lt;br&gt;&amp;nbsp;- Action on Success" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;strokeColor=#FF99CC;" vertex="1" parent="1">
+                    <mxGeometry x="30" y="450" width="120" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="gyh5iQZbHvoaphFOzq5q-1" value="KVS&lt;br&gt;&lt;br&gt;&amp;nbsp;- ID&lt;br&gt;&amp;nbsp;- Name" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#99FFFF;fillColor=none;gradientColor=#ffa500;align=left;verticalAlign=top;" vertex="1" parent="1">
-                    <mxGeometry x="440" y="550" width="120" height="120" as="geometry"/>
-                </mxCell>
-                <mxCell id="gyh5iQZbHvoaphFOzq5q-2" value="KV Item&lt;br&gt;&lt;br&gt;&amp;nbsp;- KVS&lt;br&gt;&amp;nbsp;- ID&lt;br&gt;&amp;nbsp;- Value&lt;br&gt;&amp;nbsp;- Type" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#00CCCC;fillColor=none;gradientColor=#ffa500;align=left;verticalAlign=top;" vertex="1" parent="1">
-                    <mxGeometry x="640" y="550" width="120" height="120" as="geometry"/>
+                <mxCell id="bayfGbgVO0qqfXD9BsNV-2" value="&lt;h1&gt;Workflow Rules&lt;/h1&gt;&lt;p&gt;Asignación de Reglas a Workflow. Se puede asignar un Operador (AND, OR; default=AND) y un Orden. Cuando el Workflow usa la opción de &quot;Is Node&quot; se puede asignar una Acción en casos de Éxito.&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;verticalAlign=middle;" vertex="1" parent="1">
+                    <mxGeometry x="180" y="450" width="600" height="120" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>

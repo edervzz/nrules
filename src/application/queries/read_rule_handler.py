@@ -1,31 +1,28 @@
-"""_summary_
-    """
+"""_summary_"""
 import logging
-from application.messages import ReadWorkflowRequest, ReadWorkflowResponse
-from application.validators import ReadWorkflowValidator, ReadWorkflowBizValidator
+from application.messages import ReadRuleRequest, ReadRuleResponse
+from application.validators import ReadRuleValidator, ReadRuleBizValidator
 from domain.ports import Repository
 from toolkit import Localizer
 
 
-class ReadWorkflowHandler:
-    """ _summary_ """
+class ReadRuleHandler:
+    """ Read Rule Handler """
 
     def __init__(self, repository: Repository, logger: logging, localizer: Localizer):
         self.repository = repository
         self.logger = logger
         self.localizer = localizer
 
-    def handler(self, request: ReadWorkflowRequest) -> ReadWorkflowResponse:
+    def handler(self, request: ReadRuleRequest) -> ReadRuleResponse:
         """ Handler """
         # 1. request validation
-        validator = ReadWorkflowValidator(self.localizer)
+        validator = ReadRuleValidator(self.localizer)
         validator.validate_and_throw(request)
         self.logger.info("request validated")
-
         # 2. business rule validation
-        biz_validator = ReadWorkflowBizValidator(
-            self.repository, self.localizer)
+        biz_validator = ReadRuleBizValidator(self.repository, self.localizer)
         biz_validator.validate_and_throw(request)
         self.logger.info("business rules validated")
 
-        return ReadWorkflowResponse(request.workflow, request.rules)
+        return ReadRuleResponse(request.rule)

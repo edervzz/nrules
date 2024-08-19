@@ -20,6 +20,21 @@ def tables_base(engine: Engine):
         result = session.scalar(stms)
         if result is not None:
             return
+
+    # Variant Storage ----------------------------------------------
+    variant = Table(
+        "variant",
+        metadata_obj,
+        Column(
+            "id", BigInteger, primary_key=True, autoincrement=True, comment="Variant ID"),
+        Column(
+            "name", String(50), nullable=False, comment="Variant Name", unique=True),
+        Column(
+            "values", String(2000), nullable=False, comment="Values"),
+        comment="Variant is a container for many Key-Values"
+    )
+    set_auditable(variant)
+
     # Workflows ----------------------------------------------
     workflows = Table(
         "workflows",
@@ -29,9 +44,9 @@ def tables_base(engine: Engine):
         Column(
             "name", String(50), nullable=False, comment="Workflow Name", unique=True),
         Column(
-            "is_node", Boolean, comment="Workflow works likes decision node via Rules"),
-        Column(
             "variant_id", BigInteger, comment="Variant ID"),
+        Column(
+            "is_node", Boolean, comment="Workflow works likes decision node via Rules"),
         Column(
             "action_on_success", BigInteger, comment="Call an Action for success result by ID"),
         Column(

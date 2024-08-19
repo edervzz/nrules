@@ -24,5 +24,5 @@ def read_workflow_endpoint(_id=None):
 
     return Response(
         response=result.workflow,
-        status=201
+        status=200
     )

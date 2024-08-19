@@ -1,15 +1,22 @@
 """ endpoints """
+
 from flask import Flask, Response
 from flask_swagger_ui import get_swaggerui_blueprint
 from werkzeug.exceptions import Conflict, BadRequest, NotFound
 from .hello import hello_bp
-from .create_workflow import new_workflow_bp
-from .read_workflow import read_workflow_bp
 from .migrate import migration_bp
+from .read_rule import read_rule_bp
+from .create_rule import new_rule_bp
+from .read_workflow import read_workflow_bp
+from .create_workflow import new_workflow_bp
 
 
 def map_endpoints(app: Flask, prefix: str):
     """ Map endpoints based on blueprints """
+
+    app.register_blueprint(blueprint=read_rule_bp, url_prefix=prefix)
+
+    app.register_blueprint(blueprint=new_rule_bp, url_prefix=prefix)
 
     app.register_blueprint(blueprint=read_workflow_bp, url_prefix=prefix)
 

@@ -31,7 +31,6 @@ class CreateWorkflowHandler:
 
         self.repository.begin()
         self.repository.create(request.workflow)
-
         for r in request.rules:
             self.repository.create(r)
 
@@ -39,8 +38,6 @@ class CreateWorkflowHandler:
             wfr.workflow_id = request.workflow.id
             wfr.rule_id = r.id
             self.repository.create(wfr)
-
         self.repository.commit_work()
-        self.logger.info(request.workflow.id)
 
         return CreateWorkflowResponse(request.workflow.id)

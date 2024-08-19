@@ -1,16 +1,39 @@
-""" Creaet a new Rule """
+""" Create a new workflow """
 import json
-from flask import Blueprint, request
-from webapi.models.new_rule import NewRule, NewRuleResult
+from flask import Blueprint, request, Response
+from webapi.models import NewRule
+from application.messages import CreateRuleRequest
+from application.commands import CreateRuleHandler
+from toolkit import Services
 
-new_rule = Blueprint("New Rule", __name__)
+new_rule_bp = Blueprint("New Rule", __name__)
 
 
-@new_rule.post("/rule")
-def endpoint():
-    """ endpoint """
-    request_data: NewRule = request.get_json()
+@new_rule_bp.post("/rules")
+def new_rules_endpoint():
+    """ New rules Endpoint """
+    json_data = request.get_json(silent=True)
+    if json_data is None:
+        return
 
-    result = NewRuleResult(123)
-    jsonstring = json.dumps(result.__dict__)
-    return jsonstring, 201
+    new_rules = NewRule(json.dumps(json_data))
+
+    command = CreateRuleRequest(
+        new_rules.name,
+        new_rules.expression,
+        new_rules.is_exclusive
+    )
+
+    handler = CreateRuleHandler(
+        Services.repository,
+        Services.logger,
+        Services.localizer
+    )
+
+    result = handler.handler(command)
+
+    return Response(
+        response="",
+        status=201,
+        headers=[("Item", f"/workflows/{result.id}")]
+    )

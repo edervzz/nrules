@@ -24,6 +24,9 @@ class Repository(ABC):
     def workflow_read_by_external_id(self, external_id: str) -> Workflow:
         """ read an entity by id """
 
+    def rule_read(self, _id: int) -> Rule:
+        """ read rules by id """
+
     def rule_read_by_parent_id(self, parent_id: int) -> List[Rule]:
         """ read rules by parent id """
 

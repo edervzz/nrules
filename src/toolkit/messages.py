@@ -6,6 +6,38 @@ class Codes:
     en_messages: dict[str, str] = {}
     es_messages: dict[str, str] = {}
 
+    RU_READ_002 = "RU-READ-002"
+    en_messages[RU_READ_002] = "Rule not found."
+    es_messages[RU_READ_002] = "Regla no encontrada."
+
+    RU_READ_001 = "RU-READ-001"
+    en_messages[RU_READ_001] = "Rule ID or Rule Name must be provided."
+    es_messages[RU_READ_001] = "Id Regla o Nombre Regla es obligatorio."
+
+    RU_CREA_006 = "RU-CREA-006"
+    en_messages[RU_CREA_006] = "An error happend during expression validation."
+    es_messages[RU_CREA_006] = "Un error sucedió durante la validación de la expresión."
+
+    RU_CREA_005 = "RU-CREA-005"
+    en_messages[RU_CREA_005] = "Already exists a Rule with same name."
+    es_messages[RU_CREA_005] = "Ya existe una Regla con el mismo nombre."
+
+    RU_CREA_004 = "RU-CREA-004"
+    en_messages[RU_CREA_004] = "(Internal check) 'Is Exclusive' is badformed."
+    es_messages[RU_CREA_004] = "(Internal check) 'Is Exclusive' esta mal formado."
+
+    RU_CREA_003 = "RU-CREA-003"
+    en_messages[RU_CREA_003] = "Expression is mandatory."
+    es_messages[RU_CREA_003] = "Expresión es obligatoria."
+
+    RU_CREA_002 = "RU-CREA-002"
+    en_messages[RU_CREA_002] = "Rule Name must be between 5 and 50 characters."
+    es_messages[RU_CREA_002] = "Nombre de Regla debe ser de 5 a 50 caracteres."
+
+    RU_CREA_001 = "RU-CREA-001"
+    en_messages[RU_CREA_001] = "Rule Name is mandatory."
+    es_messages[RU_CREA_001] = "Nombre de Regla es obligatorio."
+
     WF_READ_002 = "WF-READ-002"
     en_messages[WF_READ_002] = "Workflow not found."
     es_messages[WF_READ_002] = "No se encontró Workflow."

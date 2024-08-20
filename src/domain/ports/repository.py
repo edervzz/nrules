@@ -3,6 +3,7 @@
 from abc import ABC
 from typing import List
 from domain.entities import Workflow, Rule
+from .entity_repository import RuleRepository, WorkflowRepository
 
 
 class Repository(ABC):
@@ -10,7 +11,8 @@ class Repository(ABC):
 
     # "mysql+pymysql://root:my-secret-pw@localhost/nrule-core", echo=True)
     def __init__(self):
-        pass
+        self.rule: RuleRepository
+        self.workflow: WorkflowRepository
 
     def create(self, entity: any):
         """ Create a new entity """

@@ -1,5 +1,7 @@
 """ Handler Validators """
 
+from .update_rule_validator import UpdateRuleValidator
+from .update_rule_biz_validator import UpdateRuleBizValidator
 from .read_rule_validator import ReadRuleValidator
 from .read_rule_biz_validator import ReadRuleBizValidator
 from .create_rule_validator import CreateRuleValidator

@@ -1,14 +1,14 @@
 r"""_summary_"""
 import logging
-from application.messages import CreateRuleRequest, CreateRuleResponse
-from application.validators import CreateRuleValidator, CreateRuleBizValidator
+from application.messages import UpdateRuleRequest, UpdateRuleResponse
+from application.validators import UpdateRuleValidator, UpdateRuleBizValidator
 from domain.ports import Repository
 from domain.entities import Rule
 from toolkit import Localizer
 
 
-class CreateRuleHandler:
-    r""" _summary_ """
+class UpdateRuleHandler:
+    """ _summary_ """
 
     def __init__(self, repository: Repository, logger: logging, localizer: Localizer):
         self.repository = repository
@@ -16,19 +16,19 @@ class CreateRuleHandler:
         self.localizer = localizer
         self.rule: Rule = None
 
-    def handler(self, request: CreateRuleRequest) -> CreateRuleResponse:
-        r""" Handler """
+    def handler(self, request: UpdateRuleRequest) -> UpdateRuleResponse:
+        """ Handler """
         # 1. request validation
-        validator = CreateRuleValidator(self.localizer)
+        validator = UpdateRuleValidator(self.localizer)
         validator.validate_and_throw(request)
         self.logger.info("request validated")
         # 2. business rule validation
-        biz_validator = CreateRuleBizValidator(self.repository, self.localizer)
+        biz_validator = UpdateRuleBizValidator(self.repository, self.localizer)
         biz_validator.validate_and_throw(request)
         self.logger.info("business rules validated")
 
         self.repository.begin()
-        self.repository.rule.create(request.rule)
+        self.repository.rule.update(request.rule)
         self.repository.commit_work()
 
-        return CreateRuleResponse(request.rule.id)
+        return UpdateRuleResponse(request.rule.id)

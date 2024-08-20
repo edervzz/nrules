@@ -7,20 +7,29 @@ from sqlalchemy.orm import Session
 from domain.entities import WorkflowRule, Rule, Workflow, Auditable
 from domain.ports import Repository
 from infrastructure.data import initial, tables_base
+from .rule_adapter import RuleAdapter
 
 
 class RepositoryAdapter(Repository):
     """ Repository Adapter """
 
     def __init__(self, username: str, password: str, server: str, dbname: str):
+        super().__init__()
         self.session: Session = None
         self.engine: Engine = create_engine(
             f"mysql+pymysql://{username}:{
                 password}@{server}/{dbname}", echo=True
         )
         event.listen(Workflow, 'before_insert', self.__before_insert)
+        event.listen(Workflow, 'before_update', self.__before_update)
+
         event.listen(Rule, 'before_insert', self.__before_insert)
+        event.listen(Rule, 'before_update', self.__before_update)
+
         event.listen(WorkflowRule, 'before_insert', self.__before_insert)
+        event.listen(WorkflowRule, 'before_update', self.__before_update)
+
+        self.rule = RuleAdapter(self.engine)
 
     # Rule
     def rule_read(self, _id: int) -> Rule:
@@ -60,8 +69,13 @@ class RepositoryAdapter(Repository):
         if not self.session.autoflush:
             self.session.flush()
 
+    def update(self, entity: any):
+        return super().update(entity)
+
     def begin(self, autoflush=False):
         self.session = Session(self.engine, autoflush=autoflush)
+        self.rule.set_session(self.session)
+        self.workflow.set_session(self.session)
 
     def commit_work(self):
         if self.session is not None:
@@ -81,4 +95,10 @@ class RepositoryAdapter(Repository):
             target.created_by = "system"
             target.updated_by = "system"
             target.created_at = datetime.now()
+            target.updated_at = datetime.now()
+
+    def __before_update(self, mapper, connection, target):
+        """ Hook """
+        if isinstance(target, Auditable):
+            target.updated_by = "system"
             target.updated_at = datetime.now()

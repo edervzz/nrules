@@ -6,7 +6,7 @@ from toolkit.localization import Localizer, Codes
 from .expression_validator import ExpressionValidator
 
 
-class CreateRuleBizValidator(Validator):
+class UpdateRuleBizValidator(Validator):
     """ Create Rule Validator """
 
     def __init__(self, repository: Repository, localizer: Localizer):
@@ -16,6 +16,7 @@ class CreateRuleBizValidator(Validator):
 
     def __validate__(self, request: CreateRuleRequest):
         """ Validate request format """
+
         rule = self.__repository.rule.read_by_external_id(request.rule.name)
         if rule is not None:
             raise self.as_duplicated(

@@ -1,10 +1,9 @@
 """ _module_ """
 import json
-from typing import List
-from domain.entities import Workflow, Rule, WorkflowRule, Action
+from domain.entities import Workflow,   Action
 
 
-class NewWorkflow(object):
+class NewWorkflowModel(object):
     """ New Workflow model class """
 
     def __init__(self, j):

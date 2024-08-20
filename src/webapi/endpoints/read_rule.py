@@ -28,8 +28,8 @@ def read_rules_endpoint(_id=None):
 
     result = handler.handler(command)
 
-    rule = RuleModel(result.rule.name, result.rule.expression,
-                     result.rule.is_exclusive)
+    rule = RuleModel(
+        result.rule.name, result.rule.expression, result.rule.is_exclusive)
 
     js = json.dumps(rule.__dict__)
 

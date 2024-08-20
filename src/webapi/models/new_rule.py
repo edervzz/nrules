@@ -2,7 +2,7 @@
 import json
 
 
-class NewRule:
+class NewRuleModel:
     """ New Rule request """
     name: str
     operator: str

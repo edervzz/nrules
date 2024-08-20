@@ -1,5 +1,4 @@
 """ _module_ """
-import json
 
 
 class RuleModel:

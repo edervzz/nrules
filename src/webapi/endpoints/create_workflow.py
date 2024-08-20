@@ -1,7 +1,7 @@
 """ Create a new workflow """
 import json
 from flask import Blueprint, request, Response
-from webapi.models import NewWorkflow, NewWorkflowRule
+from webapi.models import NewWorkflowModel, NewWorkflowRuleModel
 from application.messages import CreateWorkflowRequest
 from application.commands import CreateWorkflowHandler
 from toolkit import Services
@@ -10,7 +10,7 @@ from domain.entities import Rule
 new_workflow_bp = Blueprint("New Workflow", __name__)
 
 
-def rule_factory(rule: NewWorkflowRule) -> Rule:
+def rule_factory(rule: NewWorkflowRuleModel) -> Rule:
     """ Rule entity factory """
     r = Rule()
     r.name = rule.name
@@ -26,7 +26,7 @@ def new_workflow_endpoint():
     if json_data is None:
         return
 
-    new_workflow = NewWorkflow(json.dumps(json_data))
+    new_workflow = NewWorkflowModel(json.dumps(json_data))
 
     command = CreateWorkflowRequest(
         new_workflow.name,

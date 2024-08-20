@@ -1,7 +1,7 @@
 """ Create a new workflow """
 import json
 from flask import Blueprint, request, Response
-from webapi.models import NewRule
+from webapi.models import NewRuleModel
 from application.messages import CreateRuleRequest
 from application.commands import CreateRuleHandler
 from toolkit import Services
@@ -16,7 +16,7 @@ def new_rules_endpoint():
     if json_data is None:
         return
 
-    new_rules = NewRule(json.dumps(json_data))
+    new_rules = NewRuleModel(json.dumps(json_data))
 
     command = CreateRuleRequest(
         new_rules.name,

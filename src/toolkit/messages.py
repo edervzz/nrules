@@ -7,6 +7,14 @@ class Codes:
     es_messages: dict[str, str] = {}
 
     # Read Rule
+    RU_READ_004 = "RU-READ-004"
+    en_messages[RU_READ_004] = "Page Size must not be negative."
+    es_messages[RU_READ_004] = "Tamaño de Pagina no debe ser negativo."
+
+    RU_READ_003 = "RU-READ-003"
+    en_messages[RU_READ_003] = "Page Number must not be negative."
+    es_messages[RU_READ_003] = "Número de Pagina no debe ser negativo."
+
     RU_READ_002 = "RU-READ-002"
     en_messages[RU_READ_002] = "Rule not found."
     es_messages[RU_READ_002] = "Regla no encontrada."
@@ -16,6 +24,10 @@ class Codes:
     es_messages[RU_READ_001] = "Id Regla o Nombre Regla es obligatorio."
 
     # Update Rule
+    RU_UPD_007 = "RU-UPD-007"
+    en_messages[RU_UPD_007] = "Rule not found."
+    es_messages[RU_UPD_007] = "No se encontró Regla."
+
     RU_UPD_006 = "RU-UPD-006"
     en_messages[RU_UPD_006] = "An error happend during expression validation."
     es_messages[RU_UPD_006] = "Un error sucedió durante la validación de la expresión."

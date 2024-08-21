@@ -1,5 +1,6 @@
 """_summary_"""
 from application.messages import CreateRuleRequest
+from domain.entities import Rule
 from domain.ports import Repository
 from toolkit import Validator
 from toolkit.localization import Localizer, Codes
@@ -17,16 +18,20 @@ class UpdateRuleBizValidator(Validator):
     def __validate__(self, request: CreateRuleRequest):
         """ Validate request format """
 
-        rule = self.__repository.rule.read_by_external_id(request.rule.name)
-        if rule is not None:
-            raise self.as_duplicated(
-                Codes.RU_CREA_005,
-                self._localizer.get(Codes.RU_CREA_005))
+        rule = self.__repository.rule.read(request.rule.id)
+        if rule is None:
+            raise self.as_not_found(
+                Codes.RU_UPD_007,
+                self._localizer.get(Codes.RU_UPD_007))
 
-        expression_validator = ExpressionValidator()
         try:
+            expression_validator = ExpressionValidator()
             expression_validator.validate(request.rule.expression)
         except ValueError as err:
             raise self.as_error(
                 Codes.RU_CREA_006,
                 err.__str__)
+
+        if isinstance(rule, Rule):
+            rule.expression = request.rule.expression
+            request.rule = rule

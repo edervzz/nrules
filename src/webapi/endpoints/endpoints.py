@@ -9,10 +9,16 @@ from .read_rule import read_rule_bp
 from .create_rule import new_rule_bp
 from .read_workflow import read_workflow_bp
 from .create_workflow import new_workflow_bp
+from .update_rule import update_rule_bp
+from .read_all_rule import read_all_rule_bp
 
 
 def map_endpoints(app: Flask, prefix: str):
     """ Map endpoints based on blueprints """
+
+    app.register_blueprint(blueprint=read_all_rule_bp, url_prefix=prefix)
+
+    app.register_blueprint(blueprint=update_rule_bp, url_prefix=prefix)
 
     app.register_blueprint(blueprint=read_rule_bp, url_prefix=prefix)
 

@@ -2,6 +2,8 @@
 
     Requests and Responses
 """
+
+from .read_all_rules_message import ReadAllRulesRequest, ReadAllRulesResponse
 from .update_rule_message import UpdateRuleRequest, UpdateRuleResponse
 from .read_rule_message import ReadRuleRequest, ReadRuleResponse
 from .create_rule_message import CreateRuleRequest, CreateRuleResponse

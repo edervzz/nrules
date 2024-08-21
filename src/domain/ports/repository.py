@@ -46,3 +46,6 @@ class Repository(ABC):
 
     def migrate(self):
         """ Run Migration """
+
+    def health_check(self) -> list:
+        """ Run Migration """

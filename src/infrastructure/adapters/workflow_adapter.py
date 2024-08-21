@@ -19,7 +19,6 @@ class WorkflowAdapter(WorkflowRepository):
         rule = self.session.scalar(stmt)
         rule.name = entity.name
         rule.expression = entity.expression
-        self.session.commit()
 
     def read(self, _id: int) -> any:
         with Session(self.engine) as session:

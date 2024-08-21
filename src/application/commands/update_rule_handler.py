@@ -8,7 +8,7 @@ from toolkit import Localizer
 
 
 class UpdateRuleHandler:
-    """ _summary_ """
+    """ Update Rule Handler """
 
     def __init__(self, repository: Repository, logger: logging, localizer: Localizer):
         self.repository = repository

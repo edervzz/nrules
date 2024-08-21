@@ -1,9 +1,9 @@
 """_summary_
     """
-from .abstractions import MutationRepository, QueryRepository, QueryFromParentRepository
+from .abstractions import MutationRepository, QueryRepository, QueryFromParentRepository, QueryPaginationRepository
 
 
-class RuleRepository(MutationRepository, QueryRepository, QueryFromParentRepository):
+class RuleRepository(MutationRepository, QueryRepository, QueryFromParentRepository, QueryPaginationRepository):
     """_summary_"""
 
     def __init__(self, engine):

@@ -43,3 +43,22 @@ class QueryFromParentRepository:
     def read_by_parent_id(self, parent_id: int) -> []:
         """ read entities by parent id """
         raise NotImplementedError(__name__)
+
+
+class QueryPaginationRepository:
+    """ reader from parent """
+
+    def read_page(self, page_no: int, page_size: int) -> tuple[list, any]:
+        """_summary_
+
+        Args:
+            page_no (int): Number of page
+            page_size (int): Size of page
+
+        Raises:
+            NotImplementedError: _description_
+
+        Returns:
+            tuple[list, any]: return list of entites and data pagination
+        """
+        raise NotImplementedError(__name__)

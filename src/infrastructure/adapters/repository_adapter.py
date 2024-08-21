@@ -4,10 +4,11 @@ from typing import List
 from datetime import datetime
 from sqlalchemy import Engine, create_engine, select, event
 from sqlalchemy.orm import Session
-from domain.entities import WorkflowRule, Rule, Workflow, Auditable
+from domain.entities import WorkflowRule, Rule, Workflow, Auditable, Migrations
 from domain.ports import Repository
 from infrastructure.data import initial, tables_base
 from .rule_adapter import RuleAdapter
+from .workflow_adapter import WorkflowAdapter
 
 
 class RepositoryAdapter(Repository):
@@ -30,6 +31,7 @@ class RepositoryAdapter(Repository):
         event.listen(WorkflowRule, 'before_update', self.__before_update)
 
         self.rule = RuleAdapter(self.engine)
+        self.workflow = WorkflowAdapter(self.engine)
 
     # Rule
     def rule_read(self, _id: int) -> Rule:
@@ -88,6 +90,15 @@ class RepositoryAdapter(Repository):
     def migrate(self):
         initial(self.engine)
         tables_base(self.engine)
+
+    def health_check(self) -> list:
+        with Session(self.engine) as session:
+            stms = select(Migrations)
+            data = session.scalars(stms).all()
+            return data
+        m = Migrations()
+        m.id = "session failure"
+        return [m]
 
     def __before_insert(self, mapper, connection, target):
         """ Hook """

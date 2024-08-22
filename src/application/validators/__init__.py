@@ -1,5 +1,6 @@
 """ Handler Validators """
 
+from .read_all_rules_biz_validator import ReadAllRulesBizValidator
 from .read_all_rules_validator import ReadAllRulesValidator
 from .update_rule_validator import UpdateRuleValidator
 from .update_rule_biz_validator import UpdateRuleBizValidator

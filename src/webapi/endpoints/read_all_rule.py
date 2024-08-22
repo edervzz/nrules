@@ -1,7 +1,7 @@
 """ Create a new workflow """
 import json
 from typing import List
-from flask import Blueprint, Response
+from flask import Blueprint, Response, request
 from application.messages import ReadAllRulesRequest
 from application.queries import ReadAllRulesHandler
 from toolkit import Services
@@ -14,9 +14,11 @@ read_all_rule_bp = Blueprint("Read All Rules", __name__)
 def read_all_rules_endpoint(_id=None):
     """ Read rules Endpoint """
     # todo: pagination
+    page_no = request.args.get("pageNo", "1")
+    page_size = request.args.get("pageSize", "5")
     command = ReadAllRulesRequest(
-        1,
-        5
+        int(page_no),
+        int(page_size)
     )
 
     handler = ReadAllRulesHandler(
@@ -39,10 +41,16 @@ def read_all_rules_endpoint(_id=None):
     else:
         rules = None
 
-    js = json.dumps(rules)
+    jsonobj = []
+    if isinstance(rules, list):
+        for r in rules:
+            if hasattr(r, "__dict__"):
+                jsonobj.append(r.__dict__)
+
+    jsonstr = json.dumps(jsonobj)
 
     return Response(
-        response=js,
+        response=jsonstr,
         status=200,
         headers=[
             ("Next-Page", f"{result.pagination.next_page}"),

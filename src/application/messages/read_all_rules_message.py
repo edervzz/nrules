@@ -10,6 +10,8 @@ class ReadAllRulesRequest:
     def __init__(self, page_no: int, page_size: int):
         self.page_no = page_no
         self.page_size = page_size
+        self.rules: List[Rule]
+        self.pagination: Pagination
 
 
 class ReadAllRulesResponse:

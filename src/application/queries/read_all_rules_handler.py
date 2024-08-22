@@ -1,7 +1,7 @@
 """_summary_"""
 import logging
 from application.messages import ReadAllRulesRequest, ReadAllRulesResponse
-from application.validators import ReadAllRulesValidator
+from application.validators import ReadAllRulesValidator, ReadAllRulesBizValidator
 from domain.entities import Pagination
 from domain.ports import Repository
 from toolkit import Localizer
@@ -22,11 +22,11 @@ class ReadAllRulesHandler:
         validator.validate_and_throw(request)
         self.logger.info("request validated")
 
-        rules, pagination = self.repository.rule.read_page(
-            request.page_no, request.page_size)
+        validator = ReadAllRulesBizValidator(self.repository, self.localizer)
+        validator.validate_and_throw(request)
+        self.logger.info("request validated")
 
-        # todo: move to biz validator
-        if not isinstance(pagination, Pagination):
+        if not isinstance(request.pagination, Pagination):
             raise TypeError("type error: Pagination")
 
-        return ReadAllRulesResponse(rules, pagination)
+        return ReadAllRulesResponse(request.rules, request.pagination)

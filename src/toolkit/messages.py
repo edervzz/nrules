@@ -7,6 +7,10 @@ class Codes:
     es_messages: dict[str, str] = {}
 
     # Read Rule
+    RU_READ_005 = "RU-READ-005"
+    en_messages[RU_READ_005] = "Rules not found."
+    es_messages[RU_READ_005] = "No se encontraron Reglas."
+
     RU_READ_004 = "RU-READ-004"
     en_messages[RU_READ_004] = "Page Size must not be negative."
     es_messages[RU_READ_004] = "Tamaño de Pagina no debe ser negativo."

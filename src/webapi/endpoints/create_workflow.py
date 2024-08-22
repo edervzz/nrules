@@ -31,6 +31,7 @@ def new_workflow_endpoint():
     command = CreateWorkflowRequest(
         new_workflow.name,
         new_workflow.is_node,
+        new_workflow.is_parcial,
         new_workflow.rules
     )
 

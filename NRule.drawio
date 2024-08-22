@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e" pages="5">
     <diagram id="LyjKLWT2vN5_jiygnvpO" name="Connections">
-        <mxGraphModel dx="1040" dy="792" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="963" dy="543" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -25,10 +25,10 @@
                 <mxCell id="AVZ-X2Hg58o_VEa4zs1Z-19" style="edgeStyle=none;html=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;dashed=1;dashPattern=8 8;endArrow=open;endFill=0;exitX=1;exitY=0.719;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="Qy_hjdB-Wre0WD_cC9GE-5" target="Qy_hjdB-Wre0WD_cC9GE-2" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="Qy_hjdB-Wre0WD_cC9GE-5" value="Workflow&lt;br&gt;&lt;br&gt;&amp;nbsp;- ID&lt;br&gt;&amp;nbsp;- Name&lt;br&gt;&amp;nbsp;- Variant&lt;br&gt;&amp;nbsp;- Is Node&lt;br&gt;&amp;nbsp;- Action on Success&lt;br&gt;&amp;nbsp;- Action on Failure" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=left;fillColor=none;strokeColor=#B266FF;gradientDirection=south;gradientColor=#7ea6e0;" parent="1" vertex="1">
+                <mxCell id="Qy_hjdB-Wre0WD_cC9GE-5" value="Workflow&lt;br&gt;&lt;br&gt;&amp;nbsp;- ID (PK)&lt;br&gt;&amp;nbsp;- Name&lt;br&gt;&amp;nbsp;- Variant&lt;br&gt;&amp;nbsp;- Is Node&lt;br&gt;&amp;nbsp;- Is Parcial&lt;br&gt;&amp;nbsp;- Action on Success&lt;br&gt;&amp;nbsp;- Action on Failure" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=left;fillColor=none;strokeColor=#B266FF;gradientDirection=south;gradientColor=#7ea6e0;" parent="1" vertex="1">
                     <mxGeometry x="40" y="350" width="120" height="320" as="geometry"/>
                 </mxCell>
-                <mxCell id="Qy_hjdB-Wre0WD_cC9GE-7" value="1) Rule&lt;br&gt;&lt;br&gt;&amp;nbsp;- ID&lt;br&gt;&amp;nbsp;- Name&lt;br&gt;&amp;nbsp;- Expression&lt;br&gt;&amp;nbsp;- Is Exclusive" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;" parent="1" vertex="1">
+                <mxCell id="Qy_hjdB-Wre0WD_cC9GE-7" value="1) Rule&lt;br&gt;&lt;br&gt;&amp;nbsp;- ID (PK)&lt;br&gt;&amp;nbsp;- Name&lt;br&gt;&amp;nbsp;- Expression&lt;br&gt;&amp;nbsp;- Is Exclusive" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;" parent="1" vertex="1">
                     <mxGeometry x="450" y="350" width="120" height="120" as="geometry"/>
                 </mxCell>
                 <mxCell id="AVZ-X2Hg58o_VEa4zs1Z-7" value="1...N" style="edgeStyle=none;html=1;fontStyle=1;endArrow=open;endFill=0;" parent="1" source="WbnDZtWvCEgxXb2GhZYb-2" target="Qy_hjdB-Wre0WD_cC9GE-7" edge="1">
@@ -37,7 +37,7 @@
                 <mxCell id="AVZ-X2Hg58o_VEa4zs1Z-8" style="edgeStyle=none;html=1;endArrow=open;endFill=0;dashed=1;dashPattern=8 8;" parent="1" source="WbnDZtWvCEgxXb2GhZYb-2" target="Qy_hjdB-Wre0WD_cC9GE-2" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="WbnDZtWvCEgxXb2GhZYb-2" value="Workflow - Rules&lt;br&gt;&lt;br&gt;&amp;nbsp;- Workflow&lt;br&gt;&amp;nbsp;- Rule&lt;br&gt;&amp;nbsp;- Operator&lt;br&gt;&amp;nbsp;- Order&lt;br&gt;&amp;nbsp;- Action on Sucess" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#FF99CC;fillColor=none;gradientColor=#ffa500;align=left;verticalAlign=top;" parent="1" vertex="1">
+                <mxCell id="WbnDZtWvCEgxXb2GhZYb-2" value="Workflow - Rules&lt;br&gt;&lt;br&gt;&amp;nbsp;- Workflow ID (PK)&lt;br&gt;&amp;nbsp;- Rule ID (PK)&lt;br&gt;&amp;nbsp;- Operator&lt;br&gt;&amp;nbsp;- Order&lt;br&gt;&amp;nbsp;- Action on Sucess" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#FF99CC;fillColor=none;gradientColor=#ffa500;align=left;verticalAlign=top;" parent="1" vertex="1">
                     <mxGeometry x="250" y="350" width="120" height="120" as="geometry"/>
                 </mxCell>
                 <mxCell id="AVZ-X2Hg58o_VEa4zs1Z-10" value="" style="edgeStyle=none;html=1;" parent="1" source="gyh5iQZbHvoaphFOzq5q-1" target="gyh5iQZbHvoaphFOzq5q-2" edge="1">
@@ -78,7 +78,7 @@
                 <mxCell id="5Z8WgemuzADRJWirdBL6-1" value="Variant&lt;br&gt;&lt;br&gt;&amp;nbsp;- ID&lt;br&gt;&amp;nbsp;- Value&lt;br&gt;&amp;nbsp;- Type" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#FFFF33;fillColor=none;gradientColor=#ffd966;align=left;verticalAlign=top;" parent="1" vertex="1">
                     <mxGeometry x="30" y="20" width="120" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="Mwn-F3GZqTvZM4NrYZBQ-1" value="&lt;h1&gt;Variante&lt;/h1&gt;&lt;p&gt;Las variantes es un Key-Value que alimenta y llena los &quot;huecos&quot; de las reglas, permitiendo multiples configuraciones en el mismo workflow y reglas. Las variantes estan asignadas a un único workflow.&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;verticalAlign=middle;" parent="1" vertex="1">
+                <mxCell id="Mwn-F3GZqTvZM4NrYZBQ-1" value="&lt;h1&gt;Variante&lt;/h1&gt;&lt;p&gt;Las variantes es un Key-Value que alimenta y llena los &quot;espacios&quot; dentro de las reglas, permitiendo multiples configuraciones en el mismo workflow y reglas. Las variantes estan asignadas a un único workflow.&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;verticalAlign=middle;" parent="1" vertex="1">
                     <mxGeometry x="180" y="20" width="600" height="120" as="geometry"/>
                 </mxCell>
                 <mxCell id="p1ZofG-8nUMUW4NEJUrA-1" value="Workflow&lt;br&gt;&lt;br&gt;&amp;nbsp;- ID&lt;br&gt;&amp;nbsp;- Name&lt;br&gt;&amp;nbsp;- Variant&lt;br&gt;&amp;nbsp;- Is Node&lt;br&gt;&amp;nbsp;- Action on Success&lt;br&gt;&amp;nbsp;- Action on Failure" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=left;fillColor=none;strokeColor=#B266FF;gradientDirection=south;gradientColor=#7ea6e0;" parent="1" vertex="1">
@@ -93,10 +93,10 @@
                 <mxCell id="mjt-Pqi9qiivTSin8wFP-2" value="&lt;h1&gt;KVS&lt;/h1&gt;&lt;p&gt;Cátalogo Llave-Valor.&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;verticalAlign=middle;" parent="1" vertex="1">
                     <mxGeometry x="180" y="760" width="600" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="bayfGbgVO0qqfXD9BsNV-1" value="Workflow Rule&lt;br&gt;&lt;br&gt;&amp;nbsp;- Workflow ID&lt;br&gt;&amp;nbsp;- Rule ID&lt;br&gt;&amp;nbsp;- Operator&lt;br&gt;&amp;nbsp;- Order&lt;br&gt;&amp;nbsp;- Action on Success" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;strokeColor=#FF99CC;" vertex="1" parent="1">
+                <mxCell id="bayfGbgVO0qqfXD9BsNV-1" value="Workflow Rule&lt;br&gt;&lt;br&gt;&amp;nbsp;- Workflow ID&lt;br&gt;&amp;nbsp;- Rule ID&lt;br&gt;&amp;nbsp;- Operator&lt;br&gt;&amp;nbsp;- Order&lt;br&gt;&amp;nbsp;- Action on Success" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;strokeColor=#FF99CC;" parent="1" vertex="1">
                     <mxGeometry x="30" y="450" width="120" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="bayfGbgVO0qqfXD9BsNV-2" value="&lt;h1&gt;Workflow Rules&lt;/h1&gt;&lt;p&gt;Asignación de Reglas a Workflow. Se puede asignar un Operador (AND, OR; default=AND) y un Orden. Cuando el Workflow usa la opción de &quot;Is Node&quot; se puede asignar una Acción en casos de Éxito.&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;verticalAlign=middle;" vertex="1" parent="1">
+                <mxCell id="bayfGbgVO0qqfXD9BsNV-2" value="&lt;h1&gt;Workflow Rules&lt;/h1&gt;&lt;p&gt;Asignación de Reglas a Workflow. Se puede asignar un Operador (AND, OR; default=AND) y un Orden. Cuando el Workflow usa la opción de &quot;Is Node&quot; se puede asignar una Acción en casos de Éxito.&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;verticalAlign=middle;" parent="1" vertex="1">
                     <mxGeometry x="180" y="450" width="600" height="120" as="geometry"/>
                 </mxCell>
             </root>

@@ -10,6 +10,7 @@ class NewWorkflowModel(object):
         self.__dict__ = json.loads(j)
         self.name = self.__dict__.get("name", "")
         self.is_node = self.__dict__.get("is_node", False)
+        self.is_parcial = self.__dict__.get("is_parcial", False)
 
         self.variant = self.__dict__.get("variant", [])
         self.rules = self.__dict__.get("rules", [])

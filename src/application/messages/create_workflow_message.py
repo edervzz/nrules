@@ -7,11 +7,12 @@ class CreateWorkflowRequest:
     """ Request workflow creation """
 
     def __init__(
-            self, name: str, is_node: bool,
+            self, name: str, is_node: bool, is_parcial: bool,
             rules: List[Rule]):
 
         self.name = name
         self.is_node = is_node
+        self.is_parcial = is_parcial
         self.rules = rules
         self.workflow: Workflow = None
 

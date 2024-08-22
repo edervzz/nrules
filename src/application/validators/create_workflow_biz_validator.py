@@ -32,5 +32,6 @@ class CreateWorkflowBizValidator(Validator):
         request.workflow = Workflow()
         request.workflow.name = request.name
         request.workflow.is_node = request.is_node
+        request.workflow.is_parcial = request.is_parcial
         request.workflow.action_on_success = 0
         request.workflow.action_on_failure = 0

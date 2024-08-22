@@ -46,7 +46,9 @@ def tables_base(engine: Engine):
         Column(
             "variant_id", BigInteger, comment="Variant ID"),
         Column(
-            "is_node", Boolean, comment="Workflow works likes decision node via Rules"),
+            "is_node", Boolean, comment="Workflow is a Node. Workflow works like decision node via Rules depending of Rule's Order"),
+        Column(
+            "is_parcial", Boolean, comment="Final Result is Parcial. Every Rule is evaluated independently, workflow returns a list of results and action"),
         Column(
             "action_on_success", BigInteger, comment="Call an Action for success result by ID"),
         Column(

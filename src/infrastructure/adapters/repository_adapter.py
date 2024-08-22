@@ -4,11 +4,13 @@ from typing import List
 from datetime import datetime
 from sqlalchemy import Engine, create_engine, select, event
 from sqlalchemy.orm import Session
-from domain.entities import WorkflowRule, Rule, Workflow, Auditable, Migrations
+from domain.entities import WorkflowRule, Rule, Workflow, Auditable, Migrations, Tenants, TenantStages
 from domain.ports import Repository
 from infrastructure.data import initial, tables_base
 from .rule_adapter import RuleAdapter
 from .workflow_adapter import WorkflowAdapter
+from .tenant_adapter import TenantAdapter
+from .tenant_stage_adapter import TenantStageAdapter
 
 
 class RepositoryAdapter(Repository):
@@ -30,30 +32,19 @@ class RepositoryAdapter(Repository):
         event.listen(WorkflowRule, 'before_insert', self.__before_insert)
         event.listen(WorkflowRule, 'before_update', self.__before_update)
 
+        event.listen(Tenants, 'before_insert', self.__before_insert)
+        event.listen(Tenants, 'before_update', self.__before_update)
+
+        event.listen(TenantStages, 'before_insert', self.__before_insert)
+        event.listen(TenantStages, 'before_update', self.__before_update)
+
         self.rule = RuleAdapter(self.engine)
         self.workflow = WorkflowAdapter(self.engine)
-
-    # Rule
-    def rule_read(self, _id: int) -> Rule:
-        with Session(self.engine) as session:
-            stmt = select(Rule).where(Rule.id == _id)
-            rule = session.scalar(stmt)
-            return rule
-
-    def rule_read_by_external_id(self, external_id: str) -> Rule:
-        with Session(self.engine) as session:
-            stmt = select(Rule).where(Rule.name == external_id)
-            rule = session.scalar(stmt)
-            return rule
-
-    def rule_read_by_parent_id(self, parent_id: int) -> List[Rule]:
-        with Session(self.engine) as session:
-            stms = select(Rule).join(WorkflowRule, Rule.id == WorkflowRule.rule_id).where(
-                WorkflowRule.workflow_id == parent_id)
-            rule = session.scalars(stms).all()
-            return rule
+        self.tenant = TenantAdapter(self.engine)
+        self.tenant_stage = TenantStageAdapter(self.engine)
 
     # Workflow
+
     def workflow_read(self, _id: int) -> Workflow:
         with Session(self.engine) as session:
             stmt = select(Workflow).where(Workflow.id == _id)
@@ -78,6 +69,8 @@ class RepositoryAdapter(Repository):
         self.session = Session(self.engine, autoflush=autoflush)
         self.rule.set_session(self.session)
         self.workflow.set_session(self.session)
+        self.tenant.set_session(self.session)
+        self.tenant_stage.set_session(self.session)
 
     def commit_work(self):
         if self.session is not None:

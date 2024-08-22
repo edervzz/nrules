@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e" pages="5">
     <diagram id="LyjKLWT2vN5_jiygnvpO" name="Connections">
-        <mxGraphModel dx="963" dy="543" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="963" dy="792" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -13,7 +13,7 @@
                 <mxCell id="Qy_hjdB-Wre0WD_cC9GE-2" value="Action&lt;br&gt;&lt;br&gt;&amp;nbsp;- ID&lt;br&gt;&amp;nbsp;- Name&lt;br&gt;&amp;nbsp;- Workflow&lt;br&gt;&amp;nbsp;- KVS" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#d79b00;fillColor=none;gradientColor=#ffa500;align=left;verticalAlign=top;" parent="1" vertex="1">
                     <mxGeometry x="250" y="550" width="120" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="Qy_hjdB-Wre0WD_cC9GE-4" value="Variant&lt;br&gt;&lt;br&gt;&amp;nbsp;- ID&lt;br&gt;&amp;nbsp;- Value&lt;br&gt;&amp;nbsp;- Type" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#FFFF33;fillColor=none;gradientColor=#ffd966;align=left;verticalAlign=top;" parent="1" vertex="1">
+                <mxCell id="Qy_hjdB-Wre0WD_cC9GE-4" value="Variant&lt;br&gt;&lt;br&gt;&amp;nbsp;- Workflow ID&lt;br&gt;&amp;nbsp;- Name&lt;br&gt;&amp;nbsp;- Value&lt;br&gt;&amp;nbsp;- Type" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#FFFF33;fillColor=none;gradientColor=#ffd966;align=left;verticalAlign=top;" parent="1" vertex="1">
                     <mxGeometry x="40" y="160" width="120" height="120" as="geometry"/>
                 </mxCell>
                 <mxCell id="AVZ-X2Hg58o_VEa4zs1Z-11" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0.998;exitY=0.191;exitDx=0;exitDy=0;exitPerimeter=0;endArrow=open;endFill=0;" parent="1" source="Qy_hjdB-Wre0WD_cC9GE-5" target="WbnDZtWvCEgxXb2GhZYb-2" edge="1">
@@ -103,7 +103,7 @@
         </mxGraphModel>
     </diagram>
     <diagram id="mPHTetRKngbROHtm6HvQ" name="Runner">
-        <mxGraphModel dx="1786" dy="792" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1363" dy="543" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>

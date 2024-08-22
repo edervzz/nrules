@@ -12,3 +12,5 @@ from .read_workflow_validator import ReadWorkflowValidator
 from .read_workflow_biz_validator import ReadWorkflowBizValidator
 from .create_workflow_validator import CreateWorkflowValidator
 from .create_workflow_biz_validator import CreateWorkflowBizValidator
+from .create_tenant_validator import CreateTenantValidator
+from .create_tenant_biz_validator import CreateTenantBizValidator

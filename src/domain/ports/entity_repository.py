@@ -17,3 +17,19 @@ class WorkflowRepository(MutationRepository, QueryRepository):
     def __init__(self, engine):
         super().__init__()
         self.engine = engine
+
+
+class TenantRepository(MutationRepository, QueryRepository):
+    """_summary_"""
+
+    def __init__(self, engine):
+        super().__init__()
+        self.engine = engine
+
+
+class TenantStageRepository(MutationRepository, QueryRepository):
+    """_summary_"""
+
+    def __init__(self, engine):
+        super().__init__()
+        self.engine = engine

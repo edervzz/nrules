@@ -11,6 +11,7 @@ from .read_workflow import read_workflow_bp
 from .create_workflow import new_workflow_bp
 from .update_rule import update_rule_bp
 from .read_all_rule import read_all_rule_bp
+from .create_tenant import new_tenant_bp
 
 
 def map_endpoints(app: Flask, prefix: str):
@@ -27,6 +28,8 @@ def map_endpoints(app: Flask, prefix: str):
     app.register_blueprint(blueprint=read_workflow_bp, url_prefix=prefix)
 
     app.register_blueprint(blueprint=new_workflow_bp, url_prefix=prefix)
+
+    app.register_blueprint(blueprint=new_tenant_bp, url_prefix=prefix)
 
     app.register_blueprint(blueprint=migration_bp, url_prefix=prefix)
 

@@ -6,6 +6,23 @@ class Codes:
     en_messages: dict[str, str] = {}
     es_messages: dict[str, str] = {}
 
+    # Create Tenant
+    TE_CREA_004 = "TE-CREA-004"
+    en_messages[TE_CREA_004] = "Tenant Name already exists."
+    es_messages[TE_CREA_004] = "Nombre de Tenant ya existe."
+
+    TE_CREA_003 = "TE-CREA-003"
+    en_messages[TE_CREA_003] = "Tenant ID already exists."
+    es_messages[TE_CREA_003] = "ID de Tenant ya existe."
+
+    TE_CREA_002 = "TE-CREA-002"
+    en_messages[TE_CREA_002] = "Tenant Name must be between 5 and 50 characteres."
+    es_messages[TE_CREA_002] = "Nombre de Tenant debe ser entre 5 y 50 caracteres."
+
+    TE_CREA_001 = "TE-CREA-001"
+    en_messages[TE_CREA_001] = "Tenant ID must be between 1 and 99."
+    es_messages[TE_CREA_001] = "Id Tenant debe ser entre 1 y 99."
+
     # Read Rule
     RU_READ_005 = "RU-READ-005"
     en_messages[RU_READ_005] = "Rules not found."
@@ -28,6 +45,10 @@ class Codes:
     es_messages[RU_READ_001] = "Id Regla o Nombre Regla es obligatorio."
 
     # Update Rule
+    RU_UPD_008 = "RU-UPD-008"
+    en_messages[RU_UPD_008] = "Rule ID or Rule Name must be provided."
+    es_messages[RU_UPD_008] = "Id Regla o Nombre Regla es obligatorio."
+
     RU_UPD_007 = "RU-UPD-007"
     en_messages[RU_UPD_007] = "Rule not found."
     es_messages[RU_UPD_007] = "No se encontró Regla."

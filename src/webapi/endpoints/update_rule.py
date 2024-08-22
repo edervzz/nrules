@@ -4,7 +4,7 @@ from flask import Blueprint, request, Response
 from webapi.models import UpdateRuleModel
 from application.messages import UpdateRuleRequest
 from application.commands import UpdateRuleHandler
-from toolkit import Services
+from toolkit import Services, Identification
 
 update_rule_bp = Blueprint("Update Rule", __name__)
 
@@ -12,6 +12,9 @@ update_rule_bp = Blueprint("Update Rule", __name__)
 @update_rule_bp.put("/rules/<_id>")
 def update_rules_endpoint(_id=None):
     """ New rules Endpoint """
+    id_type = request.args.get("idType", "")
+    rule_id, rule_name = Identification.get(_id, id_type)
+
     json_data = request.get_json(silent=True)
     if json_data is None:
         return
@@ -19,8 +22,8 @@ def update_rules_endpoint(_id=None):
     update_rule = UpdateRuleModel(json.dumps(json_data))
 
     command = UpdateRuleRequest(
-        _id,
-        update_rule.name,
+        rule_id,
+        rule_name,
         update_rule.expression,
         update_rule.is_exclusive
     )

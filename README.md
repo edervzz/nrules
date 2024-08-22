@@ -1,5 +1,12 @@
 # gentera-nrule
 
+## New Features
+- Update Rule ✨
+- Read All Rules
+- Check db connection
+- Read Rule
+- Create Rule
+
 ## Runner
 
 - Load Workflow
@@ -17,7 +24,6 @@
         - Load Workflow Action (from Validation Success/Failure)
             - Execute Workflow Action 
 
-DataDog
 
 
 ## 1. Crear environment

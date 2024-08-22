@@ -5,7 +5,7 @@ from sqlalchemy import Column, Boolean, Integer, BigInteger, String
 from sqlalchemy import MetaData, Table,  CheckConstraint, Engine, select
 from sqlalchemy.orm import Session
 from domain.entities import Migrations
-from .audit import set_auditable
+from .audit import set_auditable, set_version
 
 
 def tables_base(engine: Engine):
@@ -26,13 +26,16 @@ def tables_base(engine: Engine):
         "variant",
         metadata_obj,
         Column(
-            "id", BigInteger, primary_key=True, autoincrement=True, comment="Variant ID"),
+            "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
+        Column(
+            "id", BigInteger, primary_key=True, comment="Variant ID"),
         Column(
             "name", String(50), nullable=False, comment="Variant Name", unique=True),
         Column(
             "values", String(2000), nullable=False, comment="Values"),
         comment="Variant is a container for many Key-Values"
     )
+    set_version(variant)
     set_auditable(variant)
 
     # Workflows ----------------------------------------------
@@ -40,7 +43,9 @@ def tables_base(engine: Engine):
         "workflows",
         metadata_obj,
         Column(
-            "id", BigInteger, primary_key=True, autoincrement=True, comment="Workflow ID"),
+            "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
+        Column(
+            "id", BigInteger, primary_key=True, comment="Workflow ID"),
         Column(
             "name", String(50), nullable=False, comment="Workflow Name", unique=True),
         Column(
@@ -48,13 +53,14 @@ def tables_base(engine: Engine):
         Column(
             "is_node", Boolean, comment="Workflow is a Node. Workflow works like decision node via Rules depending of Rule's Order"),
         Column(
-            "is_parcial", Boolean, comment="Final Result is Parcial. Every Rule is evaluated independently, workflow returns a list of results and action"),
+            "is_parcial", Boolean, comment="Final Result is Parcial. Every Rule is evaluated independently, workflow returns a list of results and actions"),
         Column(
             "action_on_success", BigInteger, comment="Call an Action for success result by ID"),
         Column(
             "action_on_failure", BigInteger, comment="Call an Action for failure result by ID"),
         comment="A Workflow can be performed as Node or call actions by result"
     )
+    set_version(workflows)
     set_auditable(workflows)
 
     # Rules ----------------------------------------------
@@ -62,7 +68,9 @@ def tables_base(engine: Engine):
         "rules",
         metadata_obj,
         Column(
-            "id", BigInteger, primary_key=True, autoincrement=True, comment="Rule ID"),
+            "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
+        Column(
+            "id", BigInteger, primary_key=True, comment="Rule ID"),
         Column(
             "name", String(50), nullable=False, comment="Rule Name", unique=True),
         Column(
@@ -71,12 +79,15 @@ def tables_base(engine: Engine):
             "is_exclusive", Boolean, nullable=False, comment="Set Rule as exclusive to current workflow(s). Default: false"),
         comment="A Rule is a simple business validation"
     )
+    set_version(rule)
     set_auditable(rule)
 
     # Workflow Rules ----------------------------------------------
     workflow_rule = Table(
         "workflows_rules",
         metadata_obj,
+        Column(
+            "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
         Column(
             "workflow_id", BigInteger, primary_key=True, nullable=False, comment="Workflow ID"),
         Column(
@@ -89,6 +100,7 @@ def tables_base(engine: Engine):
             "action_on success", BigInteger, comment="Call an Action for success result by ID"),
         comment="Relation between Workflows and Rules. Can assign operator, order and success-action"
     )
+    set_version(workflow_rule)
     set_auditable(workflow_rule)
 
     # Key-Value Storage ----------------------------------------------
@@ -96,17 +108,22 @@ def tables_base(engine: Engine):
         "kvs",
         metadata_obj,
         Column(
-            "id", BigInteger, primary_key=True, autoincrement=True, comment="Key-Value Storage ID"),
+            "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
+        Column(
+            "id", BigInteger, primary_key=True, comment="Key-Value Storage ID"),
         Column(
             "name", String(50), nullable=False, comment="Key-Value Storage Name", unique=True),
         comment="KVS is a container for many Key-Values"
     )
+    set_version(kv)
     set_auditable(kv)
 
     # Key-Value Items ----------------------------------------------
     kvitem = Table(
         "kv_items",
         metadata_obj,
+        Column(
+            "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
         Column(
             "kv_id", BigInteger, primary_key=True, comment="Key-Value Storage ID"),
         Column(
@@ -117,6 +134,7 @@ def tables_base(engine: Engine):
             "type_value", String(50), nullable=True, comment="Type of value. E.g. 'json', 'string', 'int'"),
         comment="KV Item can be assign to single one KVS"
     )
+    set_version(kvitem)
     set_auditable(kvitem)
 
     # Actions ----------------------------------------------
@@ -124,7 +142,9 @@ def tables_base(engine: Engine):
         "actions",
         metadata_obj,
         Column(
-            "id", BigInteger, primary_key=True, autoincrement="auto", comment="Action ID"),
+            "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
+        Column(
+            "id", BigInteger, primary_key=True, comment="Action ID"),
         Column(
             "name", String(50), nullable=False, comment="Action Name", unique=True),
         Column(
@@ -133,6 +153,7 @@ def tables_base(engine: Engine):
             "kv_id", BigInteger, primary_key=True, comment="Key-Value Storage ID to collect"),
         comment="An Action can perform a Workflor or KVS. It can be assign to Rules or Workflows"
     )
+    set_version(actions)
     set_auditable(actions)
 
     metadata_obj.create_all(engine)

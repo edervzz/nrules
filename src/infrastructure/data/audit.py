@@ -1,5 +1,5 @@
 """ migration file """
-from sqlalchemy import Table, Column, String, DateTime
+from sqlalchemy import Table, Column, String, DateTime, Integer
 
 
 def set_auditable(table: Table):
@@ -21,4 +21,16 @@ def set_auditable(table: Table):
     )
     table.append_column(
         Column("updated_at", DateTime, comment="Updated At", nullable=False),
+    )
+
+
+def set_version(table: Table):
+    """ Add version columns
+
+    Args:
+        t (Table): table to add auditable columns
+    """
+    table.append_column(
+        Column(
+            "version", Integer, comment="Version Object", nullable=False),
     )

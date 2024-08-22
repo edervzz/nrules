@@ -6,4 +6,4 @@ from .workflow_rule import WorkflowRule
 from .action import Action
 from .pagination import Pagination
 from .auditable import Auditable
-from .base import Migrations
+from .base import Migrations, Tenants, TenantStages, XObject

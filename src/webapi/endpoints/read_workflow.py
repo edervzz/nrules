@@ -11,7 +11,7 @@ read_workflow_bp = Blueprint("Read a Workflow", __name__)
 @read_workflow_bp.get("/workflows/<_id>")
 def read_workflow_endpoint(_id=None):
     """ Read Workflow Endpoint """
-    id_type = request.args.get("idType")
+    id_type = request.args.get("idType", "")
 
     workflow_id, workflow_name = Identification.get(_id, id_type)
     command = ReadWorkflowRequest(workflow_id, workflow_name)

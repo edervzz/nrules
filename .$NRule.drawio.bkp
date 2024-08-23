@@ -1,0 +1,88 @@
+<mxfile host="65bd71144e" pages="5">
+    <diagram id="LyjKLWT2vN5_jiygnvpO" name="Connections">
+        <mxGraphModel dx="1459" dy="834" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="IPaf2PD-h_m_kelB6yjr-1" value="X-Object&lt;br&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;ID&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Object Name&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;strokeColor=#FFCCCC;" vertex="1" parent="1">
+                    <mxGeometry x="130" y="730" width="160" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="IPaf2PD-h_m_kelB6yjr-2" value="&lt;span style=&quot;background-color: initial;&quot;&gt;Tenants&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;ID&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Name&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;strokeColor=#FFCCCC;" vertex="1" parent="1">
+                    <mxGeometry x="560" y="730" width="160" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="IPaf2PD-h_m_kelB6yjr-4" style="edgeStyle=none;html=1;" edge="1" parent="1" source="IPaf2PD-h_m_kelB6yjr-3" target="IPaf2PD-h_m_kelB6yjr-2">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="IPaf2PD-h_m_kelB6yjr-3" value="&lt;span style=&quot;background-color: initial;&quot;&gt;Tenant-Stages&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;Tenant Dev ID&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Tenand Test ID&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Tenant Release ID&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;strokeColor=#FFCCCC;" vertex="1" parent="1">
+                    <mxGeometry x="345" y="710" width="160" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="IPaf2PD-h_m_kelB6yjr-6" value="&lt;span style=&quot;&quot;&gt;Rules (R)&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;Tenant ID&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;ID&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Name&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Expression&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Is Exclusive&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#66FFB3;align=left;verticalAlign=top;" vertex="1" parent="1">
+                    <mxGeometry x="640" y="120" width="150" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="IPaf2PD-h_m_kelB6yjr-7" value="&lt;span style=&quot;&quot;&gt;Container&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;Tenant ID&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;ID&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Name&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Is Node&lt;br&gt;Is Full&lt;br&gt;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#3399FF;align=left;verticalAlign=top;" vertex="1" parent="1">
+                    <mxGeometry x="240" y="120" width="150" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="IPaf2PD-h_m_kelB6yjr-32" style="edgeStyle=orthogonalEdgeStyle;html=1;elbow=vertical;" edge="1" parent="1" source="IPaf2PD-h_m_kelB6yjr-8" target="IPaf2PD-h_m_kelB6yjr-7">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="IPaf2PD-h_m_kelB6yjr-36" style="edgeStyle=orthogonalEdgeStyle;html=1;elbow=vertical;" edge="1" parent="1" source="IPaf2PD-h_m_kelB6yjr-8" target="IPaf2PD-h_m_kelB6yjr-12">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="IPaf2PD-h_m_kelB6yjr-39" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;elbow=vertical;" edge="1" parent="1" source="IPaf2PD-h_m_kelB6yjr-8" target="IPaf2PD-h_m_kelB6yjr-11">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="515" y="70"/>
+                            <mxPoint x="115" y="70"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="IPaf2PD-h_m_kelB6yjr-43" style="edgeStyle=orthogonalEdgeStyle;html=1;elbow=vertical;" edge="1" parent="1" source="IPaf2PD-h_m_kelB6yjr-8" target="IPaf2PD-h_m_kelB6yjr-6">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="IPaf2PD-h_m_kelB6yjr-8" value="&lt;span style=&quot;&quot;&gt;Container - Rules&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;Tenant ID&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Container ID&lt;br&gt;&lt;/span&gt;Rule ID&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Operator&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Order&lt;br&gt;Workflow ID&lt;br&gt;KV Id&lt;br&gt;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#99FFFF;align=left;verticalAlign=top;" vertex="1" parent="1">
+                    <mxGeometry x="440" y="120" width="150" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="IPaf2PD-h_m_kelB6yjr-31" style="edgeStyle=orthogonalEdgeStyle;html=1;elbow=vertical;" edge="1" parent="1" source="IPaf2PD-h_m_kelB6yjr-11" target="IPaf2PD-h_m_kelB6yjr-7">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="IPaf2PD-h_m_kelB6yjr-37" style="edgeStyle=orthogonalEdgeStyle;html=1;elbow=vertical;" edge="1" parent="1" source="IPaf2PD-h_m_kelB6yjr-11" target="IPaf2PD-h_m_kelB6yjr-12">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="115" y="340"/>
+                            <mxPoint x="515" y="340"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="IPaf2PD-h_m_kelB6yjr-38" style="edgeStyle=orthogonalEdgeStyle;html=1;elbow=vertical;" edge="1" parent="1" source="IPaf2PD-h_m_kelB6yjr-11" target="IPaf2PD-h_m_kelB6yjr-24">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="115" y="340"/>
+                            <mxPoint x="315" y="340"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="IPaf2PD-h_m_kelB6yjr-11" value="&lt;span style=&quot;&quot;&gt;Workflow (R)&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;Tenant ID&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;ID&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Name&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Variant ID&lt;br&gt;Container ID&lt;br&gt;Workflow ID OK&lt;br&gt;KV ID OK&lt;br&gt;&lt;/span&gt;Workflow ID NOK&lt;br&gt;KV ID NOK&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#9933FF;align=left;verticalAlign=top;" vertex="1" parent="1">
+                    <mxGeometry x="40" y="120" width="150" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="IPaf2PD-h_m_kelB6yjr-12" value="&lt;span style=&quot;&quot;&gt;KV&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;Tenant ID&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;ID&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Name&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#FFFF33;align=left;fontStyle=0;verticalAlign=top;" vertex="1" parent="1">
+                    <mxGeometry x="440" y="390" width="150" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="IPaf2PD-h_m_kelB6yjr-41" style="edgeStyle=orthogonalEdgeStyle;html=1;elbow=vertical;" edge="1" parent="1" source="IPaf2PD-h_m_kelB6yjr-13" target="IPaf2PD-h_m_kelB6yjr-12">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="IPaf2PD-h_m_kelB6yjr-13" value="&lt;span style=&quot;&quot;&gt;KV - Item&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;Tenant ID&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;KV ID&lt;br&gt;Key&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Value&lt;br&gt;Type Value&lt;br&gt;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#FFFF66;align=left;verticalAlign=top;" vertex="1" parent="1">
+                    <mxGeometry x="440" y="560" width="150" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="IPaf2PD-h_m_kelB6yjr-24" value="&lt;span style=&quot;&quot;&gt;Variant (R)&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;Tenant ID&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;ID&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Name&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#FF8000;align=left;fontStyle=0;verticalAlign=top;" vertex="1" parent="1">
+                    <mxGeometry x="240" y="390" width="150" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="IPaf2PD-h_m_kelB6yjr-42" style="edgeStyle=orthogonalEdgeStyle;html=1;elbow=vertical;" edge="1" parent="1" source="IPaf2PD-h_m_kelB6yjr-25" target="IPaf2PD-h_m_kelB6yjr-24">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="IPaf2PD-h_m_kelB6yjr-25" value="&lt;span style=&quot;&quot;&gt;KV - Item&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;Tenant ID&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;KV ID&lt;br&gt;Key&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Value&lt;br&gt;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#FFB366;align=left;verticalAlign=top;" vertex="1" parent="1">
+                    <mxGeometry x="240" y="560" width="150" height="120" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

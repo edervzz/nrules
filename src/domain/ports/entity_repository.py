@@ -33,3 +33,11 @@ class TenantStageRepository(MutationRepository, QueryRepository):
     def __init__(self, engine):
         super().__init__()
         self.engine = engine
+
+
+class XObjectRepository(MutationRepository, QueryRepository):
+    """_summary_"""
+
+    def __init__(self, engine):
+        super().__init__()
+        self.engine = engine

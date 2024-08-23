@@ -5,8 +5,9 @@ from domain.entities import Rule
 class UpdateRuleRequest:
     """ Update Rule Request """
 
-    def __init__(self, _id: int, name: str, expression: str, is_exclusive: bool):
+    def __init__(self, tenantid: int, _id: int, name: str, expression: str, is_exclusive: bool):
         self.rule = Rule()
+        self.rule.tenant_id = tenantid
         self.rule.id = _id
         self.rule.name = name
         self.rule.expression = expression

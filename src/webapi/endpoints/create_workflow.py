@@ -26,6 +26,8 @@ def new_workflow_endpoint():
     if json_data is None:
         return
 
+    Services.tenant_id = request.args.get("tenant")
+
     new_workflow = NewWorkflowModel(json.dumps(json_data))
 
     command = CreateWorkflowRequest(

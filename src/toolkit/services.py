@@ -9,6 +9,7 @@ from toolkit import Localizer
 
 class Services():
     """ Services container """
+    tenant_id: int
     repository: Repository
     logger: logging.Logger
     localizer: Localizer

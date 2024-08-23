@@ -4,7 +4,8 @@ from flask import Blueprint, request, Response
 from webapi.models import NewRuleModel
 from application.messages import CreateRuleRequest
 from application.commands import CreateRuleHandler
-from toolkit import Services
+from toolkit import Services, Identification
+
 
 new_rule_bp = Blueprint("New Rule", __name__)
 
@@ -16,9 +17,13 @@ def new_rules_endpoint():
     if json_data is None:
         return
 
+    tenant_id = Identification.get_tenant_safe(
+        int(request.args.get("tenantId", "0")))
+
     new_rules = NewRuleModel(json.dumps(json_data))
 
     command = CreateRuleRequest(
+        tenant_id,
         new_rules.name,
         new_rules.expression,
         new_rules.is_exclusive
@@ -35,5 +40,5 @@ def new_rules_endpoint():
     return Response(
         response="",
         status=201,
-        headers=[("Item", f"/workflows/{result.id}")]
+        headers=[("Item", f"/rules/{result.id}")]
     )

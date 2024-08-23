@@ -13,7 +13,7 @@ read_all_rule_bp = Blueprint("Read All Rules", __name__)
 @read_all_rule_bp.get("/rules")
 def read_all_rules_endpoint(_id=None):
     """ Read rules Endpoint """
-    # todo: pagination
+    Services.tenant_id = request.args.get("tenant")
     page_no = request.args.get("pageNo", "1")
     page_size = request.args.get("pageSize", "5")
     command = ReadAllRulesRequest(

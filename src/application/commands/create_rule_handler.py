@@ -3,7 +3,7 @@ import logging
 from application.messages import CreateRuleRequest, CreateRuleResponse
 from application.validators import CreateRuleValidator, CreateRuleBizValidator
 from domain.ports import Repository
-from domain.entities import Rule
+from domain.entities import Rule, XObject
 from toolkit import Localizer
 
 

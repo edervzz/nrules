@@ -10,6 +10,8 @@ class Workflow(Base, Auditable):
 
     __tablename__ = "workflows"
 
+    tenant_id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
+
     id: Mapped[int] = mapped_column(
         primary_key=True, autoincrement="auto", nullable=False)
 

@@ -13,7 +13,9 @@ update_rule_bp = Blueprint("Update Rule", __name__)
 def update_rules_endpoint(_id=None):
     """ New rules Endpoint """
     id_type = request.args.get("idType", "")
-    rule_id, rule_name = Identification.get(_id, id_type)
+    rule_id, rule_name = Identification.get_object(_id, id_type)
+    tenant_id = Identification.get_tenant_safe(
+        int(request.args.get("tenant", "0")))
 
     json_data = request.get_json(silent=True)
     if json_data is None:
@@ -22,6 +24,7 @@ def update_rules_endpoint(_id=None):
     update_rule = UpdateRuleModel(json.dumps(json_data))
 
     command = UpdateRuleRequest(
+        tenant_id,
         rule_id,
         rule_name,
         update_rule.expression,

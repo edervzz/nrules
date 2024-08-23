@@ -30,5 +30,6 @@ class ReadWorkflowBizValidator(Validator):
 
         request.workflow = wf
 
-        request.rules = self.repository.rule_read_by_parent_id(
+        request.rules = self.repository.rule.read_by_parent_id(
+            request.workflow.tenant_id,
             request.workflow.id)

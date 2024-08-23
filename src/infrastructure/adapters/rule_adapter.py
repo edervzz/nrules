@@ -18,35 +18,43 @@ class RuleAdapter(RuleRepository):
         if not self.session.autoflush:
             self.session.flush()
 
-    def update(self, entity: Rule):
-        stmt = select(Rule).where(Rule.id == entity.id)
+    def update(self,  entity: Rule):
+        stmt = select(Rule).where(
+            Rule.tenant_id == entity.tenant_id,
+            Rule.id == entity.id)
         rule = self.session.scalar(stmt)
         rule.name = entity.name
         rule.expression = entity.expression
+        rule.version = entity.version
 
-    def read(self, _id: int) -> Rule:
+    def read(self, tenantid: int, _id: int) -> Rule:
         with Session(self.engine) as session:
-            stmt = select(Rule).where(Rule.id == _id)
+            stmt = select(Rule).where(
+                Rule.tenant_id == tenantid, Rule.id == _id)
             rule = session.scalar(stmt)
             return rule
 
-    def read_by_external_id(self, external_id: str) -> Rule:
+    def read_by_external_id(self, tenantid: int, external_id: str) -> Rule:
         with Session(self.engine) as session:
-            stmt = select(Rule).where(Rule.name == external_id)
+            stmt = select(Rule).where(
+                Rule.tenant_id == tenantid,
+                Rule.name == external_id)
             rule = session.scalar(stmt)
             return rule
 
-    def read_by_parent_id(self, parent_id: int) -> List[Rule]:
+    def read_by_parent_id(self, tenantid: int, parent_id: int) -> List[Rule]:
         with Session(self.engine) as session:
             stms = select(Rule).join(WorkflowRule, Rule.id == WorkflowRule.rule_id).where(
+                WorkflowRule.tenant_id == tenantid,
                 WorkflowRule.workflow_id == parent_id)
             rule = session.scalars(stms).all()
             return rule
 
-    def read_page(self, page_no: int, page_size: int) -> tuple[List[Rule], Pagination]:
+    def read_page(self, tenantid: int, page_no: int, page_size: int) -> tuple[List[Rule], Pagination]:
         with Session(self.engine) as session:
             stms = select(Rule).offset((page_no-1)*page_size).limit(page_size)
             rules = session.scalars(stms).all()
-            total = session.query(Rule.id).count()
+            total = session.query(Rule.id).where(
+                Rule.tenant_id == tenantid).count()
 
             return rules, Pagination(page_no, page_size, total)

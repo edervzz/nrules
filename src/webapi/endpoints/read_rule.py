@@ -13,9 +13,11 @@ read_rule_bp = Blueprint("Read Rule", __name__)
 def read_rules_endpoint(_id=None):
     """ Read rules Endpoint """
     id_type = request.args.get("idType")
-    rule_id, rule_name = Identification.get(_id, id_type)
+    rule_id, rule_name = Identification.get_object(_id, id_type)
+    tenant_id = int(request.args.get("tenant", "0"))
 
     command = ReadRuleRequest(
+        tenant_id,
         rule_id,
         rule_name
     )
@@ -29,10 +31,12 @@ def read_rules_endpoint(_id=None):
     result = handler.handler(command)
 
     rule = RuleModel(
+        result.rule.tenant_id,
         result.rule.id,
         result.rule.name,
         result.rule.expression,
-        result.rule.is_exclusive)
+        result.rule.is_exclusive,
+        result.rule.version)
 
     js = json.dumps(rule.__dict__)
 

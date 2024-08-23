@@ -4,13 +4,14 @@ from typing import List
 from datetime import datetime
 from sqlalchemy import Engine, create_engine, select, event
 from sqlalchemy.orm import Session
-from domain.entities import WorkflowRule, Rule, Workflow, Auditable, Migrations, Tenants, TenantStages
+from domain.entities import WorkflowRule, Rule, Workflow, Auditable, Migrations, Tenants, TenantStages, XObject
 from domain.ports import Repository
 from infrastructure.data import initial, tables_base
 from .rule_adapter import RuleAdapter
 from .workflow_adapter import WorkflowAdapter
 from .tenant_adapter import TenantAdapter
 from .tenant_stage_adapter import TenantStageAdapter
+from .xobject_adapter import XObjectAdapter
 
 
 class RepositoryAdapter(Repository):
@@ -38,10 +39,14 @@ class RepositoryAdapter(Repository):
         event.listen(TenantStages, 'before_insert', self.__before_insert)
         event.listen(TenantStages, 'before_update', self.__before_update)
 
+        event.listen(XObject, 'before_insert', self.__before_insert)
+        event.listen(XObject, 'before_update', self.__before_update)
+
         self.rule = RuleAdapter(self.engine)
         self.workflow = WorkflowAdapter(self.engine)
         self.tenant = TenantAdapter(self.engine)
         self.tenant_stage = TenantStageAdapter(self.engine)
+        self.xobject = XObjectAdapter(self.engine)
 
     # Workflow
 

@@ -22,7 +22,7 @@ def initial(engine: Engine):
 
     # XObject Storage ----------------------------------------------
     variant = Table(
-        "xobject",
+        "xobjects",
         metadata_obj,
         Column(
             "id", BigInteger, primary_key=True, autoincrement=True, comment="ID for Variants, Rules, Workflow, Actions, KVS"),

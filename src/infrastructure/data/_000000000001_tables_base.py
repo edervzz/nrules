@@ -51,13 +51,15 @@ def tables_base(engine: Engine):
         Column(
             "variant_id", BigInteger, comment="Variant ID"),
         Column(
-            "is_node", Boolean, comment="Workflow is a Node. Workflow works like decision node via Rules depending of Rule's Order"),
+            "container_id", BigInteger, comment="Container ID"),
         Column(
-            "is_parcial", Boolean, comment="Final Result is Parcial. Every Rule is evaluated independently, workflow returns a list of results and actions"),
+            "workflow_id_ok", BigInteger, nullable=True, comment="Workflow ID to perform when result is success"),
         Column(
-            "action_on_success", BigInteger, comment="Call an Action for success result by ID"),
+            "kv_id_ok", BigInteger, nullable=True, comment="Key-Value Storage ID to collect when result is success"),
         Column(
-            "action_on_failure", BigInteger, comment="Call an Action for failure result by ID"),
+            "workflow_id_nok", BigInteger, nullable=True, comment="Workflow ID to perform when result is success"),
+        Column(
+            "kv_id_nok", BigInteger, nullable=True, comment="Key-Value Storage ID to collect when result is success"),
         comment="A Workflow can be performed as Node or call actions by result"
     )
     set_version(workflows)
@@ -82,26 +84,48 @@ def tables_base(engine: Engine):
     set_version(rule)
     set_auditable(rule)
 
-    # Workflow Rules ----------------------------------------------
-    workflow_rule = Table(
-        "workflows_rules",
+    # Containers ----------------------------------------------
+    container = Table(
+        "containers",
         metadata_obj,
         Column(
             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
         Column(
-            "workflow_id", BigInteger, primary_key=True, nullable=False, comment="Workflow ID"),
+            "id", Integer, primary_key=True, comment="Container ID"),
+        Column(
+            "name", String(50), nullable=False, comment="Container Name", unique=True),
+        Column(
+            "is_node", Boolean, comment="Container is a Node. Container works like decision node via Rules depending of Rule's Order"),
+        Column(
+            "is_full", Boolean, comment="Every Rule is evaluated independently, workflow returns a list of results and actions"),
+        comment="Relation between Workflows and Rules. Can assign operator, order and success-action"
+    )
+    set_version(container)
+    set_auditable(container)
+
+    # Container Rules ----------------------------------------------
+    container_rules = Table(
+        "container_rules",
+        metadata_obj,
+        Column(
+            "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
+        Column(
+            "container_id", Integer, primary_key=True, comment="Container ID"),
         Column(
             "rule_id", BigInteger, primary_key=True, nullable=False, comment="Rule ID"),
         Column(
-            "operator", String(3), CheckConstraint("operator = 'AND' OR operator = 'OR'", name="rules_chk_operator"), nullable=False, comment="Operator"),
+            "operator", String(3), CheckConstraint("operator = 'AND' OR operator = 'OR'", name="container_rules_chk_operator"), nullable=False,
+            comment="Operator evaluates rules between them. Only works when Container when it is neither Node nor Full."),
         Column(
-            "order", Integer, nullable=True, comment="Order"),
+            "order", Integer, nullable=False, comment="Order"),
         Column(
-            "action_on success", BigInteger, comment="Call an Action for success result by ID"),
+            "workflow_id_ok", BigInteger, nullable=True, comment="Workflow ID to perform when result is success"),
+        Column(
+            "kv_id_ok", BigInteger, nullable=True, comment="Key-Value Storage ID to collect when result is success"),
         comment="Relation between Workflows and Rules. Can assign operator, order and success-action"
     )
-    set_version(workflow_rule)
-    set_auditable(workflow_rule)
+    set_version(container_rules)
+    set_auditable(container_rules)
 
     # Key-Value Storage ----------------------------------------------
     kv = Table(
@@ -136,25 +160,6 @@ def tables_base(engine: Engine):
     )
     set_version(kvitem)
     set_auditable(kvitem)
-
-    # Actions ----------------------------------------------
-    actions = Table(
-        "actions",
-        metadata_obj,
-        Column(
-            "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
-        Column(
-            "id", BigInteger, primary_key=True, comment="Action ID"),
-        Column(
-            "name", String(50), nullable=False, comment="Action Name", unique=True),
-        Column(
-            "workflow_id", BigInteger, primary_key=True, autoincrement=True, comment="Workflow ID to perform"),
-        Column(
-            "kv_id", BigInteger, primary_key=True, comment="Key-Value Storage ID to collect"),
-        comment="An Action can perform a Workflor or KVS. It can be assign to Rules or Workflows"
-    )
-    set_version(actions)
-    set_auditable(actions)
 
     metadata_obj.create_all(engine)
 

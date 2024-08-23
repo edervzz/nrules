@@ -28,11 +28,11 @@ class QueryRepository:
     def __init__(self) -> None:
         self.engine: Engine
 
-    def read(self, _id: int) -> any:
+    def read(self, tenantid: int, _id: int) -> any:
         """ read entity by id """
         raise NotImplementedError(__name__)
 
-    def read_by_external_id(self, external_id: str) -> any:
+    def read_by_external_id(self, tenantid: int, external_id: str) -> any:
         """ read entity by external id """
         raise NotImplementedError(__name__)
 
@@ -40,7 +40,7 @@ class QueryRepository:
 class QueryFromParentRepository:
     """ reader from parent """
 
-    def read_by_parent_id(self, parent_id: int) -> []:
+    def read_by_parent_id(self, tenantid: int, parent_id: int) -> []:
         """ read entities by parent id """
         raise NotImplementedError(__name__)
 
@@ -48,7 +48,7 @@ class QueryFromParentRepository:
 class QueryPaginationRepository:
     """ reader from parent """
 
-    def read_page(self, page_no: int, page_size: int) -> tuple[list, any]:
+    def read_page(self, tenantid: int, page_no: int, page_size: int) -> tuple[list, any]:
         """_summary_
 
         Args:

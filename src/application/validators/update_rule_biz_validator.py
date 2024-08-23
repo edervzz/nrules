@@ -19,13 +19,16 @@ class UpdateRuleBizValidator(Validator):
         """ Validate request format """
 
         if request.rule.id != 0:
-            rule = self.__repository.rule.read(request.rule.id)
+            rule = self.__repository.rule.read(
+                request.rule.tenant_id,
+                request.rule.id)
             if rule is None:
                 raise self.as_not_found(
                     Codes.RU_UPD_007,
                     self._localizer.get(Codes.RU_UPD_007))
         else:
             rule = self.__repository.rule.read_by_external_id(
+                request.rule.tenant_id,
                 request.rule.name)
             if rule is None:
                 raise self.as_not_found(
@@ -41,5 +44,7 @@ class UpdateRuleBizValidator(Validator):
                 err.__str__)
 
         if isinstance(rule, Rule):
-            rule.expression = request.rule.expression
-            request.rule = rule
+            if rule.expression != request.rule.expression:
+                rule.expression = request.rule.expression
+                rule.version += 1
+                request.rule = rule

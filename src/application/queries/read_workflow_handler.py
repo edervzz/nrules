@@ -15,7 +15,7 @@ class ReadWorkflowHandler:
         self.logger = logger
         self.localizer = localizer
 
-    def handler(self, request: ReadWorkflowRequest) -> ReadWorkflowResponse:
+    def handler(self, request: ReadWorkflowRequest):
         """ Handler """
         # 1. request validation
         validator = ReadWorkflowValidator(self.localizer)

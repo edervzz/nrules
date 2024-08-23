@@ -1,5 +1,6 @@
 """_summary_"""
 from application.messages import CreateRuleRequest
+from domain.entities import XObject
 from domain.ports import Repository
 from toolkit import Validator
 from toolkit.localization import Localizer, Codes
@@ -9,14 +10,15 @@ from .expression_validator import ExpressionValidator
 class CreateRuleBizValidator(Validator):
     """ Create Rule Validator """
 
-    def __init__(self, repository: Repository, localizer: Localizer):
+    def __init__(self,  repository: Repository, localizer: Localizer):
         super().__init__()
         self.__repository = repository
         self._localizer = localizer
 
     def __validate__(self, request: CreateRuleRequest):
         """ Validate request format """
-        rule = self.__repository.rule.read_by_external_id(request.rule.name)
+        rule = self.__repository.rule.read_by_external_id(
+            request.rule.tenant_id, request.rule.name)
         if rule is not None:
             raise self.as_duplicated(
                 Codes.RU_CREA_005,
@@ -29,3 +31,8 @@ class CreateRuleBizValidator(Validator):
             raise self.as_error(
                 Codes.RU_CREA_006,
                 err.__str__)
+
+        xobject = XObject()
+        xobject.object_name = "rule"
+        self.__repository.xobject.create(xobject)
+        request.rule.id = xobject.id

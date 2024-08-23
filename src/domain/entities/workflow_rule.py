@@ -10,6 +10,8 @@ class WorkflowRule(Base, Auditable):
 
     __tablename__ = "workflows_rules"
 
+    tenant_id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
+
     workflow_id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
 
     rule_id: Mapped[str] = mapped_column(primary_key=True, nullable=False)

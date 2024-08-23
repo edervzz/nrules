@@ -2,7 +2,7 @@
     """
 from abc import ABC
 from domain.entities import Workflow
-from .entity_repository import RuleRepository, WorkflowRepository, TenantRepository, TenantStageRepository
+from .entity_repository import RuleRepository, WorkflowRepository, TenantRepository, TenantStageRepository, XObjectRepository
 
 
 class Repository(ABC):
@@ -14,6 +14,7 @@ class Repository(ABC):
         self.tenant_stage: TenantStageRepository
         self.rule: RuleRepository
         self.workflow: WorkflowRepository
+        self.xobject: XObjectRepository
 
     def create(self, entity: any):
         """ Create a new entity """

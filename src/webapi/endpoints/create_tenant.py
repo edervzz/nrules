@@ -23,13 +23,11 @@ def new_tenant_endpoint():
         new_tenant.tenant_name
     )
 
-    handler = CreateTenantHandler(
+    result = CreateTenantHandler(
         Services.repository,
         Services.logger,
         Services.localizer
-    )
-
-    result = handler.handler(command)
+    ).handler(command)
 
     return Response(
         response=json.dumps(result.__dict__),

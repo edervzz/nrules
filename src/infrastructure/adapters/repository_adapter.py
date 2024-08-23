@@ -1,17 +1,16 @@
 """_summary_
     """
-from typing import List
 from datetime import datetime
 from sqlalchemy import Engine, create_engine, select, event
 from sqlalchemy.orm import Session
-from domain.entities import WorkflowRule, Rule, Workflow, Auditable, Migrations, Tenants, TenantStages, XObject
+from domain.entities import WorkflowRule, Rule, Workflow
+from domain.entities import Auditable, Migrations, Tenants, TenantStages, XObject
 from domain.ports import Repository
 from infrastructure.data import initial, tables_base
 from .rule_adapter import RuleAdapter
 from .workflow_adapter import WorkflowAdapter
 from .tenant_adapter import TenantAdapter
 from .tenant_stage_adapter import TenantStageAdapter
-from .xobject_adapter import XObjectAdapter
 
 
 class RepositoryAdapter(Repository):
@@ -46,7 +45,6 @@ class RepositoryAdapter(Repository):
         self.workflow = WorkflowAdapter(self.engine)
         self.tenant = TenantAdapter(self.engine)
         self.tenant_stage = TenantStageAdapter(self.engine)
-        self.xobject = XObjectAdapter(self.engine)
 
     # Workflow
 
@@ -97,6 +95,17 @@ class RepositoryAdapter(Repository):
         m = Migrations()
         m.id = "session failure"
         return [m]
+
+    def next_number(self, objname: str) -> int:
+        xobject = XObject()
+        xobject.object_name = objname.lower()
+
+        with Session(self.engine) as session:
+            session.add(xobject)
+            session.flush()
+            _id = xobject.id
+            session.commit()
+            return _id
 
     def __before_insert(self, mapper, connection, target):
         """ Hook """

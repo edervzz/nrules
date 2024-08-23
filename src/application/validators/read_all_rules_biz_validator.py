@@ -16,7 +16,9 @@ class ReadAllRulesBizValidator(Validator):
     def __validate__(self, request: ReadAllRulesRequest):
         """ Validate request format """
         request.rules, request.pagination = self.repository.rule.read_page(
-            request.page_no, request.page_size)
+            request.tenant_id,
+            request.page_no,
+            request.page_size)
 
         if len(request.rules) == 0:
             raise self.as_not_found(

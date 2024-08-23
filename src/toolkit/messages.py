@@ -20,8 +20,8 @@ class Codes:
     es_messages[TE_CREA_002] = "Nombre de Tenant debe ser entre 5 y 50 caracteres."
 
     TE_CREA_001 = "TE-CREA-001"
-    en_messages[TE_CREA_001] = "Tenant ID must be between 1 and 99."
-    es_messages[TE_CREA_001] = "Id Tenant debe ser entre 1 y 99."
+    en_messages[TE_CREA_001] = "Tenant ID must be between 1 and 999."
+    es_messages[TE_CREA_001] = "Id Tenant debe ser entre 1 y 999."
 
     # Read Rule
     RU_READ_005 = "RU-READ-005"

@@ -9,12 +9,13 @@ from webapi.models import RuleModel
 read_rule_bp = Blueprint("Read Rule", __name__)
 
 
-@read_rule_bp.get("/rules/<_id>")
-def read_rules_endpoint(_id=None):
+@read_rule_bp.get("/t/<tid>/rules/<rule_id>")
+def read_rules_endpoint(tid=None, rule_id=None):
     """ Read rules Endpoint """
-    id_type = request.args.get("idType")
-    rule_id, rule_name = Identification.get_object(_id, id_type)
-    tenant_id = int(request.args.get("tenant", "0"))
+    tenant_id = int(tid)
+    id_type = request.args.get("idType", "")
+    rule_id, rule_name = Identification.get_object(rule_id, id_type)
+    # tenant_id = int(request.args.get("tid", "0"))
 
     command = ReadRuleRequest(
         tenant_id,

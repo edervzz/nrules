@@ -1,17 +1,17 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": " pyre - Python Rule Engine API",
+        "title": " NRule - Rule Engine API",
         "version": "1.0.0",
         "description": "Rule Engine built for Gentera"
     },
     "paths": {
-        "/engine/api/v1/hello": {
+        "/nr/api/v1/hello": {
             "get": {
+                "summary": "Healt Check",
                 "tags": [
                     "Healt Check"
                 ],
-                "description": "Hello world for health check.",
                 "produces": [
                     "application/text"
                 ],
@@ -22,16 +22,106 @@
                 }
             }
         },
-        "/engine/api/v1/rules": {
-            "post": {
+        "/nr/api/v1/t/{tid}/rules/{rule_id}": {
+            "put": {
+                "summary": "Update a rule.",
                 "tags": [
                     "rules"
                 ],
-                "description": "Create a new rule.",
                 "consumes": [
                     "application/json"
                 ],
                 "parameters": [
+                    {
+                        "name": "tid",
+                        "description": "Tenant ID",
+                        "in": "path",
+                        "type": "integer",
+                        "required": true
+                    },
+                    {
+                        "name": "rule_id",
+                        "description": "Rule Identification",
+                        "in": "path",
+                        "type": "integer",
+                        "required": true
+                    },
+                    {
+                        "name": "Rule Data",
+                        "in": "body",
+                        "description": "Rule definition.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/UpdRule"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Rule Updated"
+                    },
+                    "400": {
+                        "description": "Validation errors"
+                    },
+                    "409": {
+                        "description": "Rule already exists"
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "rules"
+                ],
+                "description": "Read a rule.",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "tid",
+                        "description": "Tenant ID",
+                        "in": "path",
+                        "type": "integer",
+                        "required": true
+                    },
+                    {
+                        "name": "rule_id",
+                        "description": "Rule Identification",
+                        "in": "path",
+                        "type": "integer",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Rule Updated"
+                    },
+                    "400": {
+                        "description": "Validation errors"
+                    },
+                    "409": {
+                        "description": "Rule already exists"
+                    }
+                }
+            }
+        },
+        "/nr/api/v1/t/{tid}/rules": {
+            "post": {
+                "summary": "Create a new rule.",
+                "tags": [
+                    "rules"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "tid",
+                        "description": "Tenant ID",
+                        "in": "path",
+                        "type": "integer",
+                        "required": true
+                    },
                     {
                         "name": "Rule Data",
                         "in": "body",
@@ -46,18 +136,64 @@
                     "201": {
                         "description": "Rule Created"
                     },
+                    "400": {
+                        "description": "Validation errors"
+                    },
                     "409": {
                         "description": "Rule already exists"
                     }
                 }
+            },
+            "get": {
+                "summary": "Read All Rules.",
+                "tags": [
+                    "rules"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "tid",
+                        "description": "Tenant ID",
+                        "in": "path",
+                        "type": "integer",
+                        "required": true
+                    },
+                    {
+                        "name": "pageNo",
+                        "description": "Number of Page.",
+                        "in": "query",
+                        "required": false,
+                        "type": "number"
+                    },
+                    {
+                        "name": "pageSize",
+                        "description": "Page Size.",
+                        "in": "query",
+                        "required": false,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Rules detail"
+                    },
+                    "400": {
+                        "description": "Validation errors"
+                    },
+                    "404": {
+                        "description": "Rules not found"
+                    }
+                }
             }
         },
-        "/engine/api/v1/workflows": {
+        "/nr/api/v1/t/{tid}/workflows": {
             "post": {
+                "summary": "Create a new Workflow base.",
                 "tags": [
                     "Workflows"
                 ],
-                "description": "Create a new Workflow base.",
                 "consumes": [
                     "application/json"
                 ],
@@ -88,6 +224,26 @@
     },
     "definitions": {
         "NewRule": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "Rule name.",
+                    "type": "string",
+                    "minLength": 5,
+                    "maxLength": 50,
+                    "required": true,
+                    "example": "ru.account.products"
+                },
+                "expression": {
+                    "description": "Expression.",
+                    "type": "string",
+                    "minLength": 5,
+                    "maxLength": 2000,
+                    "required": true
+                }
+            }
+        },
+        "UpdRule": {
             "type": "object",
             "properties": {
                 "name": {

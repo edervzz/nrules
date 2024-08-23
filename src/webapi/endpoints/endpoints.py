@@ -1,6 +1,6 @@
 """ endpoints """
 
-from flask import Flask, Response
+from flask import Flask, Response, request
 from flask_swagger_ui import get_swaggerui_blueprint
 from werkzeug.exceptions import Conflict, BadRequest, NotFound
 from .hello import hello_bp
@@ -16,6 +16,17 @@ from .create_tenant import new_tenant_bp
 
 def map_endpoints(app: Flask, prefix: str):
     """ Map endpoints based on blueprints """
+
+    app.register_blueprint(
+        get_swaggerui_blueprint(
+            "/swagger",
+            "/static/swagger.json",
+            config={
+                'app_name': 'NRule - Rule Engine API'
+            }
+        ),
+        url_prefix="/swagger"
+    )
 
     app.register_blueprint(blueprint=read_all_rule_bp, url_prefix=prefix)
 
@@ -34,17 +45,6 @@ def map_endpoints(app: Flask, prefix: str):
     app.register_blueprint(blueprint=migration_bp, url_prefix=prefix)
 
     app.register_blueprint(blueprint=hello_bp, url_prefix=prefix)
-
-    app.register_blueprint(
-        get_swaggerui_blueprint(
-            "/swagger",
-            "/static/swagger.json",
-            config={
-                'app_name': 'PYRULE - A Python Rule Engine API'
-            }
-        ),
-        url_prefix="/swagger"
-    )
 
     app.register_error_handler(
         BadRequest,
@@ -66,5 +66,6 @@ def map_endpoints(app: Flask, prefix: str):
 
     @app.after_request
     def after_request_func(response: Response):
-        response.content_type = 'application/json'
+        if request.blueprint != "swagger_ui":
+            response.content_type = 'application/json'
         return response

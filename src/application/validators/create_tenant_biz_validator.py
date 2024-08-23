@@ -17,6 +17,11 @@ class CreateTenantBizValidator(Validator):
     def __validate__(self, request: CreateTenantRequest):
         """ Validate request format """
 
+        if request.tenant_id < 0 or request.tenant_id > 999:
+            raise self.as_error(
+                Codes.TE_CREA_001,
+                self._localizer.get(Codes.TE_CREA_001))
+
         tenant = self.repository.tenant.read(request.tenant_id)
         if tenant is not None:
             raise self.as_error(
@@ -32,11 +37,11 @@ class CreateTenantBizValidator(Validator):
 
         request.tenant_dev = Tenants()
         request.tenant_dev.id = 1000 + request.tenant_id
-        request.tenant_dev.name = request.tenant_name + "(DEV)"
+        request.tenant_dev.name = request.tenant_name + "- DEV"
 
         request.tenant_test = Tenants()
         request.tenant_test.id = 2000 + request.tenant_id
-        request.tenant_test.name = request.tenant_name + "(TEST)"
+        request.tenant_test.name = request.tenant_name + "- TEST"
 
         request.tenant_release = Tenants()
         request.tenant_release.id = 3000 + request.tenant_id

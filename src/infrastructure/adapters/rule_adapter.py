@@ -52,7 +52,8 @@ class RuleAdapter(RuleRepository):
 
     def read_page(self, tenantid: int, page_no: int, page_size: int) -> tuple[List[Rule], Pagination]:
         with Session(self.engine) as session:
-            stms = select(Rule).offset((page_no-1)*page_size).limit(page_size)
+            stms = select(Rule).offset((page_no-1)*page_size).limit(page_size).where(
+                Rule.tenant_id == tenantid)
             rules = session.scalars(stms).all()
             total = session.query(Rule.id).where(
                 Rule.tenant_id == tenantid).count()

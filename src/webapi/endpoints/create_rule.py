@@ -10,15 +10,13 @@ from toolkit import Services, Identification
 new_rule_bp = Blueprint("New Rule", __name__)
 
 
-@new_rule_bp.post("/rules")
-def new_rules_endpoint():
+@new_rule_bp.post("/t/<tid>/rules")
+def new_rules_endpoint(tid=None):
     """ New rules Endpoint """
+    tenant_id = Identification.get_tenant_safe(tid)
     json_data = request.get_json(silent=True)
     if json_data is None:
         return
-
-    tenant_id = Identification.get_tenant_safe(
-        int(request.args.get("tenantId", "0")))
 
     new_rules = NewRuleModel(json.dumps(json_data))
 
@@ -40,5 +38,5 @@ def new_rules_endpoint():
     return Response(
         response="",
         status=201,
-        headers=[("Item", f"/rules/{result.id}")]
+        headers=[("Item", f"/t/{tenant_id}/rules/{result.id}")]
     )

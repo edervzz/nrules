@@ -5,7 +5,7 @@ from webapi.endpoints import map_endpoints
 from toolkit import Services
 
 
-URL_API_PREFIX = "/engine/api/v1"
+URL_API_PREFIX = "/nr/api/v1"
 
 app = Flask(__name__)
 

@@ -14,10 +14,6 @@ class CreateTenantValidator(Validator):
     def __validate__(self, request: CreateTenantRequest):
         """ Validate request format """
 
-        if request.tenant_id < 0 or request.tenant_id > 999:
-            raise self.as_error(
-                Codes.TE_CREA_001,
-                self._localizer.get(Codes.TE_CREA_001))
         if len(request.tenant_name) < 5 or len(request.tenant_name) > 50:
             raise self.as_error(
                 Codes.TE_CREA_002,

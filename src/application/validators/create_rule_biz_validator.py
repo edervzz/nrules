@@ -1,6 +1,5 @@
 """_summary_"""
 from application.messages import CreateRuleRequest
-from domain.entities import XObject
 from domain.ports import Repository
 from toolkit import Validator
 from toolkit.localization import Localizer, Codes
@@ -32,7 +31,4 @@ class CreateRuleBizValidator(Validator):
                 Codes.RU_CREA_006,
                 err.__str__)
 
-        xobject = XObject()
-        xobject.object_name = "rule"
-        self.__repository.xobject.create(xobject)
-        request.rule.id = xobject.id
+        request.rule.id = self.__repository.next_number("rule")

@@ -21,10 +21,10 @@ class Identification:
     def get_tenant_safe(cls, tenant_id: int) -> int:
         """ return tenant identification """
 
-        if tenant_id > 1999:
+        if str(tenant_id)[0] != "1":
             raise BadRequest(json.dumps(
                 {'code': "T002", 'message': "Tenant cannot be modified directly."}))
-        if tenant_id == 0:
+        if tenant_id is None or tenant_id == 0:
             raise BadRequest(json.dumps(
                 {'code': "T001", 'message': "Tenant ID is mandatory."}))
 

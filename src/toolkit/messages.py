@@ -147,3 +147,7 @@ class Codes:
     WF_CREA_001 = "WF-CREA-001"
     en_messages[WF_CREA_001] = "Workflow Name must not be empty."
     es_messages[WF_CREA_001] = "Nombre de 'Workflow' es requerido."
+
+    OBJ_UPD_001 = "OBJ_UPD_001"
+    en_messages[OBJ_UPD_001] = "No modificactions."
+    es_messages[OBJ_UPD_001] = "Sin modificaciones."

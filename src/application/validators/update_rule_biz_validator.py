@@ -48,3 +48,8 @@ class UpdateRuleBizValidator(Validator):
                 rule.expression = request.rule.expression
                 rule.version += 1
                 request.rule = rule
+            else:
+                raise self.as_error(
+                    Codes.OBJ_UPD_001,
+                    self._localizer.get(Codes.OBJ_UPD_001)
+                )

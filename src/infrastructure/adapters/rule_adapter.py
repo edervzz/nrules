@@ -3,7 +3,7 @@
 from typing import List
 from sqlalchemy import select
 from sqlalchemy.orm import Session
-from domain.entities import Rule, WorkflowRule, Pagination
+from domain.entities import Rule, Container, Pagination
 from domain.ports import RuleRepository
 
 
@@ -44,9 +44,9 @@ class RuleAdapter(RuleRepository):
 
     def read_by_parent_id(self, tenantid: int, parent_id: int) -> List[Rule]:
         with Session(self.engine) as session:
-            stms = select(Rule).join(WorkflowRule, Rule.id == WorkflowRule.rule_id).where(
-                WorkflowRule.tenant_id == tenantid,
-                WorkflowRule.workflow_id == parent_id)
+            stms = select(Rule).join(Container, Rule.id == Container.rule_id).where(
+                Container.tenant_id == tenantid,
+                Container.workflow_id == parent_id)
             rule = session.scalars(stms).all()
             return rule
 

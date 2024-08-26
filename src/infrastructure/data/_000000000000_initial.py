@@ -27,7 +27,7 @@ def initial(engine: Engine):
         Column(
             "id", BigInteger, primary_key=True, autoincrement=True, comment="ID for Variants, Rules, Workflow, Actions, KVS"),
         Column(
-            "object_name", String(50), nullable=False, comment="Variants / Rules / Workflows / Actions / KVS"),
+            "object_name", String(50), nullable=False, comment="Rules / Workflows / Actions / KVS"),
         comment="Variant is a container for many Key-Values"
     )
     set_auditable(variant)

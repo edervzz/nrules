@@ -17,12 +17,12 @@ class Workflow(Base, Auditable):
 
     name: Mapped[str] = mapped_column(nullable=False)
 
-    variant_id: Mapped[str] = mapped_column(nullable=True)
+    container_id: Mapped[int] = mapped_column(nullable=False)
 
-    is_node: Mapped[bool] = mapped_column(nullable=True)
+    ok_workflow_id: Mapped[int] = mapped_column(nullable=False)
 
-    is_parcial: Mapped[bool] = mapped_column(nullable=True)
+    ok_kvs_id: Mapped[int] = mapped_column(nullable=False)
 
-    action_on_success: Mapped[int] = mapped_column(nullable=True)
+    nok_workflow_id: Mapped[int] = mapped_column(nullable=False)
 
-    action_on_failure: Mapped[int] = mapped_column(nullable=True)
+    nok_kvs_id: Mapped[int] = mapped_column(nullable=False)

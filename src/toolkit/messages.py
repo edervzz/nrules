@@ -6,6 +6,23 @@ class Codes:
     en_messages: dict[str, str] = {}
     es_messages: dict[str, str] = {}
 
+    # Create Container
+    CO_CREA_004 = "CO-CREA-004"
+    en_messages[CO_CREA_004] = "(Internal check) 'Is Full' is badformed."
+    es_messages[CO_CREA_004] = "(Internal check) 'Is Full' está mal formado."
+
+    CO_CREA_003 = "CO-CREA-003"
+    en_messages[CO_CREA_003] = "(Internal check) 'Is Node' is badformed."
+    es_messages[CO_CREA_003] = "(Internal check) 'Is Node' está mal formado."
+
+    CO_CREA_002 = "CO-CREA-002"
+    en_messages[CO_CREA_002] = "Container Name must be between 5 and 50 characters."
+    es_messages[CO_CREA_002] = "Container de Regla debe ser de 5 a 50 caracteres."
+
+    CO_CREA_001 = "CO-CREA-001"
+    en_messages[CO_CREA_001] = "Container Name is mandatory."
+    es_messages[CO_CREA_001] = "Nombre de Contenedor es obligatorio."
+
     # Create Tenant
     TE_CREA_004 = "TE-CREA-004"
     en_messages[TE_CREA_004] = "Tenant Name already exists."

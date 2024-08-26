@@ -4,7 +4,7 @@ import logging
 from application.messages import CreateWorkflowRequest, CreateWorkflowResponse
 from application.validators import CreateWorkflowValidator, CreateWorkflowBizValidator
 from domain.ports import Repository
-from domain.entities import Workflow, WorkflowRule
+from domain.entities import Workflow, Container
 from toolkit import Localizer
 
 
@@ -34,7 +34,7 @@ class CreateWorkflowHandler:
         for r in request.rules:
             self.repository.create(r)
 
-            wfr = WorkflowRule()
+            wfr = Container()
             wfr.workflow_id = request.workflow.id
             wfr.rule_id = r.id
             self.repository.create(wfr)

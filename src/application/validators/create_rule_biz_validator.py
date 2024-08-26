@@ -1,5 +1,6 @@
 """_summary_"""
 from application.messages import CreateRuleRequest
+from domain.entities import Rule
 from domain.ports import Repository
 from toolkit import Validator
 from toolkit.localization import Localizer, Codes
@@ -31,4 +32,4 @@ class CreateRuleBizValidator(Validator):
                 Codes.RU_CREA_006,
                 err.__str__)
 
-        request.rule.id = self.__repository.next_number("rule")
+        request.rule.id = self.__repository.next_number(Rule)

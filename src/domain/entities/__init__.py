@@ -2,7 +2,7 @@
 
 from .workflow import Workflow
 from .rule import Rule
-from .workflow_rule import WorkflowRule
+from .container import Container, ContainerRules
 from .action import Action
 from .pagination import Pagination
 from .auditable import Auditable

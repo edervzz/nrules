@@ -1,7 +1,7 @@
 """_summary_
     """
 from typing import List
-from domain.entities import Workflow, Rule, WorkflowRule
+from domain.entities import Workflow, Rule, Container
 from domain.ports import Repository
 
 
@@ -11,7 +11,7 @@ class StubRepositoryAdapter(Repository):
     def __init__(self):
         self.workflows: List[Workflow] = []
         self.rules: List[Rule] = []
-        self.workflow_rules: List[WorkflowRule] = []
+        self.workflow_rules: List[Container] = []
 
     def __create(self, entity: any):
         datatype = type(entity)

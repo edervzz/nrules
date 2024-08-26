@@ -3,7 +3,7 @@
 from datetime import datetime
 from sqlalchemy import Engine, create_engine, select, event
 from sqlalchemy.orm import Session
-from domain.entities import WorkflowRule, Rule, Workflow
+from domain.entities import Container, Rule, Workflow
 from domain.entities import Auditable, Migrations, Tenants, TenantStages, XObject
 from domain.ports import Repository
 from infrastructure.data import initial, tables_base
@@ -29,8 +29,8 @@ class RepositoryAdapter(Repository):
         event.listen(Rule, 'before_insert', self.__before_insert)
         event.listen(Rule, 'before_update', self.__before_update)
 
-        event.listen(WorkflowRule, 'before_insert', self.__before_insert)
-        event.listen(WorkflowRule, 'before_update', self.__before_update)
+        event.listen(Container, 'before_insert', self.__before_insert)
+        event.listen(Container, 'before_update', self.__before_update)
 
         event.listen(Tenants, 'before_insert', self.__before_insert)
         event.listen(Tenants, 'before_update', self.__before_update)
@@ -96,9 +96,9 @@ class RepositoryAdapter(Repository):
         m.id = "session failure"
         return [m]
 
-    def next_number(self, objname: str) -> int:
+    def next_number(self, class_: type) -> int:
         xobject = XObject()
-        xobject.object_name = objname.lower()
+        xobject.object_name = class_.__name__
 
         with Session(self.engine) as session:
             session.add(xobject)

@@ -42,5 +42,5 @@ class Repository(ABC):
     def health_check(self) -> list:
         """ Run Migration """
 
-    def next_number(self, objname: str) -> int:
+    def next_number(self, class_) -> int:
         """ Get next number """

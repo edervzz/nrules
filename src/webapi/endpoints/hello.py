@@ -12,7 +12,7 @@ def hello_endpoint():
     """ New Workflow Endpoint """
 
     try:
-        repository = Services.repository
+        repository = Services.core_repository
         result = repository.health_check()
         migrations = []
         if isinstance(result, list):

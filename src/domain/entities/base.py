@@ -39,6 +39,10 @@ class Tenants(Base, Auditable):
 
     name: Mapped[str] = mapped_column(nullable=False)
 
+    option: Mapped[str] = mapped_column(nullable=False)
+
+    is_active: Mapped[bool] = mapped_column(nullable=True)
+
 
 class TenantStages(Base, Auditable):
     """ Tenants Stages """

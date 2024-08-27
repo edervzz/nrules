@@ -2,15 +2,15 @@
 
 import os
 import logging
-from domain.ports import Repository
-from infrastructure.adapters import RepositoryAdapter, StubRepositoryAdapter
+from domain.ports import CoreRepository
+from infrastructure.adapters import CoreAdapter, StubRepositoryAdapter
 from toolkit import Localizer
 
 
 class Services():
     """ Services container """
     tenant_id: int
-    repository: Repository
+    core_repository: CoreRepository
     logger: logging.Logger
     localizer: Localizer
 
@@ -19,15 +19,15 @@ class Services():
         """ prepare services """
         # repository
         try:
-            __repository = RepositoryAdapter(
-                os.environ["DBUSER"],
-                os.environ["DBPWD"],
-                os.environ["DBSERVER"],
-                os.environ["DBNAME"]
+            __repository = CoreAdapter(
+                os.environ["TENANT_DBUSER"],
+                os.environ["TENANT_DBPWD"],
+                os.environ["TENANT_DBSERVER"],
+                os.environ["TENANT_DBNAME"]
             )
         except KeyError:
             __repository = StubRepositoryAdapter()
-        Services.repository = __repository
+        Services.core_repository = __repository
 
         # logger
         logging.basicConfig()

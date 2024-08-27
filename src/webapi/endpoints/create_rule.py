@@ -28,7 +28,7 @@ def new_rules_endpoint(tid=None):
     )
 
     handler = CreateRuleHandler(
-        Services.repository,
+        Services.core_repository,
         Services.logger,
         Services.localizer
     )

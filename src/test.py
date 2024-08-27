@@ -3,14 +3,14 @@
 # from sqlalchemy import create_engine, MetaData
 # from sqlalchemy.orm import Session
 import logging
-from infrastructure.adapters import RepositoryAdapter
+from infrastructure.adapters import CoreAdapter
 from domain.entities.workflow import Workflow
-from domain.ports import Repository
+from domain.ports import CoreRepository
 from application.messages import CreateWorkflowRequest
 from application.commands import CreateWorkflowHandler
 
 
-def test01(repository: Repository):
+def test01(repository: CoreRepository):
     wf = Workflow()
     wf.name = "WF_test"
     repository.begin()
@@ -18,7 +18,7 @@ def test01(repository: Repository):
     repository.commit_work()
 
 
-r = RepositoryAdapter("root", "my-secret-pw", "localhost", "nrule-core")
+r = CoreAdapter("root", "my-secret-pw", "localhost", "nrule-core")
 datatype = type(r)
 print(datatype.__name__)
 logging.basicConfig()

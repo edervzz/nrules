@@ -2,14 +2,14 @@
 import logging
 from application.messages import ReadRuleRequest, ReadRuleResponse
 from application.validators import ReadRuleValidator, ReadRuleBizValidator
-from domain.ports import Repository
+from domain.ports import CoreRepository
 from toolkit import Localizer
 
 
 class ReadRuleHandler:
     """ Read Rule Handler """
 
-    def __init__(self, repository: Repository, logger: logging, localizer: Localizer):
+    def __init__(self, repository: CoreRepository, logger: logging, localizer: Localizer):
         self.repository = repository
         self.logger = logger
         self.localizer = localizer

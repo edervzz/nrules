@@ -3,13 +3,13 @@ from application.messages import CreateTenantRequest
 from toolkit import Validator
 from toolkit.localization import Localizer, Codes
 from domain.entities import Tenants, TenantStages
-from domain.ports import Repository
+from domain.ports import CoreRepository
 
 
 class CreateTenantBizValidator(Validator):
     """_summary_ """
 
-    def __init__(self, repository: Repository, localizer: Localizer):
+    def __init__(self, repository: CoreRepository, localizer: Localizer):
         super().__init__()
         self._localizer = localizer
         self.repository = repository

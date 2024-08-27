@@ -24,7 +24,7 @@ def new_tenant_endpoint():
     )
 
     result = CreateTenantHandler(
-        Services.repository,
+        Services.core_repository,
         Services.logger,
         Services.localizer
     ).handler(command)

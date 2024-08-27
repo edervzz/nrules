@@ -1,7 +1,7 @@
 """_summary_"""
 from application.messages import CreateRuleRequest
 from domain.entities import Rule
-from domain.ports import Repository
+from domain.ports import CoreRepository
 from toolkit import Validator
 from toolkit.localization import Localizer, Codes
 from .expression_validator import ExpressionValidator
@@ -10,7 +10,7 @@ from .expression_validator import ExpressionValidator
 class CreateRuleBizValidator(Validator):
     """ Create Rule Validator """
 
-    def __init__(self,  repository: Repository, localizer: Localizer):
+    def __init__(self,  repository: CoreRepository, localizer: Localizer):
         super().__init__()
         self.__repository = repository
         self._localizer = localizer

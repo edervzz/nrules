@@ -1,6 +1,6 @@
 """_summary_"""
 from application.messages import ReadAllRulesRequest
-from domain.ports import Repository
+from domain.ports import CoreRepository
 from toolkit import Validator
 from toolkit.localization import Localizer, Codes
 
@@ -8,7 +8,7 @@ from toolkit.localization import Localizer, Codes
 class ReadAllRulesBizValidator(Validator):
     """_summary_ """
 
-    def __init__(self, repository: Repository, localizer: Localizer):
+    def __init__(self, repository: CoreRepository, localizer: Localizer):
         super().__init__()
         self.repository = repository
         self._localizer = localizer

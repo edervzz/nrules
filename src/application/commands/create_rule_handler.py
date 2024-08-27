@@ -2,7 +2,7 @@ r"""_summary_"""
 import logging
 from application.messages import CreateRuleRequest, CreateRuleResponse
 from application.validators import CreateRuleValidator, CreateRuleBizValidator
-from domain.ports import Repository
+from domain.ports import CoreRepository
 from domain.entities import Rule
 from toolkit import Localizer
 
@@ -10,7 +10,7 @@ from toolkit import Localizer
 class CreateRuleHandler:
     r""" _summary_ """
 
-    def __init__(self, repository: Repository, logger: logging, localizer: Localizer):
+    def __init__(self, repository: CoreRepository, logger: logging, localizer: Localizer):
         self.repository = repository
         self.logger = logger
         self.localizer = localizer

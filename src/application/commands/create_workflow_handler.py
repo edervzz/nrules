@@ -3,7 +3,7 @@
 import logging
 from application.messages import CreateWorkflowRequest, CreateWorkflowResponse
 from application.validators import CreateWorkflowValidator, CreateWorkflowBizValidator
-from domain.ports import Repository
+from domain.ports import CoreRepository
 from domain.entities import Workflow, Container
 from toolkit import Localizer
 
@@ -11,7 +11,7 @@ from toolkit import Localizer
 class CreateWorkflowHandler:
     r""" _summary_ """
 
-    def __init__(self, repository: Repository, logger: logging, localizer: Localizer):
+    def __init__(self, repository: CoreRepository, logger: logging, localizer: Localizer):
         self.repository = repository
         self.logger = logger
         self.localizer = localizer

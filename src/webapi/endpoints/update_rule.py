@@ -31,7 +31,7 @@ def update_rules_endpoint(tid=None, rule_id=None):
     )
 
     handler = UpdateRuleHandler(
-        Services.repository,
+        Services.core_repository,
         Services.logger,
         Services.localizer
     )

@@ -3,14 +3,14 @@
 import logging
 from application.messages import ReadWorkflowRequest, ReadWorkflowResponse
 from application.validators import ReadWorkflowValidator, ReadWorkflowBizValidator
-from domain.ports import Repository
+from domain.ports import CoreRepository
 from toolkit import Localizer
 
 
 class ReadWorkflowHandler:
     """ _summary_ """
 
-    def __init__(self, repository: Repository, logger: logging, localizer: Localizer):
+    def __init__(self, repository: CoreRepository, logger: logging, localizer: Localizer):
         self.repository = repository
         self.logger = logger
         self.localizer = localizer

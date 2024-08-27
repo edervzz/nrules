@@ -9,7 +9,7 @@ migration_bp = Blueprint("Run Migration", __name__)
 def run_migration_endpoint():
     """ Migration Endpoint """
     try:
-        repository = Services.repository
+        repository = Services.core_repository
         repository.migrate()
 
         response = Response("", status=200, mimetype='application/json')

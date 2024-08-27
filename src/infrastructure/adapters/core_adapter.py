@@ -5,7 +5,7 @@ from sqlalchemy import Engine, create_engine, select, event
 from sqlalchemy.orm import Session
 from domain.entities import Container, Rule, Workflow
 from domain.entities import Auditable, Migrations, Tenants, TenantStages, XObject
-from domain.ports import Repository
+from domain.ports import CoreRepository
 from infrastructure.data import initial, tables_base
 from .rule_adapter import RuleAdapter
 from .workflow_adapter import WorkflowAdapter
@@ -13,7 +13,7 @@ from .tenant_adapter import TenantAdapter
 from .tenant_stage_adapter import TenantStageAdapter
 
 
-class RepositoryAdapter(Repository):
+class CoreAdapter(CoreRepository):
     """ Repository Adapter """
 
     def __init__(self, username: str, password: str, server: str, dbname: str):

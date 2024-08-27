@@ -2,10 +2,10 @@
     """
 from typing import List
 from domain.entities import Workflow, Rule, Container
-from domain.ports import Repository
+from domain.ports import CoreRepository
 
 
-class StubRepositoryAdapter(Repository):
+class StubRepositoryAdapter(CoreRepository):
     """ Repository Adapter """
 
     def __init__(self):

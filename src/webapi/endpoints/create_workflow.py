@@ -38,7 +38,7 @@ def new_workflow_endpoint():
     )
 
     handler = CreateWorkflowHandler(
-        Services.repository,
+        Services.core_repository,
         Services.logger,
         Services.localizer
     )

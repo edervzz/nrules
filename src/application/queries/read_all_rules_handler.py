@@ -3,14 +3,14 @@ import logging
 from application.messages import ReadAllRulesRequest, ReadAllRulesResponse
 from application.validators import ReadAllRulesValidator, ReadAllRulesBizValidator
 from domain.entities import Pagination
-from domain.ports import Repository
+from domain.ports import CoreRepository
 from toolkit import Localizer
 
 
 class ReadAllRulesHandler:
     """ Read All Rules Handler """
 
-    def __init__(self, repository: Repository, logger: logging, localizer: Localizer):
+    def __init__(self, repository: CoreRepository, logger: logging, localizer: Localizer):
         self.repository = repository
         self.logger = logger
         self.localizer = localizer

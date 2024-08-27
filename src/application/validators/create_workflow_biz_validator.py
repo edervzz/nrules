@@ -1,6 +1,6 @@
 """_summary_"""
 from application.messages import CreateWorkflowRequest
-from domain.ports import Repository
+from domain.ports import CoreRepository
 from domain.entities import Workflow
 from toolkit import Validator, Localizer, Codes
 
@@ -8,7 +8,7 @@ from toolkit import Validator, Localizer, Codes
 class CreateWorkflowBizValidator(Validator):
     """_summary_ """
 
-    def __init__(self, repository: Repository, localizer: Localizer):
+    def __init__(self, repository: CoreRepository, localizer: Localizer):
         super().__init__()
         self.__repository = repository
         self._localizer = localizer

@@ -24,7 +24,7 @@ def read_rules_endpoint(tid=None, rule_id=None):
     )
 
     handler = ReadRuleHandler(
-        Services.repository,
+        Services.core_repository,
         Services.logger,
         Services.localizer
     )

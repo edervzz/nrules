@@ -18,7 +18,7 @@ def read_workflow_endpoint(_id=None):
     command = ReadWorkflowRequest(workflow_id, workflow_name)
 
     result = ReadWorkflowHandler(
-        Services.repository,
+        Services.core_repository,
         Services.logger,
         Services.localizer
     ).handler(command)

@@ -65,9 +65,6 @@ class CoreAdapter(CoreRepository):
         if not self.session.autoflush:
             self.session.flush()
 
-    def update(self, entity: any):
-        return super().update(entity)
-
     def begin(self, autoflush=False):
         self.session = Session(self.engine, autoflush=autoflush)
         self.rule.set_session(self.session)
@@ -114,9 +111,13 @@ class CoreAdapter(CoreRepository):
             target.updated_by = "system"
             target.created_at = datetime.now()
             target.updated_at = datetime.now()
+        else:
+            print(mapper, connection)
 
     def __before_update(self, mapper, connection, target):
         """ Hook """
         if isinstance(target, Auditable):
             target.updated_by = "system"
             target.updated_at = datetime.now()
+        else:
+            print(mapper, connection)

@@ -2,11 +2,11 @@
     """
 from abc import ABC
 from domain.entities import Workflow
-from .abstractions import MutationRepository, QueryRepository
-from .abstractions import QueryFromParentRepository, QueryPaginationRepository
+from .abstractions import Creator, Updater
+from .abstractions import ReaderByParentID, ReaderPagination, ReaderSingle, ReaderSingleByExternalID
 
 
-class KVSRepository(MutationRepository, QueryRepository):
+class KVSRepository(Creator, ReaderSingle):
     """_summary_"""
 
     def __init__(self, engine):
@@ -14,7 +14,7 @@ class KVSRepository(MutationRepository, QueryRepository):
         self.engine = engine
 
 
-class KVItemRepository(MutationRepository, QueryRepository):
+class KVItemRepository(Creator, ReaderSingle):
     """_summary_"""
 
     def __init__(self, engine):
@@ -22,7 +22,7 @@ class KVItemRepository(MutationRepository, QueryRepository):
         self.engine = engine
 
 
-class ActionRepository(MutationRepository, QueryRepository):
+class ActionRepository(Creator, ReaderSingle):
     """_summary_"""
 
     def __init__(self, engine):
@@ -30,7 +30,7 @@ class ActionRepository(MutationRepository, QueryRepository):
         self.engine = engine
 
 
-class RuleRepository(MutationRepository, QueryRepository, QueryFromParentRepository, QueryPaginationRepository):
+class RuleRepository(Creator, Updater, ReaderSingle, ReaderByParentID, ReaderSingleByExternalID, ReaderPagination):
     """_summary_"""
 
     def __init__(self, engine):
@@ -38,7 +38,7 @@ class RuleRepository(MutationRepository, QueryRepository, QueryFromParentReposit
         self.engine = engine
 
 
-class WorkflowRepository(MutationRepository, QueryRepository):
+class WorkflowRepository(Creator, Updater, ReaderSingle, ReaderSingleByExternalID):
     """_summary_"""
 
     def __init__(self, engine):
@@ -46,7 +46,7 @@ class WorkflowRepository(MutationRepository, QueryRepository):
         self.engine = engine
 
 
-class ContainerRepository(MutationRepository, QueryRepository):
+class ContainerRepository(Creator, ReaderSingle):
     """_summary_"""
 
     def __init__(self, engine):
@@ -54,7 +54,7 @@ class ContainerRepository(MutationRepository, QueryRepository):
         self.engine = engine
 
 
-class EntrypointRepository(MutationRepository, QueryRepository):
+class EntrypointRepository(Creator, ReaderSingle):
     """_summary_"""
 
     def __init__(self, engine):
@@ -62,7 +62,7 @@ class EntrypointRepository(MutationRepository, QueryRepository):
         self.engine = engine
 
 
-class VariantRepository(MutationRepository, QueryRepository):
+class VariantRepository(Creator, ReaderSingle):
     """_summary_"""
 
     def __init__(self, engine):
@@ -70,7 +70,7 @@ class VariantRepository(MutationRepository, QueryRepository):
         self.engine = engine
 
 
-class XObjectRepository(MutationRepository, QueryRepository):
+class XObjectRepository(Creator):
     """_summary_"""
 
     def __init__(self, engine):

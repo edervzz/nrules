@@ -3,7 +3,7 @@ from sqlalchemy import Engine
 from sqlalchemy.orm import Session
 
 
-class MutationRepository:
+class Creator:
     """ creator repository """
 
     def __init__(self) -> None:
@@ -17,12 +17,16 @@ class MutationRepository:
         """ create a new entity """
         raise NotImplementedError(__name__)
 
+
+class Updater:
+    """ creator repository """
+
     def update(self, entity):
         """ update an entity """
         raise NotImplementedError(__name__)
 
 
-class QueryRepository:
+class ReaderSingle:
     """ reader repository """
 
     def __init__(self) -> None:
@@ -37,7 +41,22 @@ class QueryRepository:
         raise NotImplementedError(__name__)
 
 
-class QueryFromParentRepository:
+class ReaderSingleByExternalID:
+    """ reader repository """
+
+    def __init__(self) -> None:
+        self.engine: Engine
+
+    def read(self, tenantid: int, _id: int) -> any:
+        """ read entity by id """
+        raise NotImplementedError(__name__)
+
+    def read_by_external_id(self, tenantid: int, external_id: str) -> any:
+        """ read entity by external id """
+        raise NotImplementedError(__name__)
+
+
+class ReaderByParentID:
     """ reader from parent """
 
     def read_by_parent_id(self, tenantid: int, parent_id: int) -> []:
@@ -45,7 +64,7 @@ class QueryFromParentRepository:
         raise NotImplementedError(__name__)
 
 
-class QueryPaginationRepository:
+class ReaderPagination:
     """ reader from parent """
 
     def read_page(self, tenantid: int, page_no: int, page_size: int) -> tuple[list, any]:

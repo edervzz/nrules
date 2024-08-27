@@ -1,10 +1,10 @@
 """_summary_
     """
 from abc import ABC
-from .abstractions import MutationRepository, QueryRepository
+from .abstractions import Creator, Updater, ReaderSingle, ReaderSingleByExternalID
 
 
-class TenantRepository(MutationRepository, QueryRepository):
+class TenantRepository(Creator, ReaderSingle, ReaderSingleByExternalID):
     """_summary_"""
 
     def __init__(self, engine):
@@ -12,7 +12,7 @@ class TenantRepository(MutationRepository, QueryRepository):
         self.engine = engine
 
 
-class TenantStageRepository(MutationRepository, QueryRepository):
+class TenantStageRepository(Creator, Updater, ReaderSingle, ReaderSingleByExternalID):
     """_summary_"""
 
     def __init__(self, engine):

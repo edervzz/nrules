@@ -143,14 +143,12 @@ def tables_base(engine: Engine):
             "key", String(32), primary_key=True, comment="Key of Entrypoint"),
         Column(
             "workflow_id", BigInteger, comment="Workflow ID"),
-        Column(
-            "values", String(2000), nullable=False, comment="Values"),
-        comment="Variant is a container for many Key-Values"
+        comment="Entrypoint determine which workflow will be called"
     )
     set_version(entrypoint)
     set_auditable(entrypoint)
 
-    # Entrypoint Storage ----------------------------------------------
+    # Variant Storage ----------------------------------------------
     variant = Table(
         "variants",
         metadata_obj,

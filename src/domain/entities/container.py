@@ -1,11 +1,11 @@
 """ workflow rule """
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
-from .auditable import Auditable
+from .extra_fields import Auditable, Versioned
 from .base import Base
 
 
-class Container(Base, Auditable):
+class Container(Base, Auditable, Versioned):
     """ Container entity """
 
     __tablename__ = "containers"
@@ -21,5 +21,3 @@ class Container(Base, Auditable):
     order: Mapped[int] = mapped_column(nullable=False)
 
     action_id_ok: Mapped[int] = mapped_column(nullable=True)
-
-    version: Mapped[int] = mapped_column(nullable=False)

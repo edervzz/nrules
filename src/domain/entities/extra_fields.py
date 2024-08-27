@@ -9,3 +9,8 @@ class Auditable:
     created_at: Mapped[str] = mapped_column(nullable=False)
     updated_by: Mapped[str] = mapped_column(nullable=False)
     updated_at: Mapped[str] = mapped_column(nullable=False)
+
+
+class Versioned:
+    """" Version field """
+    version: Mapped[int] = mapped_column(nullable=False)

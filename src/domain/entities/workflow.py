@@ -1,11 +1,11 @@
 """ workflow entity """
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
-from .auditable import Auditable
+from .extra_fields import Auditable, Versioned
 from .base import Base
 
 
-class Workflow(Base, Auditable):
+class Workflow(Base, Auditable, Versioned):
     """ Workflow entity """
 
     __tablename__ = "workflows"
@@ -17,12 +17,8 @@ class Workflow(Base, Auditable):
 
     name: Mapped[str] = mapped_column(nullable=False)
 
-    container_id: Mapped[int] = mapped_column(nullable=False)
+    typeof: Mapped[str] = mapped_column(nullable=True)
 
-    ok_workflow_id: Mapped[int] = mapped_column(nullable=False)
+    action_id_ok: Mapped[int] = mapped_column(nullable=False)
 
-    ok_kvs_id: Mapped[int] = mapped_column(nullable=False)
-
-    nok_workflow_id: Mapped[int] = mapped_column(nullable=False)
-
-    nok_kvs_id: Mapped[int] = mapped_column(nullable=False)
+    action_id_nok: Mapped[int] = mapped_column(nullable=False)

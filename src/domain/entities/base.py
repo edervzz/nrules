@@ -1,6 +1,6 @@
 """ entities basis """
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
-from .auditable import Auditable
+from .extra_fields import Auditable
 
 
 class Base(DeclarativeBase):

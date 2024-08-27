@@ -1,11 +1,11 @@
 """ Entities """
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
-from .auditable import Auditable
+from .extra_fields import Auditable, Versioned
 from .base import Base
 
 
-class Rule(Base, Auditable):
+class Rule(Base, Auditable, Versioned):
     """ Rule entity """
 
     __tablename__ = "rules"
@@ -18,5 +18,3 @@ class Rule(Base, Auditable):
     name: Mapped[str] = mapped_column(nullable=False, unique=True)
 
     expression: Mapped[str] = mapped_column(nullable=False)
-
-    version: Mapped[int] = mapped_column(nullable=False)

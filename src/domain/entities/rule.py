@@ -19,6 +19,4 @@ class Rule(Base, Auditable):
 
     expression: Mapped[str] = mapped_column(nullable=False)
 
-    is_exclusive: Mapped[bool] = mapped_column(nullable=True)
-
     version: Mapped[int] = mapped_column(nullable=False)

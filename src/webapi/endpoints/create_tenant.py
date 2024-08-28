@@ -20,11 +20,14 @@ def new_tenant_endpoint():
 
     command = CreateTenantRequest(
         new_tenant.tenant_id,
-        new_tenant.tenant_name
+        new_tenant.tenant_name,
+        new_tenant.option_dev,
+        new_tenant.option_test,
+        new_tenant.option_prod
     )
 
     result = CreateTenantHandler(
-        Services.core_repository,
+        Services.tenancy_repository,
         Services.logger,
         Services.localizer
     ).handler(command)

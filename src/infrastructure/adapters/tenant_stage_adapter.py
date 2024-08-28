@@ -2,12 +2,13 @@
     """
 from sqlalchemy import select
 from sqlalchemy.orm import Session
-from domain.entities import TenantStages, Tenants
+from domain.entities import Tenants
+from domain.entities.tenant_stages import TenantStages
 from domain.ports import TenantStageRepository
 
 
 class TenantStageAdapter(TenantStageRepository):
-    """ Rule Adapter """
+    """ Tenant Stage Adapter """
 
     def set_session(self, session: Session):
         self.session = session

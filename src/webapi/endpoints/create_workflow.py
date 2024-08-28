@@ -20,7 +20,7 @@ def rule_factory(rule: NewWorkflowRuleModel) -> Rule:
 
 
 @new_workflow_bp.post("/workflows")
-def new_workflow_endpoint():
+def new_workflow_endpoint(tid=None):
     """ New Workflow Endpoint """
     json_data = request.get_json(silent=True)
     if json_data is None:
@@ -38,7 +38,7 @@ def new_workflow_endpoint():
     )
 
     handler = CreateWorkflowHandler(
-        Services.core_repository,
+        Services.core_repositories[tid],
         Services.logger,
         Services.localizer
     )

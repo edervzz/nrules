@@ -22,7 +22,7 @@ def read_all_rules_endpoint(tid=None):
     )
 
     handler = ReadAllRulesHandler(
-        Services.core_repository,
+        Services.core_repositories[tid],
         Services.logger,
         Services.localizer
     )

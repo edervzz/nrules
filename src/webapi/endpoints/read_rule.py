@@ -15,7 +15,6 @@ def read_rules_endpoint(tid=None, rule_id=None):
     tenant_id = int(tid)
     id_type = request.args.get("idType", "")
     rule_id, rule_name = Identification.get_object(rule_id, id_type)
-    # tenant_id = int(request.args.get("tid", "0"))
 
     command = ReadRuleRequest(
         tenant_id,
@@ -24,7 +23,7 @@ def read_rules_endpoint(tid=None, rule_id=None):
     )
 
     handler = ReadRuleHandler(
-        Services.core_repository,
+        Services.core_repositories[tid],
         Services.logger,
         Services.localizer
     )

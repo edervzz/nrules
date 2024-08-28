@@ -1,4 +1,5 @@
 """ Migration components """
 
-from ._000000000000_initial import initial
-from ._000000000001_tables_base import tables_base
+from .m000000000000_initial import initial
+from .m000000000001_core_tables import core_tables
+from .m000000000001_tenancy_tables import tenancy_tables

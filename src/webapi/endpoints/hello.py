@@ -1,19 +1,18 @@
 """ Create a new workflow """
 import json
 from flask import Blueprint, Response, abort
-from toolkit import Services
 from sqlalchemy.exc import OperationalError
+from toolkit import Services
 
 hello_bp = Blueprint("Hello", __name__)
 
 
-@hello_bp.get("/hello")
-def hello_endpoint():
+@hello_bp.get("/t/<tid>/hello")
+def hello_endpoint(tid: int = None):
     """ New Workflow Endpoint """
 
     try:
-        repository = Services.core_repository
-        result = repository.health_check()
+        result = Services.core_repositories[tid].health_check()
         migrations = []
         if isinstance(result, list):
             for r in result:

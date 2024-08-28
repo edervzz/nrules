@@ -1,17 +1,17 @@
 """ migration file """
 
 from datetime import datetime
-from sqlalchemy import Column, Integer, BigInteger, String
+from sqlalchemy import Column, Integer, BigInteger, String, Boolean
 from sqlalchemy import MetaData, Table,  CheckConstraint, Engine, select
 from sqlalchemy.orm import Session
 from domain.entities import Migrations
 from .audit import set_auditable, set_version
 
 
-def tables_base(engine: Engine):
-    """000000000001_tables_base"""
+def core_tables(engine: Engine) -> str:
+    """000000000001_core_tables"""
 
-    name = "000000000001_tables_base"
+    name = "000000000001_core_tables"
 
     metadata_obj = MetaData()
 
@@ -19,7 +19,19 @@ def tables_base(engine: Engine):
     with Session(engine) as session:
         result = session.scalar(stms)
         if result is not None:
-            return
+            return result.id
+
+    # XObject Storage ----------------------------------------------
+    variant = Table(
+        "xobjects",
+        metadata_obj,
+        Column(
+            "id", BigInteger, primary_key=True, autoincrement=True, comment="ID for Variants, Rules, Workflow, Actions, KVS"),
+        Column(
+            "object_name", String(50), nullable=False, comment="Rules / Workflows / Actions / KVS"),
+        comment="Variant is a container for many Key-Values"
+    )
+    set_auditable(variant)
 
     # Key-Value Storage ----------------------------------------------
     kv = Table(
@@ -62,7 +74,7 @@ def tables_base(engine: Engine):
         Column(
             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
         Column(
-            "id", BigInteger, primary_key=True, comment="Key-Value Storage ID"),
+            "id", BigInteger, primary_key=True, comment="Action ID"),
         Column(
             "workflow_id", String(50), primary_key=True, comment="Key-Value Storage Key"),
         Column(
@@ -140,9 +152,13 @@ def tables_base(engine: Engine):
         Column(
             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
         Column(
-            "key", String(32), primary_key=True, comment="Key of Entrypoint"),
+            "id", Integer, primary_key=True, comment="Workflow ID"),
+        Column(
+            "name", String(32), comment="Name code of Entrypoint"),
         Column(
             "workflow_id", BigInteger, comment="Workflow ID"),
+        Column(
+            "is_active", Boolean, comment="Entrypoint is active"),
         comment="Entrypoint determine which workflow will be called"
     )
     set_version(entrypoint)
@@ -157,7 +173,7 @@ def tables_base(engine: Engine):
         Column(
             "key", String(32), primary_key=True, comment="Key"),
         Column(
-            "entrypoint_key", String(32), primary_key=True, comment="Key of Entrypoint"),
+            "entrypoint_id", Integer, primary_key=True, comment="ID of Entrypoint"),
         Column(
             "value", String(100), nullable=False, comment="Value"),
         comment="Variant is a container for many Key-Values"
@@ -173,3 +189,4 @@ def tables_base(engine: Engine):
         m.exec_date = datetime.now()
         session.add(m)
         session.commit()
+        return name

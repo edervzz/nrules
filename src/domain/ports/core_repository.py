@@ -1,117 +1,128 @@
-"""_summary_
-    """
-from abc import ABC
-from domain.entities import Workflow
+""" core repositories """
+from abc import ABC, abstractmethod
 from .abstractions import Creator, Updater
 from .abstractions import ReaderByParentID, ReaderPagination, ReaderSingle, ReaderSingleByExternalID
 
 
-class KVSRepository(Creator, ReaderSingle):
+class KVSRepository(ABC, Creator, ReaderSingle, ReaderSingleByExternalID):
     """_summary_"""
 
     def __init__(self, engine):
-        super().__init__()
+        ABC.__init__(self)
+        Creator.__init__(self)
         self.engine = engine
 
 
-class KVItemRepository(Creator, ReaderSingle):
+class KVItemRepository(ABC, Creator, Updater, ReaderSingleByExternalID, ReaderByParentID):
     """_summary_"""
 
     def __init__(self, engine):
-        super().__init__()
+        ABC.__init__(self)
+        Creator.__init__(self)
         self.engine = engine
 
 
-class ActionRepository(Creator, ReaderSingle):
+class ActionRepository(ABC, Creator, ReaderSingle):
     """_summary_"""
 
     def __init__(self, engine):
-        super().__init__()
+        ABC.__init__(self)
+        Creator.__init__(self)
         self.engine = engine
 
 
-class RuleRepository(Creator, Updater, ReaderSingle, ReaderByParentID, ReaderSingleByExternalID, ReaderPagination):
+class RuleRepository(
+        ABC, Creator, Updater,
+        ReaderSingle, ReaderByParentID, ReaderSingleByExternalID, ReaderPagination):
     """_summary_"""
 
     def __init__(self, engine):
-        super().__init__()
+        ABC.__init__(self)
+        Creator.__init__(self)
         self.engine = engine
 
 
-class WorkflowRepository(Creator, Updater, ReaderSingle, ReaderSingleByExternalID):
+class WorkflowRepository(
+        ABC, Creator, Updater,
+        ReaderSingle, ReaderSingleByExternalID, ReaderPagination):
     """_summary_"""
 
     def __init__(self, engine):
-        super().__init__()
+        ABC.__init__(self)
+        Creator.__init__(self)
         self.engine = engine
 
 
-class ContainerRepository(Creator, ReaderSingle):
+class ContainerRepository(ABC, Creator, Updater, ReaderByParentID):
     """_summary_"""
 
     def __init__(self, engine):
-        super().__init__()
+        ABC.__init__(self)
+        Creator.__init__(self)
         self.engine = engine
 
 
-class EntrypointRepository(Creator, ReaderSingle):
+class EntrypointRepository(ABC, Creator, ReaderSingle, ReaderSingleByExternalID):
     """_summary_"""
 
     def __init__(self, engine):
-        super().__init__()
+        ABC.__init__(self)
+        Creator.__init__(self)
         self.engine = engine
 
 
-class VariantRepository(Creator, ReaderSingle):
+class VariantRepository(ABC, Creator, Updater, ReaderByParentID):
     """_summary_"""
 
     def __init__(self, engine):
-        super().__init__()
+        ABC.__init__(self)
+        Creator.__init__(self)
         self.engine = engine
 
 
-class XObjectRepository(Creator):
+class XObjectRepository(ABC, Creator):
     """_summary_"""
 
     def __init__(self, engine):
-        super().__init__()
+        ABC.__init__(self)
+        Creator.__init__(self)
         self.engine = engine
 
 
-class CoreRepository(ABC):
+class CoreRepository:
     """ Repository container """
 
     # "mysql+pymysql://root:my-secret-pw@localhost/nrule-core", echo=True)
     def __init__(self):
+        self.kv: KVSRepository
+        self.kvitem: KVItemRepository
+        self.action: ActionRepository
         self.rule: RuleRepository
         self.workflow: WorkflowRepository
+        self.container: ContainerRepository
+        self.entrypoint: EntrypointRepository
+        self.variant: VariantRepository
 
-    def create(self, entity: any):
-        """ Create a new entity """
-
-    def update(self, entity: any):
-        """ Update an entity """
-
-    def workflow_read(self, _id: int) -> Workflow:
-        """ read an entity by id """
-
-    def workflow_read_by_external_id(self, external_id: str) -> Workflow:
-        """ read an entity by id """
-
+    @abstractmethod
     def begin(self, autoflush=False):
         """ Begin transaction """
 
+    @abstractmethod
     def commit_work(self):
         """ Commit transaction """
 
+    @abstractmethod
     def rollback_work(self):
         """ Rollback transaction """
 
-    def migrate(self):
+    @abstractmethod
+    def migrate(self) -> list:
         """ Run Migration """
 
+    @abstractmethod
     def health_check(self) -> list:
         """ Run Migration """
 
+    @abstractmethod
     def next_number(self, class_) -> int:
         """ Get next number """

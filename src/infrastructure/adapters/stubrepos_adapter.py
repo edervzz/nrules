@@ -9,6 +9,7 @@ class StubRepositoryAdapter(CoreRepository):
     """ Repository Adapter """
 
     def __init__(self):
+        super().__init__()
         self.workflows: List[Workflow] = []
         self.rules: List[Rule] = []
         self.workflow_rules: List[Container] = []

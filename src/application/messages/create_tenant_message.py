@@ -1,19 +1,21 @@
 """ Create tenant messages """
-from domain.entities import Tenants, TenantStages
+from domain.entities import Tenants
 
 
 class CreateTenantRequest:
     """ Create Tenant Request """
 
-    def __init__(self, tenant_id: int, tenant_name: str):
+    def __init__(self, tenant_id: int, tenant_name: str, optiondev: str, optiontest: str, optionprod: str):
         self.tenant_id = tenant_id
         self.tenant_name = tenant_name
 
+        self.optiondev = optiondev
+        self.optiontest = optiontest
+        self.optionprod = optionprod
+
         self.tenant_dev: Tenants
         self.tenant_test: Tenants
-        self.tenant_release: Tenants
-
-        self.tenant_stage: TenantStages
+        self.tenant_prod: Tenants
 
 
 class CreateTenantResponse:

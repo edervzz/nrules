@@ -1,4 +1,5 @@
-"""repositories"""
+""" abstractions for reepository"""
+from abc import abstractmethod
 from sqlalchemy import Engine
 from sqlalchemy.orm import Session
 
@@ -7,12 +8,15 @@ class Creator:
     """ creator repository """
 
     def __init__(self) -> None:
-        self.session: Session
+        self.session: Session  # <- for mutation purpose
+        self.engine: Engine  # <- for query purpose
 
+    @abstractmethod
     def set_session(self, session: Session):
         """ assign session from engine """
         self.session = session
 
+    @abstractmethod
     def create(self, entity):
         """ create a new entity """
         raise NotImplementedError(__name__)
@@ -21,6 +25,7 @@ class Creator:
 class Updater:
     """ creator repository """
 
+    @abstractmethod
     def update(self, entity):
         """ update an entity """
         raise NotImplementedError(__name__)
@@ -29,44 +34,34 @@ class Updater:
 class ReaderSingle:
     """ reader repository """
 
-    def __init__(self) -> None:
-        self.engine: Engine
-
+    @abstractmethod
     def read(self, tenantid: int, _id: int) -> any:
         """ read entity by id """
-        raise NotImplementedError(__name__)
-
-    def read_by_external_id(self, tenantid: int, external_id: str) -> any:
-        """ read entity by external id """
         raise NotImplementedError(__name__)
 
 
 class ReaderSingleByExternalID:
-    """ reader repository """
+    """ reader single repository """
 
-    def __init__(self) -> None:
-        self.engine: Engine
-
-    def read(self, tenantid: int, _id: int) -> any:
-        """ read entity by id """
-        raise NotImplementedError(__name__)
-
+    @abstractmethod
     def read_by_external_id(self, tenantid: int, external_id: str) -> any:
         """ read entity by external id """
         raise NotImplementedError(__name__)
 
 
 class ReaderByParentID:
-    """ reader from parent """
+    """ reader many from parent """
 
+    @abstractmethod
     def read_by_parent_id(self, tenantid: int, parent_id: int) -> []:
         """ read entities by parent id """
         raise NotImplementedError(__name__)
 
 
 class ReaderPagination:
-    """ reader from parent """
+    """ reader all using pagination """
 
+    @abstractmethod
     def read_page(self, tenantid: int, page_no: int, page_size: int) -> tuple[list, any]:
         """_summary_
 

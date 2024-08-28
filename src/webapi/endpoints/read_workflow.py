@@ -9,7 +9,7 @@ read_workflow_bp = Blueprint("Read a Workflow", __name__)
 
 
 @read_workflow_bp.get("/workflows/<_id>")
-def read_workflow_endpoint(_id=None):
+def read_workflow_endpoint(tid=None, _id=None):
     """ Read Workflow Endpoint """
     Services.tenant_id = request.args.get("tenant")
     id_type = request.args.get("idType", "")
@@ -18,7 +18,7 @@ def read_workflow_endpoint(_id=None):
     command = ReadWorkflowRequest(workflow_id, workflow_name)
 
     result = ReadWorkflowHandler(
-        Services.core_repository,
+        Services.core_repositories[tid],
         Services.logger,
         Services.localizer
     ).handler(command)

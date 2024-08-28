@@ -1,19 +1,18 @@
-"""_summary_
-    """
-from abc import ABC
+""" tenancy repository """
+from abc import ABC, abstractmethod
 from .abstractions import Creator, Updater, ReaderSingle, ReaderSingleByExternalID
 
 
-class TenantRepository(Creator, ReaderSingle, ReaderSingleByExternalID):
-    """_summary_"""
+class TenantRepository(ABC, Creator, ReaderSingle):
+    """ Tenant repository """
 
     def __init__(self, engine):
         super().__init__()
         self.engine = engine
 
 
-class TenantStageRepository(Creator, Updater, ReaderSingle, ReaderSingleByExternalID):
-    """_summary_"""
+class TenantStageRepository(ABC, Creator, Updater, ReaderSingle, ReaderSingleByExternalID):
+    """ Tenant stage repository """
 
     def __init__(self, engine):
         super().__init__()
@@ -21,33 +20,29 @@ class TenantStageRepository(Creator, Updater, ReaderSingle, ReaderSingleByExtern
 
 
 class TenancyRepository(ABC):
-    """ Repository container """
+    """ Tenancy Repository container """
 
-    # "mysql+pymysql://root:my-secret-pw@localhost/nrule-core", echo=True)
+    # "mysql+pymysql://root:my-secret-pw@localhost/dbname", echo=True)
     def __init__(self):
         self.tenant: TenantRepository
         self.tenant_stage: TenantStageRepository
 
-    def create(self, entity: any):
-        """ Create a new entity """
-
-    def update(self, entity: any):
-        """ Update an entity """
-
+    @abstractmethod
     def begin(self, autoflush=False):
         """ Begin transaction """
 
+    @abstractmethod
     def commit_work(self):
         """ Commit transaction """
 
+    @abstractmethod
     def rollback_work(self):
         """ Rollback transaction """
 
+    @abstractmethod
     def migrate(self):
         """ Run Migration """
 
+    @abstractmethod
     def health_check(self) -> list:
         """ Run Migration """
-
-    def next_number(self, class_) -> int:
-        """ Get next number """

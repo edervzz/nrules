@@ -14,7 +14,7 @@ class KVItem(Base, Auditable, Versioned):
 
     key: Mapped[str] = mapped_column(primary_key=True, nullable=False)
 
-    kvs_id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
+    kv_id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
 
     value: Mapped[str] = mapped_column(nullable=False)
 

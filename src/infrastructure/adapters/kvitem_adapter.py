@@ -3,7 +3,7 @@
 from typing import List
 from sqlalchemy import select
 from sqlalchemy.orm import Session
-from domain.entities import KVItem
+from domain.entities import KVItem, KVItemKey
 from domain.ports import KVItemRepository
 
 
@@ -27,11 +27,12 @@ class KVItemAdapter(KVItemRepository):
         kvitem.typeof = entity.typeof
         kvitem.version = entity.version
 
-    def read_by_external_id(self, tenantid: int, external_id: str) -> KVItem:
+    def read(self, tenantid: int, _id: KVItemKey) -> KVItem:
         with Session(self.engine) as session:
             stmt = select(KVItem).where(
                 KVItem.tenant_id == tenantid,
-                KVItem.key == external_id)
+                KVItem.kv_id == _id.kv_id,
+                KVItem.key == _id.key)
             rule = session.scalar(stmt)
             return rule
 

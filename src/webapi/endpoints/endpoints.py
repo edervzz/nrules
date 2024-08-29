@@ -14,6 +14,7 @@ from .update_rule import update_rule_bp
 from .read_all_rule import read_all_rule_bp
 from .create_tenant import new_tenant_bp
 from .create_kv import new_kvs_bp
+from .create_kvitem import new_kvitem_bp
 
 
 def map_endpoints(app: Flask, prefix: str):
@@ -29,6 +30,8 @@ def map_endpoints(app: Flask, prefix: str):
         ),
         url_prefix="/swagger"
     )
+
+    app.register_blueprint(blueprint=new_kvitem_bp, url_prefix=prefix)
 
     app.register_blueprint(blueprint=new_kvs_bp, url_prefix=prefix)
 
@@ -46,28 +49,28 @@ def map_endpoints(app: Flask, prefix: str):
 
     app.register_blueprint(blueprint=new_tenant_bp, url_prefix=prefix)
 
+    app.register_blueprint(blueprint=hello_bp, url_prefix=prefix)
+
     app.register_blueprint(blueprint=core_migration_bp, url_prefix=prefix)
 
     app.register_blueprint(blueprint=tenancy_migration_bp, url_prefix=prefix)
 
-    app.register_blueprint(blueprint=hello_bp, url_prefix=prefix)
-
     app.register_error_handler(
         BadRequest,
         lambda error: Response(
-            response=error.description, status=400)
+            response=error.description, status=400, mimetype="application/json")
     )
 
     app.register_error_handler(
         Conflict,
         lambda error: Response(
-            response=error.description, status=409)
+            response=error.description, status=409, mimetype="application/json")
     )
 
     app.register_error_handler(
         NotFound,
         lambda error: Response(
-            response=error.description, status=404)
+            response=error.description, status=404, mimetype="application/json")
     )
 
     @app.before_request
@@ -79,8 +82,8 @@ def map_endpoints(app: Flask, prefix: str):
             tid = request.url[fromidx+3: toidx]
             Services.prepare_core_repository(tid)
 
-    @app.after_request
-    def content_type(response: Response):
-        if request.blueprint != "swagger_ui":
-            response.content_type = 'application/json'
-        return response
+    # @app.after_request
+    # def content_type(response: Response):
+    #     if request.blueprint != "swagger_ui":
+    #         response.content_type = 'application/json'
+    #     return response

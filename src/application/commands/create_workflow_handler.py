@@ -4,7 +4,7 @@ import logging
 from application.messages import CreateWorkflowRequest, CreateWorkflowResponse
 from application.validators import CreateWorkflowValidator, CreateWorkflowBizValidator
 from domain.ports import CoreRepository
-from domain.entities import Workflow, Container
+from domain.entities import Workflow
 from toolkit import Localizer
 
 

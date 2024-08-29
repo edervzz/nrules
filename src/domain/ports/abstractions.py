@@ -35,7 +35,7 @@ class ReaderSingle:
     """ reader repository """
 
     @abstractmethod
-    def read(self, tenantid: int, _id: int) -> any:
+    def read(self, tenantid: int, _id) -> any:
         """ read entity by id """
         raise NotImplementedError(__name__)
 

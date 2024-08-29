@@ -1,5 +1,6 @@
 """ Entities """
 
+from .keys import KVItemKey
 from .xobject import XObject
 from .tenants import Tenants
 from .tenant_stages import TenantStages

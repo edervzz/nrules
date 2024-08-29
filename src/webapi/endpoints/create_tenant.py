@@ -34,5 +34,6 @@ def new_tenant_endpoint():
 
     return Response(
         response=json.dumps(result.__dict__),
-        status=200
+        status=200,
+        mimetype="application/json"
     )

@@ -6,22 +6,6 @@
         "description": "Rule Engine built for Gentera"
     },
     "paths": {
-        "/nr/api/v1/hello": {
-            "get": {
-                "summary": "Healt Check",
-                "tags": [
-                    "Healt Check"
-                ],
-                "produces": [
-                    "application/text"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation"
-                    }
-                }
-            }
-        },
         "/nr/api/v1/t/{tid}/rules/{rule_id}": {
             "put": {
                 "summary": "Update a rule.",
@@ -220,6 +204,102 @@
                     }
                 }
             }
+        },
+        "/nr/api/v1/tenants": {
+            "post": {
+                "summary": "Create a new Tenant",
+                "tags": [
+                    "Tenancy"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Tenant Information",
+                        "description": "Information about Tenant and Connection Options",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/New Tenant"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/nr/api/v1/hello": {
+            "get": {
+                "summary": "Healt Check",
+                "tags": [
+                    "Healt Check"
+                ],
+                "produces": [
+                    "application/text"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/nr/api/v1/tenancy/migration": {
+            "post": {
+                "description": "Run Migration for Tenancy",
+                "tags": [
+                    "Migrations"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Migration ran successfully"
+                    },
+                    "400": {
+                        "description": "Error during migration"
+                    }
+                }
+            }
+        },
+        "/nr/api/v1/t/<tid>/core/migration": {
+            "post": {
+                "description": "Run Migration for Core by Tenant",
+                "tags": [
+                    "Migrations"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/text"
+                ],
+                "parameters": [
+                    {
+                        "name": "tid",
+                        "description": "Tenant ID",
+                        "in": "path",
+                        "type": "integer",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Migration ran successfully"
+                    },
+                    "400": {
+                        "description": "Error during migration"
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -271,21 +351,83 @@
                     "type": "string",
                     "minLength": 5,
                     "maxLength": 50,
-                    "required": true,
                     "example": "wf.account.products"
                 },
-                "is_node": {
-                    "description": "Means if workflow can derivate in many routes.",
-                    "type": "boolean",
-                    "required": true
+                "typeof": {
+                    "description": "Type of Workflow. Default = BASE.",
+                    "type": "string",
+                    "enum": [
+                        "BASE",
+                        "FULL",
+                        "NODE"
+                    ]
                 },
-                "success_action_id": {
+                "action_id_ok": {
                     "description": "Action ID for success result.",
-                    "type": "integer"
+                    "type": "integer",
+                    "required": false
                 },
-                "failure_action_id": {
+                "action_id_nok": {
                     "description": "Action ID for failure result.",
-                    "type": "integer"
+                    "type": "integer",
+                    "required": false
+                }
+            }
+        },
+        "NewKV": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "KV name.",
+                    "type": "string",
+                    "minLength": 5,
+                    "maxLength": 50,
+                    "required": true,
+                    "example": "kv.account.products"
+                }
+            }
+        },
+        "New Tenant": {
+            "type": "object",
+            "properties": {
+                "tenant_id": {
+                    "description": "Tenant ID",
+                    "type": "integer",
+                    "required": true,
+                    "minimum": 1,
+                    "maximum": 99
+                },
+                "name": {
+                    "description": "Tenant name.",
+                    "type": "string",
+                    "minLength": 5,
+                    "maxLength": 50,
+                    "required": true,
+                    "example": "t.account.products"
+                },
+                "option_dev": {
+                    "description": "Connection Option for Development Environment in Base64.",
+                    "type": "string",
+                    "minLength": 5,
+                    "maxLength": 500,
+                    "required": true,
+                    "example": "bXlzcWwrcHlteXNxbDovL3Jvb3Q6bXlzZWNyZXRwd0Bsb2NhbGhvc3QvZGJuYW1l"
+                },
+                "option_test": {
+                    "description": "Connection Option for Testing Environment in Base64.",
+                    "type": "string",
+                    "minLength": 5,
+                    "maxLength": 500,
+                    "required": true,
+                    "example": "bXlzcWwrcHlteXNxbDovL3Jvb3Q6bXlzZWNyZXRwd0Bsb2NhbGhvc3QvZGJuYW1l"
+                },
+                "option_prod": {
+                    "description": "Connection Option for Production Environment in Base64.",
+                    "type": "string",
+                    "minLength": 5,
+                    "maxLength": 500,
+                    "required": true,
+                    "example": "bXlzcWwrcHlteXNxbDovL3Jvb3Q6bXlzZWNyZXRwd0Bsb2NhbGhvc3QvZGJuYW1l"
                 }
             }
         }

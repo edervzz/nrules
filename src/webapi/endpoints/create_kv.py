@@ -11,9 +11,9 @@ new_kvs_bp = Blueprint("New KVS", __name__)
 
 
 @new_kvs_bp.post("/t/<tid>/kvs")
-def new_kvs_endpoint(tid=None):
+def new_kvs_endpoint(tid: int = None):
     """ New KVS Endpoint """
-    tenant_id = Identification.get_tenant_safe(tid)
+    Identification.get_tenant_safe(tid)
     json_data = request.get_json(silent=True)
     if json_data is None:
         return
@@ -21,7 +21,7 @@ def new_kvs_endpoint(tid=None):
     new_rules = NewKVModel(json.dumps(json_data))
 
     command = CreateKVRequest(
-        tenant_id,
+        tid,
         new_rules.name
     )
 
@@ -36,5 +36,5 @@ def new_kvs_endpoint(tid=None):
     return Response(
         response="",
         status=201,
-        headers=[("Item", f"/t/{tenant_id}/kvs/{result.id}")]
+        headers=[("Item", f"/t/{tid}/kvs/{result.id}")]
     )

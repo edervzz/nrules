@@ -1,11 +1,13 @@
 # gentera-nrule
 
 ## New Features
-- Update Rule ✨
-- Read All Rules
-- Check db connection
-- Read Rule
-- Create Rule
+- Dockerized
+- Swagger
+- OTEL
+- CQRS
+- Multitenancy
+
+
 
 ## Runner
 

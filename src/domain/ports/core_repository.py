@@ -13,7 +13,7 @@ class KVSRepository(ABC, Creator, ReaderSingle, ReaderSingleByExternalID):
         self.engine = engine
 
 
-class KVItemRepository(ABC, Creator, Updater, ReaderSingleByExternalID, ReaderByParentID):
+class KVItemRepository(ABC, Creator, Updater, ReaderSingle, ReaderByParentID):
     """_summary_"""
 
     def __init__(self, engine):

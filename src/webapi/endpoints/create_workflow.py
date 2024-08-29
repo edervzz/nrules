@@ -46,5 +46,5 @@ def new_workflow_endpoint(tid: int = None):
     return Response(
         response="",
         status=201,
-        headers=[("Item", f"/workflows/{result.id}")]
+        headers=[("Item", f"/t/{tid}/workflows/{result.id}")]
     )

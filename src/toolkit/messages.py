@@ -6,6 +6,34 @@ class Codes:
     en_messages: dict[str, str] = {}
     es_messages: dict[str, str] = {}
 
+    KVI_CREA_007 = "KVI-CREA-007"
+    en_messages[KVI_CREA_007] = "KV Parent ID not found."
+    es_messages[KVI_CREA_007] = "ID padre no fue encontrado."
+
+    KVI_CREA_006 = "KVI-CREA-006"
+    en_messages[KVI_CREA_006] = "Type Of must not be greater than 50 characteres."
+    es_messages[KVI_CREA_006] = "Tipo debe tener un máximo de 50 caracteres."
+
+    KVI_CREA_005 = "KVI-CREA-005"
+    en_messages[KVI_CREA_005] = "Value must not be greater than 500 characteres."
+    es_messages[KVI_CREA_005] = "Valor debe tener un máximo de 500 caracteres."
+
+    KVI_CREA_004 = "KVI-CREA-004"
+    en_messages[KVI_CREA_004] = "Value must not be empty."
+    es_messages[KVI_CREA_004] = "Valor es obligatorio."
+
+    KVI_CREA_003 = "KVI-CREA-003"
+    en_messages[KVI_CREA_003] = "KV Parent ID must not be empty."
+    es_messages[KVI_CREA_003] = "ID padre es obligatorio."
+
+    KVI_CREA_002 = "KVI-CREA-002"
+    en_messages[KVI_CREA_002] = "KV Item Name must be between 5 and 50 characters."
+    es_messages[KVI_CREA_002] = "Nombre de KV Item debe ser de 5 a 50 caracteres."
+
+    KVI_CREA_001 = "KVI-CREA-001"
+    en_messages[KVI_CREA_001] = "Nombre de KV Item es obligatorio."
+    es_messages[KVI_CREA_001] = "KV Item Name must not be empty."
+
     KV_CREA_003 = "KV-CREA-003"
     en_messages[KV_CREA_003] = "KVS already exists."
     es_messages[KV_CREA_003] = "KVS ya existe."

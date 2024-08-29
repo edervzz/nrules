@@ -1,5 +1,6 @@
 """ models """
 
+from .new_kvitem import NewKVItem
 from .new_kv import NewKVModel
 from .update_rule import UpdateRuleModel
 from .rule import RuleModel

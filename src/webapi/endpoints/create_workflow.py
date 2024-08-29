@@ -4,7 +4,7 @@ from flask import Blueprint, request, Response
 from webapi.models import NewWorkflowModel, NewWorkflowRuleModel
 from application.messages import CreateWorkflowRequest
 from application.commands import CreateWorkflowHandler
-from toolkit import Services
+from toolkit import Services, Identification
 from domain.entities import Rule
 
 new_workflow_bp = Blueprint("New Workflow", __name__)
@@ -19,31 +19,29 @@ def rule_factory(rule: NewWorkflowRuleModel) -> Rule:
     return r
 
 
-@new_workflow_bp.post("/workflows")
-def new_workflow_endpoint(tid=None):
+@new_workflow_bp.post("/t/<tid>/workflows")
+def new_workflow_endpoint(tid: int = None):
     """ New Workflow Endpoint """
+    Identification.get_tenant_safe(tid)
     json_data = request.get_json(silent=True)
     if json_data is None:
         return
 
-    Services.tenant_id = request.args.get("tenant")
-
     new_workflow = NewWorkflowModel(json.dumps(json_data))
 
     command = CreateWorkflowRequest(
+        tid,
         new_workflow.name,
-        new_workflow.is_node,
-        new_workflow.is_parcial,
-        new_workflow.rules
+        new_workflow.typeof,
+        new_workflow.action_id_ok,
+        new_workflow.action_id_nok
     )
 
-    handler = CreateWorkflowHandler(
+    result = CreateWorkflowHandler(
         Services.core_repositories[tid],
         Services.logger,
         Services.localizer
-    )
-
-    result = handler.handler(command)
+    ).handler(command)
 
     return Response(
         response="",

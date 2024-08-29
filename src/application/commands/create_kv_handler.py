@@ -1,36 +1,32 @@
-"""_summary_
-    """
+r"""_summary_"""
 import logging
-from application.messages import CreateWorkflowRequest, CreateWorkflowResponse
-from application.validators import CreateWorkflowValidator, CreateWorkflowBizValidator
+from application.messages import CreateKVRequest, CreateKVResponse
+from application.validators import CreateKVValidator, CreateKVBizValidator
 from domain.ports import CoreRepository
-from domain.entities import Workflow, Container
 from toolkit import Localizer
 
 
-class CreateWorkflowHandler:
+class CreateKVHandler:
     r""" _summary_ """
 
     def __init__(self, repository: CoreRepository, logger: logging, localizer: Localizer):
         self.repository = repository
         self.logger = logger
         self.localizer = localizer
-        self.workflow: Workflow = None
 
-    def handler(self, request: CreateWorkflowRequest) -> CreateWorkflowResponse:
+    def handler(self, request: CreateKVRequest):
         r""" Handler """
         # 1. request validation
-        validator = CreateWorkflowValidator(self.localizer)
+        validator = CreateKVValidator(self.localizer)
         validator.validate_and_throw(request)
         self.logger.info("request validated")
         # 2. business rule validation
-        biz_validator = CreateWorkflowBizValidator(
-            self.repository, self.localizer)
+        biz_validator = CreateKVBizValidator(self.repository, self.localizer)
         biz_validator.validate_and_throw(request)
         self.logger.info("business rules validated")
 
         self.repository.begin()
-        self.repository.workflow.create(request.workflow)
+        self.repository.rule.create(request.kv)
         self.repository.commit_work()
 
-        return CreateWorkflowResponse(request.workflow.id)
+        return CreateKVResponse(request.kv.id)

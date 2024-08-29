@@ -8,7 +8,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 class XObject(Base, Auditable):
     """ X-Object """
 
-    __tablename__ = "xobject"
+    __tablename__ = "xobjects"
 
     id: Mapped[int] = mapped_column(
         primary_key=True, autoincrement="auto", nullable=False)

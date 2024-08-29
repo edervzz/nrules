@@ -6,6 +6,18 @@ class Codes:
     en_messages: dict[str, str] = {}
     es_messages: dict[str, str] = {}
 
+    KV_CREA_003 = "KV-CREA-003"
+    en_messages[KV_CREA_003] = "KVS already exists."
+    es_messages[KV_CREA_003] = "KVS ya existe."
+
+    KV_CREA_002 = "KV-CREA-002"
+    en_messages[KV_CREA_002] = "KVS Name must be between 5 and 50 characters."
+    es_messages[KV_CREA_002] = "Nombre de KVS debe ser de 5 a 50 caracteres."
+
+    KV_CREA_001 = "KV-CREA-001"
+    en_messages[KV_CREA_001] = "KVS Name is mandatory."
+    es_messages[KV_CREA_001] = "Nombre de KVS es obligatorio."
+
     # Create Container
     CO_CREA_004 = "CO-CREA-004"
     en_messages[CO_CREA_004] = "(Internal check) 'Is Full' is badformed."
@@ -150,7 +162,7 @@ class Codes:
     es_messages[WF_CREA_005] = "Nombre de 'Rule' debe ser de 5 a 50 caracteres."
 
     WF_CREA_004 = "WF-CREA-004"
-    en_messages[WF_CREA_004] = "Rules. Name and Expression are mandatory."
+    en_messages[WF_CREA_004] = "Type Of must be 'BASE' or 'FULL' or 'NODE'."
     es_messages[WF_CREA_004] = "'Rules'. Nombre y Expresión son obligatorios."
 
     WF_CREA_003 = "WF-CREA-003"

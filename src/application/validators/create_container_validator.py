@@ -14,19 +14,19 @@ class CreateContainerValidator(Validator):
     def __validate__(self, request: CreateKVRequest):
         """ Validate request format """
 
-        if request.container.name == "":
+        if request.kv.name == "":
             raise self.as_error(
                 Codes.RU_CREA_001,
                 self._localizer.get(Codes.CO_CREA_001))
-        if len(request.container.name) < 5 or len(request.rule.name) > 50:
+        if len(request.kv.name) < 5 or len(request.rule.name) > 50:
             self.add_failure(
                 Codes.RU_CREA_002,
                 self._localizer.get(Codes.CO_CREA_002))
-        if not isinstance(request.container.is_node, bool):
+        if not isinstance(request.kv.is_node, bool):
             raise self.as_error(
                 Codes.RU_CREA_004,
                 self._localizer.get(Codes.CO_CREA_003))
-        if not isinstance(request.container.is_full, bool):
+        if not isinstance(request.kv.is_full, bool):
             raise self.as_error(
                 Codes.RU_CREA_004,
                 self._localizer.get(Codes.CO_CREA_004))

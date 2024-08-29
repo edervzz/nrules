@@ -1,20 +1,20 @@
 """ Create workflow """
-from typing import List
-from domain.entities import Workflow, Rule
+from domain.entities import Workflow
 
 
 class CreateWorkflowRequest:
     """ Request workflow creation """
 
     def __init__(
-            self, name: str, is_node: bool, is_parcial: bool,
-            rules: List[Rule]):
+            self, tid: int, name: str, typeof: str, action_id_ok: int, action_id_nok):
 
-        self.name = name
-        self.is_node = is_node
-        self.is_parcial = is_parcial
-        self.rules = rules
-        self.workflow: Workflow = None
+        self.workflow = Workflow()
+        self.workflow.tenant_id = tid
+        self.workflow.name = name
+        self.workflow.typeof = typeof
+        self.workflow.action_id_ok = action_id_ok
+        self.workflow.action_id_nok = action_id_nok
+        self.workflow.version = 1
 
 
 class CreateWorkflowResponse:

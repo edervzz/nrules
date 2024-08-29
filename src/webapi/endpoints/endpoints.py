@@ -13,6 +13,7 @@ from .create_workflow import new_workflow_bp
 from .update_rule import update_rule_bp
 from .read_all_rule import read_all_rule_bp
 from .create_tenant import new_tenant_bp
+from .create_kv import new_kvs_bp
 
 
 def map_endpoints(app: Flask, prefix: str):
@@ -28,6 +29,8 @@ def map_endpoints(app: Flask, prefix: str):
         ),
         url_prefix="/swagger"
     )
+
+    app.register_blueprint(blueprint=new_kvs_bp, url_prefix=prefix)
 
     app.register_blueprint(blueprint=read_all_rule_bp, url_prefix=prefix)
 

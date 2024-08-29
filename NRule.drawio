@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="LyjKLWT2vN5_jiygnvpO" name="Connections">
-        <mxGraphModel dx="1072" dy="1744" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="1311" dy="1892" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -31,7 +31,7 @@
                 <mxCell id="Cc5brCJZF-9JAWSVs0_s-61" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="IPaf2PD-h_m_kelB6yjr-11" target="Cc5brCJZF-9JAWSVs0_s-21" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="IPaf2PD-h_m_kelB6yjr-11" value="&lt;span style=&quot;&quot;&gt;Workflow&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;Tenant ID&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;ID&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Name&lt;br&gt;&lt;/span&gt;Is Node&lt;br&gt;Is Full&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Action OK&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Action NOK&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#007FFF;align=left;verticalAlign=top;" parent="1" vertex="1">
+                <mxCell id="IPaf2PD-h_m_kelB6yjr-11" value="&lt;span style=&quot;&quot;&gt;Workflow&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;Tenant ID&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;ID&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Name&lt;br&gt;&lt;/span&gt;Typeof&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Action OK&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Action NOK&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#007FFF;align=left;verticalAlign=top;" parent="1" vertex="1">
                     <mxGeometry x="270" y="-720" width="160" height="160" as="geometry"/>
                 </mxCell>
                 <mxCell id="Cc5brCJZF-9JAWSVs0_s-20" value="" style="group" parent="1" vertex="1" connectable="0">

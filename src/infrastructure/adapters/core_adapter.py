@@ -70,7 +70,7 @@ class CoreAdapter(CoreRepository):
     def begin(self, autoflush=False):
         self.session = Session(self.engine, autoflush=autoflush)
         self.xobject.set_session(self.session)
-        self.kv.set_session(self.session)
+        self.kvs.set_session(self.session)
         self.kvitem.set_session(self.session)
         self.action.set_session(self.session)
         self.rule.set_session(self.session)

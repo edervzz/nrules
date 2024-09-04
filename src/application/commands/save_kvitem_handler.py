@@ -20,17 +20,19 @@ class SaveKVItemHandler:
         # 1. request validation
         validator = SaveKVItemValidator(self.localizer)
         validator.validate_and_throw(request)
-        self.logger("request validated")
+        self.logger.info("request validated")
         # 2. business rule validation
         biz_validator = SaveKVItemBizValidator(self.repository, self.localizer)
         biz_validator.validate_and_throw(request)
-        self.logger("business rules validated")
+        self.logger.info("business rules validated")
 
         self.repository.begin()
-        if request.is_update:
-            self.repository.kvitem.update(request.kvitem)
-        else:
-            self.repository.kvitem.create(request.kvitem)
+        if len(request.kvitems_to_update) > 0:
+            for it in request.kvitems_to_update:
+                self.repository.kvitem.update(it)
+        if len(request.kvitems_to_insert) > 0:
+            for it in request.kvitems_to_insert:
+                self.repository.kvitem.create(it)
         self.repository.commit_work()
 
         return SaveKVItemResponse(request.kvitem.kv_id, request.kvitem.key)

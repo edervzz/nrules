@@ -17,10 +17,9 @@ class TenantAdapter(TenantRepository):
         if not self.session.autoflush:
             self.session.flush()
 
-    def read(self, tenantid: int,  _id: int) -> Tenants:
+    def read(self, _id) -> Tenants:
         with Session(self.engine) as session:
-            stmt = select(Tenants).where(
-                Tenants.id == tenantid
-            )
-            rule = session.scalar(stmt)
+            stms = select(Tenants).where(
+                Tenants.id == _id)
+            rule = session.scalar(stms)
             return rule

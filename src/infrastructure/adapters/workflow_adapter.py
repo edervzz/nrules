@@ -1,6 +1,5 @@
 """_summary_
     """
-from sqlalchemy import select
 from sqlalchemy.orm import Session
 from domain.entities import Workflow, Pagination
 from domain.ports import WorkflowRepository
@@ -18,33 +17,28 @@ class WorkflowAdapter(WorkflowRepository):
             self.session.flush()
 
     def update(self, entity: Workflow):
-        stmt = select(Workflow).where(Workflow.id == entity.id)
-        rule = self.session.scalar(stmt)
+        rule = self.session.query(Workflow).where(
+            Workflow.id == entity.id).one_or_none()
         rule.name = entity.name
         rule.expression = entity.expression
 
-    def read(self, tenantid: int, _id: int) -> any:
+    def read(self, _id) -> any:
         with Session(self.engine) as session:
-            stmt = select(Workflow).where(
-                Workflow.tenant_id == tenantid,
-                Workflow.id == _id)
-            workflow = session.scalar(stmt)
+            workflow = session.query(Workflow).where(
+                Workflow.id == _id).one_or_none()
             return workflow
 
-    def read_by_external_id(self, tenantid: int, external_id: str) -> Workflow:
+    def read_by_external_id(self, external_id) -> Workflow:
         with Session(self.engine) as session:
-            stmt = select(Workflow).where(
-                Workflow.tenant_id == tenantid,
-                Workflow.name == external_id)
-            workflow = session.scalar(stmt)
+            workflow = session.query(Workflow).where(
+                Workflow.name == external_id).one_or_none()
             return workflow
 
-    def read_page(self, tenantid: int, page_no: int, page_size: int) -> tuple[list, Workflow]:
+    def read_page(self, page_no, page_size) -> tuple[list, Workflow]:
+        offset = (page_no-1)*page_size
         with Session(self.engine) as session:
-            stms = select(Workflow).offset((page_no-1)*page_size).limit(page_size).where(
-                Workflow.tenant_id == tenantid)
-            rules = session.scalars(stms).all()
-            total = session.query(Workflow.id).where(
-                Workflow.tenant_id == tenantid).count()
+            workflows = session.query(Workflow).offset(
+                offset).limit(page_size).all()
+            total = session.query(Workflow.id).count()
 
-            return rules, Pagination(page_no, page_size, total)
+            return workflows, Pagination(page_no, page_size, total)

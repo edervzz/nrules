@@ -1,6 +1,5 @@
 """_summary_
     """
-from sqlalchemy import select
 from sqlalchemy.orm import Session
 from domain.entities import KV
 from domain.ports import KVSRepository
@@ -17,18 +16,13 @@ class KVSAdapter(KVSRepository):
         if not self.session.autoflush:
             self.session.flush()
 
-    def read(self, tenantid: int, _id: int) -> KV:
+    def read(self, _id) -> KV:
         with Session(self.engine) as session:
-            stmt = select(KV).where(
-                KV.tenant_id == tenantid,
-                KV.id == _id)
-            rule = session.scalar(stmt)
+            rule = session.query(KV).where(KV.id == _id).one_or_none()
             return rule
 
-    def read_by_external_id(self, tenantid: int, external_id: str) -> any:
+    def read_by_external_id(self, external_id) -> any:
         with Session(self.engine) as session:
-            stmt = select(KV).where(
-                KV.tenant_id == tenantid,
-                KV.name == external_id)
-            rule = session.scalar(stmt)
+            rule = session.query(KV).where(
+                KV.name == external_id).one_or_none()
             return rule

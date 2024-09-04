@@ -1,9 +1,8 @@
 """ Create a new workflow """
 import json
-from flask import Blueprint, Response, abort
+from flask import Blueprint, Response, abort, current_app
 from sqlalchemy.exc import OperationalError
-from toolkit import Services
-
+from domain.ports import CoreRepository
 hello_bp = Blueprint("Hello", __name__)
 
 
@@ -12,19 +11,24 @@ def hello_endpoint(tid: int = None):
     """ New Workflow Endpoint """
 
     try:
-        result = Services.core_repositories[tid].health_check()
-        migrations = []
-        if isinstance(result, list):
-            for r in result:
-                if hasattr(r, "id"):
-                    migrations.append(r.id)
+        core_repository = current_app.config[str(tid)]
 
-        jsonobj = {
-            "migrations": migrations
-        }
+        if isinstance(core_repository, CoreRepository):
+            result = core_repository.health_check()
+            migrations = []
+            if isinstance(result, list):
+                for r in result:
+                    if hasattr(r, "id"):
+                        migrations.append(r.id)
 
-        jsonstr = json.dumps(jsonobj)
-        return Response(jsonstr, status=200, mimetype='application/json')
+            jsonobj = {
+                "migrations": migrations
+            }
+
+            jsonstr = json.dumps(jsonobj)
+            return Response(jsonstr, status=200, mimetype='application/json')
+        else:
+            raise ValueError("TID not found")
 
     except ValueError as err:
         abort(400, str(err))

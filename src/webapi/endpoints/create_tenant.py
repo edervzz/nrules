@@ -1,10 +1,9 @@
 """ Create a new workflow """
 import json
-from flask import Blueprint, request, Response
+from flask import Blueprint, request, Response, current_app
 from webapi.models import NewTenantModel
 from application.messages import CreateTenantRequest
 from application.commands import CreateTenantHandler
-from toolkit import Services
 
 new_tenant_bp = Blueprint("New Tenant", __name__)
 
@@ -27,9 +26,9 @@ def new_tenant_endpoint():
     )
 
     result = CreateTenantHandler(
-        Services.tenancy_repository,
-        Services.logger,
-        Services.localizer
+        current_app.config["tenancy_repository"],
+        current_app.config["logger"],
+        current_app.config["localizer"]
     ).handler(command)
 
     return Response(

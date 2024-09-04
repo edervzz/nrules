@@ -6,9 +6,13 @@ class Codes:
     en_messages: dict[str, str] = {}
     es_messages: dict[str, str] = {}
 
+    KVI_CREA_008 = "KVI-CREA-008"
+    en_messages[KVI_CREA_008] = "List must not be empty."
+    es_messages[KVI_CREA_008] = "La lista no debe estar vacía."
+
     KVI_CREA_007 = "KVI-CREA-007"
     en_messages[KVI_CREA_007] = "KV Parent ID not found."
-    es_messages[KVI_CREA_007] = "ID padre no fue encontrado."
+    es_messages[KVI_CREA_007] = "KV padre no fue encontrado."
 
     KVI_CREA_006 = "KVI-CREA-006"
     en_messages[KVI_CREA_006] = "Type Of must not be greater than 50 characteres."

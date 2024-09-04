@@ -1,16 +1,16 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": " NRule - Rule Engine API",
-        "version": "1.0.0",
-        "description": "Rule Engine built for Gentera"
+        "title": " NRule - Rules Engine API",
+        "version": "0.0.0",
+        "description": "Rules Engine built for Gentera.\n t - Tenancy\n nr - NRule"
     },
     "paths": {
         "/nr/api/v1/t/{tid}/rules/{rule_id}": {
             "put": {
                 "summary": "Update a rule.",
                 "tags": [
-                    "rules"
+                    "Rules"
                 ],
                 "consumes": [
                     "application/json"
@@ -36,7 +36,7 @@
                         "description": "Rule definition.",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/UpdRule"
+                            "$ref": "#/definitions/Update Rule"
                         }
                     }
                 ],
@@ -54,7 +54,7 @@
             },
             "get": {
                 "tags": [
-                    "rules"
+                    "Rules"
                 ],
                 "description": "Read a rule.",
                 "consumes": [
@@ -93,7 +93,7 @@
             "post": {
                 "summary": "Create a new rule.",
                 "tags": [
-                    "rules"
+                    "Rules"
                 ],
                 "consumes": [
                     "application/json"
@@ -112,7 +112,7 @@
                         "description": "Rule definition.",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/NewRule"
+                            "$ref": "#/definitions/New Rule"
                         }
                     }
                 ],
@@ -131,7 +131,7 @@
             "get": {
                 "summary": "Read All Rules.",
                 "tags": [
-                    "rules"
+                    "Rules"
                 ],
                 "consumes": [
                     "application/json"
@@ -191,7 +191,7 @@
                         "description": "Workflow definition.",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/NewWorkflow"
+                            "$ref": "#/definitions/New Workflow"
                         }
                     }
                 ],
@@ -205,7 +205,95 @@
                 }
             }
         },
-        "/nr/api/v1/tenants": {
+        "/nr/api/v1/t/{tid}/kvs/{kid}/items": {
+            "put": {
+                "summary": "Create or Update a KV Item.",
+                "tags": [
+                    "Key-Value Storage"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "tid",
+                        "description": "Tenant ID",
+                        "in": "path",
+                        "type": "integer",
+                        "required": true
+                    },
+                    {
+                        "name": "kid",
+                        "description": "KV Identifier",
+                        "in": "path",
+                        "type": "integer",
+                        "required": true
+                    },
+                    {
+                        "name": "KV Item data",
+                        "in": "body",
+                        "description": "KV Item definition.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/New KV Item"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "KVS created"
+                    },
+                    "400": {
+                        "description": "Invalid request data"
+                    }
+                }
+            }
+        },
+        "/nr/api/v1/t/{tid}/kvs": {
+            "post": {
+                "summary": "Create a new Key Value container.",
+                "description": "This Storage can be hosted in a specialized database.",
+                "tags": [
+                    "Key-Value Storage"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "tid",
+                        "description": "Tenant ID",
+                        "in": "path",
+                        "type": "integer",
+                        "required": true
+                    },
+                    {
+                        "name": "KVS data",
+                        "in": "body",
+                        "description": "KVS definition.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/New KV"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "KVS created"
+                    },
+                    "400": {
+                        "description": "Invalid request data"
+                    }
+                }
+            }
+        },
+        "/tenancy/api/v1/tenants": {
             "post": {
                 "summary": "Create a new Tenant",
                 "tags": [
@@ -232,11 +320,11 @@
                 }
             }
         },
-        "/nr/api/v1/hello": {
+        "/nr/api/v1/t/{tid}/hello": {
             "get": {
-                "summary": "Healt Check",
+                "summary": "Execute a Health Check to NRule API & multiple tenancy Databases.",
                 "tags": [
-                    "Healt Check"
+                    "Hello"
                 ],
                 "produces": [
                     "application/text"
@@ -248,9 +336,9 @@
                 }
             }
         },
-        "/nr/api/v1/tenancy/migration": {
+        "/migration/api/v1/tenancy": {
             "post": {
-                "description": "Run Migration for Tenancy",
+                "summary": "Run Migration for Tenancy",
                 "tags": [
                     "Migrations"
                 ],
@@ -270,9 +358,9 @@
                 }
             }
         },
-        "/nr/api/v1/t/<tid>/core/migration": {
+        "/migration/api/v1/t/<tid>/nrule": {
             "post": {
-                "description": "Run Migration for Core by Tenant",
+                "summary": "Run Migration for NRule by Tenant",
                 "tags": [
                     "Migrations"
                 ],
@@ -303,7 +391,7 @@
         }
     },
     "definitions": {
-        "NewRule": {
+        "New Rule": {
             "type": "object",
             "properties": {
                 "name": {
@@ -323,7 +411,7 @@
                 }
             }
         },
-        "UpdRule": {
+        "Update Rule": {
             "type": "object",
             "properties": {
                 "name": {
@@ -343,7 +431,7 @@
                 }
             }
         },
-        "NewWorkflow": {
+        "New Workflow": {
             "type": "object",
             "properties": {
                 "name": {
@@ -374,7 +462,7 @@
                 }
             }
         },
-        "NewKV": {
+        "New KV": {
             "type": "object",
             "properties": {
                 "name": {
@@ -384,6 +472,32 @@
                     "maxLength": 50,
                     "required": true,
                     "example": "kv.account.products"
+                }
+            }
+        },
+        "New KV Item": {
+            "type": "object",
+            "properties": {
+                "key": {
+                    "description": "Key of Item.",
+                    "type": "string",
+                    "minLength": 5,
+                    "maxLength": 50,
+                    "required": true
+                },
+                "value": {
+                    "description": "Value of Item.",
+                    "type": "string",
+                    "minLength": 5,
+                    "maxLength": 500,
+                    "required": true
+                },
+                "typeof": {
+                    "description": "Type of Item.",
+                    "type": "string",
+                    "minLength": 5,
+                    "maxLength": 50,
+                    "required": true
                 }
             }
         },

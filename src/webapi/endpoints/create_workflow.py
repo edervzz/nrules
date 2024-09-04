@@ -1,10 +1,10 @@
 """ Create a new workflow """
 import json
-from flask import Blueprint, request, Response
+from flask import Blueprint, request, Response, current_app
 from webapi.models import NewWorkflowModel, NewWorkflowRuleModel
 from application.messages import CreateWorkflowRequest
 from application.commands import CreateWorkflowHandler
-from toolkit import Services, Identification
+from toolkit import Identification
 from domain.entities import Rule
 
 new_workflow_bp = Blueprint("New Workflow", __name__)
@@ -38,9 +38,9 @@ def new_workflow_endpoint(tid: int = None):
     )
 
     result = CreateWorkflowHandler(
-        Services.core_repositories[tid],
-        Services.logger,
-        Services.localizer
+        current_app.config[str(tid)],
+        current_app.config["logger"],
+        current_app.config["localizer"]
     ).handler(command)
 
     return Response(

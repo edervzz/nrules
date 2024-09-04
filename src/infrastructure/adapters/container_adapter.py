@@ -1,7 +1,6 @@
 """_summary_
     """
 from typing import List
-from sqlalchemy import select
 from sqlalchemy.orm import Session
 from domain.entities import Container
 from domain.ports import ContainerRepository
@@ -19,17 +18,15 @@ class ContainerAdapter(ContainerRepository):
             self.session.flush()
 
     def update(self, entity: Container):
-        stmt = select(Container).where(
+        rule = self.session.query(Container).where(
             Container.tenant_id == entity.tenant_id,
-            Container.workflow_id == entity.workflow_id)
-        rule = self.session.scalar(stmt)
+            Container.workflow_id == entity.workflow_id).one_or_none()
+
         rule.name = entity.name
         rule.expression = entity.expression
 
-    def read_by_parent_id(self, tenantid: int, parent_id: int) -> List[Container]:
+    def read_by_parent_id(self, parent_id) -> List[Container]:
         with Session(self.engine) as session:
-            stmt = select(Container).where(
-                Container.tenant_id == tenantid,
-                Container.workflow_id == parent_id)
-            containers = session.scalars(stmt)
+            containers = session.query(Container).where(
+                Container.workflow_id == parent_id).all()
             return containers

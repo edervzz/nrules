@@ -1,7 +1,6 @@
 """_summary_
     """
 from typing import List
-from sqlalchemy import select
 from sqlalchemy.orm import Session
 from domain.entities import Rule, Container, Pagination
 from domain.ports import RuleRepository
@@ -19,43 +18,36 @@ class RuleAdapter(RuleRepository):
             self.session.flush()
 
     def update(self,  entity: Rule):
-        stmt = select(Rule).where(
+        rule = self.session.query(Rule).where(
             Rule.tenant_id == entity.tenant_id,
-            Rule.id == entity.id)
-        rule = self.session.scalar(stmt)
+            Rule.id == entity.id).one_or_none(9)
+
         rule.name = entity.name
         rule.expression = entity.expression
         rule.version = entity.version
 
-    def read(self, tenantid: int, _id: int) -> Rule:
+    def read(self, _id) -> Rule:
         with Session(self.engine) as session:
-            stmt = select(Rule).where(
-                Rule.tenant_id == tenantid, Rule.id == _id)
-            rule = session.scalar(stmt)
+            rule = session.query(Rule).where(Rule.id == _id).one_or_none()
             return rule
 
-    def read_by_external_id(self, tenantid: int, external_id: str) -> Rule:
+    def read_by_external_id(self, external_id) -> Rule:
         with Session(self.engine) as session:
-            stmt = select(Rule).where(
-                Rule.tenant_id == tenantid,
-                Rule.name == external_id)
-            rule = session.scalar(stmt)
+            rule = session.query(Rule).where(
+                Rule.name == external_id).one_or_none()
             return rule
 
-    def read_by_parent_id(self, tenantid: int, parent_id: int) -> List[Rule]:
+    def read_by_parent_id(self, parent_id) -> List[Rule]:
         with Session(self.engine) as session:
-            stms = select(Rule).join(Container, Rule.id == Container.rule_id).where(
-                Container.tenant_id == tenantid,
-                Container.workflow_id == parent_id)
-            rule = session.scalars(stms).all()
-            return rule
+            rules = session.query(Rule).join(
+                Container, Rule.id == Container.rule_id).where(
+                Container.workflow_id == parent_id).all()
+            return rules
 
-    def read_page(self, tenantid: int, page_no: int, page_size: int) -> tuple[List[Rule], Pagination]:
+    def read_page(self, page_no, page_size) -> tuple[List[Rule], Pagination]:
         with Session(self.engine) as session:
-            stms = select(Rule).offset((page_no-1)*page_size).limit(page_size).where(
-                Rule.tenant_id == tenantid)
-            rules = session.scalars(stms).all()
-            total = session.query(Rule.id).where(
-                Rule.tenant_id == tenantid).count()
+            offset = (page_no-1)*page_size
+            rules = session.query(Rule).offset(offset).limit(page_size).all()
+            total = session.query(Rule.id).where().count()
 
             return rules, Pagination(page_no, page_size, total)

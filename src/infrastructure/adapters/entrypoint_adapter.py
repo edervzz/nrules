@@ -1,6 +1,6 @@
 """_summary_
     """
-from sqlalchemy import select
+
 from sqlalchemy.orm import Session
 from domain.entities import Entrypoint
 from domain.ports import EntrypointRepository
@@ -17,18 +17,14 @@ class EntrypointAdapter(EntrypointRepository):
         if not self.session.autoflush:
             self.session.flush()
 
-    def read(self, tenantid: int, _id: int) -> any:
+    def read(self, _id) -> any:
         with Session(self.engine) as session:
-            stmt = select(Entrypoint).where(
-                Entrypoint.tenant_id == tenantid,
-                Entrypoint.id == _id)
-            containers = session.scalar(stmt)
-            return containers
+            container = session.query(Entrypoint).where(
+                Entrypoint.id == _id).one_or_none()
+            return container
 
-    def read_by_external_id(self, tenantid: int, external_id: str) -> Entrypoint:
+    def read_by_external_id(self, external_id) -> Entrypoint:
         with Session(self.engine) as session:
-            stmt = select(Entrypoint).where(
-                Entrypoint.tenant_id == tenantid,
-                Entrypoint.name == external_id)
-            containers = session.scalar(stmt)
-            return containers
+            container = session.query(Entrypoint).where(
+                Entrypoint.name == external_id).one_or_none()
+            return container

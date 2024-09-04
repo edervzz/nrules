@@ -1,10 +1,10 @@
 """ Create a new workflow """
 import json
-from flask import Blueprint, request, Response
+from flask import Blueprint, request, Response, current_app
 from webapi.models import NewRuleModel
 from application.messages import CreateRuleRequest
 from application.commands import CreateRuleHandler
-from toolkit import Services, Identification
+from toolkit import Identification
 
 
 new_rule_bp = Blueprint("New Rule", __name__)
@@ -28,9 +28,9 @@ def new_rules_endpoint(tid=None):
     )
 
     handler = CreateRuleHandler(
-        Services.core_repositories[tid],
-        Services.logger,
-        Services.localizer
+        current_app.config[str(tid)],
+        current_app.config["logger"],
+        current_app.config["localizer"]
     )
 
     result = handler.handler(command)

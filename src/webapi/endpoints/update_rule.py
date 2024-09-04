@@ -1,10 +1,10 @@
 """ Create a new workflow """
 import json
-from flask import Blueprint, request, Response
+from flask import Blueprint, request, Response, current_app
 from webapi.models import UpdateRuleModel
 from application.messages import UpdateRuleRequest
 from application.commands import UpdateRuleHandler
-from toolkit import Services, Identification
+from toolkit import Identification
 
 update_rule_bp = Blueprint("Update Rule", __name__)
 
@@ -31,9 +31,9 @@ def update_rules_endpoint(tid=None, rule_id=None):
     )
 
     handler = UpdateRuleHandler(
-        Services.core_repositories[tid],
-        Services.logger,
-        Services.localizer
+        current_app.config[str(tid)],
+        current_app.config["logger"],
+        current_app.config["localizer"]
     )
 
     result = handler.handler(command)

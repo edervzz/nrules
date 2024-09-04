@@ -1,9 +1,9 @@
 """ Create a new workflow """
 import json
-from flask import Blueprint, request, Response
+from flask import Blueprint, request, Response, current_app
 from application.messages import ReadRuleRequest
 from application.queries import ReadRuleHandler
-from toolkit import Services, Identification
+from toolkit import Identification
 from webapi.models import RuleModel
 
 read_rule_bp = Blueprint("Read Rule", __name__)
@@ -23,9 +23,9 @@ def read_rules_endpoint(tid=None, rule_id=None):
     )
 
     handler = ReadRuleHandler(
-        Services.core_repositories[tid],
-        Services.logger,
-        Services.localizer
+        current_app.config[str(tid)],
+        current_app.config["logger"],
+        current_app.config["localizer"]
     )
 
     result = handler.handler(command)

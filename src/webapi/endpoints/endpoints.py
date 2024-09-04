@@ -1,9 +1,15 @@
 """ endpoints """
 
-from flask import Flask, Response, request
+import logging
+import os
+import base64
+from flask import Flask, Response, request, session
 from flask_swagger_ui import get_swaggerui_blueprint
 from werkzeug.exceptions import Conflict, BadRequest, NotFound
-from toolkit import Services
+from toolkit import Localizer
+from domain.entities import Tenants
+from domain.ports import TenancyRepository
+from infrastructure.adapters import CoreAdapter, TenancyAdapter
 from .hello import hello_bp
 from .migrate import core_migration_bp, tenancy_migration_bp
 from .read_rule import read_rule_bp
@@ -17,8 +23,32 @@ from .create_kv import new_kvs_bp
 from .create_kvitem import new_kvitem_bp
 
 
-def map_endpoints(app: Flask, prefix: str):
+def register_endpoints(app: Flask, prefix: str):
     """ Map endpoints based on blueprints """
+
+    app.register_blueprint(new_kvitem_bp, url_prefix=prefix)
+
+    app.register_blueprint(new_kvs_bp, url_prefix=prefix)
+
+    app.register_blueprint(read_all_rule_bp, url_prefix=prefix)
+
+    app.register_blueprint(update_rule_bp, url_prefix=prefix)
+
+    app.register_blueprint(read_rule_bp, url_prefix=prefix)
+
+    app.register_blueprint(new_rule_bp, url_prefix=prefix)
+
+    app.register_blueprint(read_workflow_bp, url_prefix=prefix)
+
+    app.register_blueprint(new_workflow_bp, url_prefix=prefix)
+
+    app.register_blueprint(new_tenant_bp, url_prefix=prefix)
+
+    app.register_blueprint(hello_bp, url_prefix=prefix)
+
+    app.register_blueprint(core_migration_bp, url_prefix=prefix)
+
+    app.register_blueprint(tenancy_migration_bp, url_prefix=prefix)
 
     app.register_blueprint(
         get_swaggerui_blueprint(
@@ -31,29 +61,52 @@ def map_endpoints(app: Flask, prefix: str):
         url_prefix="/swagger"
     )
 
-    app.register_blueprint(blueprint=new_kvitem_bp, url_prefix=prefix)
 
-    app.register_blueprint(blueprint=new_kvs_bp, url_prefix=prefix)
+def register_before_request(app: Flask):
+    """ Register event before request """
 
-    app.register_blueprint(blueprint=read_all_rule_bp, url_prefix=prefix)
+    @app.before_request
+    def _():
+        """ Prepare core repository by tenant """
 
-    app.register_blueprint(blueprint=update_rule_bp, url_prefix=prefix)
+        if "/t/" in request.url:
+            fromidx = request.url.index("/t/")
+            toidx = request.url.index("/", fromidx + 3)
+            tid = request.url[fromidx+3: toidx]
 
-    app.register_blueprint(blueprint=read_rule_bp, url_prefix=prefix)
+            if not str(tid) in app.config:
+                tenancy_repository = app.config["tenancy_repository"]
 
-    app.register_blueprint(blueprint=new_rule_bp, url_prefix=prefix)
+                if isinstance(tenancy_repository, TenancyRepository):
+                    tenant = tenancy_repository.tenant.read(tid)
 
-    app.register_blueprint(blueprint=read_workflow_bp, url_prefix=prefix)
+                if isinstance(tenant, Tenants):
+                    with app.app_context():
+                        cs = base64.b64decode(tenant.option).decode("utf-8")
+                        app.config[str(tid)] = CoreAdapter(cs, tid)
+                else:
+                    raise BadRequest(f"Tenant {tid} is not recognized.")
 
-    app.register_blueprint(blueprint=new_workflow_bp, url_prefix=prefix)
 
-    app.register_blueprint(blueprint=new_tenant_bp, url_prefix=prefix)
+def register_services(app: Flask):
+    """ Register Services """
 
-    app.register_blueprint(blueprint=hello_bp, url_prefix=prefix)
+    with app.app_context():
+        app.config["tenancy_repository"] = TenancyAdapter(
+            os.environ["TENANT_DBUSER"],
+            os.environ["TENANT_DBPWD"],
+            os.environ["TENANT_DBSERVER"],
+            os.environ["TENANT_DBNAME"]
+        )
 
-    app.register_blueprint(blueprint=core_migration_bp, url_prefix=prefix)
+        logging.basicConfig()
+        app.config["logger"] = logging.getLogger(__name__)
 
-    app.register_blueprint(blueprint=tenancy_migration_bp, url_prefix=prefix)
+        app.config["localizer"] = Localizer()
+
+
+def register_error_handlers(app: Flask):
+    """ Register error handlers Bad Request, Conflict, Not Found """
 
     app.register_error_handler(
         BadRequest,
@@ -72,18 +125,3 @@ def map_endpoints(app: Flask, prefix: str):
         lambda error: Response(
             response=error.description, status=404, mimetype="application/json")
     )
-
-    @app.before_request
-    def core_repository():
-        """ prepare core repository by tenant """
-        if "/t/" in request.url:
-            fromidx = request.url.index("/t/")
-            toidx = request.url.index("/", fromidx + 3)
-            tid = request.url[fromidx+3: toidx]
-            Services.prepare_core_repository(tid)
-
-    # @app.after_request
-    # def content_type(response: Response):
-    #     if request.blueprint != "swagger_ui":
-    #         response.content_type = 'application/json'
-    #     return response

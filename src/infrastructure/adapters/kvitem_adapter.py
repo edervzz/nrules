@@ -1,7 +1,6 @@
 """_summary_
     """
 from typing import List
-from sqlalchemy import select
 from sqlalchemy.orm import Session
 from domain.entities import KVItem, KVItemKey
 from domain.ports import KVItemRepository
@@ -19,27 +18,23 @@ class KVItemAdapter(KVItemRepository):
             self.session.flush()
 
     def update(self, entity: KVItem):
-        stmt = select(KVItem).where(
-            KVItem.tenant_id == entity.tenant_id,
-            KVItem.key == entity.key)
-        kvitem = self.session.scalar(stmt)
+        kvitem = self.session.query(KVItem).where(
+            KVItem.kv_id == entity.kv_id,
+            KVItem.key == entity.key).one_or_none()
+
         kvitem.value = entity.value
         kvitem.typeof = entity.typeof
         kvitem.version = entity.version
 
-    def read(self, tenantid: int, _id: KVItemKey) -> KVItem:
+    def read(self, _id: KVItemKey) -> KVItem:
         with Session(self.engine) as session:
-            stmt = select(KVItem).where(
-                KVItem.tenant_id == tenantid,
+            rule = session.query(KVItem).where(
                 KVItem.kv_id == _id.kv_id,
-                KVItem.key == _id.key)
-            rule = session.scalar(stmt)
+                KVItem.key == _id.key).one_or_none()
             return rule
 
-    def read_by_parent_id(self, tenantid: int, parent_id: int) -> List[KVItem]:
+    def read_by_parent_id(self, parent_id) -> List[KVItem]:
         with Session(self.engine) as session:
-            stms = select(KVItem).where(
-                KVItem.tenant_id == tenantid,
-                KVItem.kv_id == parent_id)
-            kvitems = session.scalars(stms).all()
+            kvitems = session.query(KVItem).where(
+                KVItem.kv_id == parent_id).all()
             return kvitems

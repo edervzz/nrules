@@ -6,9 +6,8 @@ from domain.entities import KV
 class CreateKVRequest:
     """_summary_"""
 
-    def __init__(self, tenant_id: int, name: str):
+    def __init__(self, name: str):
         self.kv = KV()
-        self.kv.tenant_id = tenant_id
         self.kv.name = name
         self.kv.version = 1
 

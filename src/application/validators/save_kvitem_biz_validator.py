@@ -16,22 +16,19 @@ class SaveKVItemBizValidator(Validator):
 
     def __validate__(self, request: SaveKVItemRequest):
 
-        kv = self.repository.kv.read(
-            request.kvitem.tenant_id, request.kvitem.kv_id)
-        if kv is None:
+        kvs = self.repository.kvs.read(request.kv_id)
+
+        if kvs is None:
             self.add_failure(
                 Codes.KVI_CREA_007,
                 self.localizer.get(Codes.KVI_CREA_007))
 
-        key = KVItemKey(request.kvitem.kv_id, request.kvitem.key)
-
-        kvitem = self.repository.kvitem.read(
-            request.kvitem.tenant_id,
-            key)
-
-        if isinstance(kvitem, KVItem):
-            kvitem.value = request.kvitem.value
-            kvitem.typeof = request.kvitem.typeof
-            kvitem.version += 1
-            request.kvitem = kvitem
-            request.is_update = True
+        for kvit in request.kvitems:
+            key = KVItemKey(kvit.kv_id, kvit.key)
+            dbitem = self.repository.kvitem.read(key)
+            if isinstance(dbitem, KVItem):
+                kvit.version = dbitem.version + 1
+                request.kvitems_to_update.append(kvit)
+            else:
+                kvit.version = 1
+                request.kvitems_to_insert.append(kvit)

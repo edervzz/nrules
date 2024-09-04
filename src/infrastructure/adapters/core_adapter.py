@@ -3,8 +3,9 @@
 from datetime import datetime
 from sqlalchemy import Engine, create_engine, select, event
 from sqlalchemy.orm import Session
+from sqlalchemy.orm import Query
 from domain.entities import Container, Rule, Workflow
-from domain.entities import Auditable, Migrations, Variant
+from domain.entities import TenantSpecific, Auditable, Migrations, Variant
 from domain.entities import XObject, KV, KVItem, Action, Entrypoint
 from domain.ports import CoreRepository
 from infrastructure.data import initial, core_tables
@@ -20,15 +21,26 @@ from .variant_adapter import VariantAdapter
 
 
 class CoreAdapter(CoreRepository):
-    """ Core Adapter 
+    """ Core Adapter
 
         "bXlzcWwrcHlteXNxbDovL3Jvb3Q6bXktc2VjcmV0LXB3QGxvY2FsaG9zdC9ucnVsZS1jb3Jl"
     """
 
-    def __init__(self, connstr: str):
+    def __init__(self, connstr: str, tid: int):
         super().__init__()
+        self.tid = tid
         self.session: Session = None
         self.engine: Engine = create_engine(connstr, echo=True)
+
+        self.xobject = XObjectAdapter(self.engine)
+        self.kvs = KVSAdapter(self.engine)
+        self.kvitem = KVItemAdapter(self.engine)
+        self.action = ActionAdapter(self.engine)
+        self.rule = RuleAdapter(self.engine)
+        self.workflow = WorkflowAdapter(self.engine)
+        self.container = ContainerAdapter(self.engine)
+        self.entrypoint = EntrypointAdapter(self.engine)
+        self.variant = VariantAdapter(self.engine)
 
         event.listen(XObject, 'before_insert', self.__before_insert)
         event.listen(XObject, 'before_update', self.__before_update)
@@ -57,18 +69,15 @@ class CoreAdapter(CoreRepository):
         event.listen(Variant, 'before_insert', self.__before_insert)
         event.listen(Variant, 'before_update', self.__before_update)
 
-        self.xobject = XObjectAdapter(self.engine)
-        self.kvs = KVItemAdapter(self.engine)
-        self.kvitem = KVSAdapter(self.engine)
-        self.action = ActionAdapter(self.engine)
-        self.rule = RuleAdapter(self.engine)
-        self.workflow = WorkflowAdapter(self.engine)
-        self.container = ContainerAdapter(self.engine)
-        self.entrypoint = EntrypointAdapter(self.engine)
-        self.variant = VariantAdapter(self.engine)
+        @event.listens_for(Query, 'before_compile', retval=True)
+        def _fn(query: Query):
+
+            query = query.filter_by(tenant_id=self.tid)
+            return query
 
     def begin(self, autoflush=False):
         self.session = Session(self.engine, autoflush=autoflush)
+
         self.xobject.set_session(self.session)
         self.kvs.set_session(self.session)
         self.kvitem.set_session(self.session)
@@ -82,10 +91,28 @@ class CoreAdapter(CoreRepository):
     def commit_work(self):
         if self.session is not None:
             self.session.commit()
+            self.xobject.set_session(None)
+            self.kvs.set_session(None)
+            self.kvitem.set_session(None)
+            self.action.set_session(None)
+            self.rule.set_session(None)
+            self.workflow.set_session(None)
+            self.container.set_session(None)
+            self.entrypoint.set_session(None)
+            self.variant.set_session(None)
 
     def rollback_work(self):
         if self.session is not None:
             self.session.rollback()
+            self.xobject.set_session(None)
+            self.kvs.set_session(None)
+            self.kvitem.set_session(None)
+            self.action.set_session(None)
+            self.rule.set_session(None)
+            self.workflow.set_session(None)
+            self.container.set_session(None)
+            self.entrypoint.set_session(None)
+            self.variant.set_session(None)
 
     def migrate(self) -> list:
         initial(self.engine)
@@ -93,9 +120,9 @@ class CoreAdapter(CoreRepository):
         return [name]
 
     def health_check(self) -> list:
-        with Session(self.engine) as session:
+        with Session(self.engine) as s:
             stms = select(Migrations)
-            data = session.scalars(stms).all()
+            data = s.scalars(stms).all()
             return data
         m = Migrations()
         m.id = "session failure"
@@ -105,27 +132,31 @@ class CoreAdapter(CoreRepository):
         xobject = XObject()
         xobject.object_name = class_.__name__
 
-        with Session(self.engine) as session:
-            session.add(xobject)
-            session.flush()
+        with Session(self.engine) as s:
+            s.add(xobject)
+            s.flush()
             _id = xobject.id
-            session.commit()
+            s.commit()
             return _id
 
-    def __before_insert(self, mapper, connection, target):
+    def __before_insert(self, _, __, target):
         """ Hook """
         if isinstance(target, Auditable):
+            now = datetime.now()
             target.created_by = "system"
             target.updated_by = "system"
-            target.created_at = datetime.now()
-            target.updated_at = datetime.now()
-        else:
-            print(mapper, connection)
+            target.created_at = now
+            target.updated_at = now
 
-    def __before_update(self, mapper, connection, target):
+        if isinstance(target, TenantSpecific):
+            target.tenant_id = self.tid
+
+    def __before_update(self, _, __, target):
         """ Hook """
         if isinstance(target, Auditable):
+
             target.updated_by = "system"
             target.updated_at = datetime.now()
-        else:
-            print(mapper, connection)
+
+        if isinstance(target, TenantSpecific):
+            target.tenant_id = self.tid

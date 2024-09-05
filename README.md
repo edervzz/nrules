@@ -1,5 +1,13 @@
 # gentera-nrule
 
+- Hello
+- Migrate Tenant, Core
+- Create Tenant
+- Create KV
+- Save KV Item
+- Create Workflow
+- Save Rules
+
 ## New Features
 - Dockerized
 - Swagger

@@ -5,10 +5,10 @@ from .extra_fields import Auditable, Versioned
 from .base import Base
 
 
-class Workflow(Base, Auditable, Versioned):
-    """ Workflow entity """
+class Ruleset(Base, Auditable, Versioned):
+    """ Ruleset entity """
 
-    __tablename__ = "workflows"
+    __tablename__ = "rulesets"
 
     tenant_id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
 

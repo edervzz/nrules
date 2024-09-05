@@ -22,7 +22,7 @@ class KVItemRepository(ABC, Creator, Updater, ReaderSingle, ReaderByParentID):
         self.engine = engine
 
 
-class ActionRepository(ABC, Creator, ReaderSingle):
+class ActionRepository(ABC, Creator, Updater, ReaderSingle, ReaderSingleByExternalID):
     """_summary_"""
 
     def __init__(self, engine):
@@ -42,7 +42,7 @@ class RuleRepository(
         self.engine = engine
 
 
-class WorkflowRepository(
+class RulesetRepository(
         ABC, Creator, Updater,
         ReaderSingle, ReaderSingleByExternalID, ReaderPagination):
     """_summary_"""
@@ -98,7 +98,7 @@ class CoreRepository:
         self.kvitem: KVItemRepository
         self.action: ActionRepository
         self.rule: RuleRepository
-        self.workflow: WorkflowRepository
+        self.ruleset: RulesetRepository
         self.container: ContainerRepository
         self.entrypoint: EntrypointRepository
         self.variant: VariantRepository

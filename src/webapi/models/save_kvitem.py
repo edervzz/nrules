@@ -3,8 +3,8 @@
 import json
 
 
-class NewKVItem:
-    """ New KV Item request """
+class SaveKVItem:
+    """ Save KV Item request """
 
     def __init__(self, j):
         self.__dict__ = json.loads(j)

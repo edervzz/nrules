@@ -1,16 +1,16 @@
 """ Create a new workflow """
 import json
 from flask import Blueprint, request, Response, current_app
-from webapi.models import NewWorkflowModel, NewWorkflowRuleModel
+from webapi.models import NewRulesetModel, NewRulesetModel
 from application.messages import CreateWorkflowRequest
 from application.commands import CreateWorkflowHandler
 from toolkit import Identification
 from domain.entities import Rule
 
-new_workflow_bp = Blueprint("New Workflow", __name__)
+new_ruleset_bp = Blueprint("New Ruleset", __name__)
 
 
-def rule_factory(rule: NewWorkflowRuleModel) -> Rule:
+def rule_factory(rule: NewRulesetModel) -> Rule:
     """ Rule entity factory """
     r = Rule()
     r.name = rule.name
@@ -19,15 +19,15 @@ def rule_factory(rule: NewWorkflowRuleModel) -> Rule:
     return r
 
 
-@new_workflow_bp.post("/t/<tid>/workflows")
-def new_workflow_endpoint(tid: int = None):
+@new_ruleset_bp.post("/t/<tid>/workflows")
+def endpoint(tid: int = None):
     """ New Workflow Endpoint """
     Identification.get_tenant_safe(tid)
     json_data = request.get_json(silent=True)
     if json_data is None:
         return
 
-    new_workflow = NewWorkflowModel(json.dumps(json_data))
+    new_workflow = NewRulesetModel(json.dumps(json_data))
 
     command = CreateWorkflowRequest(
         tid,

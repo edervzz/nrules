@@ -15,18 +15,18 @@ from .migrate import core_migration_bp, tenancy_migration_bp
 from .read_rule import read_rule_bp
 from .create_rule import new_rule_bp
 from .read_workflow import read_workflow_bp
-from .create_workflow import new_workflow_bp
+from .create_ruleset import new_ruleset_bp
 from .update_rule import update_rule_bp
 from .read_all_rule import read_all_rule_bp
 from .create_tenant import new_tenant_bp
 from .create_kv import new_kvs_bp
-from .create_kvitem import new_kvitem_bp
+from .save_kvitem import save_kvitem_bp
 
 
 def register_endpoints(app: Flask, prefix: str):
     """ Map endpoints based on blueprints """
 
-    app.register_blueprint(new_kvitem_bp, url_prefix=prefix)
+    app.register_blueprint(save_kvitem_bp, url_prefix=prefix)
 
     app.register_blueprint(new_kvs_bp, url_prefix=prefix)
 
@@ -40,7 +40,7 @@ def register_endpoints(app: Flask, prefix: str):
 
     app.register_blueprint(read_workflow_bp, url_prefix=prefix)
 
-    app.register_blueprint(new_workflow_bp, url_prefix=prefix)
+    app.register_blueprint(new_ruleset_bp, url_prefix=prefix)
 
     app.register_blueprint(new_tenant_bp, url_prefix=prefix)
 
@@ -69,6 +69,8 @@ def register_before_request(app: Flask):
     def _():
         """ Prepare core repository by tenant """
 
+        session["username"] = "eder@mail.com"
+
         if "/t/" in request.url:
             fromidx = request.url.index("/t/")
             toidx = request.url.index("/", fromidx + 3)
@@ -83,7 +85,7 @@ def register_before_request(app: Flask):
                 if isinstance(tenant, Tenants):
                     with app.app_context():
                         cs = base64.b64decode(tenant.option).decode("utf-8")
-                        app.config[str(tid)] = CoreAdapter(cs, tid)
+                        app.config[str(tid)] = CoreAdapter(tid, cs)
                 else:
                     raise BadRequest(f"Tenant {tid} is not recognized.")
 

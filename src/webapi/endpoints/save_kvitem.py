@@ -1,17 +1,17 @@
 """ Create a new workflow """
 import json
 from flask import Blueprint, request, Response, current_app
-from webapi.models import NewKVItem
+from webapi.models import SaveKVItem
 from domain.entities import KVItem
 from application.messages import SaveKVItemRequest
 from application.commands import SaveKVItemHandler
 from toolkit import Identification
 
 
-new_kvitem_bp = Blueprint("New KV Item", __name__)
+save_kvitem_bp = Blueprint("Save KV Item", __name__)
 
 
-@new_kvitem_bp.put("/t/<tid>/kvs/<kid>/items")
+@save_kvitem_bp.put("/t/<tid>/kvs/<kid>/items")
 def wrapper(tid: int = None, kid: int = None):
     """ New KV Items Endpoint """
     Identification.get_tenant_safe(tid)
@@ -21,7 +21,7 @@ def wrapper(tid: int = None, kid: int = None):
 
     kvitems = []
     for j in json_data:
-        newitem = NewKVItem(json.dumps(j))
+        newitem = SaveKVItem(json.dumps(j))
         item = KVItem()
         item.key = newitem.key
         item.kv_id = kid

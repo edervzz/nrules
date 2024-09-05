@@ -14,6 +14,8 @@ class Action(Base, Auditable, Versioned):
 
     id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
 
-    workflow_id: Mapped[int] = mapped_column(nullable=False)
+    name: Mapped[str] = mapped_column(nullable=False)
+
+    ruleset_id: Mapped[int] = mapped_column(nullable=False)
 
     kv_id: Mapped[int] = mapped_column(nullable=False)

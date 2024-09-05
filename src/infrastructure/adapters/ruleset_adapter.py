@@ -1,11 +1,11 @@
 """_summary_
     """
 from sqlalchemy.orm import Session
-from domain.entities import Workflow, Pagination
-from domain.ports import WorkflowRepository
+from domain.entities import Ruleset, Pagination
+from domain.ports import RulesetRepository
 
 
-class WorkflowAdapter(WorkflowRepository):
+class RulesetAdapter(RulesetRepository):
     """ Workflow Adapter """
 
     def set_session(self, session: Session):
@@ -16,29 +16,29 @@ class WorkflowAdapter(WorkflowRepository):
         if not self.session.autoflush:
             self.session.flush()
 
-    def update(self, entity: Workflow):
-        rule = self.session.query(Workflow).where(
-            Workflow.id == entity.id).one_or_none()
+    def update(self, entity: Ruleset):
+        rule = self.session.query(Ruleset).where(
+            Ruleset.id == entity.id).one_or_none()
         rule.name = entity.name
         rule.expression = entity.expression
 
     def read(self, _id) -> any:
         with Session(self.engine) as session:
-            workflow = session.query(Workflow).where(
-                Workflow.id == _id).one_or_none()
+            workflow = session.query(Ruleset).where(
+                Ruleset.id == _id).one_or_none()
             return workflow
 
-    def read_by_external_id(self, external_id) -> Workflow:
+    def read_by_external_id(self, external_id) -> Ruleset:
         with Session(self.engine) as session:
-            workflow = session.query(Workflow).where(
-                Workflow.name == external_id).one_or_none()
+            workflow = session.query(Ruleset).where(
+                Ruleset.name == external_id).one_or_none()
             return workflow
 
-    def read_page(self, page_no, page_size) -> tuple[list, Workflow]:
+    def read_page(self, page_no, page_size) -> tuple[list, Ruleset]:
         offset = (page_no-1)*page_size
         with Session(self.engine) as session:
-            workflows = session.query(Workflow).offset(
+            workflows = session.query(Ruleset).offset(
                 offset).limit(page_size).all()
-            total = session.query(Workflow.id).count()
+            total = session.query(Ruleset.id).count()
 
             return workflows, Pagination(page_no, page_size, total)

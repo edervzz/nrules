@@ -7,7 +7,7 @@ from .entrypoint import Entrypoint
 from .variant import Variant
 from .kv import KV
 from .kv_item import KVItem
-from .workflow import Workflow
+from .ruleset import Ruleset
 from .rule import Rule
 from .container import Container
 from .action import Action

@@ -1,5 +1,5 @@
 """ Create workflow """
-from domain.entities import Workflow
+from domain.entities import Ruleset
 
 
 class CreateWorkflowRequest:
@@ -8,7 +8,7 @@ class CreateWorkflowRequest:
     def __init__(
             self, tid: int, name: str, typeof: str, action_id_ok: int, action_id_nok):
 
-        self.workflow = Workflow()
+        self.workflow = Ruleset()
         self.workflow.tenant_id = tid
         self.workflow.name = name
         self.workflow.typeof = typeof

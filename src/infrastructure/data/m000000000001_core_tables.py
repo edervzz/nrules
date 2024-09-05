@@ -101,49 +101,49 @@ def core_tables(engine: Engine) -> str:
     set_version(rule)
     set_auditable(rule)
 
-    # Workflows ----------------------------------------------
-    workflows = Table(
-        "workflows",
+    # ruleset ----------------------------------------------
+    ruleset = Table(
+        "rulesets",
         metadata_obj,
         Column(
             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
         Column(
-            "id", BigInteger, primary_key=True, comment="Workflow ID"),
+            "id", BigInteger, primary_key=True, comment="Rule Set ID"),
         Column(
-            "name", String(50), nullable=False, comment="Workflow Name"),
+            "name", String(50), nullable=False, comment="Rule Set Name"),
         Column(
-            "typeof", String(4), CheckConstraint("typeof = 'BASE' OR typeof = 'FULL' OR typeof = 'NODE'", name="workflow_chk_typeof"), nullable=False,
-            comment="Type of Workflow: Base, full, node"),
+            "typeof", String(4), CheckConstraint("typeof = 'BASE' OR typeof = 'FULL' OR typeof = 'NODE'", name="ruleset_chk_typeof"), nullable=False,
+            comment="Type of Rule set: Base, full, node"),
         Column(
             "action_id_ok", BigInteger, nullable=True, comment="Action to perform when result is success"),
         Column(
             "action_id_nok", BigInteger, nullable=True, comment="Action to perform when result is success"),
         comment="A Workflow can be performed as Node or call actions by result"
     )
-    set_version(workflows)
-    set_auditable(workflows)
+    set_version(ruleset)
+    set_auditable(ruleset)
 
-    # Containers ----------------------------------------------
-    container = Table(
-        "containers",
-        metadata_obj,
-        Column(
-            "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
-        Column(
-            "workflow_id", Integer, primary_key=True, comment="Workflow ID"),
-        Column(
-            "rule_id", Integer, primary_key=True, comment="Workflow ID"),
-        Column(
-            "operator", String(3), CheckConstraint("operator = 'AND' OR operator = 'OR'", name="container_rules_chk_operator"), nullable=False,
-            comment="Operator evaluates rules between them. Only works when Workflow is type Base."),
-        Column(
-            "order", Integer, nullable=False, comment="Position into set of rules"),
-        Column(
-            "action_id_ok", BigInteger, nullable=True, comment="Action to perform when result is success. Only works when Workflow is type Node"),
-        comment="Relation between Workflows and Rules. Can assign operator, order and success-action"
-    )
-    set_version(container)
-    set_auditable(container)
+    # # Containers ----------------------------------------------
+    # container = Table(
+    #     "containers",
+    #     metadata_obj,
+    #     Column(
+    #         "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
+    #     Column(
+    #         "workflow_id", Integer, primary_key=True, comment="Workflow ID"),
+    #     Column(
+    #         "rule_id", Integer, primary_key=True, comment="Workflow ID"),
+    #     Column(
+    #         "operator", String(3), CheckConstraint("operator = 'AND' OR operator = 'OR'", name="container_rules_chk_operator"), nullable=False,
+    #         comment="Operator evaluates rules between them. Only works when Workflow is type Base."),
+    #     Column(
+    #         "order", Integer, nullable=False, comment="Position into set of rules"),
+    #     Column(
+    #         "action_id_ok", BigInteger, nullable=True, comment="Action to perform when result is success. Only works when Workflow is type Node"),
+    #     comment="Relation between Workflows and Rules. Can assign operator, order and success-action"
+    # )
+    # set_version(container)
+    # set_auditable(container)
 
     # Entrypoint Storage ----------------------------------------------
     entrypoint = Table(
@@ -152,11 +152,11 @@ def core_tables(engine: Engine) -> str:
         Column(
             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
         Column(
-            "id", Integer, primary_key=True, comment="Workflow ID"),
+            "id", Integer, primary_key=True, comment="Entrypoint ID"),
         Column(
             "name", String(32), comment="Name code of Entrypoint"),
         Column(
-            "workflow_id", BigInteger, comment="Workflow ID"),
+            "ruleset_id", BigInteger, comment="Rule Set ID"),
         Column(
             "is_active", Boolean, comment="Entrypoint is active"),
         comment="Entrypoint determine which workflow will be called"

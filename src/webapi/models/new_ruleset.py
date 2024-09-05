@@ -2,7 +2,7 @@
 import json
 
 
-class NewWorkflowModel(object):
+class NewRulesetModel(object):
     """ New Workflow model class """
 
     def __init__(self, j):

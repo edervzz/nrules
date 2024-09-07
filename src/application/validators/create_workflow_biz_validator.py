@@ -1,6 +1,6 @@
 """_summary_"""
 from application.messages import CreateWorkflowRequest
-from domain.entities import Ruleset
+from domain.entities import Node
 from domain.ports import CoreRepository
 from toolkit import Validator, Localizer, Codes
 
@@ -23,4 +23,4 @@ class CreateWorkflowBizValidator(Validator):
                 Codes.WF_CREA_003,
                 self._localizer.get(Codes.WF_CREA_003))
 
-        request.workflow.id = self.__repository.next_number(Ruleset)
+        request.workflow.id = self.__repository.next_number(Node)

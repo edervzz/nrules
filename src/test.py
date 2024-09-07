@@ -4,14 +4,14 @@
 # from sqlalchemy.orm import Session
 import logging
 from infrastructure.adapters import CoreAdapter
-from domain.entities import Ruleset
+from domain.entities import Node
 from domain.ports import CoreRepository
 from application.messages import CreateWorkflowRequest
 from application.commands import CreateWorkflowHandler
 
 
 def test01(repository: CoreRepository):
-    wf = Ruleset()
+    wf = Node()
     wf.name = "WF_test"
     repository.begin()
     repository.create(wf)

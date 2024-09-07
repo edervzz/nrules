@@ -21,18 +21,6 @@ def core_tables(engine: Engine) -> str:
         if result is not None:
             return result.id
 
-    # XObject Storage ----------------------------------------------
-    variant = Table(
-        "xobjects",
-        metadata_obj,
-        Column(
-            "id", BigInteger, primary_key=True, autoincrement=True, comment="ID for Variants, Rules, Workflow, Actions, KVS"),
-        Column(
-            "object_name", String(50), nullable=False, comment="Rules / Workflows / Actions / KVS"),
-        comment="Variant is a container for many Key-Values"
-    )
-    set_auditable(variant)
-
     # Key-Value Storage ----------------------------------------------
     kv = Table(
         "kvs",
@@ -102,48 +90,48 @@ def core_tables(engine: Engine) -> str:
     set_auditable(rule)
 
     # ruleset ----------------------------------------------
-    ruleset = Table(
-        "rulesets",
+    workflow = Table(
+        "workflows",
         metadata_obj,
         Column(
             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
         Column(
-            "id", BigInteger, primary_key=True, comment="Rule Set ID"),
+            "id", BigInteger, primary_key=True, comment="Workflow ID"),
         Column(
-            "name", String(50), nullable=False, comment="Rule Set Name"),
+            "name", String(50), nullable=False, comment="workflow Name"),
         Column(
-            "typeof", String(4), CheckConstraint("typeof = 'BASE' OR typeof = 'FULL' OR typeof = 'NODE'", name="ruleset_chk_typeof"), nullable=False,
-            comment="Type of Rule set: Base, full, node"),
+            "typeof", String(4), CheckConstraint("typeof = 'BASE' OR typeof = 'FULL' OR typeof = 'NODE'", name="workflows_chk_typeof"), nullable=False,
+            comment="Type of workflow: Base, full, node"),
         Column(
             "action_id_ok", BigInteger, nullable=True, comment="Action to perform when result is success"),
         Column(
             "action_id_nok", BigInteger, nullable=True, comment="Action to perform when result is success"),
         comment="A Workflow can be performed as Node or call actions by result"
     )
-    set_version(ruleset)
-    set_auditable(ruleset)
+    set_version(workflow)
+    set_auditable(workflow)
 
-    # # Containers ----------------------------------------------
-    # container = Table(
-    #     "containers",
-    #     metadata_obj,
-    #     Column(
-    #         "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
-    #     Column(
-    #         "workflow_id", Integer, primary_key=True, comment="Workflow ID"),
-    #     Column(
-    #         "rule_id", Integer, primary_key=True, comment="Workflow ID"),
-    #     Column(
-    #         "operator", String(3), CheckConstraint("operator = 'AND' OR operator = 'OR'", name="container_rules_chk_operator"), nullable=False,
-    #         comment="Operator evaluates rules between them. Only works when Workflow is type Base."),
-    #     Column(
-    #         "order", Integer, nullable=False, comment="Position into set of rules"),
-    #     Column(
-    #         "action_id_ok", BigInteger, nullable=True, comment="Action to perform when result is success. Only works when Workflow is type Node"),
-    #     comment="Relation between Workflows and Rules. Can assign operator, order and success-action"
-    # )
-    # set_version(container)
-    # set_auditable(container)
+    # Containers ----------------------------------------------
+    container = Table(
+        "containers",
+        metadata_obj,
+        Column(
+            "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
+        Column(
+            "workflow_id", Integer, primary_key=True, comment="Workflow ID"),
+        Column(
+            "rule_id", Integer, primary_key=True, comment="Workflow ID"),
+        Column(
+            "operator", String(3), CheckConstraint("operator = 'AND' OR operator = 'OR'", name="container_rules_chk_operator"), nullable=False,
+            comment="Operator evaluates rules between them. Only works when Workflow is type Base."),
+        Column(
+            "order", Integer, nullable=False, comment="Position into set of rules"),
+        Column(
+            "action_id_ok", BigInteger, nullable=True, comment="Action to perform when result is success. Only works when Workflow is type Node"),
+        comment="Relation between Workflows and Rules. Can assign operator, order and success-action"
+    )
+    set_version(container)
+    set_auditable(container)
 
     # Entrypoint Storage ----------------------------------------------
     entrypoint = Table(
@@ -171,9 +159,11 @@ def core_tables(engine: Engine) -> str:
         Column(
             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
         Column(
-            "key", String(32), primary_key=True, comment="Key"),
+            "id", Integer, primary_key=True, comment="Variant ID"),
         Column(
             "entrypoint_id", Integer, primary_key=True, comment="ID of Entrypoint"),
+        Column(
+            "key", String(32), primary_key=True, comment="Key"),
         Column(
             "value", String(100), nullable=False, comment="Value"),
         comment="Variant is a container for many Key-Values"

@@ -1,4 +1,4 @@
-""" workflow rule """
+""" container rule """
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
 from .extra_fields import Auditable, Versioned

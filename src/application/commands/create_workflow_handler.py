@@ -4,7 +4,7 @@ import logging
 from application.messages import CreateWorkflowRequest, CreateWorkflowResponse
 from application.validators import CreateWorkflowValidator, CreateWorkflowBizValidator
 from domain.ports import CoreRepository
-from domain.entities import Ruleset
+from domain.entities import Node
 from toolkit import Localizer
 
 
@@ -15,7 +15,7 @@ class CreateWorkflowHandler:
         self.repository = repository
         self.logger = logger
         self.localizer = localizer
-        self.workflow: Ruleset = None
+        self.workflow: Node = None
 
     def handler(self, request: CreateWorkflowRequest) -> CreateWorkflowResponse:
         r""" Handler """

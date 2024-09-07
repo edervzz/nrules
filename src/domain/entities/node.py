@@ -5,10 +5,10 @@ from .extra_fields import Auditable, Versioned
 from .base import Base
 
 
-class Ruleset(Base, Auditable, Versioned):
-    """ Ruleset entity """
+class Node(Base, Auditable, Versioned):
+    """ Node entity """
 
-    __tablename__ = "rulesets"
+    __tablename__ = "nodes"
 
     tenant_id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
 

@@ -43,11 +43,15 @@ def core_tables(engine: Engine) -> str:
         Column(
             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
         Column(
-            "key", String(50), primary_key=True, comment="Key-Value Storage Key"),
+            "id", BigInteger, primary_key=True, comment="Item ID"),
         Column(
             "kv_id", BigInteger, primary_key=True, comment="Key-Value Storage ID"),
         Column(
+            "key", String(50), comment="Key-Value Storage Key"),
+        Column(
             "value", String(500), nullable=False, comment="Key-Value Storage Value"),
+        Column(
+            "calculate", String(3), CheckConstraint("calculate = 'ADD' OR calculate = 'MOD'", name="kv_items_chk_calculate"), nullable=False, comment="Calculation method"),
         Column(
             "typeof", String(50), nullable=True, comment="Type of value. E.g. 'json', 'string', 'int'"),
         comment="KV Item can be assign to single one KVS"
@@ -55,22 +59,22 @@ def core_tables(engine: Engine) -> str:
     set_version(kvitem)
     set_auditable(kvitem)
 
-    # Action ----------------------------------------------
-    actions = Table(
-        "actions",
+    # Expressions ----------------------------------------------
+    exp = Table(
+        "expressions",
         metadata_obj,
         Column(
             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
         Column(
-            "id", BigInteger, primary_key=True, comment="Action ID"),
+            "id", BigInteger, primary_key=True, comment="Expression ID"),
         Column(
-            "workflow_id", String(50), primary_key=True, comment="Key-Value Storage Key"),
+            "rule_id", BigInteger, primary_key=True, comment="Rule ID"),
         Column(
-            "kvs_id", String(500), nullable=False, comment="Key-Value Storage Value"),
-        comment="Actions determine to whom call or retrieve as result of rule or workflow."
+            "expression", String(1024), nullable=False, comment="Expression"),
+        comment="A simple business validation"
     )
-    set_version(actions)
-    set_auditable(actions)
+    set_version(exp)
+    set_auditable(exp)
 
     # Rules ----------------------------------------------
     rule = Table(
@@ -83,55 +87,46 @@ def core_tables(engine: Engine) -> str:
         Column(
             "name", String(50), nullable=False, comment="Rule Name"),
         Column(
-            "expression", String(1024), nullable=False, comment="Expression"),
+            "is_switch", BigInteger, nullable=True, comment="Rule work as switch"),
+        Column(
+            "rule_id", BigInteger, nullable=True, comment="Linked rule"),
+        Column(
+            "kvs_id", BigInteger, nullable=True, comment="Linked KVS"),
         comment="A Rule is a simple business validation"
     )
     set_version(rule)
     set_auditable(rule)
 
-    # ruleset ----------------------------------------------
-    workflow = Table(
-        "workflows",
+    # switches ----------------------------------------------
+    switches = Table(
+        "switches",
         metadata_obj,
         Column(
             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
         Column(
-            "id", BigInteger, primary_key=True, comment="Workflow ID"),
+            "rule_id", BigInteger, primary_key=True, comment="Rule ID"),
         Column(
-            "name", String(50), nullable=False, comment="workflow Name"),
+            "rule_id1", BigInteger, primary_key=True, comment="Rule ID 1"),
         Column(
-            "typeof", String(4), CheckConstraint("typeof = 'BASE' OR typeof = 'FULL' OR typeof = 'NODE'", name="workflows_chk_typeof"), nullable=False,
-            comment="Type of workflow: Base, full, node"),
+            "rule_id2", BigInteger, primary_key=True, comment="Rule ID 2"),
         Column(
-            "action_id_ok", BigInteger, nullable=True, comment="Action to perform when result is success"),
+            "rule_id3", BigInteger, primary_key=True, comment="Rule ID 3"),
         Column(
-            "action_id_nok", BigInteger, nullable=True, comment="Action to perform when result is success"),
-        comment="A Workflow can be performed as Node or call actions by result"
+            "rule_id4", BigInteger, primary_key=True, comment="Rule ID 4"),
+        Column(
+            "rule_id5", BigInteger, primary_key=True, comment="Rule ID 5"),
+        Column(
+            "rule_id6", BigInteger, primary_key=True, comment="Rule ID 6"),
+        Column(
+            "rule_id7", BigInteger, primary_key=True, comment="Rule ID 7"),
+        Column(
+            "rule_id8", BigInteger, primary_key=True, comment="Rule ID 8"),
+        Column(
+            "rule_id9", BigInteger, primary_key=True, comment="Rule ID 9"),
+        comment="9 exits"
     )
-    set_version(workflow)
-    set_auditable(workflow)
-
-    # Containers ----------------------------------------------
-    container = Table(
-        "containers",
-        metadata_obj,
-        Column(
-            "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
-        Column(
-            "workflow_id", Integer, primary_key=True, comment="Workflow ID"),
-        Column(
-            "rule_id", Integer, primary_key=True, comment="Workflow ID"),
-        Column(
-            "operator", String(3), CheckConstraint("operator = 'AND' OR operator = 'OR'", name="container_rules_chk_operator"), nullable=False,
-            comment="Operator evaluates rules between them. Only works when Workflow is type Base."),
-        Column(
-            "order", Integer, nullable=False, comment="Position into set of rules"),
-        Column(
-            "action_id_ok", BigInteger, nullable=True, comment="Action to perform when result is success. Only works when Workflow is type Node"),
-        comment="Relation between Workflows and Rules. Can assign operator, order and success-action"
-    )
-    set_version(container)
-    set_auditable(container)
+    set_version(switches)
+    set_auditable(switches)
 
     # Entrypoint Storage ----------------------------------------------
     entrypoint = Table(
@@ -144,32 +139,13 @@ def core_tables(engine: Engine) -> str:
         Column(
             "name", String(32), comment="Name code of Entrypoint"),
         Column(
-            "ruleset_id", BigInteger, comment="Rule Set ID"),
+            "rule_id", BigInteger, comment="Rule ID"),
         Column(
-            "is_active", Boolean, comment="Entrypoint is active"),
-        comment="Entrypoint determine which workflow will be called"
+            "kvs_id_in", Boolean, comment="KVS ID used as input"),
+        comment="Entrypoint determine which Rules will be called"
     )
     set_version(entrypoint)
     set_auditable(entrypoint)
-
-    # Variant Storage ----------------------------------------------
-    variant = Table(
-        "variants",
-        metadata_obj,
-        Column(
-            "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
-        Column(
-            "id", Integer, primary_key=True, comment="Variant ID"),
-        Column(
-            "entrypoint_id", Integer, primary_key=True, comment="ID of Entrypoint"),
-        Column(
-            "key", String(32), primary_key=True, comment="Key"),
-        Column(
-            "value", String(100), nullable=False, comment="Value"),
-        comment="Variant is a container for many Key-Values"
-    )
-    set_version(variant)
-    set_auditable(variant)
 
     metadata_obj.create_all(engine)
 

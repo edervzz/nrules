@@ -1,11 +1,11 @@
 """ migration file """
 
 from datetime import datetime
-from sqlalchemy import Column, Integer, BigInteger, String, Boolean, BINARY
-from sqlalchemy import MetaData, Table,  CheckConstraint, Engine, select
+from sqlalchemy import Column, BigInteger, String
+from sqlalchemy import MetaData, Table,   Engine, select
 from sqlalchemy.orm import Session
 from domain.entities import Migrations
-from .audit import set_auditable, set_version
+from .audit import set_auditable
 
 
 def core_tables(engine: Engine) -> str:

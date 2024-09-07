@@ -18,4 +18,6 @@ class KVItem(Base, TenantSpecific, Auditable, Versioned):
 
     value: Mapped[str] = mapped_column(nullable=False)
 
+    calculate: Mapped[str] = mapped_column(nullable=True)
+
     typeof: Mapped[str] = mapped_column(nullable=True)

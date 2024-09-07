@@ -68,8 +68,6 @@ def core_tables(engine: Engine) -> str:
         Column(
             "id", BigInteger, primary_key=True, comment="Expression ID"),
         Column(
-            "rule_id", BigInteger, primary_key=True, comment="Rule ID"),
-        Column(
             "expression", String(1024), nullable=False, comment="Expression"),
         comment="A simple business validation"
     )
@@ -106,23 +104,23 @@ def core_tables(engine: Engine) -> str:
         Column(
             "rule_id", BigInteger, primary_key=True, comment="Rule ID"),
         Column(
-            "rule_id1", BigInteger, primary_key=True, comment="Rule ID 1"),
+            "rule_id1", BigInteger, primary_key=False, comment="Rule ID 1"),
         Column(
-            "rule_id2", BigInteger, primary_key=True, comment="Rule ID 2"),
+            "rule_id2", BigInteger, primary_key=False, comment="Rule ID 2"),
         Column(
-            "rule_id3", BigInteger, primary_key=True, comment="Rule ID 3"),
+            "rule_id3", BigInteger, primary_key=False, comment="Rule ID 3"),
         Column(
-            "rule_id4", BigInteger, primary_key=True, comment="Rule ID 4"),
+            "rule_id4", BigInteger, primary_key=False, comment="Rule ID 4"),
         Column(
-            "rule_id5", BigInteger, primary_key=True, comment="Rule ID 5"),
+            "rule_id5", BigInteger, primary_key=False, comment="Rule ID 5"),
         Column(
-            "rule_id6", BigInteger, primary_key=True, comment="Rule ID 6"),
+            "rule_id6", BigInteger, primary_key=False, comment="Rule ID 6"),
         Column(
-            "rule_id7", BigInteger, primary_key=True, comment="Rule ID 7"),
+            "rule_id7", BigInteger, primary_key=False, comment="Rule ID 7"),
         Column(
-            "rule_id8", BigInteger, primary_key=True, comment="Rule ID 8"),
+            "rule_id8", BigInteger, primary_key=False, comment="Rule ID 8"),
         Column(
-            "rule_id9", BigInteger, primary_key=True, comment="Rule ID 9"),
+            "rule_id9", BigInteger, primary_key=False, comment="Rule ID 9"),
         comment="9 exits"
     )
     set_version(switches)

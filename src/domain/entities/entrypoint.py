@@ -16,6 +16,8 @@ class Entrypoint(Base, Auditable, Versioned):
 
     name: Mapped[str] = mapped_column(nullable=False)
 
-    workflow_id: Mapped[int] = mapped_column(nullable=False)
+    objty: Mapped[str] = mapped_column(nullable=False)
 
-    is_active: Mapped[bool] = mapped_column(nullable=False)
+    objid: Mapped[int] = mapped_column(nullable=False)
+
+    kvs_id_in: Mapped[int] = mapped_column(nullable=False)

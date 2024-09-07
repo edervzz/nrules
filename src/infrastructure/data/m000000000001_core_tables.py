@@ -59,16 +59,22 @@ def core_tables(engine: Engine) -> str:
     set_version(kvitem)
     set_auditable(kvitem)
 
-    # Expressions ----------------------------------------------
+    # Conditions ----------------------------------------------
     exp = Table(
-        "expressions",
+        "conditions",
         metadata_obj,
         Column(
             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
         Column(
             "id", BigInteger, primary_key=True, comment="Expression ID"),
         Column(
+            "rule_id", BigInteger, primary_key=True, comment="Rule ID"),
+        Column(
             "expression", String(1024), nullable=False, comment="Expression"),
+        Column(
+            "position", Integer, nullable=False, comment="Position"),
+        Column(
+            "operator", String(3), CheckConstraint("operator = 'AND' OR operator = 'OR'", name="conditions_chk_operator"), nullable=False, comment="Operator [OR, AND=default]"),
         comment="A simple business validation"
     )
     set_version(exp)
@@ -83,11 +89,9 @@ def core_tables(engine: Engine) -> str:
         Column(
             "id", BigInteger, primary_key=True, comment="Rule ID"),
         Column(
-            "name", String(50), nullable=False, comment="Rule Name"),
+            "name", String(50), nullable=False, unique=True, comment="Rule's Name"),
         Column(
-            "is_switch", BigInteger, nullable=True, comment="Rule work as switch"),
-        Column(
-            "rule_id", BigInteger, nullable=True, comment="Linked rule"),
+            "is_zero_condition", String(50), nullable=False, comment="Active force OK result"),
         Column(
             "kvs_id", BigInteger, nullable=True, comment="Linked KVS"),
         comment="A Rule is a simple business validation"
@@ -95,36 +99,38 @@ def core_tables(engine: Engine) -> str:
     set_version(rule)
     set_auditable(rule)
 
-    # switches ----------------------------------------------
-    switches = Table(
-        "switches",
+    # Node ----------------------------------------------
+    node = Table(
+        "nodes",
         metadata_obj,
         Column(
             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
         Column(
-            "rule_id", BigInteger, primary_key=True, comment="Rule ID"),
+            "rule_id", BigInteger, primary_key=True, nullable=False, comment="Rule to perform"),
         Column(
-            "rule_id1", BigInteger, primary_key=False, comment="Rule ID 1"),
+            "mode", String(5), CheckConstraint("mode = 'ALL' OR mode = 'EARLY'", name="switches_chk_mode"), primary_key=False, comment="Switch Mode [ALL, EARLY=default]"),
         Column(
-            "rule_id2", BigInteger, primary_key=False, comment="Rule ID 2"),
+            "rule_id1", BigInteger, primary_key=False, comment="Next Rule 1"),
         Column(
-            "rule_id3", BigInteger, primary_key=False, comment="Rule ID 3"),
+            "rule_id2", BigInteger, primary_key=False, comment="Next Rule 2"),
         Column(
-            "rule_id4", BigInteger, primary_key=False, comment="Rule ID 4"),
+            "rule_id3", BigInteger, primary_key=False, comment="Next Rule 3"),
         Column(
-            "rule_id5", BigInteger, primary_key=False, comment="Rule ID 5"),
+            "rule_id4", BigInteger, primary_key=False, comment="Next Rule 4"),
         Column(
-            "rule_id6", BigInteger, primary_key=False, comment="Rule ID 6"),
+            "rule_id5", BigInteger, primary_key=False, comment="Next Rule 5"),
         Column(
-            "rule_id7", BigInteger, primary_key=False, comment="Rule ID 7"),
+            "rule_id6", BigInteger, primary_key=False, comment="Next Rule 6"),
         Column(
-            "rule_id8", BigInteger, primary_key=False, comment="Rule ID 8"),
+            "rule_id7", BigInteger, primary_key=False, comment="Next Rule 7"),
         Column(
-            "rule_id9", BigInteger, primary_key=False, comment="Rule ID 9"),
-        comment="9 exits"
+            "rule_id8", BigInteger, primary_key=False, comment="Next Rule 8"),
+        Column(
+            "rule_id9", BigInteger, primary_key=False, comment="Next Rule 9"),
+        comment="Nodes determine the rule connected to another ones"
     )
-    set_version(switches)
-    set_auditable(switches)
+    set_version(node)
+    set_auditable(node)
 
     # Entrypoint Storage ----------------------------------------------
     entrypoint = Table(
@@ -135,7 +141,7 @@ def core_tables(engine: Engine) -> str:
         Column(
             "id", Integer, primary_key=True, comment="Entrypoint ID"),
         Column(
-            "name", String(32), comment="Name code of Entrypoint"),
+            "name", String(50), nullable=False, unique=True, comment="Entrypoint's Name"),
         Column(
             "rule_id", BigInteger, comment="Rule ID"),
         Column(

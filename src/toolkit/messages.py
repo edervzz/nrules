@@ -62,6 +62,18 @@ class Codes:
     en_messages[KVI_CREA_001] = "Nombre de KV Item es obligatorio."
     es_messages[KVI_CREA_001] = "KV Item Name must not be empty."
 
+    KV_READ_003 = "KVI-READ-003"
+    en_messages[KV_READ_003] = "KV Items not found."
+    es_messages[KV_READ_003] = "No se encontrado Items del KV."
+
+    KV_READ_002 = "KVI-READ-002"
+    en_messages[KV_READ_002] = "KV ID not found."
+    es_messages[KV_READ_002] = "KV ID no encontrado."
+
+    KV_READ_001 = "KVI-READ-001"
+    en_messages[KV_READ_001] = "KV ID must not be empty."
+    es_messages[KV_READ_001] = "KV ID debe proporcionarse."
+
     KV_CREA_003 = "KV-CREA-003"
     en_messages[KV_CREA_003] = "KVS already exists."
     es_messages[KV_CREA_003] = "KVS ya existe."
@@ -163,6 +175,10 @@ class Codes:
     es_messages[RU_UPD_001] = "Nombre de Regla es obligatorio."
 
     # Create Rule
+    RU_CREA_007 = "RU-CREA-007"
+    en_messages[RU_CREA_007] = "At least one conditions is required."
+    es_messages[RU_CREA_007] = "Al menos se requiere una condición."
+
     RU_CREA_006 = "RU-CREA-006"
     en_messages[RU_CREA_006] = "An error happend during expression validation."
     es_messages[RU_CREA_006] = "Un error sucedió durante la validación de la expresión."

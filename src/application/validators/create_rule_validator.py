@@ -2,6 +2,7 @@
 from application.messages import CreateRuleRequest
 from toolkit import Validator
 from toolkit.localization import Localizer, Codes
+from .expression_validator import ExpressionValidator
 
 
 class CreateRuleValidator(Validator):
@@ -22,11 +23,28 @@ class CreateRuleValidator(Validator):
             self.add_failure(
                 Codes.RU_CREA_002,
                 self._localizer.get(Codes.RU_CREA_002))
-        if request.rule.expression == "":
-            raise self.as_error(
-                Codes.RU_CREA_003,
-                self._localizer.get(Codes.RU_CREA_003))
-        if not isinstance(request.rule.is_exclusive, bool):
-            raise self.as_error(
-                Codes.RU_CREA_004,
-                self._localizer.get(Codes.RU_CREA_004))
+        if request.rule.is_zero_condition is False and len(request.conditions) == 0:
+            self.add_failure(
+                Codes.RU_CREA_006,
+                self._localizer.get(Codes.RU_CREA_006))
+        else:
+            validator = ExpressionValidator()
+            idx = 0
+            for c in request.conditions:
+                idx += 1
+                if c.expression == "":
+                    self.add_failure(
+                        Codes.RU_CREA_003,
+                        self._localizer.get(Codes.RU_CREA_003))
+                if c.operator.upper() not in ["AND", "OR"]:
+                    c.operator = "AND"
+
+                c.position = idx
+
+                try:
+                    validator.validate(c.expression)
+                except ValueError:
+                    self.add_failure(
+                        Codes.RU_CREA_006,
+                        self._localizer.get(Codes.RU_CREA_006)
+                    )

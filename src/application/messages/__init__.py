@@ -2,7 +2,7 @@
 
     Requests and Responses
 """
-from create_order_message import CreateOrderResponse
+from .read_kvs_message import ReadKVSRequest, ReadKVSResponse
 from .save_action_message import SaveActionRequest, SaveActionResponse
 from .save_kvitem_message import SaveKVItemRequest, SaveKVItemResponse
 from .create_kv_message import CreateKVRequest, CreateKVResponse

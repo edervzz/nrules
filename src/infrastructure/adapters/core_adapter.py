@@ -5,15 +5,16 @@ from flask import session
 from sqlalchemy import Engine, create_engine, select, event
 from sqlalchemy.orm import Session
 from sqlalchemy.orm import Query
-from domain.entities import Rule, Node
-from domain.entities import TenantSpecific, Auditable, Migrations
+from domain.entities import Rule, Node, Condition
+from domain.entities import TenantSpecific, Versioned, Auditable, Migrations
 from domain.entities import XObject, KV, KVItem, Entrypoint
 from domain.ports import CoreRepository
-from infrastructure.data import initial, core_tables
+from infrastructure.data import initial, core_tables, core_admin
 from .xobject_adapter import XObjectAdapter
 from .kvs_adapter import KVSAdapter
 from .kvitem_adapter import KVItemAdapter
 from .rule_adapter import RuleAdapter
+from .condition_adapter import ConditionAdapter
 from .entrypoint_adapter import EntrypointAdapter
 
 
@@ -33,6 +34,7 @@ class CoreAdapter(CoreRepository):
         self.kvs = KVSAdapter(self.engine)
         self.kvitem = KVItemAdapter(self.engine)
         self.rule = RuleAdapter(self.engine)
+        self.condition = ConditionAdapter(self.engine)
         self.entrypoint = EntrypointAdapter(self.engine)
 
         event.listen(XObject, 'before_insert', self.__before_insert)
@@ -46,6 +48,9 @@ class CoreAdapter(CoreRepository):
 
         event.listen(Rule, 'before_insert', self.__before_insert)
         event.listen(Rule, 'before_update', self.__before_update)
+
+        event.listen(Condition, 'before_insert', self.__before_insert)
+        event.listen(Condition, 'before_update', self.__before_update)
 
         event.listen(Node, 'before_insert', self.__before_insert)
         event.listen(Node, 'before_update', self.__before_update)
@@ -63,12 +68,9 @@ class CoreAdapter(CoreRepository):
         self.xobject.set_session(self.session)
         self.kvs.set_session(self.session)
         self.kvitem.set_session(self.session)
-        self.action.set_session(self.session)
         self.rule.set_session(self.session)
-        self.ruleset.set_session(self.session)
-        self.container.set_session(self.session)
+        self.condition.set_session(self.session)
         self.entrypoint.set_session(self.session)
-        self.variant.set_session(self.session)
 
     def commit_work(self):
         if self.session is not None:
@@ -76,12 +78,8 @@ class CoreAdapter(CoreRepository):
             self.xobject.set_session(None)
             self.kvs.set_session(None)
             self.kvitem.set_session(None)
-            self.action.set_session(None)
             self.rule.set_session(None)
-            self.ruleset.set_session(None)
-            self.container.set_session(None)
             self.entrypoint.set_session(None)
-            self.variant.set_session(None)
 
     def rollback_work(self):
         if self.session is not None:
@@ -89,17 +87,14 @@ class CoreAdapter(CoreRepository):
             self.xobject.set_session(None)
             self.kvs.set_session(None)
             self.kvitem.set_session(None)
-            self.action.set_session(None)
             self.rule.set_session(None)
-            self.ruleset.set_session(None)
-            self.container.set_session(None)
             self.entrypoint.set_session(None)
-            self.variant.set_session(None)
 
     def migrate(self) -> list:
         initial(self.engine)
-        name = core_tables(self.engine)
-        return [name]
+        admin = core_admin(self.engine)
+        tables = core_tables(self.engine)
+        return [admin, tables]
 
     def health_check(self) -> list:
         with Session(self.engine) as s:
@@ -133,6 +128,9 @@ class CoreAdapter(CoreRepository):
         if isinstance(target, TenantSpecific):
             target.tenant_id = self.tid
 
+        if isinstance(target, Versioned):
+            target.version = 1
+
     def __before_update(self, _, __, target):
         """ Hook """
         if isinstance(target, Auditable):
@@ -142,3 +140,6 @@ class CoreAdapter(CoreRepository):
 
         if isinstance(target, TenantSpecific):
             target.tenant_id = self.tid
+
+        if isinstance(target, Versioned):
+            target.version += 1

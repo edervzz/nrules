@@ -28,5 +28,5 @@ class CreateTenantResponse:
         self.tenant_test_id = tenant_test_id
         self.tenant_test_name = tenant_test_name
 
-        self.tenant_release_id = tenant_release_id
-        self.tenant_release_name = tenant_release_name
+        self.tenant_prod_id = tenant_release_id
+        self.tenant_prod_name = tenant_release_name

@@ -8,10 +8,10 @@ from domain.entities import Migrations
 from .audit import set_auditable
 
 
-def core_tables(engine: Engine) -> str:
-    """000000000001_core_tables"""
+def core_admin(engine: Engine) -> str:
+    """000000000001_core_admin"""
 
-    name = "000000000001_core_tables"
+    name = "000000000001_core_admin"
 
     metadata_obj = MetaData()
 

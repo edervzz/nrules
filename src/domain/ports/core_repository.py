@@ -4,7 +4,7 @@ from .abstractions import Creator, Updater
 from .abstractions import ReaderByParentID, ReaderPagination, ReaderSingle, ReaderSingleByExternalID
 
 
-class KVSRepository(ABC, Creator, ReaderSingle):
+class KVSRepository(ABC, Creator, ReaderSingle, ReaderSingleByExternalID):
     """_summary_"""
 
     def __init__(self, engine):
@@ -24,7 +24,18 @@ class KVItemRepository(ABC, Creator, Updater, ReaderSingle, ReaderByParentID):
 
 class RuleRepository(
         ABC, Creator, Updater,
-        ReaderSingle, ReaderByParentID, ReaderSingleByExternalID, ReaderPagination):
+        ReaderSingle, ReaderSingleByExternalID, ReaderPagination):
+    """_summary_"""
+
+    def __init__(self, engine):
+        ABC.__init__(self)
+        Creator.__init__(self)
+        self.engine = engine
+
+
+class ConditionRepository(
+        ABC, Creator, Updater,
+        ReaderSingle):
     """_summary_"""
 
     def __init__(self, engine):
@@ -70,6 +81,7 @@ class CoreRepository:
         self.kvs: KVSRepository
         self.kvitem: KVItemRepository
         self.rule: RuleRepository
+        self.condition: ConditionRepository
         self.node: NodeRepository
         self.entrypoint: EntrypointRepository
 

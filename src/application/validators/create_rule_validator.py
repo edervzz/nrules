@@ -36,7 +36,7 @@ class CreateRuleValidator(Validator):
                     self.add_failure(
                         Codes.RU_CREA_003,
                         self._localizer.get(Codes.RU_CREA_003))
-                if c.operator.upper() not in ["AND", "OR"]:
+                if c.operator is None or c.operator.upper() not in ["AND", "OR"]:
                     c.operator = "AND"
 
                 c.position = idx

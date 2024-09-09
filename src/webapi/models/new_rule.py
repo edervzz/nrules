@@ -12,10 +12,10 @@ class NewRuleModel:
         self.name = self.__dict__.get("name", "")
         self.is_zero_condition = self.__dict__.get("is_zero_condition", False)
         self.kvs_id = self.__dict__.get("kvs_id", 0)
-
         conditions = self.__dict__.get("conditions", None)
+
         self.conditions: List[Condition] = []
-        if conditions is list:
+        if isinstance(conditions, list):
             for c in conditions:
                 cond = Condition()
                 if "expression" in c:

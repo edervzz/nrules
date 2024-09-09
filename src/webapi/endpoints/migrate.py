@@ -1,6 +1,6 @@
 """ Run Migration """
 from flask import Blueprint, Response, abort, current_app
-from domain.ports import CoreRepository
+from domain.ports import TenancyRepository, CoreRepository
 
 tenancy_migration_bp = Blueprint("Run Tenancy Migration", __name__)
 core_migration_bp = Blueprint("Run Core Migration", __name__)
@@ -12,13 +12,13 @@ def run_tenancy_migration_endpoint():
 
     try:
         repository = current_app.config["tenancy_repository"]
-        if isinstance(repository, CoreRepository):
+        if isinstance(repository, TenancyRepository):
             r = repository.migrate()
 
             response = Response(r, status=200, mimetype='application/json')
             return response
         else:
-            raise ValueError("TID not found")
+            raise ValueError("Tenancy repository not found")
 
     except ValueError as err:
         abort(400, str(err))
@@ -30,10 +30,12 @@ def run_core_migration_endpoint(tid=None):
 
     try:
         repository = current_app.config[str(tid)]
-        r = repository.migrate()
-
-        response = Response(r, status=200, mimetype='application/json')
-        return response
+        if isinstance(repository, CoreRepository):
+            r = repository.migrate()
+            response = Response(r, status=200, mimetype='application/json')
+            return response
+        else:
+            raise ValueError("TID not found")
 
     except ValueError as err:
         abort(400, str(err))

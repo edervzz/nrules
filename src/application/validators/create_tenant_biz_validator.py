@@ -22,8 +22,7 @@ class CreateTenantBizValidator(Validator):
                 Codes.TE_CREA_001,
                 self._localizer.get(Codes.TE_CREA_001))
 
-        tenant = self.repository.tenant.read(
-            request.tenant_id, request.tenant_id)
+        tenant = self.repository.tenant.read(request.tenant_id)
         if tenant is not None:
             raise self.as_error(
                 Codes.TE_CREA_003,
@@ -31,14 +30,14 @@ class CreateTenantBizValidator(Validator):
 
         request.tenant_dev = Tenants()
         request.tenant_dev.id = 100 + request.tenant_id
-        request.tenant_dev.name = request.tenant_name + " - DEV"
+        request.tenant_dev.name = request.tenant_name + ".dev"
         request.tenant_dev.stage = "DEV"
         request.tenant_dev.option = request.optiondev
         request.tenant_dev.is_active = True
 
         request.tenant_test = Tenants()
         request.tenant_test.id = 200 + request.tenant_id
-        request.tenant_test.name = request.tenant_name + " - TEST"
+        request.tenant_test.name = request.tenant_name + ".test"
         request.tenant_test.stage = "TEST"
         request.tenant_test.option = request.optiontest
         request.tenant_test.is_active = True

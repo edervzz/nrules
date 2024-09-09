@@ -22,15 +22,6 @@ class KVItemRepository(ABC, Creator, Updater, ReaderSingle, ReaderByParentID):
         self.engine = engine
 
 
-class ActionRepository(ABC, Creator, Updater, ReaderSingle, ReaderSingleByExternalID):
-    """_summary_"""
-
-    def __init__(self, engine):
-        ABC.__init__(self)
-        Creator.__init__(self)
-        self.engine = engine
-
-
 class RuleRepository(
         ABC, Creator, Updater,
         ReaderSingle, ReaderByParentID, ReaderSingleByExternalID, ReaderPagination):
@@ -53,25 +44,7 @@ class NodeRepository(
         self.engine = engine
 
 
-class ContainerRepository(ABC, Creator, Updater, ReaderByParentID):
-    """_summary_"""
-
-    def __init__(self, engine):
-        ABC.__init__(self)
-        Creator.__init__(self)
-        self.engine = engine
-
-
 class EntrypointRepository(ABC, Creator, ReaderSingle, ReaderSingleByExternalID):
-    """_summary_"""
-
-    def __init__(self, engine):
-        ABC.__init__(self)
-        Creator.__init__(self)
-        self.engine = engine
-
-
-class VariantRepository(ABC, Creator, Updater, ReaderByParentID):
     """_summary_"""
 
     def __init__(self, engine):
@@ -96,12 +69,9 @@ class CoreRepository:
     def __init__(self):
         self.kvs: KVSRepository
         self.kvitem: KVItemRepository
-        self.action: ActionRepository
         self.rule: RuleRepository
-        self.ruleset: NodeRepository
-        self.container: ContainerRepository
+        self.node: NodeRepository
         self.entrypoint: EntrypointRepository
-        self.variant: VariantRepository
 
     @abstractmethod
     def begin(self, autoflush=False):

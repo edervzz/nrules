@@ -25,8 +25,8 @@ class CreateRuleValidator(Validator):
                 self._localizer.get(Codes.RU_CREA_002))
         if request.rule.is_zero_condition is False and len(request.conditions) == 0:
             self.add_failure(
-                Codes.RU_CREA_006,
-                self._localizer.get(Codes.RU_CREA_006))
+                Codes.RU_CREA_007,
+                self._localizer.get(Codes.RU_CREA_007))
         else:
             validator = ExpressionValidator()
             idx = 0
@@ -43,8 +43,9 @@ class CreateRuleValidator(Validator):
 
                 try:
                     validator.validate(c.expression)
-                except ValueError:
+                except ValueError as err:
                     self.add_failure(
                         Codes.RU_CREA_006,
-                        self._localizer.get(Codes.RU_CREA_006)
+                        self._localizer.get(
+                            Codes.RU_CREA_006, c.expression, err)
                     )

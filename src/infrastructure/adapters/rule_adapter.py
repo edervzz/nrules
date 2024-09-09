@@ -2,7 +2,7 @@
     """
 from typing import List
 from sqlalchemy.orm import Session
-from domain.entities import Rule, Container, Pagination
+from domain.entities import Rule, Pagination
 from domain.ports import RuleRepository
 
 
@@ -36,13 +36,6 @@ class RuleAdapter(RuleRepository):
             rule = session.query(Rule).where(
                 Rule.name == external_id).one_or_none()
             return rule
-
-    def read_by_parent_id(self, parent_id) -> List[Rule]:
-        with Session(self.engine) as session:
-            rules = session.query(Rule).join(
-                Container, Rule.id == Container.rule_id).where(
-                Container.workflow_id == parent_id).all()
-            return rules
 
     def read_page(self, page_no, page_size) -> tuple[List[Rule], Pagination]:
         with Session(self.engine) as session:

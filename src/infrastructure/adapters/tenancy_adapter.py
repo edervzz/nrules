@@ -16,9 +16,7 @@ class TenancyAdapter(TenancyRepository):
         super().__init__()
         self.session: Session = None
         self.engine: Engine = create_engine(
-            f"mysql+pymysql://{username}:{
-                password}@{server}/{dbname}", echo=True
-        )
+            f"mysql+pymysql://{username}:{password}@{server}/{dbname}", echo=True)
         event.listen(Tenants, 'before_insert', self.__before_insert)
         event.listen(Tenants, 'before_update', self.__before_update)
 

@@ -1,7 +1,7 @@
 """_summary_
     """
 from typing import List
-from domain.entities import Node, Rule, Container
+from domain.entities import Node, Rule
 from domain.ports import CoreRepository
 
 
@@ -12,13 +12,10 @@ class StubRepositoryAdapter(CoreRepository):
         super().__init__()
         self.workflows: List[Node] = []
         self.rules: List[Rule] = []
-        self.workflow_rules: List[Container] = []
 
     def __create(self, entity: any):
         datatype = type(entity)
         match datatype.__name__:
-            case "WorkflowRule":
-                self.workflow_rules.append(entity)
             case "Rule":
                 entity.id = len(self.rules) + 1
                 self.rules.append(entity)
@@ -33,34 +30,6 @@ class StubRepositoryAdapter(CoreRepository):
         for w in self.workflows:
             if w.id == _id:
                 return w
-
-    def rule_read_by_parent_id(self, parent_id: int) -> List[Rule]:
-        if len(self.workflow_rules) == 0 or len(self.rules) == 0:
-            return None
-
-        rules = []
-        for wr in self.workflow_rules:
-            if wr.workflow_id == parent_id:
-                for r in self.rules:
-                    if r.id == wr.rule_id:
-                        rules.append(r)
-                        break
-        return rules
-
-    def workflow_read_by_external_id(self, external_id: str) -> Node:
-        if len(self.workflows) == 0:
-            return None
-
-        for w in self.workflows:
-            if w.name == external_id:
-                return w
-
-    def create(self, entity: any):
-        if isinstance(entity, list):
-            for e in entity:
-                self.__create(e)
-        else:
-            self.__create(entity)
 
     def begin(self):
         pass

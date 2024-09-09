@@ -180,7 +180,7 @@ class Codes:
     es_messages[RU_CREA_007] = "Al menos se requiere una condición."
 
     RU_CREA_006 = "RU-CREA-006"
-    en_messages[RU_CREA_006] = "An error happend during expression validation."
+    en_messages[RU_CREA_006] = "ExpVal: {}."
     es_messages[RU_CREA_006] = "Un error sucedió durante la validación de la expresión."
 
     RU_CREA_005 = "RU-CREA-005"

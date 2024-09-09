@@ -21,19 +21,17 @@ def new_rules_endpoint(tid=None):
     new_rules = NewRuleModel(json.dumps(json_data))
 
     command = CreateRuleRequest(
-        tenant_id,
         new_rules.name,
-        new_rules.expression,
-        new_rules.is_exclusive
+        new_rules.is_zero_condition,
+        new_rules.kvs_id,
+        new_rules.conditions
     )
 
-    handler = CreateRuleHandler(
+    result = CreateRuleHandler(
         current_app.config[str(tid)],
         current_app.config["logger"],
         current_app.config["localizer"]
-    )
-
-    result = handler.handler(command)
+    ).handler(command)
 
     return Response(
         response="",

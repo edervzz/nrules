@@ -18,28 +18,35 @@ class SaveKVItemValidator(Validator):
                 Codes.KVI_CREA_008,
                 self.localizer.get(Codes.KVI_CREA_008))
 
-        for kvitem in request.kvitems:
-            if len(kvitem.key) == 0:
+        for kvit in request.kvitems:
+            if len(kvit.key) == 0:
                 self.add_failure(
                     Codes.KVI_CREA_001,
                     self.localizer.get(Codes.KVI_CREA_001))
-            if len(kvitem.kv_id) == 0:
+            if len(kvit.kv_id) == 0:
                 self.add_failure(
                     Codes.KVI_CREA_003,
                     self.localizer.get(Codes.KVI_CREA_003))
-            if len(kvitem.key) < 5 or len(request.kvitem.key) > 50:
+            if len(kvit.key) < 5 or len(request.kvitem.key) > 50:
                 self.add_failure(
                     Codes.KVI_CREA_002,
                     self.localizer.get(Codes.KVI_CREA_002))
-            if len(kvitem.value) == 0:
+            if len(kvit.value) == 0:
                 self.add_failure(
                     Codes.KVI_CREA_004,
                     self.localizer.get(Codes.KVI_CREA_004))
-            if len(kvitem.value) > 500:
+            if len(kvit.value) > 500:
                 self.add_failure(
                     Codes.KVI_CREA_005,
                     self.localizer.get(Codes.KVI_CREA_005))
-            if len(kvitem.typeof) > 50:
+            if len(kvit.typeof) > 50:
                 self.add_failure(
                     Codes.KVI_CREA_006,
                     self.localizer.get(Codes.KVI_CREA_006))
+
+            kvit.calculate = "ADD" if kvit.calculate is None else kvit.calculate
+
+            if kvit.calculate not in ["ADD", "MOD"]:
+                self.add_failure(
+                    Codes.KVI_CREA_009,
+                    self.localizer.get(Codes.KVI_CREA_009))

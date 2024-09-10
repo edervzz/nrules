@@ -10,15 +10,13 @@ URL_API_PREFIX = "/nr/api/v1"
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(seconds=10)
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(seconds=60)
 
 # prepare services
-
-
-register_endpoints(app, URL_API_PREFIX)
-register_before_request(app)
-register_error_handlers(app)
 register_services(app)
+register_endpoints(app, URL_API_PREFIX)
+register_error_handlers(app)
+register_before_request(app)
 
 
 if __name__ == "__main__":

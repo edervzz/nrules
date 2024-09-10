@@ -18,6 +18,8 @@ class SaveKVItemBizValidator(Validator):
 
         kvs = self.repository.kvs.read(request.kv_id)
 
+        keys_to_insert = []
+
         if kvs is None:
             self.add_failure(
                 Codes.KVI_CREA_007,
@@ -31,9 +33,16 @@ class SaveKVItemBizValidator(Validator):
             if isinstance(dbitem, KVItem):
                 dbitem.calculate = kvit.calculate
                 dbitem.value = kvit.value
-                dbitem.key = kvit.key
                 dbitem.typeof = kvit.typeof
                 request.kvitems_to_update.append(dbitem)
             else:
                 kvit.id = self.repository.next_number(KVItem)
                 request.kvitems_to_insert.append(kvit)
+                keys_to_insert.append(kvit.key)
+
+        unique_keys = set(keys_to_insert)
+
+        if len(unique_keys) != len(request.kvitems_to_insert):
+            self.add_failure(
+                Codes.KVI_CREA_007,
+                self.localizer.get(Codes.KVI_CREA_007))

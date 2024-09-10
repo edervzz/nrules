@@ -30,6 +30,14 @@ class Codes:
     en_messages[ACTION_CREA_001] = "Action Name must be between 5 and 50 characters."
     es_messages[ACTION_CREA_001] = "Nombre de Action debe ser de 5 a 50 caracteres."
 
+    KVI_CREA_010 = "KVI-CREA-010"
+    en_messages[KVI_CREA_010] = "Duplicated Keys are not allowed."
+    es_messages[KVI_CREA_010] = "Keys duplicadas no están permitidas."
+
+    KVI_CREA_009 = "KVI-CREA-009"
+    en_messages[KVI_CREA_009] = "KV Item Calculation value must be 'ADD' or 'MOD'."
+    es_messages[KVI_CREA_009] = "El valor de cálculo del KV Item debe ser 'ADD' o  'MOD'."
+
     KVI_CREA_008 = "KVI-CREA-008"
     en_messages[KVI_CREA_008] = "List must not be empty."
     es_messages[KVI_CREA_008] = "La lista no debe estar vacía."

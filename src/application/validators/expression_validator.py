@@ -1,13 +1,17 @@
 
 """ Extensions """
 from typing import List
+from toolkit import Validator
+from toolkit.localization import Localizer, Codes
 from domain.entities.expression_component import ExpressionComponent
 
 
-class ExpressionValidator:
+class ExpressionValidator(Validator):
     """ Extensions for expressions """
 
-    def __init__(self):
+    def __init__(self, localizer: Localizer):
+        super().__init__()
+        self._localizer = localizer
         self.expression_original = ""
         self._and = "<&&>"
         self._or = "<||>"
@@ -23,18 +27,19 @@ class ExpressionValidator:
         self.components: List[ExpressionComponent] = []
         self.operators = []
 
-    def validate(self, expression_original: str):
-        """ Run request validations """
-        # obj.asdf >= false AND qwer = true OR rtyu = "hello" AND lkjj = 9898
-        # obj.asdf >= false<OP>qwer = true<OP>rtyu = "hello"<OP>lkjj = 9898
-        # obj.asdf >= false<&&>qwer = true<||>rtyu = "hello"<&&>lkjj = 9898
-        # obj.asdf<IO>false<OP>qwer<IO>true<OP>rtyu<IO>"hello"<OP>lkjj<IO>9898
-        # obj.asdf<GE>false<&&>qwer<EQ>true<||>rtyu<EQ>"hello"<&&>lkjj<EQ>9898
-        # obj.asdf, GE, false       => true
-        # qwer,     GE, true        => true
-        # rtyu,     GE, "hello"     => false
-        # lkjj,     EQ, 9898        => true
-        self.expression_original = expression_original.strip()
+    def __validate__(self, request: str):
+        """ Run request validations 
+        obj.asdf >= false AND qwer = true OR rtyu = "hello" AND lkjj = 9898 \n
+        obj.asdf >= false<OP>qwer = true<OP>rtyu = "hello"<OP>lkjj = 9898 \n
+        obj.asdf >= false<&&>qwer = true<||>rtyu = "hello"<&&>lkjj = 9898 \n
+        obj.asdf<IO>false<OP>qwer<IO>true<OP>rtyu<IO>"hello"<OP>lkjj<IO>9898 \n
+        obj.asdf<GE>false<&&>qwer<EQ>true<||>rtyu<EQ>"hello"<&&>lkjj<EQ>9898 \n
+        obj.asdf, GE, false       => true \n
+        qwer,     GE, true        => true \n
+        rtyu,     GE, "hello"     => false \n
+        lkjj,     EQ, 9898        => true \n
+        """
+        self.expression_original = request.strip()
         components: List[ExpressionComponent] = []
         operators: List[str] = []
         translated = self.__create_translate()
@@ -47,7 +52,11 @@ class ExpressionValidator:
             # collect operator
             if len(components) != 0:
                 if var_value.find(self._oper, cursor_exp, length) == -1:
-                    raise ValueError("operator not found")
+                    raise self.as_error(
+                        Codes.RU_CREA_006,
+                        self._localizer.get(
+                            Codes.RU_CREA_006, request, "operator not found")
+                    )
                 else:
                     oper_start = var_value.find(
                         self._oper, cursor_exp, length)
@@ -57,13 +66,21 @@ class ExpressionValidator:
                     cursor_exp = oper_end
             # collect variable
             if var_value.find(self._inoper, cursor_exp, length) == -1:
-                raise ValueError("variable not found")
+                raise self.as_error(
+                    Codes.RU_CREA_006,
+                    self._localizer.get(
+                        Codes.RU_CREA_006, request, "variable not found")
+                )
             variable_end = var_value.find(self._inoper, cursor_exp, length)
             variable = translated[cursor_exp:variable_end]
             cursor_exp = variable_end
             # collect inner operator
             if var_value.find(self._inoper, cursor_exp, length) == -1:
-                raise ValueError("inner operator not found")
+                raise self.as_error(
+                    Codes.RU_CREA_006,
+                    self._localizer.get(
+                        Codes.RU_CREA_006, request, "inner operator not found")
+                )
             inner_oper_start = var_value.find(self._inoper, cursor_exp, length)
             inner_oper_end = inner_oper_start + 4
             inner_oper = translated[inner_oper_start:inner_oper_end]
@@ -77,7 +94,11 @@ class ExpressionValidator:
                     value = translated[inner_oper_start:]
                     is_end_expression = True
                 else:
-                    raise ValueError("inner operator at end of expression")
+                    raise self.as_error(
+                        Codes.RU_CREA_006,
+                        self._localizer.get(
+                            Codes.RU_CREA_006, request, "inner operator at end of expression")
+                    )
             else:
                 value = translated[cursor_exp:value_end]
 

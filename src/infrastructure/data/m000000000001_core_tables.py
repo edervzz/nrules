@@ -2,7 +2,7 @@
 
 from datetime import datetime
 from sqlalchemy import Column, Integer, BigInteger, String, Boolean
-from sqlalchemy import MetaData, Table,  CheckConstraint, Engine, select
+from sqlalchemy import MetaData, Table,  CheckConstraint, UniqueConstraint, Engine, select
 from sqlalchemy.orm import Session
 from domain.entities import Migrations
 from .audit import set_auditable, set_version
@@ -54,6 +54,7 @@ def core_tables(engine: Engine) -> str:
             "calculate", String(3), CheckConstraint("calculate = 'ADD' OR calculate = 'MOD'", name="kv_items_chk_calculate"), nullable=False, comment="Calculation method"),
         Column(
             "typeof", String(50), nullable=True, comment="Type of value. E.g. 'json', 'string', 'int'"),
+        UniqueConstraint("tenant_id", "kv_id", "key", name="kv_items_unk"),
         comment="KV Item can be assign to single one KVS"
     )
     set_version(kvitem)
@@ -106,28 +107,12 @@ def core_tables(engine: Engine) -> str:
         Column(
             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
         Column(
-            "rule_id", BigInteger, primary_key=True, nullable=False, comment="Rule to perform"),
+            "rule_id", BigInteger, primary_key=True, comment="Rule ID"),
         Column(
-            "mode", String(5), CheckConstraint("mode = 'ALL' OR mode = 'EARLY'", name="switches_chk_mode"), primary_key=False, comment="Switch Mode [ALL, EARLY=default]"),
+            "related_rule_id", BigInteger, primary_key=True, comment="Related Rule ID"),
         Column(
-            "rule_id1", BigInteger, primary_key=False, comment="Next Rule 1"),
-        Column(
-            "rule_id2", BigInteger, primary_key=False, comment="Next Rule 2"),
-        Column(
-            "rule_id3", BigInteger, primary_key=False, comment="Next Rule 3"),
-        Column(
-            "rule_id4", BigInteger, primary_key=False, comment="Next Rule 4"),
-        Column(
-            "rule_id5", BigInteger, primary_key=False, comment="Next Rule 5"),
-        Column(
-            "rule_id6", BigInteger, primary_key=False, comment="Next Rule 6"),
-        Column(
-            "rule_id7", BigInteger, primary_key=False, comment="Next Rule 7"),
-        Column(
-            "rule_id8", BigInteger, primary_key=False, comment="Next Rule 8"),
-        Column(
-            "rule_id9", BigInteger, primary_key=False, comment="Next Rule 9"),
-        comment="Nodes determine the rule connected to another ones"
+            "position", Integer, nullable=False, comment="Position Order"),
+        comment="Nodes determine a rule connected to another ones"
     )
     set_version(node)
     set_auditable(node)

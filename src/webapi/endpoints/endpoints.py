@@ -57,13 +57,23 @@ def register_endpoints(app: Flask, prefix: str):
 
 
 def register_before_request(app: Flask):
-    """ Register event before request """
+    """ Register \n
+        - Authorization
+        - Core Adapter by Tenant
+        - Language used on Localization
+    """
 
     @app.before_request
     def _():
         """ Prepare core repository by tenant """
 
-        session["username"] = "eder@mail.com"
+        session["username"] = "eder@mail.com"  # extraer de jwt
+
+        langu = request.headers["Accept-Language"] if "Accept-Language" in request.headers else "EN"
+        with app.app_context():
+            localizer = app.config["localizer"]
+            if isinstance(localizer, Localizer):
+                localizer.set_langu(langu)
 
         if "/t/" in request.url:
             fromidx = request.url.index("/t/")
@@ -85,7 +95,11 @@ def register_before_request(app: Flask):
 
 
 def register_services(app: Flask):
-    """ Register Services """
+    """ Register services:
+        - Tenancy Adapter
+        - Logger
+        - Localizer
+    """
 
     with app.app_context():
         app.config["tenancy_repository"] = TenancyAdapter(
@@ -97,12 +111,15 @@ def register_services(app: Flask):
 
         logging.basicConfig()
         app.config["logger"] = logging.getLogger(__name__)
-
         app.config["localizer"] = Localizer()
 
 
 def register_error_handlers(app: Flask):
-    """ Register error handlers Bad Request, Conflict, Not Found """
+    """ Register error handlers 
+        - Bad Request
+        - Conflict 
+        - Not Found 
+    """
 
     app.register_error_handler(
         BadRequest,

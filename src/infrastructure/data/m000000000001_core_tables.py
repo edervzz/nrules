@@ -92,7 +92,7 @@ def core_tables(engine: Engine) -> str:
         Column(
             "name", String(50), nullable=False, unique=True, comment="Rule's Name"),
         Column(
-            "is_zero_condition", String(50), nullable=False, comment="Active force OK result"),
+            "is_zero_condition", Boolean, nullable=False, comment="Active force OK result"),
         Column(
             "kvs_id", BigInteger, nullable=True, comment="Linked KVS"),
         comment="A Rule is a simple business validation"

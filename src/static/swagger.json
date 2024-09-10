@@ -6,15 +6,10 @@
         "description": "Rules Engine built for Gentera.\n t - Tenancy\n nr - NRule"
     },
     "paths": {
-        "/nr/api/v1/t/{tid}/rules/{rule_id}": {
-            "put": {
-                "summary": "Update a rule.",
-                "tags": [
-                    "Rules"
-                ],
-                "consumes": [
-                    "application/json"
-                ],
+        "/nr/api/v1/t/{tid}/hello": {
+            "get": {
+                "summary": "Run a Health Check to NRule API.",
+                "description": "Set Tenant ID to determine DB Adapter. It will show migrations executed.",
                 "parameters": [
                     {
                         "name": "tid",
@@ -22,69 +17,45 @@
                         "in": "path",
                         "type": "integer",
                         "required": true
-                    },
+                    }
+                ],
+                "tags": [
+                    "Hello"
+                ],
+                "produces": [
+                    "application/text"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/tenancy/api/v1/tenants": {
+            "post": {
+                "summary": "Create a New Tenant",
+                "description": "Set ID, name and connection string options. Consider name field start with '<b>t.</b>'",
+                "tags": [
+                    "Tenancy"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
                     {
-                        "name": "rule_id",
-                        "description": "Rule Identification",
-                        "in": "path",
-                        "type": "integer",
-                        "required": true
-                    },
-                    {
-                        "name": "Rule Data",
+                        "name": "Tenant Information",
+                        "description": "Information about Tenant and Connection Options",
                         "in": "body",
-                        "description": "Rule definition.",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/Update Rule"
+                            "$ref": "#/definitions/New Tenant"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Rule Updated"
-                    },
-                    "400": {
-                        "description": "Validation errors"
-                    },
-                    "409": {
-                        "description": "Rule already exists"
-                    }
-                }
-            },
-            "get": {
-                "tags": [
-                    "Rules"
-                ],
-                "description": "Read a rule.",
-                "consumes": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "tid",
-                        "description": "Tenant ID",
-                        "in": "path",
-                        "type": "integer",
-                        "required": true
-                    },
-                    {
-                        "name": "rule_id",
-                        "description": "Rule Identification",
-                        "in": "path",
-                        "type": "integer",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Rule Updated"
-                    },
-                    "400": {
-                        "description": "Validation errors"
-                    },
-                    "409": {
-                        "description": "Rule already exists"
+                        "description": "Successful operation"
                     }
                 }
             }
@@ -172,11 +143,95 @@
                 }
             }
         },
-        "/nr/api/v1/t/{tid}/workflows": {
-            "post": {
-                "summary": "Create a new Workflow base.",
+        "/nr/api/v1/t/{tid}/rules/{rule_id}": {
+            "put": {
+                "summary": "Update a rule.",
                 "tags": [
-                    "Workflows"
+                    "Rules"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "tid",
+                        "description": "Tenant ID",
+                        "in": "path",
+                        "type": "integer",
+                        "required": true
+                    },
+                    {
+                        "name": "rule_id",
+                        "description": "Rule Identification",
+                        "in": "path",
+                        "type": "integer",
+                        "required": true
+                    },
+                    {
+                        "name": "Rule Data",
+                        "in": "body",
+                        "description": "Rule definition.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Update Rule"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Rule Updated"
+                    },
+                    "400": {
+                        "description": "Validation errors"
+                    },
+                    "409": {
+                        "description": "Rule already exists"
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Rules"
+                ],
+                "description": "Read a rule.",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "tid",
+                        "description": "Tenant ID",
+                        "in": "path",
+                        "type": "integer",
+                        "required": true
+                    },
+                    {
+                        "name": "rule_id",
+                        "description": "Rule Identification",
+                        "in": "path",
+                        "type": "integer",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Rule Updated"
+                    },
+                    "400": {
+                        "description": "Validation errors"
+                    },
+                    "409": {
+                        "description": "Rule already exists"
+                    }
+                }
+            }
+        },
+        "/nr/api/v1/t/{tid}/kvs": {
+            "post": {
+                "summary": "Create a new Key Value container.",
+                "description": "Consider name field start with '<b>kv.</b>'\nThis Storage can be hosted in a specialized database.",
+                "tags": [
+                    "Key-Value Storage"
                 ],
                 "consumes": [
                     "application/json"
@@ -186,18 +241,25 @@
                 ],
                 "parameters": [
                     {
-                        "name": "Workflow Data",
+                        "name": "tid",
+                        "description": "Tenant ID",
+                        "in": "path",
+                        "type": "integer",
+                        "required": true
+                    },
+                    {
+                        "name": "KVS data",
                         "in": "body",
-                        "description": "Workflow definition.",
+                        "description": "KVS definition.",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/New Workflow"
+                            "$ref": "#/definitions/New KV"
                         }
                     }
                 ],
                 "responses": {
                     "201": {
-                        "description": "Workflow created"
+                        "description": "KVS created"
                     },
                     "400": {
                         "description": "Invalid request data"
@@ -252,91 +314,7 @@
                 }
             }
         },
-        "/nr/api/v1/t/{tid}/kvs": {
-            "post": {
-                "summary": "Create a new Key Value container.",
-                "description": "This Storage can be hosted in a specialized database.",
-                "tags": [
-                    "Key-Value Storage"
-                ],
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "tid",
-                        "description": "Tenant ID",
-                        "in": "path",
-                        "type": "integer",
-                        "required": true
-                    },
-                    {
-                        "name": "KVS data",
-                        "in": "body",
-                        "description": "KVS definition.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/New KV"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "KVS created"
-                    },
-                    "400": {
-                        "description": "Invalid request data"
-                    }
-                }
-            }
-        },
-        "/tenancy/api/v1/tenants": {
-            "post": {
-                "summary": "Create a new Tenant",
-                "tags": [
-                    "Tenancy"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "Tenant Information",
-                        "description": "Information about Tenant and Connection Options",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/New Tenant"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation"
-                    }
-                }
-            }
-        },
-        "/nr/api/v1/t/{tid}/hello": {
-            "get": {
-                "summary": "Execute a Health Check to NRule API & multiple tenancy Databases.",
-                "tags": [
-                    "Hello"
-                ],
-                "produces": [
-                    "application/text"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation"
-                    }
-                }
-            }
-        },
-        "/migration/api/v1/tenancy": {
+        "/nr/api/v1/tenancy/migration": {
             "post": {
                 "summary": "Run Migration for Tenancy",
                 "tags": [
@@ -358,7 +336,7 @@
                 }
             }
         },
-        "/migration/api/v1/t/<tid>/nrule": {
+        "/nr/api/v1/t/{tid}/core/migration": {
             "post": {
                 "summary": "Run Migration for NRule by Tenant",
                 "tags": [
@@ -391,6 +369,37 @@
         }
     },
     "definitions": {
+        "Conditions": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "expression": {
+                        "type": "string",
+                        "minLength": 5,
+                        "maxLength": 1024,
+                        "required": true,
+                        "example": "quotationAmount > 10000 AND product = 'CCR'"
+                    },
+                    "position": {
+                        "description": "By default, position will be set in appearance order.",
+                        "type": "integer",
+                        "required": false
+                    },
+                    "operator": {
+                        "type": "string",
+                        "minLength": 2,
+                        "maxLength": 3,
+                        "enum": [
+                            "OR",
+                            "AND"
+                        ],
+                        "default": "AND",
+                        "required": false
+                    }
+                }
+            }
+        },
         "New Rule": {
             "type": "object",
             "properties": {
@@ -402,12 +411,17 @@
                     "required": true,
                     "example": "ru.account.products"
                 },
-                "expression": {
-                    "description": "Expression.",
-                    "type": "string",
-                    "minLength": 5,
-                    "maxLength": 2000,
-                    "required": true
+                "is_zero_condition": {
+                    "description": "This rule return True. Recomendation: use this feature to call others Rules without previous validation.",
+                    "type": "boolean",
+                    "required": false,
+                    "default": false
+                },
+                "conditions": {
+                    "description": "Rule name.",
+                    "type": "object",
+                    "$ref": "#/definitions/Conditions",
+                    "required": false
                 }
             }
         },
@@ -520,7 +534,7 @@
                     "example": "t.account.products"
                 },
                 "option_dev": {
-                    "description": "Connection Option for Development Environment in Base64.",
+                    "description": "Connection Option for Development Environment in Base64 format.",
                     "type": "string",
                     "minLength": 5,
                     "maxLength": 500,
@@ -528,7 +542,7 @@
                     "example": "bXlzcWwrcHlteXNxbDovL3Jvb3Q6bXlzZWNyZXRwd0Bsb2NhbGhvc3QvZGJuYW1l"
                 },
                 "option_test": {
-                    "description": "Connection Option for Testing Environment in Base64.",
+                    "description": "Connection Option for Testing Environment in Base64 format.",
                     "type": "string",
                     "minLength": 5,
                     "maxLength": 500,
@@ -536,7 +550,7 @@
                     "example": "bXlzcWwrcHlteXNxbDovL3Jvb3Q6bXlzZWNyZXRwd0Bsb2NhbGhvc3QvZGJuYW1l"
                 },
                 "option_prod": {
-                    "description": "Connection Option for Production Environment in Base64.",
+                    "description": "Connection Option for Production Environment in Base64 format.",
                     "type": "string",
                     "minLength": 5,
                     "maxLength": 500,

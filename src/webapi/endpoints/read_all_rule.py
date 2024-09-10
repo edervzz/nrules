@@ -35,8 +35,8 @@ def read_all_rules_endpoint(tid=None):
                 tenant_id,
                 r.id,
                 r.name,
-                r.expression,
-                r.is_exclusive,
+                r.is_zero_condition,
+                r.kvs_id,
                 r.version)
             rules.append(rule)
     else:
@@ -53,6 +53,7 @@ def read_all_rules_endpoint(tid=None):
     return Response(
         response=jsonstr,
         status=200,
+        content_type="application/json",
         headers=[
             ("Next-Page", f"{result.pagination.next_page}"),
             ("Previous-Page", f"{result.pagination.previous_page}"),

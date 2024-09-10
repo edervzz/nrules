@@ -40,7 +40,8 @@ class RuleAdapter(RuleRepository):
     def read_page(self, page_no, page_size) -> tuple[List[Rule], Pagination]:
         with Session(self.engine) as session:
             offset = (page_no-1)*page_size
-            rules = session.query(Rule).offset(offset).limit(page_size).all()
-            total = session.query(Rule.id).where().count()
+            rules = session.query(Rule).offset(
+                offset).limit(page_size).all()
+            total = session.query(Rule.id).all()
 
-            return rules, Pagination(page_no, page_size, total)
+            return rules, Pagination(page_no, page_size, len(total))

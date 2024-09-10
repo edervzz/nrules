@@ -60,7 +60,7 @@ class CoreAdapter(CoreRepository):
 
         @event.listens_for(Query, 'before_compile', retval=True)
         def _fn(query: Query):
-            return query.filter_by(tenant_id=self.tid)
+            return query.enable_assertions(False).filter_by(tenant_id=self.tid)
 
     def begin(self, autoflush=False):
         self.session = Session(self.engine, autoflush=autoflush)

@@ -5,7 +5,7 @@ from flask import session
 from sqlalchemy import Engine, create_engine, select, event
 from sqlalchemy.orm import Session
 from sqlalchemy.orm import Query
-from domain.entities import Rule, Node, Condition
+from domain.entities import Rule, RuleRelation, Conditions
 from domain.entities import TenantSpecific, Versioned, Auditable, Migrations
 from domain.entities import XObject, KV, KVItem, Entrypoint
 from domain.ports import CoreRepository
@@ -49,11 +49,11 @@ class CoreAdapter(CoreRepository):
         event.listen(Rule, 'before_insert', self.__before_insert)
         event.listen(Rule, 'before_update', self.__before_update)
 
-        event.listen(Condition, 'before_insert', self.__before_insert)
-        event.listen(Condition, 'before_update', self.__before_update)
+        event.listen(Conditions, 'before_insert', self.__before_insert)
+        event.listen(Conditions, 'before_update', self.__before_update)
 
-        event.listen(Node, 'before_insert', self.__before_insert)
-        event.listen(Node, 'before_update', self.__before_update)
+        event.listen(RuleRelation, 'before_insert', self.__before_insert)
+        event.listen(RuleRelation, 'before_update', self.__before_update)
 
         event.listen(Entrypoint, 'before_insert', self.__before_insert)
         event.listen(Entrypoint, 'before_update', self.__before_update)

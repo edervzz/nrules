@@ -1,6 +1,6 @@
 """_summary_"""
 from application.messages import CreateRuleRequest
-from domain.entities import Rule, Condition
+from domain.entities import Rule, Conditions
 from domain.ports import CoreRepository
 from toolkit import Validator
 from toolkit.localization import Localizer, Codes
@@ -24,6 +24,6 @@ class CreateRuleBizValidator(Validator):
 
         request.rule.id = self.__repository.next_number(Rule)
 
-        if isinstance(request.conditions, list):
-            for c in request.conditions:
-                c.id = self.__repository.next_number(Condition)
+        if isinstance(request.cases, list):
+            for c in request.cases:
+                c.id = self.__repository.next_number(Conditions)

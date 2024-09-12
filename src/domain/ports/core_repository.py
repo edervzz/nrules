@@ -33,7 +33,7 @@ class RuleRepository(
         self.engine = engine
 
 
-class ConditionRepository(
+class CaseRepository(
         ABC, Creator, Updater,
         ReaderSingle):
     """_summary_"""
@@ -81,7 +81,7 @@ class CoreRepository:
         self.kvs: KVSRepository
         self.kvitem: KVItemRepository
         self.rule: RuleRepository
-        self.condition: ConditionRepository
+        self.condition: CaseRepository
         self.node: NodeRepository
         self.entrypoint: EntrypointRepository
 

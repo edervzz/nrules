@@ -1,4 +1,5 @@
 """_summary_"""
+import json
 from application.messages import CreateRuleRequest
 from toolkit import Validator
 from toolkit.localization import Localizer, Codes
@@ -19,25 +20,25 @@ class CreateRuleValidator(Validator):
             raise self.as_error(
                 Codes.RU_CREA_001,
                 self._localizer.get(Codes.RU_CREA_001))
+
+        if request.rule.rule_type.upper() != "SWITCH":
+            self.add_failure(
+                Codes.RU_CREA_004,
+                self._localizer.get(Codes.RU_CREA_004))
+
         if len(request.rule.name) < 5 or len(request.rule.name) > 50:
             self.add_failure(
                 Codes.RU_CREA_002,
                 self._localizer.get(Codes.RU_CREA_002))
-        if request.rule.is_zero_condition is False and len(request.conditions) == 0:
-            self.add_failure(
-                Codes.RU_CREA_007,
-                self._localizer.get(Codes.RU_CREA_007))
         else:
             validator = ExpressionValidator(self._localizer)
             idx = 0
-            for c in request.conditions:
+            for c in request.cases:
                 idx += 1
                 if c.expression == "":
                     self.add_failure(
                         Codes.RU_CREA_003,
                         self._localizer.get(Codes.RU_CREA_003))
-                if c.operator is None or c.operator.upper() not in ["AND", "OR"]:
-                    c.operator = "AND"
 
                 c.position = idx
 

@@ -29,7 +29,7 @@ class ExpressionValidator(Validator):
 
     def __validate__(self, request: str):
         """ Run request validations 
-        obj.asdf >= false AND qwer = true OR rtyu = "hello" AND lkjj = 9898 \n
+        obj.asdf >= false && qwer = true || rtyu = "hello" || lkjj = 9898 \n
         obj.asdf >= false<OP>qwer = true<OP>rtyu = "hello"<OP>lkjj = 9898 \n
         obj.asdf >= false<&&>qwer = true<||>rtyu = "hello"<&&>lkjj = 9898 \n
         obj.asdf<IO>false<OP>qwer<IO>true<OP>rtyu<IO>"hello"<OP>lkjj<IO>9898 \n
@@ -115,8 +115,8 @@ class ExpressionValidator(Validator):
 
     def __create_translate(self) -> str:
         translated = self.expression_original
-        translated = translated.replace(" AND ", self._and)
-        translated = translated.replace(" OR ", self._or)
+        translated = translated.replace(" && ", self._and)
+        translated = translated.replace(" || ", self._or)
         translated = translated.replace(" = ", self._eq)
         translated = translated.replace(" <> ", self._ne)
         translated = translated.replace(" > ", self._gt)
@@ -129,8 +129,8 @@ class ExpressionValidator(Validator):
 
     def __create_var_value(self) -> str:
         var_value = self.expression_original
-        var_value = var_value.replace(" AND ", self._oper)
-        var_value = var_value.replace(" OR ", self._oper)
+        var_value = var_value.replace(" && ", self._oper)
+        var_value = var_value.replace(" || ", self._oper)
         var_value = var_value.replace(" = ", self._inoper)
         var_value = var_value.replace(" <> ", self._inoper)
         var_value = var_value.replace(" > ", self._inoper)

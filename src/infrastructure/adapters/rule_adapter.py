@@ -18,12 +18,14 @@ class RuleAdapter(RuleRepository):
             self.session.flush()
 
     def update(self,  entity: Rule):
+        rule: Rule
         rule = self.session.query(Rule).where(
-            Rule.tenant_id == entity.tenant_id,
             Rule.id == entity.id).one_or_none(9)
 
         rule.name = entity.name
-        rule.expression = entity.expression
+        rule.rule_type = entity.rule_type
+        rule.kvs_id_nok = entity.kvs_id_nok
+
         rule.version = entity.version
 
     def read(self, _id) -> Rule:

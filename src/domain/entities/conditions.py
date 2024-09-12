@@ -5,7 +5,7 @@ from .extra_fields import Auditable, Versioned, TenantSpecific
 from .base import Base
 
 
-class Condition(Base, TenantSpecific, Auditable, Versioned):
+class Conditions(Base, TenantSpecific, Auditable, Versioned):
     """ Rule entity """
 
     __tablename__ = "conditions"
@@ -18,4 +18,6 @@ class Condition(Base, TenantSpecific, Auditable, Versioned):
 
     position: Mapped[int] = mapped_column(nullable=False)
 
-    operator: Mapped[str] = mapped_column(nullable=False)
+    kvs_id: Mapped[int] = mapped_column(nullable=True)
+
+    kvs_id_nok: Mapped[int] = mapped_column(nullable=True)

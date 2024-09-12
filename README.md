@@ -1,5 +1,34 @@
 # gentera-nrule
 
+SWITCH
+quotationAmount > 10000 AND product = 'CCR' AND minAmount > 5000  
+    => "amount": 123,"rates": {"min":12.2, "max":14}
+quotationAmount > 15000 | product = 'CGC' | minAmount > 10000 
+    => "amount": 123,"rates": {"min":11.2, "max":13}
+quotationAmount > 25000 | product = 'CGC' | minAmount > 20000 
+    => "amount": 123,"rates": {"min":10.1, "max":11}
+ELSE
+    => "amount": 123,"rates": {"min":15.4, "max":17.1}
+
+IFELSE
+IF product IN ['CCR','CM']
+    IF minAmount > 10000
+        => "amount": 123,"rates": {"min":12.2, "max":14}
+    IF minAmount > 15000
+        => "amount": 123,"rates": {"min":11.2, "max":14}
+    ELSE
+        => "amount": 123,"rates": {"min":15.2, "max":17.1}
+IF product IN ['CGC']
+    IF minAmount > 10000
+        => "amount": 123,"rates": {"min":12.2, "max":14}
+    IF minAmount > 15000
+        => "amount": 123,"rates": {"min":11.2, "max":14}
+    ELSE
+        => "amount": 123,"rates": {"min":15.2, "max":17.1}
+
+ELSE
+    => "amount": 123,"rates": {"min":19.4, "max":19.9}
+
 - Hello
 - Migrate Tenant, Core
 - Create Tenant

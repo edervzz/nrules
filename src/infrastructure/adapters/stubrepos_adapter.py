@@ -1,7 +1,7 @@
 """_summary_
     """
 from typing import List
-from domain.entities import Node, Rule
+from domain.entities import RuleRelation, Rule
 from domain.ports import CoreRepository
 
 
@@ -10,7 +10,7 @@ class StubRepositoryAdapter(CoreRepository):
 
     def __init__(self):
         super().__init__()
-        self.workflows: List[Node] = []
+        self.workflows: List[RuleRelation] = []
         self.rules: List[Rule] = []
 
     def __create(self, entity: any):
@@ -23,7 +23,7 @@ class StubRepositoryAdapter(CoreRepository):
                 entity.id = len(self.workflows) + 1
                 self.workflows.append(entity)
 
-    def workflow_read(self, _id: int) -> Node:
+    def workflow_read(self, _id: int) -> RuleRelation:
         if len(self.workflows) == 0:
             return None
 

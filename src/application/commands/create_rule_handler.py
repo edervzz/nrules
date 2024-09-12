@@ -29,7 +29,7 @@ class CreateRuleHandler:
 
         self.repository.begin()
         self.repository.rule.create(request.rule)
-        for c in request.conditions:
+        for c in request.cases:
             c.rule_id = request.rule.id
             self.repository.condition.create(c)
         self.repository.commit_work()

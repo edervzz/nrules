@@ -9,8 +9,8 @@ from .tenants import Tenants
 from .entrypoint import Entrypoint
 from .kv import KV
 from .kv_item import KVItem
-from .node import Node
-from .condition import Condition
+from .rule_relation import RuleRelation
+from .conditions import Conditions
 from .rule import Rule
 
 

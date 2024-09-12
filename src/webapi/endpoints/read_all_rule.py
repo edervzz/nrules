@@ -36,7 +36,7 @@ def read_all_rules_endpoint(tid=None):
                 r.id,
                 r.name,
                 r.is_zero_condition,
-                r.kvs_id,
+                r.kvs_id_nok,
                 r.version)
             rules.append(rule)
     else:

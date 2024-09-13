@@ -52,7 +52,7 @@ def core_tables(engine: Engine) -> str:
         Column(
             "value", String(500), nullable=False, comment="Key-Value Storage Value"),
         Column(
-            "calculation", String(3), CheckConstraint("calculate = 'ADD' OR calculate = 'MOD'", name="kv_items_chk_calculation"), nullable=False, comment="Calculation method"),
+            "calculation", String(3), CheckConstraint("calculation = 'ADD' OR calculation = 'MOD'", name="kv_items_chk_calculation"), nullable=False, comment="Calculation method"),
         Column(
             "typeof", String(10), nullable=True, comment="Type of value. E.g. 'json', 'string', 'int'"),
         UniqueConstraint("tenant_id", "kv_id", "key", name="kv_items_unk"),
@@ -60,7 +60,8 @@ def core_tables(engine: Engine) -> str:
     )
     set_version(kvitem)
     set_auditable(kvitem)
-    Index("ix_kv_items_001", kv.c.tenant_id, kv.c.key)
+    Index("ix_kv_items_001", kvitem.c.tenant_id, kvitem.c.kv_id, kvitem.c.key)
+    Index("ix_kv_items_002", kvitem.c.tenant_id, kvitem.c.kv_id)
 
     # Conditions ----------------------------------------------
     case = Table(
@@ -84,6 +85,7 @@ def core_tables(engine: Engine) -> str:
     )
     set_version(case)
     set_auditable(case)
+    Index("ix_conditions_001", case.c.tenant_id, case.c.rule_id)
 
     # Rules ----------------------------------------------
     rule = Table(
@@ -103,7 +105,7 @@ def core_tables(engine: Engine) -> str:
     )
     set_version(rule)
     set_auditable(rule)
-    Index("ix_rules_001", rule.c.tenant_id, kv.c.name)
+    Index("ix_rules_001", rule.c.tenant_id, rule.c.name)
 
     # rule Relation ----------------------------------------------
     rule_relation = Table(
@@ -125,6 +127,8 @@ def core_tables(engine: Engine) -> str:
     )
     set_version(rule_relation)
     set_auditable(rule_relation)
+    Index("ix_rule_relations_001", rule_relation.c.tenant_id,
+          rule_relation.c.related_rule_id)
 
     # Condition Relation ----------------------------------------------
     cond_relation = Table(
@@ -148,6 +152,8 @@ def core_tables(engine: Engine) -> str:
     )
     set_version(cond_relation)
     set_auditable(cond_relation)
+    Index("ix_condition_relations_001",
+          cond_relation.c.tenant_id, cond_relation.c.related_condition_id)
 
     # Entrypoint Storage ----------------------------------------------
     entrypoint = Table(
@@ -167,7 +173,7 @@ def core_tables(engine: Engine) -> str:
     )
     set_version(entrypoint)
     set_auditable(entrypoint)
-    Index("ix_entrypoints_001", kv.c.tenant_id, kv.c.name)
+    Index("ix_entrypoints_001", entrypoint.c.tenant_id, entrypoint.c.name)
 
     metadata_obj.create_all(engine)
 

@@ -73,6 +73,24 @@ class XObjectRepository(ABC, Creator):
         self.engine = engine
 
 
+class XRuleRepository(ABC, Creator):
+    """_summary_"""
+
+    def __init__(self, engine):
+        ABC.__init__(self)
+        Creator.__init__(self)
+        self.engine = engine
+
+
+class XConditionRepository(ABC, Creator):
+    """_summary_"""
+
+    def __init__(self, engine):
+        ABC.__init__(self)
+        Creator.__init__(self)
+        self.engine = engine
+
+
 class CoreRepository:
     """ Repository container """
 

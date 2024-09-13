@@ -9,7 +9,7 @@ class Localizer:
     def __init__(self):
         self.langu = "EN"
 
-    def get(self, code: str, params: List[str] = None):
+    def get(self, code: str, *params):
         """ retrieve message """
         if self.langu == "ES":
             mess = Codes.es_messages[code] if code in Codes.es_messages else code

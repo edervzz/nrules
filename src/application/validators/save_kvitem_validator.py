@@ -23,7 +23,7 @@ class SaveKVItemValidator(Validator):
                 self.add_failure(
                     Codes.KVI_CREA_001,
                     self.localizer.get(Codes.KVI_CREA_001))
-            if len(kvit.kv_id) == 0:
+            if kvit.kv_id == 0:
                 self.add_failure(
                     Codes.KVI_CREA_003,
                     self.localizer.get(Codes.KVI_CREA_003))
@@ -44,9 +44,9 @@ class SaveKVItemValidator(Validator):
                     Codes.KVI_CREA_006,
                     self.localizer.get(Codes.KVI_CREA_006))
 
-            kvit.calculate = "ADD" if kvit.calculate is None else kvit.calculate
+            kvit.calculation = "ADD" if kvit.calculation is None else kvit.calculation
 
-            if kvit.calculate not in ["ADD", "MOD"]:
+            if kvit.calculation not in ["ADD", "MOD"]:
                 self.add_failure(
                     Codes.KVI_CREA_009,
                     self.localizer.get(Codes.KVI_CREA_009))

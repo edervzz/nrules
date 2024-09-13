@@ -13,8 +13,8 @@ class ExpressionValidator(Validator):
         super().__init__()
         self._localizer = localizer
         self.expression_original = ""
-        self._and = "<&&>"
-        self._or = "<||>"
+        self._and = "<AND>"
+        self._or = "<OR>"
         self._eq = "<EQ>"
         self._ne = "<NE>"
         self._gt = "<GT>"
@@ -55,7 +55,7 @@ class ExpressionValidator(Validator):
                     raise self.as_error(
                         Codes.RU_CREA_006,
                         self._localizer.get(
-                            Codes.RU_CREA_006, request, "operator not found")
+                            Codes.RU_CREA_006, "operator not found")
                     )
                 else:
                     oper_start = var_value.find(
@@ -69,7 +69,7 @@ class ExpressionValidator(Validator):
                 raise self.as_error(
                     Codes.RU_CREA_006,
                     self._localizer.get(
-                        Codes.RU_CREA_006, request, "variable not found")
+                        Codes.RU_CREA_006, "variable not found")
                 )
             variable_end = var_value.find(self._inoper, cursor_exp, length)
             variable = translated[cursor_exp:variable_end]
@@ -79,7 +79,7 @@ class ExpressionValidator(Validator):
                 raise self.as_error(
                     Codes.RU_CREA_006,
                     self._localizer.get(
-                        Codes.RU_CREA_006, request, "inner operator not found")
+                        Codes.RU_CREA_006, "inner operator not found")
                 )
             inner_oper_start = var_value.find(self._inoper, cursor_exp, length)
             inner_oper_end = inner_oper_start + 4
@@ -97,7 +97,7 @@ class ExpressionValidator(Validator):
                     raise self.as_error(
                         Codes.RU_CREA_006,
                         self._localizer.get(
-                            Codes.RU_CREA_006, request, "inner operator at end of expression")
+                            Codes.RU_CREA_006, "inner operator at end of expression")
                     )
             else:
                 value = translated[cursor_exp:value_end]
@@ -115,8 +115,8 @@ class ExpressionValidator(Validator):
 
     def __create_translate(self) -> str:
         translated = self.expression_original
-        translated = translated.replace(" && ", self._and)
-        translated = translated.replace(" || ", self._or)
+        translated = translated.replace(" AND ", self._and)
+        translated = translated.replace(" OR ", self._or)
         translated = translated.replace(" = ", self._eq)
         translated = translated.replace(" <> ", self._ne)
         translated = translated.replace(" > ", self._gt)
@@ -129,8 +129,8 @@ class ExpressionValidator(Validator):
 
     def __create_var_value(self) -> str:
         var_value = self.expression_original
-        var_value = var_value.replace(" && ", self._oper)
-        var_value = var_value.replace(" || ", self._oper)
+        var_value = var_value.replace(" AND ", self._oper)
+        var_value = var_value.replace(" OR ", self._oper)
         var_value = var_value.replace(" = ", self._inoper)
         var_value = var_value.replace(" <> ", self._inoper)
         var_value = var_value.replace(" > ", self._inoper)

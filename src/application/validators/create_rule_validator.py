@@ -21,7 +21,12 @@ class CreateRuleValidator(Validator):
                 Codes.RU_CREA_001,
                 self._localizer.get(Codes.RU_CREA_001))
 
-        if request.rule.rule_type.upper() != "SWITCH":
+        if request.rule.rule_type is None:
+            self.add_failure(
+                Codes.RU_CREA_008,
+                self._localizer.get(Codes.RU_CREA_008))
+
+        if request.rule.rule_type.upper() not in ["CASE", "TREE"]:
             self.add_failure(
                 Codes.RU_CREA_004,
                 self._localizer.get(Codes.RU_CREA_004))
@@ -33,7 +38,7 @@ class CreateRuleValidator(Validator):
         else:
             validator = ExpressionValidator(self._localizer)
             idx = 0
-            for c in request.cases:
+            for c in request.conditions:
                 idx += 1
                 if c.expression == "":
                     self.add_failure(

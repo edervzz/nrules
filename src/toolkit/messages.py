@@ -183,13 +183,25 @@ class Codes:
     es_messages[RU_UPD_001] = "Nombre de Regla es obligatorio."
 
     # Create Rule
+    RU_CREA_010 = "RU-CREA-010"
+    en_messages[RU_CREA_010] = "Rule, KVS {} not found."
+    es_messages[RU_CREA_010] = "Regla, KVS {} no encontrado."
+
+    RU_CREA_009 = "RU-CREA-009"
+    en_messages[RU_CREA_009] = "Condition {}, KVS {} not found."
+    es_messages[RU_CREA_009] = "Condición {}, KVS {} no encontrado."
+
+    RU_CREA_008 = "RU-CREA-008"
+    en_messages[RU_CREA_008] = "Rule Type must be provided."
+    es_messages[RU_CREA_008] = "Tipo de Regla es obligatorio."
+
     RU_CREA_007 = "RU-CREA-007"
     en_messages[RU_CREA_007] = "At least one conditions is required."
     es_messages[RU_CREA_007] = "Al menos se requiere una condición."
 
     RU_CREA_006 = "RU-CREA-006"
     en_messages[RU_CREA_006] = "ExpVal: {}."
-    es_messages[RU_CREA_006] = "Un error sucedió durante la validación de la expresión."
+    es_messages[RU_CREA_006] = "ExpVal: {}."
 
     RU_CREA_005 = "RU-CREA-005"
     en_messages[RU_CREA_005] = "Already exists a Rule with same name."

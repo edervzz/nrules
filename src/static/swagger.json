@@ -369,33 +369,58 @@
         }
     },
     "definitions": {
-        "Conditions": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "expression": {
-                        "type": "string",
-                        "minLength": 5,
-                        "maxLength": 1024,
-                        "required": true,
-                        "example": "quotationAmount > 10000 AND product = 'CCR'"
-                    },
-                    "position": {
-                        "description": "By default, position will be set in appearance order.",
-                        "type": "integer",
-                        "required": false
-                    },
-                    "operator": {
-                        "type": "string",
-                        "minLength": 2,
-                        "maxLength": 3,
-                        "enum": [
-                            "OR",
-                            "AND"
-                        ],
-                        "default": "AND",
-                        "required": false
+        "New Condition": {
+            "type": "object",
+            "properties": {
+                "expression": {
+                    "type": "string",
+                    "minLength": 5,
+                    "maxLength": 1024,
+                    "required": true,
+                    "example": "quotationAmount > 10000 AND product = 'CCR'"
+                },
+                "kvs_id_ok": {
+                    "type": "integer",
+                    "required": false
+                },
+                "kvs_id_nok": {
+                    "type": "integer",
+                    "required": false
+                }
+            }
+        },
+        "New Conditions Tree": {
+            "type": "object",
+            "properties": {
+                "expression": {
+                    "type": "string",
+                    "minLength": 5,
+                    "maxLength": 1024,
+                    "required": true,
+                    "example": "quotationAmount > 10000 AND product = 'CCR'"
+                },
+                "kvs_id_ok": {
+                    "type": "integer",
+                    "required": false
+                },
+                "kvs_id_nok": {
+                    "type": "integer",
+                    "required": false
+                },
+                "ok": {
+                    "description": "Array of Condition to evaluate",
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "$ref": "#/definitions/New Conditions Tree"
+                    }
+                },
+                "nok": {
+                    "description": "Array of Condition to evaluate",
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "$ref": "#/definitions/New Conditions Tree"
                     }
                 }
             }
@@ -406,22 +431,38 @@
                 "name": {
                     "description": "Rule name.",
                     "type": "string",
+                    "required": true,
                     "minLength": 5,
                     "maxLength": 50,
-                    "required": true,
                     "example": "ru.account.products"
                 },
-                "is_zero_condition": {
-                    "description": "This rule return True. Recomendation: use this feature to call others Rules without previous validation.",
-                    "type": "boolean",
-                    "required": false,
-                    "default": false
+                "rule_type": {
+                    "description": "Type of rule.",
+                    "type": "string",
+                    "required": true,
+                    "enum": [
+                        "CASE",
+                        "TREE"
+                    ],
+                    "default": "CASE"
                 },
                 "conditions": {
-                    "description": "Rule name.",
-                    "type": "object",
-                    "$ref": "#/definitions/Conditions",
-                    "required": false
+                    "description": "Array of conditions.",
+                    "type": "array",
+                    "required": false,
+                    "items": {
+                        "type": "object",
+                        "$ref": "#/definitions/New Condition"
+                    }
+                },
+                "conditions_tree": {
+                    "description": "Array of conditions tree.",
+                    "type": "array",
+                    "required": false,
+                    "items": {
+                        "type": "object",
+                        "$ref": "#/definitions/New Conditions Tree"
+                    }
                 }
             }
         },
@@ -442,37 +483,6 @@
                     "minLength": 5,
                     "maxLength": 2000,
                     "required": true
-                }
-            }
-        },
-        "New Workflow": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "description": "Workflow name.",
-                    "type": "string",
-                    "minLength": 5,
-                    "maxLength": 50,
-                    "example": "wf.account.products"
-                },
-                "typeof": {
-                    "description": "Type of Workflow. Default = BASE.",
-                    "type": "string",
-                    "enum": [
-                        "BASE",
-                        "FULL",
-                        "NODE"
-                    ]
-                },
-                "action_id_ok": {
-                    "description": "Action ID for success result.",
-                    "type": "integer",
-                    "required": false
-                },
-                "action_id_nok": {
-                    "description": "Action ID for failure result.",
-                    "type": "integer",
-                    "required": false
                 }
             }
         },

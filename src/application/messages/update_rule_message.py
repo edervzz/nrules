@@ -1,17 +1,21 @@
 """ create rule messages """
+from typing import List
 from domain.entities import Rule
+from domain.entities import Condition
 
 
 class UpdateRuleRequest:
     """ Update Rule Request """
 
-    def __init__(self, tenantid: int, _id: int, name: str, expression: str, is_exclusive: bool):
+    def __init__(self, tenantid: int, _id: int, name: str, rule_type: str, kvs_id_nok: int, conditions: List[Condition]):
         self.rule = Rule()
         self.rule.tenant_id = tenantid
         self.rule.id = _id
         self.rule.name = name
-        self.rule.expression = expression
-        self.rule.is_exclusive = is_exclusive
+        self.rule.kvs_id_nok = kvs_id_nok
+        self.rule.rule_type = rule_type
+
+        self.conditions = conditions
 
 
 class UpdateRuleResponse:

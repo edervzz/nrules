@@ -5,7 +5,7 @@ from .extra_fields import Auditable, Versioned, TenantSpecific
 from .base import Base
 
 
-class Conditions(Base, TenantSpecific, Auditable, Versioned):
+class Condition(Base, TenantSpecific, Auditable, Versioned):
     """ Rule entity """
 
     __tablename__ = "conditions"

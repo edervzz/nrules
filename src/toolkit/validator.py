@@ -18,6 +18,10 @@ class Validator(ABC):
         if len(self.__messages_codes) > 0:
             raise BadRequest(json.dumps(self.__messages_codes))
 
+    def any_error(self) -> bool:
+        """ return true when any error was collected """
+        return len(self.__messages_codes) > 0
+
     def add_failure(self, code: str, message: str):
         """ Add a message code into collection. """
         self.__messages_codes.append({'code': code, 'message': message})

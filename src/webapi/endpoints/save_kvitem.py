@@ -23,15 +23,15 @@ def wrapper(tid: int = None, kid: int = None):
     for j in json_data:
         newitem = SaveKVItem(json.dumps(j))
         item = KVItem()
+        item.kv_id = int(kid)
         item.key = newitem.key
-        item.kv_id = kid
         item.value = newitem.value
         item.typeof = newitem.typeof
         kvitems.append(item)
 
     command = SaveKVItemRequest(
         tid,
-        kid,
+        int(kid),
         item.key,
         item.value,
         item.typeof, kvitems)

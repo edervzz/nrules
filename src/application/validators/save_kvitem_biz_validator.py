@@ -28,10 +28,10 @@ class SaveKVItemBizValidator(Validator):
         for kvit in request.kvitems:
             key = KVItemKey(kvit.kv_id, kvit.key)
             dbitem = self.repository.kvitem.read(key)
-            kvit.calculate = "ADD" if kvit.calculate is None else kvit.calculate
+            kvit.calculation = "ADD" if kvit.calculation is None else kvit.calculation
 
             if isinstance(dbitem, KVItem):
-                dbitem.calculate = kvit.calculate
+                dbitem.calculation = kvit.calculation
                 dbitem.value = kvit.value
                 dbitem.typeof = kvit.typeof
                 request.kvitems_to_update.append(dbitem)

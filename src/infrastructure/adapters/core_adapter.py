@@ -5,12 +5,14 @@ from flask import session
 from sqlalchemy import Engine, create_engine, select, event
 from sqlalchemy.orm import Session
 from sqlalchemy.orm import Query
-from domain.entities import Rule, RuleRelation, Conditions
+from domain.entities import Rule, RuleRelation, Condition
 from domain.entities import TenantSpecific, Versioned, Auditable, Migrations
-from domain.entities import XObject, KV, KVItem, Entrypoint
+from domain.entities import XObject, XRule, XCondition, KV, KVItem, Entrypoint
 from domain.ports import CoreRepository
 from infrastructure.data import initial, core_tables, core_admin
 from .xobject_adapter import XObjectAdapter
+from .xrule_adapter import XRuleAdapter
+from .xcondition_adapter import XConditionAdapter
 from .kvs_adapter import KVSAdapter
 from .kvitem_adapter import KVItemAdapter
 from .rule_adapter import RuleAdapter
@@ -26,11 +28,13 @@ class CoreAdapter(CoreRepository):
 
     def __init__(self, tid: int, connstr: str):
         super().__init__()
-        self.tid = tid
+        self.tid = int(tid)
         self.session: Session = None
         self.engine: Engine = create_engine(connstr, echo=True)
 
         self.xobject = XObjectAdapter(self.engine)
+        self.xrule = XRuleAdapter(self.engine)
+        self.xcondition = XConditionAdapter(self.engine)
         self.kvs = KVSAdapter(self.engine)
         self.kvitem = KVItemAdapter(self.engine)
         self.rule = RuleAdapter(self.engine)
@@ -39,6 +43,12 @@ class CoreAdapter(CoreRepository):
 
         event.listen(XObject, 'before_insert', self.__before_insert)
         event.listen(XObject, 'before_update', self.__before_update)
+
+        event.listen(XRule, 'before_insert', self.__before_insert)
+        event.listen(XRule, 'before_update', self.__before_update)
+
+        event.listen(XCondition, 'before_insert', self.__before_insert)
+        event.listen(XCondition, 'before_update', self.__before_update)
 
         event.listen(KV, 'before_insert', self.__before_insert)
         event.listen(KV, 'before_update', self.__before_update)
@@ -49,8 +59,8 @@ class CoreAdapter(CoreRepository):
         event.listen(Rule, 'before_insert', self.__before_insert)
         event.listen(Rule, 'before_update', self.__before_update)
 
-        event.listen(Conditions, 'before_insert', self.__before_insert)
-        event.listen(Conditions, 'before_update', self.__before_update)
+        event.listen(Condition, 'before_insert', self.__before_insert)
+        event.listen(Condition, 'before_update', self.__before_update)
 
         event.listen(RuleRelation, 'before_insert', self.__before_insert)
         event.listen(RuleRelation, 'before_update', self.__before_update)
@@ -66,6 +76,8 @@ class CoreAdapter(CoreRepository):
         self.session = Session(self.engine, autoflush=autoflush)
 
         self.xobject.set_session(self.session)
+        self.xrule.set_session(self.session)
+        self.xcondition.set_session(self.session)
         self.kvs.set_session(self.session)
         self.kvitem.set_session(self.session)
         self.rule.set_session(self.session)
@@ -106,8 +118,13 @@ class CoreAdapter(CoreRepository):
         return [m]
 
     def next_number(self, class_: type) -> int:
-        xobject = XObject()
-        xobject.object_name = class_.__name__
+        if class_.__name__ == "Rule":
+            xobject = XRule()
+        elif class_.__name__ == "Condition":
+            xobject = XCondition()
+        else:
+            xobject = XObject()
+            xobject.object_name = class_.__name__
 
         with Session(self.engine) as s:
             s.add(xobject)

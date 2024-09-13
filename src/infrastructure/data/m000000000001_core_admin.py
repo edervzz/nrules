@@ -22,7 +22,7 @@ def core_admin(engine: Engine) -> str:
             return result.id
 
     # XObject Storage ----------------------------------------------
-    variant = Table(
+    xobjects = Table(
         "xobjects",
         metadata_obj,
         Column(
@@ -31,7 +31,27 @@ def core_admin(engine: Engine) -> str:
             "object_name", String(50), nullable=False, comment="Rules / Workflows / Actions / KVS"),
         comment="Variant is a container for many Key-Values"
     )
-    set_auditable(variant)
+    set_auditable(xobjects)
+
+    # xrules Storage ----------------------------------------------
+    xrules = Table(
+        "xrules",
+        metadata_obj,
+        Column(
+            "id", BigInteger, primary_key=True, autoincrement=True, comment="ID for Rules"),
+        comment="Number generator por rules"
+    )
+    set_auditable(xrules)
+
+    # xconditions Storage ----------------------------------------------
+    xconditions = Table(
+        "xconditions",
+        metadata_obj,
+        Column(
+            "id", BigInteger, primary_key=True, autoincrement=True, comment="ID for Conditions"),
+        comment="Number generator por rules"
+    )
+    set_auditable(xconditions)
 
     metadata_obj.create_all(engine)
 

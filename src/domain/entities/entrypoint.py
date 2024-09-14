@@ -16,4 +16,4 @@ class Entrypoint(Base, TenantSpecific, Auditable, Versioned):
 
     rule_id: Mapped[int] = mapped_column(nullable=False)
 
-    kvs_id_in: Mapped[int] = mapped_column(nullable=False)
+    kvs_id: Mapped[int] = mapped_column(nullable=False)

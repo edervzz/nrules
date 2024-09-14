@@ -1,5 +1,4 @@
 """_summary_"""
-import json
 from application.messages import CreateRuleRequest
 from toolkit import Validator
 from toolkit.localization import Localizer, Codes

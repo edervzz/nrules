@@ -382,10 +382,6 @@
                 "kvs_id_ok": {
                     "type": "integer",
                     "required": false
-                },
-                "kvs_id_nok": {
-                    "type": "integer",
-                    "required": false
                 }
             }
         },
@@ -398,14 +394,6 @@
                     "maxLength": 1024,
                     "required": true,
                     "example": "quotationAmount > 10000 AND product = 'CCR'"
-                },
-                "kvs_id_ok": {
-                    "type": "integer",
-                    "required": false
-                },
-                "kvs_id_nok": {
-                    "type": "integer",
-                    "required": false
                 },
                 "ok": {
                     "description": "Array of Condition to evaluate",
@@ -422,6 +410,14 @@
                         "type": "object",
                         "$ref": "#/definitions/New Conditions Tree"
                     }
+                },
+                "kvs_id_ok": {
+                    "type": "integer",
+                    "required": false
+                },
+                "kvs_id_nok": {
+                    "type": "integer",
+                    "required": false
                 }
             }
         },
@@ -463,6 +459,10 @@
                         "type": "object",
                         "$ref": "#/definitions/New Conditions Tree"
                     }
+                },
+                "kvs_id_nok": {
+                    "type": "integer",
+                    "required": false
                 }
             }
         },

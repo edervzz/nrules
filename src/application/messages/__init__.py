@@ -2,6 +2,7 @@
 
     Requests and Responses
 """
+from .run_rule_message import RunRuleRequest, RunRuleResponse
 from .read_kvs_message import ReadKVSRequest, ReadKVSResponse
 from .save_kvitem_message import SaveKVItemRequest, SaveKVItemResponse
 from .create_kv_message import CreateKVRequest, CreateKVResponse

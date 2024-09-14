@@ -13,8 +13,8 @@ class ExpressionValidator(Validator):
         super().__init__()
         self._localizer = localizer
         self.expression_original = ""
-        self._and = "<AND>"
-        self._or = "<OR>"
+        self._and = "<&&>"
+        self._or = "<||>"
         self._eq = "<EQ>"
         self._ne = "<NE>"
         self._gt = "<GT>"
@@ -26,6 +26,10 @@ class ExpressionValidator(Validator):
         self._inoper = "<IO>"
         self.components: List[ExpressionComponent] = []
         self.operators = []
+
+    def get_components_operators(self):
+        """ return a list of component and operators """
+        return (self.components, self.operators)
 
     def __validate__(self, request: str):
         """ Run request validations 

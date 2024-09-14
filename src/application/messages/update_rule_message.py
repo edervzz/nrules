@@ -7,13 +7,11 @@ from domain.entities import Condition
 class UpdateRuleRequest:
     """ Update Rule Request """
 
-    def __init__(self, tenantid: int, _id: int, name: str, rule_type: str, kvs_id_nok: int, conditions: List[Condition]):
+    def __init__(self, _id: int, name: str, kvs_id_nok: int, conditions: List[Condition]):
         self.rule = Rule()
-        self.rule.tenant_id = tenantid
         self.rule.id = _id
         self.rule.name = name
         self.rule.kvs_id_nok = kvs_id_nok
-        self.rule.rule_type = rule_type
 
         self.conditions = conditions
 

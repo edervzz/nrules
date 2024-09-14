@@ -18,6 +18,6 @@ class Condition(Base, TenantSpecific, Auditable, Versioned):
 
     position: Mapped[int] = mapped_column(nullable=False)
 
-    kvs_id: Mapped[int] = mapped_column(nullable=True)
+    kvs_id_ok: Mapped[int] = mapped_column(nullable=True)
 
     kvs_id_nok: Mapped[int] = mapped_column(nullable=True)

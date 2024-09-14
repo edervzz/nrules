@@ -1,5 +1,5 @@
-"""_summary_
-    """
+"""_summary_"""
+from typing import List
 from sqlalchemy.orm import Session
 from domain.entities import Condition
 from domain.ports import CaseRepository
@@ -23,12 +23,18 @@ class ConditionAdapter(CaseRepository):
 
         condition.expression = entity.expression
         condition.position = entity.position
-        condition.kvs_id = entity.kvs_id
+        condition.kvs_id_ok = entity.kvs_id_ok
         condition.kvs_id_nok = entity.kvs_id_nok
         condition.version = entity.version
 
     def read(self, _id) -> Condition:
         with Session(self.engine) as session:
-            rule = session.query(Condition).where(
+            condition = session.query(Condition).where(
                 Condition.id == _id).one_or_none()
-            return rule
+            return condition
+
+    def read_by_parent_id(self, parent_id: int) -> List[Condition]:
+        with Session(self.engine) as session:
+            conditions = session.query(Condition).where(
+                Condition.rule_id == parent_id). order_by(Condition.position).all()
+            return conditions

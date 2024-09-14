@@ -35,7 +35,10 @@ def core_tables(engine: Engine) -> str:
     )
     set_version(kv)
     set_auditable(kv)
-    Index("ix_kvs_001", kv.c.tenant_id, kv.c.name)
+    Index(
+        "ix_kvs_001",
+        kv.c.tenant_id,
+        kv.c.name)
 
     # Key-Value Items ----------------------------------------------
     kvitem = Table(
@@ -60,8 +63,15 @@ def core_tables(engine: Engine) -> str:
     )
     set_version(kvitem)
     set_auditable(kvitem)
-    Index("ix_kv_items_001", kvitem.c.tenant_id, kvitem.c.kv_id, kvitem.c.key)
-    Index("ix_kv_items_002", kvitem.c.tenant_id, kvitem.c.kv_id)
+    Index(
+        "ix_kv_items_001",
+        kvitem.c.tenant_id,
+        kvitem.c.kv_id,
+        kvitem.c.key)
+    Index(
+        "ix_kv_items_002",
+        kvitem.c.tenant_id,
+        kvitem.c.kv_id)
 
     # Conditions ----------------------------------------------
     case = Table(
@@ -78,14 +88,17 @@ def core_tables(engine: Engine) -> str:
         Column(
             "position", Integer, nullable=False, comment="Position"),
         Column(
-            "kvs_id", BigInteger, nullable=True, comment="KVS associated when condition was successful"),
+            "kvs_id_ok", BigInteger, nullable=True, comment="KVS associated when condition was successful"),
         Column(
             "kvs_id_nok", BigInteger, nullable=True, comment="KVS associated when condition was failed"),
         comment="A simple business case"
     )
     set_version(case)
     set_auditable(case)
-    Index("ix_conditions_001", case.c.tenant_id, case.c.rule_id)
+    Index(
+        "ix_conditions_001",
+        case.c.tenant_id,
+        case.c.rule_id)
 
     # Rules ----------------------------------------------
     rule = Table(
@@ -105,7 +118,10 @@ def core_tables(engine: Engine) -> str:
     )
     set_version(rule)
     set_auditable(rule)
-    Index("ix_rules_001", rule.c.tenant_id, rule.c.name)
+    Index(
+        "ix_rules_001",
+        rule.c.tenant_id,
+        rule.c.name)
 
     # rule Relation ----------------------------------------------
     rule_relation = Table(
@@ -127,8 +143,10 @@ def core_tables(engine: Engine) -> str:
     )
     set_version(rule_relation)
     set_auditable(rule_relation)
-    Index("ix_rule_relations_001", rule_relation.c.tenant_id,
-          rule_relation.c.related_rule_id)
+    Index(
+        "ix_rule_relations_001",
+        rule_relation.c.tenant_id,
+        rule_relation.c.related_rule_id)
 
     # Condition Relation ----------------------------------------------
     cond_relation = Table(
@@ -152,8 +170,10 @@ def core_tables(engine: Engine) -> str:
     )
     set_version(cond_relation)
     set_auditable(cond_relation)
-    Index("ix_condition_relations_001",
-          cond_relation.c.tenant_id, cond_relation.c.related_condition_id)
+    Index(
+        "ix_condition_relations_001",
+        cond_relation.c.tenant_id,
+        cond_relation.c.related_condition_id)
 
     # Entrypoint Storage ----------------------------------------------
     entrypoint = Table(
@@ -168,12 +188,15 @@ def core_tables(engine: Engine) -> str:
         Column(
             "rule_id", BigInteger, comment="Rule ID"),
         Column(
-            "kvs_id_in", Boolean, comment="KVS ID used as input"),
+            "kvs_id", Boolean, comment="KVS ID used as input"),
         comment="Entrypoint determine which Rules will be called"
     )
     set_version(entrypoint)
     set_auditable(entrypoint)
-    Index("ix_entrypoints_001", entrypoint.c.tenant_id, entrypoint.c.name)
+    Index(
+        "ix_entrypoints_001",
+        entrypoint.c.tenant_id,
+        entrypoint.c.name)
 
     metadata_obj.create_all(engine)
 

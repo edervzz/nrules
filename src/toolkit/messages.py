@@ -6,29 +6,21 @@ class Codes:
     en_messages: dict[str, str] = {}
     es_messages: dict[str, str] = {}
 
-    ACTION_CREA_006 = "ACTION-CREA-006"
-    en_messages[ACTION_CREA_006] = "KVS no encontrado."
-    es_messages[ACTION_CREA_006] = "KVS ID not found."
+    RUNNER_004 = "RUNNER-004 "
+    en_messages[RUNNER_004] = "KVS {} not found."
+    es_messages[RUNNER_004] = "KVS {}, no encontrada."
 
-    ACTION_CREA_005 = "ACTION-CREA-005"
-    en_messages[ACTION_CREA_005] = "Ruleset no encontrado."
-    es_messages[ACTION_CREA_005] = "Ruleset ID not found."
+    RUNNER_003 = "RUNNER-003 "
+    en_messages[RUNNER_003] = "Rule {} not found."
+    es_messages[RUNNER_003] = "Regla {}, no encontrada."
 
-    ACTION_CREA_004 = "ACTION-CREA-004"
-    en_messages[ACTION_CREA_004] = "Nombre de Actión no debe repetirse."
-    es_messages[ACTION_CREA_004] = "Action's Name already exists."
+    RUNNER_002 = "RUNNER-002 "
+    en_messages[RUNNER_002] = "Component {}, Expression {}, not found."
+    es_messages[RUNNER_002] = "Componente {}, Expresión {}, no encontrado."
 
-    ACTION_CREA_003 = "ACTION-CREA-003"
-    en_messages[ACTION_CREA_003] = "Actión no existe."
-    es_messages[ACTION_CREA_003] = "Action do not exists."
-
-    ACTION_CREA_002 = "ACTION-CREA-002"
-    en_messages[ACTION_CREA_002] = "Just Ruleset or KVS must be declared."
-    es_messages[ACTION_CREA_002] = "Un Ruleset o un KVS debe ser indicado."
-
-    ACTION_CREA_001 = "ACTION-CREA-001"
-    en_messages[ACTION_CREA_001] = "Action Name must be between 5 and 50 characters."
-    es_messages[ACTION_CREA_001] = "Nombre de Action debe ser de 5 a 50 caracteres."
+    RUNNER_001 = "RUNNER-001"
+    en_messages[RUNNER_001] = "Rule name and ID must not be empty."
+    es_messages[RUNNER_001] = "Nombre o ID de regla son obligatorios."
 
     KVI_CREA_010 = "KVI-CREA-010"
     en_messages[KVI_CREA_010] = "Duplicated Keys are not allowed."

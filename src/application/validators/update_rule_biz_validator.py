@@ -35,17 +35,13 @@ class UpdateRuleBizValidator(Validator):
                     Codes.RU_UPD_007,
                     self._local.get(Codes.RU_UPD_007))
 
-        try:
-            expression_validator = ExpressionValidator(self._local)
-            expression_validator.validate_and_throw(request.rule.expression)
-        except ValueError as err:
-            raise self.as_error(
-                Codes.RU_CREA_006,
-                err.__str__)
+        # todo: validar cada condition
 
         if isinstance(rule, Rule):
-            if rule.expression != request.rule.expression:
-                rule.expression = request.rule.expression
+            if rule.rule_type != request.rule.rule_type or rule.kvs_id_nok != request.rule.kvs_id_nok or rule.name != request.rule.name:
+                rule.name = request.rule.name
+                rule.rule_type = request.rule.rule_type
+                rule.kvs_id_nok = request.rule.kvs_id_nok
                 rule.version += 1
                 request.rule = rule
             else:

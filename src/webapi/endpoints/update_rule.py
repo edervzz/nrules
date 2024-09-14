@@ -23,11 +23,10 @@ def update_rules_endpoint(tid=None, rule_id=None):
     update_rule = UpdateRuleModel(json.dumps(json_data))
 
     command = UpdateRuleRequest(
-        tenant_id,
         rule_id,
         rule_name,
-        update_rule.expression,
-        update_rule.is_exclusive
+        update_rule.kvs_id_nok,
+        update_rule.conditions
     )
 
     handler = UpdateRuleHandler(

@@ -35,7 +35,7 @@ class RuleRepository(
 
 class CaseRepository(
         ABC, Creator, Updater,
-        ReaderSingle):
+        ReaderSingle, ReaderByParentID):
     """_summary_"""
 
     def __init__(self, engine):

@@ -21,7 +21,7 @@ class NewRuleModel:
                 cond = Condition()
                 if "expression" in c:
                     cond.expression = c["expression"]
-                if "kvs_id" in c:
-                    cond.kvs_id = c["kvs_id"]
+                if "kvs_id_ok" in c:
+                    cond.kvs_id_ok = c["kvs_id_ok"]
 
                 self.conditions.append(cond)

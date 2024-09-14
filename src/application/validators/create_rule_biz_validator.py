@@ -33,12 +33,12 @@ class CreateRuleBizValidator(Validator):
             pos = 0
             for cit in request.conditions:
                 pos += 1
-                if cit.kvs_id is not None and cit.kvs_id > 0:
-                    kvs = self._repo.kvs.read(cit.kvs_id)
+                if cit.kvs_id_ok is not None and cit.kvs_id_ok > 0:
+                    kvs = self._repo.kvs.read(cit.kvs_id_ok)
                     if kvs is None:
                         self.add_failure(
                             Codes.RU_CREA_009,
-                            self._local.get(Codes.RU_CREA_009, pos, cit.kvs_id))
+                            self._local.get(Codes.RU_CREA_009, pos, cit.kvs_id_ok))
 
         if not self.any_error():
             request.rule.id = self._repo.next_number(Rule)

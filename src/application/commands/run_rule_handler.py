@@ -1,13 +1,13 @@
 r"""_summary_"""
 import logging
 from application.messages import RunRuleRequest, RunRuleResponse
-from application.validators import RunRuleValidator, CreateKVBizValidator
+from application.validators import RunRuleValidator, RunRuleBizValidator
 from domain.ports import CoreRepository
 from toolkit import Localizer
 
 
 class RunRuleHandler:
-    r""" _summary_ """
+    """ command """
 
     def __init__(self, repository: CoreRepository, logger: logging, localizer: Localizer):
         self.repository = repository
@@ -15,18 +15,14 @@ class RunRuleHandler:
         self.localizer = localizer
 
     def handler(self, request: RunRuleRequest):
-        r""" Handler """
+        """ Handler """
         # 1. request validation
         validator = RunRuleValidator(self.localizer)
         validator.validate_and_throw(request)
         self.logger.info("request validated")
         # 2. business rule validation
-        biz_validator = CreateKVBizValidator(self.repository, self.localizer)
+        biz_validator = RunRuleBizValidator(self.repository, self.localizer)
         biz_validator.validate_and_throw(request)
         self.logger.info("business rules validated")
 
-        self.repository.begin()
-        self.repository.rule.create(request.kv)
-        self.repository.commit_work()
-
-        return RunRuleResponse(request.kv.id)
+        return RunRuleResponse(request.ok, request.rule_results, request.trace)

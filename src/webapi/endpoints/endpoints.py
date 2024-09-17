@@ -19,10 +19,13 @@ from .read_all_rule import read_all_rule_bp
 from .create_tenant import new_tenant_bp
 from .create_kv import new_kvs_bp
 from .save_kvitem import save_kvitem_bp
+from .run_rule import run_rule_bp
 
 
 def register_endpoints(app: Flask, prefix: str):
     """ Map endpoints based on blueprints """
+
+    app.register_blueprint(run_rule_bp, url_prefix=prefix)
 
     app.register_blueprint(save_kvitem_bp, url_prefix=prefix)
 

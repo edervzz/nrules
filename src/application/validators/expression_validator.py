@@ -1,5 +1,6 @@
 
 """ Extensions """
+from decimal import Decimal
 from typing import List
 from toolkit import Validator
 from toolkit.localization import Localizer, Codes
@@ -32,7 +33,7 @@ class ExpressionValidator(Validator):
         return (self.components, self.operators)
 
     def __validate__(self, request: str):
-        """ Run request validations 
+        """ Run request validations
         obj.asdf >= false && qwer = true || rtyu = "hello" || lkjj = 9898 \n
         obj.asdf >= false<OP>qwer = true<OP>rtyu = "hello"<OP>lkjj = 9898 \n
         obj.asdf >= false<&&>qwer = true<||>rtyu = "hello"<&&>lkjj = 9898 \n
@@ -95,7 +96,7 @@ class ExpressionValidator(Validator):
                 # confirm no more inner operators forward
                 value_end = var_value.find(self._inoper, cursor_exp, length)
                 if value_end == -1:
-                    value = translated[inner_oper_start:]
+                    value = translated[cursor_exp:]
                     is_end_expression = True
                 else:
                     raise self.as_error(
@@ -105,6 +106,12 @@ class ExpressionValidator(Validator):
                     )
             else:
                 value = translated[cursor_exp:value_end]
+
+            if "'" in value or "\"" in value:
+                value = value.replace("'", "")
+                value = value.replace("\"", "")
+            else:
+                value = Decimal(value)
 
             item = ExpressionComponent(variable, inner_oper, value)
             # move cursor

@@ -14,6 +14,7 @@ from .kv_item import KVItem
 from .rule_relation import RuleRelation
 from .conditions import Condition
 from .rule import Rule
+from .rule_result import RuleResult
 
 
 from .pagination import Pagination

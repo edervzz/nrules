@@ -1,5 +1,6 @@
 """ models """
 
+from .run_rule import RunRule
 from .transport import Item, TransportItems
 from .save_kvitem import SaveKVItem
 from .new_kv import NewKVModel

@@ -1,10 +1,11 @@
 """ summary """
+from decimal import Decimal
 from typing import List
 from toolkit import Validator, Localizer, Codes
 from application.messages import RunRuleRequest
-from application.validators import ExpressionValidator
-from domain.entities import Rule, KVItem, Condition
+from domain.entities import Rule, KV, KVItem, Condition, RuleResult
 from domain.ports import CoreRepository
+from .expression_validator import ExpressionValidator
 
 
 class RunRuleBizValidator(Validator):
@@ -28,16 +29,18 @@ class RunRuleBizValidator(Validator):
             )
             return
 
+        request.trace.append(f"rule: {rule.name}, type:{rule.rule_type}")
+
         conditions: List[Condition] = self._repo.condition.read_by_parent_id(
             rule.id)
         if conditions is None:
             request.ok = True  # by default, non conditions => truthy
             return
 
-        kvitems: List[KVItem] = []
+        kvitems_input: List[KVItem] = []
         if request.kvs_id != 0:
-            kvitems = self._repo.kvitem.read_by_parent_id(request.kvs_id)
-            if kvitems is None:
+            kvitems_input = self._repo.kvitem.read_by_parent_id(request.kvs_id)
+            if kvitems_input is None:
                 self.add_failure(
                     Codes.RUNNER_003,
                     self._local.get(
@@ -48,12 +51,13 @@ class RunRuleBizValidator(Validator):
         if self.any_error():
             return
 
-        for cx in conditions:
+        condition_ok = False
+        for cit in conditions:
             validator = ExpressionValidator(self._local)
-            validator.validate_and_throw(cx)
+            validator.validate_and_throw(cit.expression)
 
-            components, _ = validator.get_components_operators()
-            # expression_results: List[bool] = []
+            components, operators = validator.get_components_operators()
+            component_results: List[bool] = []
 
             for cx in components:
                 if cx.variable in request.payload:
@@ -68,38 +72,60 @@ class RunRuleBizValidator(Validator):
 
                 passed = False
                 match cx.operator:
-                    case "EQ":
+                    case "<EQ>":
                         passed = value == cx.value
-                    case "NE":
-                        passed = value != cx.value
-                    case "GT":
-                        passed = value > cx.value
-                    case "GE":
-                        passed = value >= cx.value
-                    case "LT":
-                        passed = value < cx.value
-                    case "LE":
-                        passed = value <= cx.value
-                    case "IN":
-                        passed = value in cx.value
+                    case "<NE>":
+                        passed = value != Decimal(cx.value)
+                    case "<GT>":
+                        passed = value > Decimal(cx.value)
+                    case "<GE>":
+                        passed = value >= Decimal(cx.value)
+                    case "<LT>":
+                        passed = value < Decimal(cx.value)
+                    case "<LE>":
+                        passed = value <= Decimal(cx.value)
+                    case "<IN>":
+                        passed = value in Decimal(cx.value)
+                component_results.append(passed)
 
-                if passed:
-                    request.ok = True
-                    request.kvitems = kvitems
+            if len(component_results) == 1:
+                condition_ok = component_results[0]
+            else:
+                condition_ok = component_results[0]
+                component_results = component_results[1:]
+                idx = 0
+                for rx in component_results:
+                    op = operators[idx]
+                    if op == "<&&>":
+                        condition_ok = condition_ok and rx
+                    elif op == "<||>":
+                        condition_ok = condition_ok or rx
 
-                # expression_results.append(passed)
+                    idx += 1
 
-                # if len(expression_results) == 1:
-                #     request.ok = expression_results[0]
-                # else:
-                #     r0 = expression_results[0]
-                #     expression_results = expression_results[1:]
-                #     idx = 0
-                #     for rx in expression_results:
-                #         op = operators[idx]
-                #         if op == "<&&>":
-                #             r0 = r0 and rx
-                #         elif op == "<||>":
-                #             r0 = r0 or rx
+            if condition_ok:
+                request.trace.append(
+                    f"success condition: {cit.id}, kvs id: {cit.kvs_id_ok}, expression: {cit.expression}")
 
-                #         idx += 1
+                rs = RuleResult(rule.id, rule.name, 0, 0, [])
+                request.ok = True
+                if rule.rule_type == "CASE":
+                    if cit.kvs_id_ok != 0:
+
+                        kvs: KV = self._repo.kvs.read(cit.kvs_id_ok)
+                        rs.kvs_id = kvs.id
+                        rs.kvs_name = kvs.name
+                        rs.kvitems = self._repo.kvitem.read_by_parent_id(
+                            cit.kvs_id_ok)
+                        request.rule_results.append(rs)
+                break
+
+        if not condition_ok:
+            request.trace.append("failed")
+            rs = RuleResult(rule.id, rule.name, 0, 0, [])
+            if rule.kvs_id_nok != 0:
+                kvs: KV = self._repo.kvs.read(rule.kvs_id_nok)
+                rs.kvs_id = kvs.id
+                rs.kvs_name = kvs.name
+                rs.kvitems = self._repo.kvitem.read(rule.kvs_id_nok)
+                request.rule_results.append(rs)

@@ -19,8 +19,18 @@ class NewRuleModel:
         if isinstance(conditions, list):
             for c in conditions:
                 cond = Condition()
-                if "expression" in c:
-                    cond.expression = c["expression"]
+                if "expressions" in c:
+                    expressions = c["expressions"]
+                    if isinstance(expressions, list):
+                        idx = 0
+                        for eit in expressions:
+                            idx += 1
+                            exp = str(eit).strip()
+                            if idx == 1:
+                                cond.expression = exp
+                            else:
+                                cond.expression += " && " + exp
+
                 if "kvs_id_ok" in c:
                     cond.kvs_id_ok = c["kvs_id_ok"]
 

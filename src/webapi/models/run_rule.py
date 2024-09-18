@@ -2,23 +2,23 @@
     """
 import json
 from typing import List
-from domain.entities import RuleResult
+from domain.entities import RunRuleResult
 
 
 class RunRule:
     """ response """
 
-    def __init__(self, ok: bool, rule_results: List[RuleResult], trace: List[str]):
-        self.ok = ok
-        self.data_result = []
+    def __init__(self, ok: bool, rule_results: List[RunRuleResult], trace: List[str]):
+        self.success = ok
+        self.result = []
         self.trace = []
 
         if rule_results is not None and len(rule_results) > 0:
             for rrit in rule_results:
                 rs = ResultItems(
-                    rrit.rule_id, rrit.rule_name, 0, 0, [])
-                rs.kvs_id = rrit.kvs_id
-                rs.kvs_name = rrit.kvs_name
+                    rrit.rule.id, rrit.rule.name, 0, 0, [])
+                rs.kvs_id = rrit.kv.id
+                rs.kvs_name = rrit.kv.name
                 if rrit.kvitems is not None and len(rrit.kvitems) > 0:
                     for kit in rrit.kvitems:
                         it = Item(
@@ -26,7 +26,7 @@ class RunRule:
                             kit.calculation, kit.typeof)
                         rs.kvs_items.append(it)
 
-                self.data_result.append(rs)
+                self.result.append(rs)
 
         if trace is not None and len(trace) > 0:
             for tit in trace:

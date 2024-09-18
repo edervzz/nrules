@@ -3,7 +3,7 @@ from decimal import Decimal
 from typing import List
 from toolkit import Validator, Localizer, Codes
 from application.messages import RunRuleRequest
-from domain.entities import Rule, KV, KVItem, Condition, RuleResult
+from domain.entities import Rule, KV, KVItem, Condition, RunRuleResult
 from domain.ports import CoreRepository
 from .expression_validator import ExpressionValidator
 
@@ -107,25 +107,22 @@ class RunRuleBizValidator(Validator):
                 request.trace.append(
                     f"success condition: {cit.id}, kvs id: {cit.kvs_id_ok}, expression: {cit.expression}")
 
-                rs = RuleResult(rule.id, rule.name, 0, 0, [])
                 request.ok = True
-                if rule.rule_type == "CASE":
-                    if cit.kvs_id_ok != 0:
 
-                        kvs: KV = self._repo.kvs.read(cit.kvs_id_ok)
-                        rs.kvs_id = kvs.id
-                        rs.kvs_name = kvs.name
-                        rs.kvitems = self._repo.kvitem.read_by_parent_id(
-                            cit.kvs_id_ok)
-                        request.rule_results.append(rs)
+                if cit.kvs_id_ok != 0:
+                    rs = RunRuleResult(rule, None, [])
+                    rs.kv = self._repo.kvs.read(cit.kvs_id_ok)
+                    rs.kvitems = self._repo.kvitem.read_by_parent_id(
+                        cit.kvs_id_ok)
+                    request.rule_results.append(rs)
                 break
 
         if not condition_ok:
             request.trace.append("failed")
-            rs = RuleResult(rule.id, rule.name, 0, 0, [])
+
             if rule.kvs_id_nok != 0:
-                kvs: KV = self._repo.kvs.read(rule.kvs_id_nok)
-                rs.kvs_id = kvs.id
-                rs.kvs_name = kvs.name
-                rs.kvitems = self._repo.kvitem.read(rule.kvs_id_nok)
+                rs = RunRuleResult(rule, None, [])
+                rs.kv = self._repo.kvs.read(rule.kvs_id_nok)
+                rs.kvitems = self._repo.kvitem.read_by_parent_id(
+                    rule.kvs_id_nok)
                 request.rule_results.append(rs)

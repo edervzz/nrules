@@ -1,6 +1,6 @@
 """ message """
 from typing import List
-from domain.entities import KV, RuleResult
+from domain.entities import KV, RunRuleResult
 
 
 class RunRuleRequest:
@@ -11,7 +11,7 @@ class RunRuleRequest:
         self.rule_name = rule_name
         self.kvs_id = kvs_id
         self.payload = payload
-        self.rule_results: List[RuleResult] = []
+        self.rule_results: List[RunRuleResult] = []
         self.trace = []
 
         self.ok = False
@@ -21,7 +21,7 @@ class RunRuleRequest:
 class RunRuleResponse:
     """ Response """
 
-    def __init__(self, ok: bool, rule_results: List[RuleResult], trace: List[str]):
+    def __init__(self, ok: bool, rule_results: List[RunRuleResult], trace: List[str]):
         self.ok = ok
         self.rule_results = rule_results
         self.trace = trace

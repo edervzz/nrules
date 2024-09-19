@@ -6,7 +6,7 @@ class Codes:
     en_messages: dict[str, str] = {}
     es_messages: dict[str, str] = {}
 
-    RUNNER_004 = "RUNNER-004 "
+    RUNNER_004 = "RUNNER-004"
     en_messages[RUNNER_004] = "KVS {} not found."
     es_messages[RUNNER_004] = "KVS {}, no encontrada."
 

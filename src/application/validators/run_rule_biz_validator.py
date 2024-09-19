@@ -3,7 +3,7 @@ from decimal import Decimal
 from typing import List
 from toolkit import Validator, Localizer, Codes
 from application.messages import RunRuleRequest
-from domain.entities import Rule, KV, KVItem, Condition, RunRuleResult
+from domain.entities import Rule, KV, KVItem, Condition, Expression, RunRuleResult
 from domain.ports import CoreRepository
 from .expression_validator import ExpressionValidator
 
@@ -23,9 +23,9 @@ class RunRuleBizValidator(Validator):
 
         if rule is None:
             self.add_failure(
-                Codes.RUNNER_004,
+                Codes.RUNNER_003,
                 self._local.get(
-                    Codes.RUNNER_004, request.kvs_id)
+                    Codes.RUNNER_003, request.rule_id)
             )
             return
 
@@ -53,58 +53,73 @@ class RunRuleBizValidator(Validator):
 
         condition_ok = False
         for cit in conditions:
-            validator = ExpressionValidator(self._local)
-            validator.validate_and_throw(cit.expression)
+            expressions: List[Expression] = self._repo.expression.read_by_parent_id(
+                cit.id)
 
-            components, operators = validator.get_components_operators()
-            component_results: List[bool] = []
+            expression_results: List[bool] = []
+            for exp in expressions:
+                validator = ExpressionValidator(self._local)
+                validator.validate_and_throw(exp.expression)
 
-            for cx in components:
-                if cx.variable in request.payload:
-                    value = request.payload[cx.variable]
+                components, operators = validator.get_components_operators()
+
+                component_results: List[bool] = []
+                for cx in components:
+                    if cx.variable in request.payload:
+                        value = request.payload[cx.variable]
+                    else:
+                        self.add_failure(
+                            Codes.RUNNER_002,
+                            self._local.get(Codes.RUNNER_002, cx.variable)
+                        )
+                        return
+
+                    passed = False
+                    match cx.operator:
+                        case "<EQ>":
+                            passed = value == cx.value
+                        case "<NE>":
+                            passed = value != Decimal(cx.value)
+                        case "<GT>":
+                            passed = value > Decimal(cx.value)
+                        case "<GE>":
+                            passed = value >= Decimal(cx.value)
+                        case "<LT>":
+                            passed = value < Decimal(cx.value)
+                        case "<LE>":
+                            passed = value <= Decimal(cx.value)
+                        case "<IN>":
+                            passed = value in Decimal(cx.value)
+                    component_results.append(passed)
+
+                if len(component_results) == 1:
+                    component_ok = component_results[0]
                 else:
-                    self.add_failure(
-                        Codes.RUNNER_002,
-                        self._local.get(Codes.RUNNER_002, cx.variable)
-                    )
-                    return
+                    component_ok = component_results[0]
+                    component_results = component_results[1:]
+                    idx = 0
+                    for rx in component_results:
+                        op = operators[idx]
+                        if op == "<&&>":
+                            component_ok = component_ok and rx
+                        elif op == "<||>":
+                            component_ok = component_ok or rx
 
-                passed = False
-                match cx.operator:
-                    case "<EQ>":
-                        passed = value == cx.value
-                    case "<NE>":
-                        passed = value != Decimal(cx.value)
-                    case "<GT>":
-                        passed = value > Decimal(cx.value)
-                    case "<GE>":
-                        passed = value >= Decimal(cx.value)
-                    case "<LT>":
-                        passed = value < Decimal(cx.value)
-                    case "<LE>":
-                        passed = value <= Decimal(cx.value)
-                    case "<IN>":
-                        passed = value in Decimal(cx.value)
-                component_results.append(passed)
+                        idx += 1
 
-            if len(component_results) == 1:
-                condition_ok = component_results[0]
+                expression_results.append(component_ok)
+
+            if len(expression_results) == 1:
+                condition_ok = expression_results[0]
             else:
-                condition_ok = component_results[0]
-                component_results = component_results[1:]
-                idx = 0
-                for rx in component_results:
-                    op = operators[idx]
-                    if op == "<&&>":
-                        condition_ok = condition_ok and rx
-                    elif op == "<||>":
-                        condition_ok = condition_ok or rx
-
-                    idx += 1
+                condition_ok = expression_results[0]
+                component_results = expression_results[1:]
+                for rx in expression_results:
+                    condition_ok = condition_ok and rx
 
             if condition_ok:
                 request.trace.append(
-                    f"success condition: {cit.id}, kvs id: {cit.kvs_id_ok}, expression: {cit.expression}")
+                    f"success condition: {cit.id}, kvs id: {cit.kvs_id_ok}")
 
                 request.ok = True
 

@@ -15,8 +15,8 @@ class Codes:
     es_messages[RUNNER_003] = "Regla {}, no encontrada."
 
     RUNNER_002 = "RUNNER-002 "
-    en_messages[RUNNER_002] = "Component {}, Expression {}, not found."
-    es_messages[RUNNER_002] = "Componente {}, Expresión {}, no encontrado."
+    en_messages[RUNNER_002] = "Component {}, not found into payload."
+    es_messages[RUNNER_002] = "Se requiere el componente '{}', dentro de la solicitud."
 
     RUNNER_001 = "RUNNER-001"
     en_messages[RUNNER_001] = "Rule name and ID must not be empty."

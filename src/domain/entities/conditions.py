@@ -14,8 +14,6 @@ class Condition(Base, TenantSpecific, Auditable, Versioned):
 
     rule_id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
 
-    expression: Mapped[str] = mapped_column(nullable=False)
-
     position: Mapped[int] = mapped_column(nullable=False)
 
     kvs_id_ok: Mapped[int] = mapped_column(nullable=True)

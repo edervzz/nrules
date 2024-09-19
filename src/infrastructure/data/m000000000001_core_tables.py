@@ -73,6 +73,27 @@ def core_tables(engine: Engine) -> str:
         kvitem.c.tenant_id,
         kvitem.c.kv_id)
 
+    # Expressions ----------------------------------------------
+    expression = Table(
+        "expressions",
+        metadata_obj,
+        Column(
+            "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
+        Column(
+            "id", BigInteger, primary_key=True, comment="Expression ID"),
+        Column(
+            "condition_id", BigInteger, primary_key=True, comment="Rule ID"),
+        Column(
+            "expression", String(1024), nullable=False, comment="Expression"),
+        comment="A simple expression"
+    )
+    set_version(expression)
+    set_auditable(expression)
+    Index(
+        "ix_expressions_001",
+        expression.c.tenant_id,
+        expression.c.condition_id)
+
     # Conditions ----------------------------------------------
     case = Table(
         "conditions",
@@ -83,8 +104,6 @@ def core_tables(engine: Engine) -> str:
             "id", BigInteger, primary_key=True, comment="Expression ID"),
         Column(
             "rule_id", BigInteger, primary_key=True, comment="Rule ID"),
-        Column(
-            "expression", String(1024), nullable=False, comment="Expression"),
         Column(
             "position", Integer, nullable=False, comment="Position"),
         Column(

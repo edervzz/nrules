@@ -44,9 +44,20 @@ class CaseRepository(
         self.engine = engine
 
 
-class NodeRepository(
+class ConditionRepository(
         ABC, Creator, Updater,
-        ReaderSingle, ReaderSingleByExternalID, ReaderPagination):
+        ReaderSingle, ReaderByParentID):
+    """_summary_"""
+
+    def __init__(self, engine):
+        ABC.__init__(self)
+        Creator.__init__(self)
+        self.engine = engine
+
+
+class ExpressionRepository(
+        ABC, Creator, Updater,
+        ReaderSingle, ReaderByParentID):
     """_summary_"""
 
     def __init__(self, engine):
@@ -100,7 +111,7 @@ class CoreRepository:
         self.kvitem: KVItemRepository
         self.rule: RuleRepository
         self.condition: CaseRepository
-        self.node: NodeRepository
+        self.expression: ExpressionRepository
         self.entrypoint: EntrypointRepository
 
     @abstractmethod

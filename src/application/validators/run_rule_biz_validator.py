@@ -65,8 +65,7 @@ class RunRuleBizValidator(Validator):
                 else:
                     self.add_failure(
                         Codes.RUNNER_002,
-                        self._local.get(Codes.RUNNER_002, cx.variable,
-                                        cx.variable+cx.operator+cx.value)
+                        self._local.get(Codes.RUNNER_002, cx.variable)
                     )
                     return
 

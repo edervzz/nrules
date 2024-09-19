@@ -13,6 +13,7 @@ from .kv import KV
 from .kv_item import KVItem
 from .rule_relation import RuleRelation
 from .conditions import Condition
+from .expressions import Expression
 from .rule import Rule
 from .rule_result import RunRuleResult
 

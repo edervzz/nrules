@@ -5,7 +5,7 @@ from flask import session
 from sqlalchemy import Engine, create_engine, select, event
 from sqlalchemy.orm import Session
 from sqlalchemy.orm import Query
-from domain.entities import Rule, RuleRelation, Condition
+from domain.entities import Rule, RuleRelation, Condition, Expression
 from domain.entities import TenantSpecific, Versioned, Auditable, Migrations
 from domain.entities import XObject, XRule, XCondition, KV, KVItem, Entrypoint
 from domain.ports import CoreRepository
@@ -17,6 +17,7 @@ from .kvs_adapter import KVSAdapter
 from .kvitem_adapter import KVItemAdapter
 from .rule_adapter import RuleAdapter
 from .condition_adapter import ConditionAdapter
+from .expression_adapter import ExpressionAdapter
 from .entrypoint_adapter import EntrypointAdapter
 
 
@@ -39,6 +40,7 @@ class CoreAdapter(CoreRepository):
         self.kvitem = KVItemAdapter(self.engine)
         self.rule = RuleAdapter(self.engine)
         self.condition = ConditionAdapter(self.engine)
+        self.expression = ExpressionAdapter(self.engine)
         self.entrypoint = EntrypointAdapter(self.engine)
 
         event.listen(XObject, 'before_insert', self.__before_insert)
@@ -62,6 +64,9 @@ class CoreAdapter(CoreRepository):
         event.listen(Condition, 'before_insert', self.__before_insert)
         event.listen(Condition, 'before_update', self.__before_update)
 
+        event.listen(Expression, 'before_insert', self.__before_insert)
+        event.listen(Expression, 'before_update', self.__before_update)
+
         event.listen(RuleRelation, 'before_insert', self.__before_insert)
         event.listen(RuleRelation, 'before_update', self.__before_update)
 
@@ -82,6 +87,7 @@ class CoreAdapter(CoreRepository):
         self.kvitem.set_session(self.session)
         self.rule.set_session(self.session)
         self.condition.set_session(self.session)
+        self.expression.set_session(self.session)
         self.entrypoint.set_session(self.session)
 
     def commit_work(self):

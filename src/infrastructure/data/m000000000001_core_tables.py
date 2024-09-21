@@ -55,7 +55,7 @@ def core_tables(engine: Engine) -> str:
         Column(
             "value", String(500), nullable=False, comment="Key-Value Storage Value"),
         Column(
-            "calculation", String(3), CheckConstraint("calculation = 'ADD' OR calculation = 'MOD'", name="kv_items_chk_calculation"), nullable=False, comment="Calculation method"),
+            "calculation", String(3), CheckConstraint("calculation = 'ADD' OR calculation = 'MOD' OR calculation = 'FN'", name="kv_items_chk_calculation"), nullable=False, comment="Calculation method"),
         Column(
             "typeof", String(10), nullable=True, comment="Type of value. E.g. 'json', 'string', 'int'"),
         UniqueConstraint("tenant_id", "kv_id", "key", name="kv_items_unk"),

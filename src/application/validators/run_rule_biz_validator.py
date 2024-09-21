@@ -3,7 +3,7 @@ from decimal import Decimal
 from typing import List
 from toolkit import Validator, Localizer, Codes
 from application.messages import RunRuleRequest
-from domain.entities import Rule, KV, KVItem, Condition, Expression, RunRuleResult
+from domain.entities import Rule, KVItem, Condition, Expression, RunRuleResult
 from domain.ports import CoreRepository
 from .expression_validator import ExpressionValidator
 
@@ -75,21 +75,24 @@ class RunRuleBizValidator(Validator):
                         return
 
                     passed = False
-                    match cx.operator:
-                        case "<EQ>":
-                            passed = value == cx.value
-                        case "<NE>":
-                            passed = value != Decimal(cx.value)
-                        case "<GT>":
-                            passed = value > Decimal(cx.value)
-                        case "<GE>":
-                            passed = value >= Decimal(cx.value)
-                        case "<LT>":
-                            passed = value < Decimal(cx.value)
-                        case "<LE>":
-                            passed = value <= Decimal(cx.value)
-                        case "<IN>":
-                            passed = value in Decimal(cx.value)
+                    if cx.value == "<ANYVALUE>":
+                        passed = True
+                    else:
+                        match cx.operator:
+                            case "<EQ>":
+                                passed = value == cx.value
+                            case "<NE>":
+                                passed = value != Decimal(cx.value)
+                            case "<GT>":
+                                passed = value > Decimal(cx.value)
+                            case "<GE>":
+                                passed = value >= Decimal(cx.value)
+                            case "<LT>":
+                                passed = value < Decimal(cx.value)
+                            case "<LE>":
+                                passed = value <= Decimal(cx.value)
+                            case "<IN>":
+                                passed = value in cx.value
                     component_results.append(passed)
 
                 if len(component_results) == 1:

@@ -24,8 +24,8 @@ def new_rules_endpoint(tid=None):
         new_rules.name,
         new_rules.rule_type,
         new_rules.kvs_id_nok,
-        new_rules.conditions,
-        new_rules.expressions
+        new_rules.cases,
+        new_rules.conditions
     )
 
     result = CreateRuleHandler(

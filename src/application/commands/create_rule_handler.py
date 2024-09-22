@@ -29,10 +29,10 @@ class CreateRuleHandler:
 
         self.repository.begin()
         self.repository.rule.create(request.rule)
+        for e in request.matrix:
+            self.repository.matrix.create(e)
         for e in request.conditions:
             self.repository.condition.create(e)
-        for e in request.expressions:
-            self.repository.expression.create(e)
 
         self.repository.commit_work()
 

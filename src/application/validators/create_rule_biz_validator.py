@@ -1,7 +1,7 @@
 """_summary_"""
 from typing import List
 from application.messages import CreateRuleRequest
-from domain.entities import Rule, Condition, Expression
+from domain.entities import Rule, Case, Condition
 from domain.ports import CoreRepository
 from toolkit import Validator
 from toolkit.localization import Localizer, Codes
@@ -30,9 +30,9 @@ class CreateRuleBizValidator(Validator):
                     Codes.RU_CREA_010,
                     self._local.get(Codes.RU_CREA_010, request.rule.kvs_id_nok))
 
-        if isinstance(request.conditions, list):
+        if isinstance(request.matrix, list):
             cond_position = 0
-            for cit in request.conditions:
+            for cit in request.matrix:
                 cond_position += 1
                 if cit.kvs_id_ok is not None and cit.kvs_id_ok > 0:
                     kvs = self._repo.kvs.read(cit.kvs_id_ok)
@@ -44,14 +44,14 @@ class CreateRuleBizValidator(Validator):
         if not self.any_error():
             request.rule.id = self._repo.next_number(Rule)
 
-            if isinstance(request.conditions, list):
-                final_expressions: List[Expression] = []
+            if isinstance(request.matrix, list):
+                final_expressions: List[Condition] = []
                 cond_position = 0
-                for cit in request.conditions:
-                    new_condition_id = self._repo.next_number(Condition)
+                for cit in request.matrix:
+                    new_condition_id = self._repo.next_number(Case)
                     expressions_by_cond = []
                     expressions_by_cond = [self.set_condition_id(
-                        e, new_condition_id) for e in request.expressions if e.condition_id == cit.id]
+                        e, new_condition_id) for e in request.conditions if e.condition_id == cit.id]
                     final_expressions.extend(expressions_by_cond)
 
                     cond_position += 1
@@ -59,10 +59,10 @@ class CreateRuleBizValidator(Validator):
                     cit.id = new_condition_id
                     cit.rule_id = request.rule.id
 
-                request.expressions = final_expressions
+                request.conditions = final_expressions
 
-    def set_condition_id(self, expression: Expression, condid):
+    def set_condition_id(self, expression: Condition, condid):
         """ assign condition id  """
         expression.condition_id = condid
-        expression.id = self._repo.next_number(Expression)
+        expression.id = self._repo.next_number(Condition)
         return expression

@@ -55,7 +55,7 @@ class ConditionRepository(
         self.engine = engine
 
 
-class ExpressionRepository(
+class ConditionRepository(
         ABC, Creator, Updater,
         ReaderSingle, ReaderByParentID):
     """_summary_"""
@@ -110,8 +110,8 @@ class CoreRepository:
         self.kvs: KVSRepository
         self.kvitem: KVItemRepository
         self.rule: RuleRepository
-        self.condition: CaseRepository
-        self.expression: ExpressionRepository
+        self.matrix: CaseRepository
+        self.condition: ConditionRepository
         self.entrypoint: EntrypointRepository
 
     @abstractmethod

@@ -38,7 +38,7 @@ class CreateRuleValidator(Validator):
             validator = ExpressionValidator(self._localizer)
 
             idx = 0
-            for c in request.expressions:
+            for c in request.conditions:
                 idx += 1
                 if c.expression == "":
                     self.add_failure(

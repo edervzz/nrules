@@ -1,19 +1,19 @@
 """ create rule messages """
 from typing import List
-from domain.entities import Condition, Expression, Rule
+from domain.entities import Case, Condition, Rule
 
 
 class CreateRuleRequest:
     """ Create Rule Request """
 
-    def __init__(self, name: str, rule_type: str, kvs_id_nok: int, conditions: List[Condition], expressions: List[Expression]):
+    def __init__(self, name: str, rule_type: str, kvs_id_nok: int, matrix: List[Case], conditions: List[Condition]):
         self.rule = Rule()
         self.rule.name = name
         self.rule.rule_type = rule_type
         self.rule.kvs_id_nok = kvs_id_nok
 
+        self.matrix = matrix
         self.conditions = conditions
-        self.expressions = expressions
 
 
 class CreateRuleResponse:

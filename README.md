@@ -1,4 +1,21 @@
 # gentera-nrule
+Tipo de Regla: Match | Tree
+
+Parámetros de entrada:
+    monto_cuota
+    producto
+
+Parámetros de salida:
+    tasa_min
+    tasa_max
+
+Se eligió _Match_, se crea 1 caso vacío
+
+
+Match
+caso: monto_cuota > 1000, monto_cuota < 20000, product = 'CCR'
+entonces => tasa_min: 15.4, tasa_max: 17.1
+
 
 SWITCH
 quotationAmount > 10000 AND product = 'CCR' AND minAmount > 5000  

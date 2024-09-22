@@ -1,7 +1,7 @@
 """ _module_ """
 import json
 from typing import List
-from domain.entities import Condition, Expression
+from domain.entities import Case, Condition, KVItem
 
 
 class NewRuleModel:
@@ -13,27 +13,49 @@ class NewRuleModel:
         self.kvs_id_nok = self.__dict__.get("kvs_id_nok", 0)
         self.rule_type = self.__dict__.get("rule_type", False)
 
-        conditions = self.__dict__.get("conditions", None)
+        matrix = self.__dict__.get("matrix", None)
 
-        self.expressions: List[Expression] = []
         self.conditions: List[Condition] = []
+        self.cases: List[Case] = []
+        self.output: List[KVItem] = []
 
-        if isinstance(conditions, list):
+        if isinstance(matrix, list):
             idx = 0
-            for c in conditions:
+            for c in matrix:
                 idx += 1
-                cond = Condition()
-                cond.id = idx
-                if "expressions" in c:
-                    expressions = c["expressions"]
-                    if isinstance(expressions, list):
-                        for eit in expressions:
-                            exp = Expression()
-                            exp.expression = str(eit).strip()
-                            exp.condition_id = idx
-                            self.expressions.append(exp)
+                case = Case()
+                case.id = idx
+                if "conditions" in c:
+                    conditions = c["conditions"]
+                    if isinstance(conditions, list):
+                        for eit in conditions:
+                            if "variable" in eit:
+                                variable = eit["variable"]
+                            if "operator" in eit:
+                                operator = eit["operator"]
+                            if "value" in eit:
+                                value = eit["value"]
 
-                if "kvs_id_ok" in c:
-                    cond.kvs_id_ok = c["kvs_id_ok"]
+                            cond = Condition()
+                            cond.expression = f"{str(variable).strip()} {
+                                str(operator).strip()} {str(value).strip()}"
+                            cond.condition_id = idx
+                            self.conditions.append(cond)
 
-                self.conditions.append(cond)
+                if "output" in c:
+                    output = c["output"]
+                    if isinstance(output, list):
+                        for o in output:
+                            if "key" in o:
+                                key = o["key"]
+                            if "value" in o:
+                                value = o["value"]
+                            if "typeof" in o:
+                                typeof = o["typeof"]
+                            kvitem = KVItem()
+                            kvitem.key = str(key).strip()
+                            kvitem.value = str(value).strip()
+                            kvitem.typeof = str(typeof).strip()
+                            self.output.append(kvitem)
+
+                self.cases.append(case)

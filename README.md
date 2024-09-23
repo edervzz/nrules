@@ -97,7 +97,7 @@ $ pip install flask
 
 ## 2.1 Requirements
 ```bash
-pip freeze > requirements.txt
+  
 ```
 
 ## 2.2 Requirements
@@ -156,3 +156,9 @@ def get_store(): # endpoint
     """_summary_"""
     return {"store": stores}
 ```
+
+## 4 Vite
+``` bash
+npm create vite
+```
+Luego seguir los pasos de vite

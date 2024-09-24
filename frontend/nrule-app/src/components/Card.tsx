@@ -10,7 +10,7 @@ export default function Card(props: CardProps) {
         <div
             className="container"
             style={{
-                width: "450px",
+                width: "750px",
             }}
         >
             <div className="card">

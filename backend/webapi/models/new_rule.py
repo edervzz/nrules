@@ -12,6 +12,7 @@ class NewRuleModel:
         self.name = self.__dict__.get("name", "")
         self.kvs_id_nok = self.__dict__.get("kvs_id_nok", 0)
         self.rule_type = self.__dict__.get("rule_type", False)
+        self.strategy = self.__dict__.get("strategy", "")
 
         matrix = self.__dict__.get("matrix", None)
 

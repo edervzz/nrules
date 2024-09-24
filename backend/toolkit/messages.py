@@ -175,6 +175,10 @@ class Codes:
     es_messages[RU_UPD_001] = "Nombre de Regla es obligatorio."
 
     # Create Rule
+    RU_CREA_011 = "RU-CREA-011"
+    en_messages[RU_CREA_011] = "Strategy must be EARLY / BASIC / ALL."
+    es_messages[RU_CREA_011] = "La estrategia debe ser EARLY / BASIC / ALL."
+
     RU_CREA_010 = "RU-CREA-010"
     en_messages[RU_CREA_010] = "Rule, KVS {} not found."
     es_messages[RU_CREA_010] = "Regla, KVS {} no encontrado."

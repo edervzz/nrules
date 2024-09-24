@@ -30,6 +30,12 @@ class CreateRuleValidator(Validator):
                 Codes.RU_CREA_004,
                 self._localizer.get(Codes.RU_CREA_004))
 
+        if request.rule.rule_type.upper() == "CASE":
+            if request.rule.strategy not in ["EARLY", "BASE", "ALL"]:
+                self.add_failure(
+                    Codes.RU_CREA_011,
+                    self._localizer.get(Codes.RU_CREA_011))
+
         if len(request.rule.name) < 5 or len(request.rule.name) > 50:
             self.add_failure(
                 Codes.RU_CREA_002,

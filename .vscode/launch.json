@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "command": "npm run dev",
+            "name": "frontend",
+            "request": "launch",
+            "type": "node-terminal",
+            "cwd": "${workspaceFolder}/frontend/nrule-app"
+        },
+        {
             "justMyCode": false,
             "name": "Python Debugger: Flask",
             "type": "debugpy",

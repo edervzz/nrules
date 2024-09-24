@@ -9,9 +9,9 @@ export default function Card(props: CardProps) {
     return (
         <div
             className="container"
-            style={{
-                width: "450px",
-            }}
+            // style={{
+            //     width: "750px",
+            // }}
         >
             <div className="card">
                 <div className="card-body">{children}</div>

@@ -185,8 +185,11 @@ Luego seguir los pasos de vite
 
 Agregar esta linea en el archivo main.tsx
 import 'bootstrap/dist/css/bootstrap.min.css'
+<<<<<<< HEAD
 
 ## 7 librerias
 
 Bootstrap, Tailwind, Bulma CSS
 react-bootstrap, daisy ui, react bulma
+=======
+>>>>>>> f5be7ecff993aa42a366ac44bdf1281a0fb3934e

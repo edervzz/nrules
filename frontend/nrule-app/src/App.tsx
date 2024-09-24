@@ -4,7 +4,11 @@ import ListHeroes, { Hero } from "./components/ListHeroes";
 import ButtonMinion from "./components/Button";
 import { useState } from "react";
 import Condition from "./components/Condition/Condition";
+<<<<<<< HEAD
 import BasicOperatorSelector from "./components/BasicOperatorSelector";
+=======
+import OperatorTypes from "./components/OperatorTypes";
+>>>>>>> f5be7ecff993aa42a366ac44bdf1281a0fb3934e
 import { OperatorEnum } from "./enums/operator";
 
 function App() {

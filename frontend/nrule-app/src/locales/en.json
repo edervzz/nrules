@@ -1,0 +1,26 @@
+{
+    "select_operator": "Seleccione Operador",
+
+    "equal": "Equal",
+    "not_equal": "Not Equal",    
+    "less_than": "Less Than",
+    "greater_than": "Greater Than",
+    "less_equal": "Less Equal",
+    "greater_equal": "Greater Equal",
+    "in_": "In",
+    "not_in": "Not In",
+    "between": "Between",
+    "not_between": "Not Between",
+    "any": "Anything",
+    "equal_desc": "X is equal to Z",
+    "not_equal_desc": "X is different to Z",
+    "less_than_desc": "X is less than Z",
+    "greater_than_desc": "X is greater than Z",
+    "less_equal_desc": "X is less or equal to Z",
+    "greater_equal_desc": "X is greater or equal to Z",
+    "in_desc": "X belongs to List",
+    "not_in_desc": "X not belongs to List",
+    "between_desc": "X is between Q and Z",
+    "not_between_desc": "X is NOT between Q and Z",
+    "any_desc": "X is any value"
+}

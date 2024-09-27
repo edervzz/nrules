@@ -23,7 +23,8 @@
                 "TENANT_DBUSER": "root",
                 "TENANT_DBPWD": "my-secret-pw",
                 "TENANT_DBSERVER": "localhost",
-                "TENANT_DBNAME": "nrule-tenancy"
+                "TENANT_DBNAME": "nrule-tenancy",
+                "DEBUG": "true" 
             },
             "args": [
                 "run",

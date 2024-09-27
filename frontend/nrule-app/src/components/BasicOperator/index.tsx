@@ -1,12 +1,13 @@
-import { OperatorEnum } from "../../enums/operator";
+import { Button, Card, CardBody } from "react-bootstrap";
+import { Operator } from "../../enums/operator";
 import styles from "./OperatorTypes.module.css";
 
 type Props = {
     operator: string;
     operText: string;
     operDescription: string;
-    operEnum: OperatorEnum;
-    onClickDelegate: (op: OperatorEnum) => void;
+    operEnum: Operator;
+    onClickOperator: (op: Operator) => void;
 };
 
 export default function BasicOperator({
@@ -14,33 +15,25 @@ export default function BasicOperator({
     operText,
     operDescription,
     operEnum,
-    onClickDelegate,
+    onClickOperator,
 }: Props) {
-    const className = [`btn`, `btn-light`, `${styles.button}`].join(" ");
-
-    const handleClick = () => {
-        onClickDelegate(operEnum);
-    };
-
     return (
-        <button
-            onClick={() => handleClick()}
-            type="button"
-            className={className}
+        <Button
+            variant="light"
+            onClick={() => onClickOperator(operEnum)}
+            className={`${styles.button}`}
         >
-            <div className="card">
-                <div className="card-body">
-                    <h5 className="card-title">
+            <Card onClick={() => onClickOperator(operEnum)}>
+                <CardBody>
+                    <Card.Title>
                         <span className="badge text-bg-primary">
                             {operator}
                         </span>{" "}
                         {operText}
-                    </h5>
-                    <h6 className="card-subtitle mb-2 text-body-secondary">
-                        {operDescription}
-                    </h6>
-                </div>
-            </div>
-        </button>
+                    </Card.Title>
+                    <Card.Text>{operDescription}</Card.Text>
+                </CardBody>
+            </Card>
+        </Button>
     );
 }

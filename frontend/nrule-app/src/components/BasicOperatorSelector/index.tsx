@@ -1,117 +1,126 @@
-import { OperatorEnum } from "../../enums/operator";
+import { Col, Container, Row } from "react-bootstrap";
+import { Operator } from "../../enums/operator";
 import BasicOperator from "../BasicOperator";
+import Messages from "../../locales/Messages";
+
 type Props = {
-    onClickDelegate: (op: OperatorEnum) => void;
+    onOperatorSelected: (op: Operator) => void;
 };
 
-export default function BasicOperatorSelector({ onClickDelegate }: Props) {
+function BasicOperatorSelector({ onOperatorSelected }: Props) {
     return (
-        <div className="container text-center">
-            <div className="row">
-                <div className="col">
+        <Container fluid>
+            <Row>
+                <Col md="auto">
                     <BasicOperator
-                        operator="EQ"
-                        operText="Equal"
-                        operDescription="A is equal to B"
-                        operEnum={OperatorEnum.EQ}
-                        onClickDelegate={onClickDelegate}
+                        operator={Messages.EQ}
+                        operText={Messages.EQUAL}
+                        operDescription={Messages.EQUAL_DESC}
+                        operEnum={Operator.EQ}
+                        onClickOperator={onOperatorSelected}
                     />
-                </div>
-                <div className="col">
+                </Col>
+                <Col md="auto">
                     <BasicOperator
-                        operator="NE"
-                        operText="Not Equal"
-                        operDescription="A is different to B"
-                        operEnum={OperatorEnum.NE}
-                        onClickDelegate={onClickDelegate}
+                        operator={Messages.NE}
+                        operText={Messages.NOT_EQUAL}
+                        operDescription={Messages.NOT_EQUAL_DESC}
+                        operEnum={Operator.NE}
+                        onClickOperator={onOperatorSelected}
                     />
-                </div>
-            </div>
+                </Col>
 
-            <div className="row">
-                <div className="col">
+                <Col md="auto">
                     <BasicOperator
-                        operator="GT"
-                        operText="Greater Than"
-                        operDescription="A is greater than B"
-                        operEnum={OperatorEnum.GT}
-                        onClickDelegate={onClickDelegate}
+                        operator={Messages.GT}
+                        operText={Messages.GREATER_THAN}
+                        operDescription={Messages.GREATER_THAN_DESC}
+                        operEnum={Operator.GT}
+                        onClickOperator={onOperatorSelected}
                     />
-                </div>
-                <div className="col">
+                </Col>
+                <Col md="auto">
                     <BasicOperator
-                        operator="LT"
-                        operText="Less Than"
-                        operDescription="A is less than B"
-                        operEnum={OperatorEnum.LT}
-                        onClickDelegate={onClickDelegate}
+                        operator={Messages.LT}
+                        operText={Messages.LESS_THAN}
+                        operDescription={Messages.LESS_THAN_DESC}
+                        operEnum={Operator.LT}
+                        onClickOperator={onOperatorSelected}
                     />
-                </div>
-            </div>
+                </Col>
+            </Row>
 
-            <div className="row">
-                <div className="col">
+            <Row>
+                <Col md="auto">
                     <BasicOperator
-                        operator="GE"
-                        operText="Greater Equal"
-                        operDescription="A is greater or equal to B"
-                        operEnum={OperatorEnum.GE}
-                        onClickDelegate={onClickDelegate}
+                        operator={Messages.GE}
+                        operText={Messages.GREATER_EQUAL}
+                        operDescription={Messages.GREATER_EQUAL_DESC}
+                        operEnum={Operator.GE}
+                        onClickOperator={onOperatorSelected}
                     />
-                </div>
-                <div className="col">
+                </Col>
+                <Col md="auto">
                     <BasicOperator
-                        operator="LE"
-                        operText="Less Equal"
-                        operDescription="A is less or equal to B"
-                        operEnum={OperatorEnum.LE}
-                        onClickDelegate={onClickDelegate}
+                        operator={Messages.LE}
+                        operText={Messages.LESS_EQUAL}
+                        operDescription={Messages.LESS_EQUAL_DESC}
+                        operEnum={Operator.LE}
+                        onClickOperator={onOperatorSelected}
                     />
-                </div>
-            </div>
-            <div className="row">
-                <div className="col">
-                    <BasicOperator
-                        operator="IN"
-                        operText="Contained"
-                        operDescription="A is contained in List"
-                        operEnum={OperatorEnum.IN}
-                        onClickDelegate={onClickDelegate}
-                    />
-                </div>
-                <div className="col">
-                    <BasicOperator
-                        operator="NOT IN"
-                        operText="Not Contained"
-                        operDescription="A is NOT contained in List"
-                        operEnum={OperatorEnum.NI}
-                        onClickDelegate={onClickDelegate}
-                    />
-                </div>
-            </div>
+                </Col>
 
-            <div className="row">
-                <div className="col">
-                    <div className="col">
-                        <BasicOperator
-                            operator="BT"
-                            operText="Between"
-                            operDescription="A is between B and C"
-                            operEnum={OperatorEnum.BT}
-                            onClickDelegate={onClickDelegate}
-                        />
-                    </div>
-                </div>
-                <div className="col">
+                <Col md="auto">
                     <BasicOperator
-                        operator="ANY"
-                        operText="Anything"
-                        operDescription="Can be any value"
-                        operEnum={OperatorEnum.ANY}
-                        onClickDelegate={onClickDelegate}
+                        operator={Messages.I}
+                        operText={Messages.IN}
+                        operDescription={Messages.IN_DESC}
+                        operEnum={Operator.IN}
+                        onClickOperator={onOperatorSelected}
                     />
-                </div>
-            </div>
-        </div>
+                </Col>
+                <Col md="auto">
+                    <BasicOperator
+                        operator={Messages.E}
+                        operText={Messages.NOT_IN}
+                        operDescription={Messages.NOT_IN_DESC}
+                        operEnum={Operator.NI}
+                        onClickOperator={onOperatorSelected}
+                    />
+                </Col>
+            </Row>
+
+            <Row>
+                <Col md="auto">
+                    <BasicOperator
+                        operator={Messages.BT}
+                        operText={Messages.BETWEEN}
+                        operDescription={Messages.BETWEEN_DESC}
+                        operEnum={Operator.BT}
+                        onClickOperator={onOperatorSelected}
+                    />
+                </Col>
+                <Col md="auto">
+                    <BasicOperator
+                        operator={Messages.NB}
+                        operText={Messages.NOT_BETWEEN}
+                        operDescription={Messages.NOT_BETWEEN_DESC}
+                        operEnum={Operator.NB}
+                        onClickOperator={onOperatorSelected}
+                    />
+                </Col>
+                <Col md="auto">
+                    <BasicOperator
+                        operator={Messages.ANYVAL}
+                        operText={Messages.ANY}
+                        operDescription={Messages.ANY_DESC}
+                        operEnum={Operator.ANY}
+                        onClickOperator={onOperatorSelected}
+                    />
+                </Col>
+            </Row>
+        </Container>
     );
 }
+
+export default BasicOperatorSelector;

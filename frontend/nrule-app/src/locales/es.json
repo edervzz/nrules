@@ -1,4 +1,28 @@
 {
+
+    "button_continue": "Continuar",
+    "button_next": "Siguiente",
+    "button_back": "Atrás",
+    "button_cancel": "Cancelar",
+    "button_close": "Cerrar",
+
+    "new_rule":"Nueva Regla",
+    "new_rule_params":"Nueva Regla - Parámetros",
+    "rulename":"Nombre de regla",
+    "ruletype":"Tipo",
+    "ruletype_select":"- Seleccione tipo de regla -",
+    "table":"Tabla",
+    "tree":"Árbol",
+    "flow":"Flujo",
+    "tables":"Tablas",
+    "trees":"Árboles",
+    "flows":"Flujos",
+    "management":"Administración",
+    "transports":"Transportes",
+    "tenants":"Multi-Empresa",
+    "users":"Usuarios",
+
+
     "select_operator": "Seleccione Operador",
 
     "equal": "Igual",

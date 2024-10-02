@@ -1,4 +1,27 @@
 {
+    "button_continue": "Continue",
+    "button_next": "Next",
+    "button_back": "Back",
+    "button_cancel": "Cancel",
+    "button_close": "Close",
+
+
+    "new_rule":"New Rule",
+    "new_rule_params":"New Rule - Parameters",
+    "rulename":"Rule Name",
+    "ruletype":"Type",
+    "ruletype_select":"- Select type of rule -",
+    "table":"Table",
+    "tree":"Tree",
+    "flow":"Flujo",
+    "tables":"Tables",
+    "trees":"Trees",
+    "flows":"Flows",
+    "management":"Management",
+    "transports":"Transports",
+    "tenants":"Multi-tenancy",
+    "users":"Users",
+
     "select_operator": "Seleccione Operador",
 
     "equal": "Equal",

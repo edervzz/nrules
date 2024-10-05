@@ -1,5 +1,8 @@
 # gentera-nrule
 
+https://overapi.com/python
+https://overapi.com/regex
+
 Tipo de Regla: Match | Tree
 
 Parámetros de entrada:
@@ -192,4 +195,5 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 Bootstrap, Tailwind, Bulma CSS
 react-bootstrap, daisy ui, react bulma
 =======
->>>>>>> f5be7ecff993aa42a366ac44bdf1281a0fb3934e
+
+> > > > > > > f5be7ecff993aa42a366ac44bdf1281a0fb3934e

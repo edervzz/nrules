@@ -4,12 +4,18 @@ i18next.changeLanguage("es");
 
 export default class Messages{
 
+    static CREA_RULE_001 = i18next.t("common:crea_rule_001");
+
+    static BUTTON_ADD = i18next.t("common:button_add");
     static BUTTON_CONTINUE = i18next.t("common:button_continue");
     static BUTTON_NEXT = i18next.t("common:button_next");
     static BUTTON_BACK = i18next.t("common:button_back");
     static BUTTON_CANCEL = i18next.t("common:button_cancel");
     static BUTTON_CLOSE = i18next.t("common:button_close");
     
+    
+    static SETTINGS = i18next.t("common:settings");
+    static SIGN_OUT = i18next.t("common:sign_out");
     static NEW_RULE = i18next.t("common:new_rule");
     static NEW_RULE_PARAMS = i18next.t("common:new_rule_params");
     static RULENAME = i18next.t("common:rulename");

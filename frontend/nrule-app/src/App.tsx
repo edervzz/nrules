@@ -1,7 +1,7 @@
-import Navigation from "./components/Navigation";
+import MainMenu from "./components/MainMenu";
 
 function App() {
-    return <Navigation></Navigation>;
+    return <MainMenu></MainMenu>;
 }
 
 export default App;

@@ -20,7 +20,7 @@ type Props = {
     onOperationConditionSelected: (op: Operator) => void;
 };
 
-const Condition = ({ operator, onOperationConditionSelected }: Props) => {
+const Conditionsss = ({ operator, onOperationConditionSelected }: Props) => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -151,4 +151,4 @@ function getOperatorSymbol(op: Operator): [string, string] {
     return [opsym, optxt];
 }
 
-export default Condition;
+export default Conditionsss;

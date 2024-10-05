@@ -1,11 +1,15 @@
 {
+    "crea_rule_001": "Longitud debe ser entre 5 y 50 caracteres",
 
+    "button_add": "Agregar",
     "button_continue": "Continuar",
     "button_next": "Siguiente",
     "button_back": "Atrás",
     "button_cancel": "Cancelar",
     "button_close": "Cerrar",
 
+    "settings": "Configuración",
+    "sign_out": "Cerrar Sesión",
     "new_rule":"Nueva Regla",
     "new_rule_params":"Nueva Regla - Parámetros",
     "rulename":"Nombre de regla",

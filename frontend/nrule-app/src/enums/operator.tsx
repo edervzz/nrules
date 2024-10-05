@@ -11,3 +11,12 @@ export enum Operator {
     NB,
     ANY,
 }
+
+export enum ConditionType {
+    STR = "String",
+    NUM = "Numeric",
+    BOOL = "Boolean",
+    DATE = "Date",
+    TIME = "Time",
+    DTIME = "Datetime",
+}

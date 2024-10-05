@@ -1,11 +1,17 @@
 {
+    
+    "crea_rule_001": "Length must be between 5 and 50 characteres",
+
+
+    "button_add": "Add",
     "button_continue": "Continue",
     "button_next": "Next",
     "button_back": "Back",
     "button_cancel": "Cancel",
     "button_close": "Close",
 
-
+    "settings": "Settings",
+    "sign_out": "Sign Out",
     "new_rule":"New Rule",
     "new_rule_params":"New Rule - Parameters",
     "rulename":"Rule Name",

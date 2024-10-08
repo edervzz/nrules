@@ -1,5 +1,5 @@
 import { Button, Card, CardBody } from "react-bootstrap";
-import { Operator } from "../../enums/operator";
+import { Operator } from "../../enums";
 import styles from "./OperatorTypes.module.css";
 
 type Props = {

@@ -1,6 +1,16 @@
 {
     "crea_rule_001": "Longitud debe ser entre 5 y 50 caracteres",
 
+    "name": "Nombre",
+    "type": "Tipo",
+
+    "send_crea_rule": "4. Enviando Creación de Regla",
+    "output_params": "3. Ingrese los Valores de Salida",
+    "input_params": "2. Ingrese las Condiciones de Entrada",
+    "start_new_rule": "1. Ingrese el Nombre y Tipo de Regla",
+
+    "button_output": "Salida",
+    "button_condition": "Condición",
     "button_add": "Agregar",
     "button_continue": "Continuar",
     "button_next": "Siguiente",

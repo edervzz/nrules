@@ -8,7 +8,7 @@ import {
     Row,
     Tooltip,
 } from "react-bootstrap";
-import { Operator } from "../../enums/operator";
+import { Operator } from "../../enums";
 import { useState } from "react";
 import BasicOperatorSelector from "../BasicOperatorSelector";
 import Messages from "../../locales/Messages";

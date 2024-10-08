@@ -6,6 +6,16 @@ export default class Messages{
 
     static CREA_RULE_001 = i18next.t("common:crea_rule_001");
 
+    static NAME = i18next.t("common:name");
+    static TYPE = i18next.t("common:type");
+
+    static START_NEW_RULE = i18next.t("common:start_new_rule");
+    static INPUT_PARAMS = i18next.t("common:input_params");
+    static OUTPUT_PARAMS = i18next.t("common:output_params");
+    static SEND_CREA_RULE = i18next.t("common:send_crea_rule");
+
+    static BUTTON_OUTPUT = i18next.t("common:button_output");
+    static BUTTON_CONDITION = i18next.t("common:button_condition");
     static BUTTON_ADD = i18next.t("common:button_add");
     static BUTTON_CONTINUE = i18next.t("common:button_continue");
     static BUTTON_NEXT = i18next.t("common:button_next");
@@ -31,9 +41,9 @@ export default class Messages{
     static TRANSPORTS = i18next.t("common:transports");
     static TENANTS = i18next.t("common:tenants");
     static USERS = i18next.t("common:users");
-
     static SELECT_OPERATOR = i18next.t("common:select_operator");
 
+    // operators descriptions
     static EQUAL = i18next.t("common:equal");
     static NOT_EQUAL = i18next.t("common:not_equal");
     static LESS_EQUAL = i18next.t("common:less_equal");
@@ -57,6 +67,7 @@ export default class Messages{
     static NOT_BETWEEN_DESC = i18next.t("common:not_between_desc");
     static ANY_DESC = i18next.t("common:any_desc");
 
+    // operators
     static EQ = "="
     static NE = "<>"
     static GT = ">"

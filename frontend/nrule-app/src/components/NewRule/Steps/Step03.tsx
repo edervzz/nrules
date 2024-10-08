@@ -1,29 +1,29 @@
 import { Button, Form, InputGroup, Table } from "react-bootstrap";
-import { NewRuleCondition } from "../../../typings";
+import { NewRuleOutput } from "../../../typings";
 import { ConditionType } from "../../../enums";
 import Messages from "../../../locales/Messages";
 
 type Props = {
-    conditions: NewRuleCondition[];
-    onDeleteCondition: (id: number) => void;
-    onChangeCondition: (id: number, value: string) => void;
-    onChangeConditionType: (id: number, value: string) => void;
-    onAddCondition: () => void;
+    outputs: NewRuleOutput[];
+    onDeleteOutput: (id: number) => void;
+    onChangeOutput: (id: number, value: string) => void;
+    onChangeOutputType: (id: number, value: string) => void;
+    onAddOutput: () => void;
 };
 
-function Step02({
-    conditions,
-    onDeleteCondition,
-    onChangeCondition,
-    onChangeConditionType,
-    onAddCondition,
+function Step03({
+    outputs,
+    onDeleteOutput,
+    onChangeOutput,
+    onChangeOutputType,
+    onAddOutput,
 }: Props) {
     return (
         <>
             <br />
-            <Button onClick={onAddCondition} size="sm">
+            <Button onClick={onAddOutput} size="sm">
                 <i className="bi bi-plus-lg"></i>
-                {" " + Messages.BUTTON_CONDITION}
+                {" " + Messages.BUTTON_OUTPUT}
             </Button>
 
             <Table striped bordered hover>
@@ -35,12 +35,12 @@ function Step02({
                     </tr>
                 </thead>
                 <tbody>
-                    {conditions.map((x, idx) => (
+                    {outputs.map((x, idx) => (
                         <tr key={x.id}>
                             <td>
                                 {idx !== 0 && (
                                     <Button
-                                        onClick={() => onDeleteCondition(x.id)}
+                                        onClick={() => onDeleteOutput(x.id)}
                                         size="sm"
                                         variant="danger"
                                     >
@@ -52,10 +52,7 @@ function Step02({
                                 <InputGroup className="mb-1">
                                     <Form.Control
                                         onChange={(e) =>
-                                            onChangeCondition(
-                                                x.id,
-                                                e.target.value
-                                            )
+                                            onChangeOutput(x.id, e.target.value)
                                         }
                                         value={x.variable}
                                         placeholder="fieldName"
@@ -65,10 +62,7 @@ function Step02({
                             <td>
                                 <Form.Select
                                     onChange={(e) =>
-                                        onChangeConditionType(
-                                            x.id,
-                                            e.target.value
-                                        )
+                                        onChangeOutputType(x.id, e.target.value)
                                     }
                                     value={x.type}
                                     aria-label="Default select example"
@@ -87,4 +81,4 @@ function Step02({
     );
 }
 
-export default Step02;
+export default Step03;

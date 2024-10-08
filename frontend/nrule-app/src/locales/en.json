@@ -2,7 +2,16 @@
     
     "crea_rule_001": "Length must be between 5 and 50 characteres",
 
+    "name": "Name",
+    "type": "Type",
 
+    "send_crea_rule": "4. Enviando Solicitud de creción de Regla",
+    "output_params": "3. Enter Output Values",
+    "input_params": "2. Enter Incoming Conditions",
+    "start_new_rule": "1. Enter Name and Type of Rule",
+
+    "button_output": "Output",
+    "button_condition": "Condition",
     "button_add": "Add",
     "button_continue": "Continue",
     "button_next": "Next",

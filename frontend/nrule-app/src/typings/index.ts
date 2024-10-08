@@ -5,3 +5,10 @@ export type NewRuleCondition = {
     type: string;
 };
 
+
+export type NewRuleOutput = {
+    id:number;
+    variable: string;
+    type: string;
+};
+

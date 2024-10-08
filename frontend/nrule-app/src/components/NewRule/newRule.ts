@@ -24,3 +24,16 @@ export function validateHeader(rulename: string ){
     const result = schema.validate({runame: rulename})
     return result.error?.message
 }
+
+export function titleNewRule(step:number){
+    switch (step) {
+        case 1:
+            return Messages.START_NEW_RULE;
+        case 2:
+            return Messages.INPUT_PARAMS;
+        case 3:
+            return Messages.OUTPUT_PARAMS;
+        default:
+            return Messages.SEND_CREA_RULE;
+    }
+}

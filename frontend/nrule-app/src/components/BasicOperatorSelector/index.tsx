@@ -1,5 +1,5 @@
 import { Col, Container, Row } from "react-bootstrap";
-import { Operator } from "../../enums/operator";
+import { Operator } from "../../enums";
 import BasicOperator from "../BasicOperator";
 import Messages from "../../locales/Messages";
 

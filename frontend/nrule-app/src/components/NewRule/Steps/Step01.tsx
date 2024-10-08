@@ -19,6 +19,7 @@ function Step01({
     return (
         <Form>
             <Form.Group className="mb-3" controlId="rulename">
+                <br />
                 <Form.Label>{Messages.RULENAME}</Form.Label>
                 <Form.Control
                     onChange={(e) => onRuleNameChange(e.target.value)}

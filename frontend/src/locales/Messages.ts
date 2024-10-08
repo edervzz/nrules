@@ -1,7 +1,5 @@
 import i18next from "./i18n";
 
-i18next.changeLanguage("es");
-
 export default class Messages{
 
     static CREA_RULE_001 = i18next.t("common:crea_rule_001");

@@ -1,11 +1,12 @@
 // import { useState } from "react";
-import { Container } from "react-bootstrap";
+import { Badge, Container } from "react-bootstrap";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-// import NewRule from "../NewRule";
+
 import Messages from "../../locales/Messages";
 import styles from "./MainMenu.module.css";
+import i18next from "i18next";
 
 type Props = {
     link_new?: string;
@@ -26,6 +27,7 @@ function Menu({ link_new = "/new", onClickNew = () => {} }: Props) {
             {/* Navigation Bar*/}
             <Navbar expand="md" className={`bg-body-tertiary`}>
                 <Container>
+                    <Navbar.Text></Navbar.Text>
                     <Navbar.Brand href="/">NRule</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
@@ -57,22 +59,27 @@ function Menu({ link_new = "/new", onClickNew = () => {} }: Props) {
                                 >
                                     {Messages.TENANTS}
                                 </NavDropdown.Item>
-                                <NavDropdown.Divider />
-                                <NavDropdown.Item
-                                    className={styles.link}
-                                    href="/users"
-                                >
-                                    {Messages.USERS}
-                                </NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
                     </Navbar.Collapse>
 
-                    <Navbar.Collapse className="justify-content-end">
+                    <Navbar.Collapse
+                        className="justify-content-end"
+                        id="basic-navbar-nav"
+                    >
                         <NavDropdown
                             title={navDropdownTitle}
                             id="basic-nav-dropdown"
                         >
+                            <NavDropdown.ItemText>
+                                <Badge bg="success">v0.0.1</Badge>
+                            </NavDropdown.ItemText>
+
+                            <NavDropdown.Item
+                                className={styles.link}
+                                onClick={() => i18next.changeLanguage("en")}
+                            ></NavDropdown.Item>
+
                             <NavDropdown.Item
                                 className={styles.link}
                                 href="#action/3.1"

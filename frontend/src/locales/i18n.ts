@@ -5,7 +5,7 @@ import * as esCommon from './es.json';
 export const defaultNS = 'common'; // Default name space
 
 i18next.init({
-    lng: 'en', 
+    lng: 'es', 
     fallbackLng: 'en', 
     debug: true, // Enable debug mode (optional)
     resources: {

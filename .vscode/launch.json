@@ -9,7 +9,7 @@
             "name": "frontend",
             "request": "launch",
             "type": "node-terminal",
-            "cwd": "${workspaceFolder}/frontend/nrule-app"
+            "cwd": "${workspaceFolder}/frontend"
         },
         {
             "justMyCode": false,

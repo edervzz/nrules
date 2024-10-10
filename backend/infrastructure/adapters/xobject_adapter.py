@@ -2,10 +2,9 @@
     """
 from sqlalchemy.orm import Session
 from domain.entities import XObject
-from domain.ports import XObjectRepository
 
 
-class XObjectAdapter(XObjectRepository):
+class XObjectAdapter():
     """ X-Object Adapter """
 
     def set_session(self, session: Session):

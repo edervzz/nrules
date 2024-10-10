@@ -6,7 +6,8 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 
 import Messages from "../../locales/Messages";
 import styles from "./MainMenu.module.css";
-import i18next from "i18next";
+import { useState } from "react";
+import Logout from "../Logout";
 
 type Props = {
     link_new?: string;
@@ -14,19 +15,22 @@ type Props = {
     link_tables?: string;
 };
 
+const navDropdownTitle = (
+    <>
+        <i className="bi bi-building-fill" />
+        {" Compartamos"}
+    </>
+);
+
 function Menu({ link_new = "/new", onClickNew = () => {} }: Props) {
-    const navDropdownTitle = (
-        <>
-            <i className="bi bi-person-circle" />
-            {" master"}
-        </>
-    );
+    const [showLogout, setShowLogout] = useState(false);
 
     return (
         <>
+            {showLogout && <Logout></Logout>}
             {/* Navigation Bar*/}
             <Navbar expand="md" className={`bg-body-tertiary`}>
-                <Container>
+                <Container fluid="xl">
                     <Navbar.Text></Navbar.Text>
                     <Navbar.Brand href="/">NRule</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -39,8 +43,13 @@ function Menu({ link_new = "/new", onClickNew = () => {} }: Props) {
                             >
                                 {Messages.NEW_RULE}
                             </Nav.Link>
+
                             <Nav.Link className={styles.link} href="/tables">
                                 {Messages.TABLES}
+                            </Nav.Link>
+
+                            <Nav.Link className={styles.link} href="/runner">
+                                {Messages.RUNNER}
                             </Nav.Link>
 
                             <NavDropdown
@@ -72,24 +81,22 @@ function Menu({ link_new = "/new", onClickNew = () => {} }: Props) {
                             id="basic-nav-dropdown"
                         >
                             <NavDropdown.ItemText>
+                                TID: 101
+                            </NavDropdown.ItemText>
+
+                            <NavDropdown.ItemText>
+                                <i className="bi bi-person-circle" />
+                                {" osvelazquez"}
+                            </NavDropdown.ItemText>
+
+                            <NavDropdown.ItemText>
                                 <Badge bg="success">v0.0.1</Badge>
                             </NavDropdown.ItemText>
 
-                            <NavDropdown.Item
-                                className={styles.link}
-                                onClick={() => i18next.changeLanguage("en")}
-                            ></NavDropdown.Item>
-
-                            <NavDropdown.Item
-                                className={styles.link}
-                                href="#action/3.1"
-                            >
-                                {Messages.SETTINGS}
-                            </NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item
                                 className={styles.link}
-                                href="#action/3.4"
+                                onClick={() => setShowLogout(true)}
                             >
                                 <i className="bi bi-box-arrow-right"></i>
                                 {" " + Messages.SIGN_OUT}

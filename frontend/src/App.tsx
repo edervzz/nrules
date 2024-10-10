@@ -1,23 +1,23 @@
 import { createBrowserRouter } from "react-router-dom";
-import Home from "./pages/Home";
-import New from "./pages/New";
-import Tables from "./pages/Tables";
-import Transports from "./pages/Transports";
-import Tenancy from "./pages/Tenancy";
-import Users from "./pages/Users";
+import HomePage from "./pages/HomePage";
+import NewPage from "./pages/NewPage";
+import TablesTage from "./pages/TablesPage";
+import Transports from "./pages/TransportsPage";
+import TenancyPage from "./pages/TenancyPage";
+import UsersPage from "./pages/UsersPage";
 
 export const router = createBrowserRouter([
     {
         path: "/",
-        element: <Home />,
+        element: <HomePage />,
     },
     {
         path: "/new",
-        element: <New />,
+        element: <NewPage />,
     },
     {
         path: "/tables",
-        element: <Tables />,
+        element: <TablesTage />,
     },
     {
         path: "/transports",
@@ -25,10 +25,14 @@ export const router = createBrowserRouter([
     },
     {
         path: "/tenancy",
-        element: <Tenancy />,
+        element: <TenancyPage />,
     },
     {
         path: "/users",
-        element: <Users />,
+        element: <UsersPage />,
+    },
+    {
+        path: "/runner",
+        element: <UsersPage />,
     },
 ]);

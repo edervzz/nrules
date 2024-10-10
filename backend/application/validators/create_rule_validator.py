@@ -25,18 +25,18 @@ class CreateRuleValidator(Validator):
                 Codes.RU_CREA_008,
                 self._localizer.get(Codes.RU_CREA_008))
 
-        if request.rule.rule_type.upper() not in ["CASE", "TREE"]:
+        if request.rule.rule_type.upper() not in ["MATRIX", "TREE"]:
             self.add_failure(
                 Codes.RU_CREA_004,
                 self._localizer.get(Codes.RU_CREA_004))
 
-        if request.rule.rule_type.upper() == "CASE":
+        if request.rule.rule_type.upper() == "MATRIX":
             if request.rule.strategy not in ["EARLY", "BASE", "ALL"]:
                 self.add_failure(
                     Codes.RU_CREA_011,
                     self._localizer.get(Codes.RU_CREA_011))
 
-        if len(request.rule.name) < 5 or len(request.rule.name) > 50:
+        if len(request.rule.name) <= 5 or len(request.rule.name) > 50:
             self.add_failure(
                 Codes.RU_CREA_002,
                 self._localizer.get(Codes.RU_CREA_002))
@@ -44,7 +44,7 @@ class CreateRuleValidator(Validator):
             validator = ExpressionValidator(self._localizer)
 
             idx = 0
-            for c in request.conditions:
+            for c in request.expressions:
                 idx += 1
                 if c.expression == "":
                     self.add_failure(

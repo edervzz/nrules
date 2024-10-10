@@ -10,7 +10,5 @@ class KV(Base, TenantSpecific, Auditable, Versioned):
 
     __tablename__ = "kvs"
 
-    id: Mapped[int] = mapped_column(
+    id: Mapped[str] = mapped_column(
         primary_key=True, nullable=False)
-
-    name: Mapped[str] = mapped_column(nullable=False)

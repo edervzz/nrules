@@ -1,7 +1,6 @@
 """ migration file """
 
-from datetime import datetime
-from sqlalchemy import Column, Integer, BigInteger, String, Boolean, Index
+from sqlalchemy import Column, Integer, String, Boolean, Index
 from sqlalchemy import MetaData, Table,  CheckConstraint, UniqueConstraint, Engine, select
 from sqlalchemy.orm import Session
 from domain.entities import Migrations
@@ -22,38 +21,34 @@ def core_tables(engine: Engine) -> str:
             return result.id
 
     # Key-Value Storage ----------------------------------------------
-    kv = Table(
+    kvs = Table(
         "kvs",
         metadata_obj,
         Column(
             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
         Column(
-            "id", BigInteger, primary_key=True, comment="Key-Value Storage ID"),
-        Column(
-            "name", String(50), nullable=False, comment="Key-Value Storage Name", unique=True),
+            "id", String(32), primary_key=True, comment="Key-Value Storage ID"),
         comment="KVS is a container for many Key-Values"
     )
-    set_version(kv)
-    set_auditable(kv)
+    set_version(kvs)
+    set_auditable(kvs)
     Index(
         "ix_kvs_001",
-        kv.c.tenant_id,
-        kv.c.name)
+        kvs.c.tenant_id,
+        kvs.c.name)
 
     # Key-Value Items ----------------------------------------------
-    kvitem = Table(
+    kvitems = Table(
         "kv_items",
         metadata_obj,
         Column(
             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
         Column(
-            "id", BigInteger, primary_key=True, comment="Item ID"),
+            "key", String(50), comment="Key"),
         Column(
-            "kv_id", BigInteger, primary_key=True, comment="Key-Value Storage ID"),
+            "kv_id", String(32), primary_key=True, comment="Key-Value Storage ID"),
         Column(
-            "key", String(50), comment="Key-Value Storage Key"),
-        Column(
-            "value", String(500), nullable=False, comment="Key-Value Storage Value"),
+            "value", String(500), nullable=False, comment="Value"),
         Column(
             "calculation", String(3), CheckConstraint("calculation = 'ADD' OR calculation = 'MOD' OR calculation = 'FN'", name="kv_items_chk_calculation"), nullable=False, comment="Calculation method"),
         Column(
@@ -61,63 +56,12 @@ def core_tables(engine: Engine) -> str:
         UniqueConstraint("tenant_id", "kv_id", "key", name="kv_items_unk"),
         comment="KV Item can be assign to single one KVS"
     )
-    set_version(kvitem)
-    set_auditable(kvitem)
+    set_version(kvitems)
+    set_auditable(kvitems)
     Index(
         "ix_kv_items_001",
-        kvitem.c.tenant_id,
-        kvitem.c.kv_id,
-        kvitem.c.key)
-    Index(
-        "ix_kv_items_002",
-        kvitem.c.tenant_id,
-        kvitem.c.kv_id)
-
-    # Conditions ----------------------------------------------
-    expression = Table(
-        "conditions",
-        metadata_obj,
-        Column(
-            "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
-        Column(
-            "id", BigInteger, primary_key=True, comment="Expression ID"),
-        Column(
-            "condition_id", BigInteger, primary_key=True, comment="Rule ID"),
-        Column(
-            "expression", String(1024), nullable=False, comment="Expression"),
-        comment="A simple expression"
-    )
-    set_version(expression)
-    set_auditable(expression)
-    Index(
-        "ix_expressions_001",
-        expression.c.tenant_id,
-        expression.c.condition_id)
-
-    # Matrixes ----------------------------------------------
-    case = Table(
-        "cases",
-        metadata_obj,
-        Column(
-            "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
-        Column(
-            "id", BigInteger, primary_key=True, comment="Expression ID"),
-        Column(
-            "rule_id", BigInteger, primary_key=True, comment="Rule ID"),
-        Column(
-            "position", Integer, nullable=False, comment="Position"),
-        Column(
-            "kvs_id_ok", BigInteger, nullable=True, comment="KVS associated when condition was successful"),
-        Column(
-            "kvs_id_nok", BigInteger, nullable=True, comment="KVS associated when condition was failed"),
-        comment="A simple business case"
-    )
-    set_version(case)
-    set_auditable(case)
-    Index(
-        "ix_cases_001",
-        case.c.tenant_id,
-        case.c.rule_id)
+        kvitems.c.tenant_id,
+        kvitems.c.kv_id)
 
     # Rules ----------------------------------------------
     rule = Table(
@@ -126,16 +70,16 @@ def core_tables(engine: Engine) -> str:
         Column(
             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
         Column(
-            "id", BigInteger, primary_key=True, comment="Rule ID"),
+            "id", String(32), primary_key=True, comment="Rule ID"),
         Column(
             "name", String(50), nullable=False, unique=True, comment="Rule's Name"),
         Column(
-            "rule_type", String(4), CheckConstraint("rule_type = 'CASE' OR rule_type = 'TREE'", name="rules_chk_rule_type"), nullable=False, comment="Type of Rule (CASE, TREE)"),
+            "rule_type", String(4), CheckConstraint("rule_type = 'MATRIX' OR rule_type = 'TREE'", name="rules_chk_rule_type"), nullable=False, comment="Type of Rule (MATRIX, TREE)"),
         Column(
             "strategy", String(4), CheckConstraint("strategy = 'EARLY' OR strategy = 'BASE' OR strategy = 'ALL'", name="rules_chk_rule_type"), nullable=False, comment="Strategy of rule depending of Type"),
         Column(
-            "kvs_id_nok", BigInteger, nullable=True, comment="KVS associated when no condition was success"),
-        comment="A Rule is a simple business validation"
+            "kvs_id_nok", String(32), nullable=True, comment="KVS associated when no condition was success"),
+        comment="Rule Catalog"
     )
     set_version(rule)
     set_auditable(rule)
@@ -144,87 +88,76 @@ def core_tables(engine: Engine) -> str:
         rule.c.tenant_id,
         rule.c.name)
 
-    # rule Relation ----------------------------------------------
-    rule_relation = Table(
-        "rule_relations",
+    # Parameters ----------------------------------------------
+    parameters = Table(
+        "parameters",
         metadata_obj,
         Column(
             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
         Column(
-            "rule_id", BigInteger, primary_key=True, comment="Rule ID"),
+            "key", String(50), primary_key=True, comment="Paramater Key"),
         Column(
-            "related_rule_id", BigInteger, primary_key=True, comment="Related Rule ID"),
+            "rule_id", String(32), primary_key=True, comment="Rule ID"),
         Column(
-            "relation_type",
-            String(3),
-            CheckConstraint("relation_type = 'OK' OR relation_type = 'NOK'",
-                            name="rule_relations_chk_relation_type"),
-            nullable=False, comment="Relation type between rules"),
-        comment="Relation between rules"
+            "value_type", String(10), nullable=False, comment="Type of Value: String, Numeric, Date"),
+        comment="Extra information for expressions"
     )
-    set_version(rule_relation)
-    set_auditable(rule_relation)
+    set_version(parameters)
+    set_auditable(parameters)
     Index(
-        "ix_rule_relations_001",
-        rule_relation.c.tenant_id,
-        rule_relation.c.related_rule_id)
+        "ix_parameters_001",
+        parameters.c.rule_id)
 
-    # Condition Relation ----------------------------------------------
-    cond_relation = Table(
-        "condition_relations",
+    # Conditions ----------------------------------------------
+    conditions = Table(
+        "conditions",
         metadata_obj,
         Column(
             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
         Column(
-            "condition_id", BigInteger, primary_key=True, comment="Condition ID"),
+            "id", String(32), primary_key=True, comment="ID"),
         Column(
-            "related_condition_id", BigInteger, primary_key=True, comment="Related Condition ID"),
+            "rule_id", String(32), primary_key=True, comment="Rule ID"),
         Column(
-            "relation_type",
-            String(3),
-            CheckConstraint("relation_type = 'OK' OR relation_type = 'NOK'",
-                            name="condition_relations_chk_relation_type"),
-            nullable=False, comment="Relation type between conditions"),
+            "position", Integer, nullable=False, comment="Position"),
         Column(
-            "position", Integer, nullable=False, comment="Position between condition when they are assigned to same one"),
-        comment="Relation between Conditions"
+            "parent_id", Integer, nullable=True, comment="Condition Parent ID"),
+        Column(
+            "kvs_id_ok", String(32), nullable=True, comment="KVS associated when condition was successful"),
+        Column(
+            "kvs_id_nok", String(32), nullable=True, comment="KVS associated when condition was failed"),
+        comment="Matrix's Rows. Set execution order"
     )
-    set_version(cond_relation)
-    set_auditable(cond_relation)
+    set_version(conditions)
+    set_auditable(conditions)
     Index(
-        "ix_condition_relations_001",
-        cond_relation.c.tenant_id,
-        cond_relation.c.related_condition_id)
+        "ix_conditions_001",
+        conditions.c.tenant_id,
+        conditions.c.rule_id)
+    Index(
+        "ix_conditions_002",
+        conditions.c.tenant_id,
+        conditions.c.parent_id)
 
-    # Entrypoint Storage ----------------------------------------------
-    entrypoint = Table(
-        "entrypoints",
+    # Expressions  ----------------------------------------------
+    expressions = Table(
+        "expressions",
         metadata_obj,
         Column(
             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
         Column(
-            "id", Integer, primary_key=True, comment="Entrypoint ID"),
+            "id", String(32), primary_key=True, comment="ID"),
         Column(
-            "name", String(50), nullable=False, unique=True, comment="Entrypoint's Name"),
+            "condition_id", String(32), primary_key=True, comment="Condition ID"),
         Column(
-            "rule_id", BigInteger, comment="Rule ID"),
-        Column(
-            "kvs_id", Boolean, comment="KVS ID used as input"),
-        comment="Entrypoint determine which Rules will be called"
+            "expression", String(500), nullable=False, comment="Expression"),
+        UniqueConstraint(
+            "tenant_id", "id", name="kv_expressions_unk"),
+        comment="Matrix's Columns. Set expressions to evaluate"
     )
-    set_version(entrypoint)
-    set_auditable(entrypoint)
+    set_version(expressions)
+    set_auditable(expressions)
     Index(
-        "ix_entrypoints_001",
-        entrypoint.c.tenant_id,
-        entrypoint.c.name)
-
-    metadata_obj.create_all(engine)
-
-    with Session(engine) as session:
-        m = Migrations()
-        m.id = name
-        m.exec_date = datetime.now()
-        session.add(m)
-        session.commit()
-        return name
+        "ix_expressions_001",
+        expressions.c.tenant_id,
+        expressions.c.condition_id)

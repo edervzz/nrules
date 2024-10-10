@@ -1,7 +1,7 @@
 """ _module_ """
 import json
 from typing import List
-from domain.entities import Case
+from domain.entities import Condition
 
 
 class UpdateRuleModel:
@@ -15,10 +15,10 @@ class UpdateRuleModel:
 
         conditions = self.__dict__.get("conditions", None)
 
-        self.conditions: List[Case] = []
+        self.conditions: List[Condition] = []
         if isinstance(conditions, list):
             for c in conditions:
-                cond = Case()
+                cond = Condition()
                 if "id" in c:
                     cond.id = c["id"]
                 if "expression" in c:

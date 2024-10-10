@@ -8,8 +8,10 @@ type Props = {
     currentStep: Number;
     rulename: string;
     ruletype: number;
+    rulestrategy: number;
     handleRulenameChange: (v: string) => void;
     handleRuleTypeChange: (v: number) => void;
+    handleRuleStrategyChange: (v: number) => void;
     isError: boolean;
     conditions: NewRuleCondition[];
     onAddCondition: () => void;
@@ -27,8 +29,10 @@ export default function Steps({
     currentStep,
     rulename,
     ruletype,
+    rulestrategy,
     handleRulenameChange,
     handleRuleTypeChange,
+    handleRuleStrategyChange,
     isError,
     conditions,
     onAddCondition,
@@ -47,8 +51,10 @@ export default function Steps({
                 <Step01
                     rulename={rulename}
                     ruletype={ruletype}
+                    rulestrategy={rulestrategy}
                     onRuleNameChange={handleRulenameChange}
                     onRuleTypeChange={handleRuleTypeChange}
+                    onRuleStrategyChange={handleRuleStrategyChange}
                     isError={isError}
                 />
             );

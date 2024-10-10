@@ -1,13 +1,13 @@
 """ create rule messages """
 from typing import List
 from domain.entities import Rule
-from domain.entities import Case
+from domain.entities import Condition
 
 
 class UpdateRuleRequest:
     """ Update Rule Request """
 
-    def __init__(self, _id: int, name: str, kvs_id_nok: int, conditions: List[Case]):
+    def __init__(self, _id: int, name: str, kvs_id_nok: int, conditions: List[Condition]):
         self.rule = Rule()
         self.rule.id = _id
         self.rule.name = name

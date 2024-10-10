@@ -6,12 +6,18 @@ from .base import Base
 
 
 class Condition(Base, TenantSpecific, Auditable, Versioned):
-    """ entity """
+    """ Condition entity """
 
     __tablename__ = "conditions"
 
-    id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
+    id: Mapped[str] = mapped_column(primary_key=True, nullable=False)
 
-    condition_id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
+    rule_id: Mapped[str] = mapped_column(primary_key=True, nullable=False)
 
-    expression: Mapped[str] = mapped_column(nullable=False)
+    position: Mapped[int] = mapped_column(nullable=False)
+
+    parent_id: Mapped[str] = mapped_column(nullable=False)
+
+    kvs_id_ok: Mapped[int] = mapped_column(nullable=True)
+
+    kvs_id_nok: Mapped[int] = mapped_column(nullable=True)

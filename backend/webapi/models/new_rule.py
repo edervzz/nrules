@@ -1,7 +1,8 @@
 """ _module_ """
 import json
+import uuid
 from typing import List
-from domain.entities import Case, Condition, KVItem
+from domain.entities import Condition, Expression, KVItem, KV
 
 
 class NewRuleModel:
@@ -10,53 +11,69 @@ class NewRuleModel:
     def __init__(self, j):
         self.__dict__ = json.loads(j)
         self.name = self.__dict__.get("name", "")
-        self.kvs_id_nok = self.__dict__.get("kvs_id_nok", 0)
         self.rule_type = self.__dict__.get("rule_type", False)
         self.strategy = self.__dict__.get("strategy", "")
 
-        matrix = self.__dict__.get("matrix", None)
+        conditions_raw = self.__dict__.get("conditions", None)
 
+        self.kvs: List[KV] = []
+        self.kvitems: List[KVItem] = []
         self.conditions: List[Condition] = []
-        self.cases: List[Case] = []
-        self.output: List[KVItem] = []
+        self.expressions: List[Expression] = []
 
-        if isinstance(matrix, list):
-            idx = 0
-            for c in matrix:
-                idx += 1
-                case = Case()
-                case.id = idx
-                if "conditions" in c:
-                    conditions = c["conditions"]
-                    if isinstance(conditions, list):
-                        for eit in conditions:
-                            if "variable" in eit:
-                                variable = eit["variable"]
-                            if "operator" in eit:
-                                operator = eit["operator"]
-                            if "value" in eit:
-                                value = eit["value"]
+        if isinstance(conditions_raw, list):
+            for cond in conditions_raw:
+                one_condition = Condition()
+                one_condition.id = str(uuid.uuid4())
+                one_condition.position = len(self.conditions) + 1
 
-                            cond = Condition()
-                            cond.expression = f"{str(variable).strip()} {
+                if "expressions" in cond:
+                    expressions = cond["expressions"]
+                    if isinstance(expressions, list):
+                        for cond in expressions:
+                            expression = Expression()
+                            expression.id = str(uuid.uuid4())
+                            expression.condition_id = one_condition.id
+
+                            variable = ""
+                            operator = ""
+                            value = ""
+                            if "variable" in cond:
+                                variable = cond["variable"]
+                            if "operator" in cond:
+                                operator = cond["operator"]
+                            if "value" in cond:
+                                value = cond["value"]
+
+                            expression.expression = f"{str(variable).strip()} {
                                 str(operator).strip()} {str(value).strip()}"
-                            cond.condition_id = idx
-                            self.conditions.append(cond)
+                            self.expressions.append(expression)
 
-                if "output" in c:
-                    output = c["output"]
+                if "output" in cond:
+                    output = cond["output"]
+                    one_kv = KV()
+                    one_kv.id = str(uuid.uuid4())
                     if isinstance(output, list):
                         for o in output:
+                            kvitem = KVItem()
+                            kvitem.kv_id = one_kv.id
+
+                            key = ""
+                            value = ""
+                            typeof = ""
                             if "key" in o:
                                 key = o["key"]
                             if "value" in o:
                                 value = o["value"]
                             if "typeof" in o:
                                 typeof = o["typeof"]
-                            kvitem = KVItem()
+
                             kvitem.key = str(key).strip()
                             kvitem.value = str(value).strip()
                             kvitem.typeof = str(typeof).strip()
-                            self.output.append(kvitem)
+                            self.kvitems.append(kvitem)
 
-                self.cases.append(case)
+                    self.kvs.append(one_kv)
+                    one_condition.kvs_id_ok = one_kv.id
+
+                self.conditions.append(one_condition)

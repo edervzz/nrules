@@ -1,24 +1,21 @@
 """_summary_
     """
+import uuid
 from datetime import datetime
 from flask import session
 from sqlalchemy import Engine, create_engine, select, event
 from sqlalchemy.orm import Session
 from sqlalchemy.orm import Query
-from domain.entities import Rule, RuleRelation, Case, Condition
+from domain.entities import Rule, Expression, Condition
 from domain.entities import TenantSpecific, Versioned, Auditable, Migrations
-from domain.entities import XObject, XRule, XCondition, KV, KVItem, Entrypoint
+from domain.entities import KV, KVItem
 from domain.ports import CoreRepository
 from infrastructure.data import initial, core_tables, core_admin
-from .xobject_adapter import XObjectAdapter
-from .xrule_adapter import XRuleAdapter
-from .xcondition_adapter import XConditionAdapter
 from .kvs_adapter import KVSAdapter
 from .kvitem_adapter import KVItemAdapter
 from .rule_adapter import RuleAdapter
-from .condition_adapter import CaseAdapter
-from .expression_adapter import ConditionAdapter
-from .entrypoint_adapter import EntrypointAdapter
+from .condition_adapter import ConditionAdapter
+from .expression_adapter import ExpressionAdapter
 
 
 class CoreAdapter(CoreRepository):
@@ -33,24 +30,11 @@ class CoreAdapter(CoreRepository):
         self.session: Session = None
         self.engine: Engine = create_engine(connstr, echo=True)
 
-        self.xobject = XObjectAdapter(self.engine)
-        self.xrule = XRuleAdapter(self.engine)
-        self.xcondition = XConditionAdapter(self.engine)
         self.kvs = KVSAdapter(self.engine)
         self.kvitem = KVItemAdapter(self.engine)
         self.rule = RuleAdapter(self.engine)
-        self.matrix = CaseAdapter(self.engine)
+        self.expression = ExpressionAdapter(self.engine)
         self.condition = ConditionAdapter(self.engine)
-        self.entrypoint = EntrypointAdapter(self.engine)
-
-        event.listen(XObject, 'before_insert', self.__before_insert)
-        event.listen(XObject, 'before_update', self.__before_update)
-
-        event.listen(XRule, 'before_insert', self.__before_insert)
-        event.listen(XRule, 'before_update', self.__before_update)
-
-        event.listen(XCondition, 'before_insert', self.__before_insert)
-        event.listen(XCondition, 'before_update', self.__before_update)
 
         event.listen(KV, 'before_insert', self.__before_insert)
         event.listen(KV, 'before_update', self.__before_update)
@@ -61,17 +45,11 @@ class CoreAdapter(CoreRepository):
         event.listen(Rule, 'before_insert', self.__before_insert)
         event.listen(Rule, 'before_update', self.__before_update)
 
-        event.listen(Case, 'before_insert', self.__before_insert)
-        event.listen(Case, 'before_update', self.__before_update)
+        event.listen(Expression, 'before_insert', self.__before_insert)
+        event.listen(Expression, 'before_update', self.__before_update)
 
         event.listen(Condition, 'before_insert', self.__before_insert)
         event.listen(Condition, 'before_update', self.__before_update)
-
-        event.listen(RuleRelation, 'before_insert', self.__before_insert)
-        event.listen(RuleRelation, 'before_update', self.__before_update)
-
-        event.listen(Entrypoint, 'before_insert', self.__before_insert)
-        event.listen(Entrypoint, 'before_update', self.__before_update)
 
         @event.listens_for(Query, 'before_compile', retval=True)
         def _fn(query: Query):
@@ -80,33 +58,25 @@ class CoreAdapter(CoreRepository):
     def begin(self, autoflush=False):
         self.session = Session(self.engine, autoflush=autoflush)
 
-        self.xobject.set_session(self.session)
-        self.xrule.set_session(self.session)
-        self.xcondition.set_session(self.session)
         self.kvs.set_session(self.session)
         self.kvitem.set_session(self.session)
         self.rule.set_session(self.session)
-        self.matrix.set_session(self.session)
+        self.expression.set_session(self.session)
         self.condition.set_session(self.session)
-        self.entrypoint.set_session(self.session)
 
     def commit_work(self):
         if self.session is not None:
             self.session.commit()
-            self.xobject.set_session(None)
             self.kvs.set_session(None)
             self.kvitem.set_session(None)
             self.rule.set_session(None)
-            self.entrypoint.set_session(None)
 
     def rollback_work(self):
         if self.session is not None:
             self.session.rollback()
-            self.xobject.set_session(None)
             self.kvs.set_session(None)
             self.kvitem.set_session(None)
             self.rule.set_session(None)
-            self.entrypoint.set_session(None)
 
     def migrate(self) -> list:
         initial(self.engine)
@@ -122,22 +92,6 @@ class CoreAdapter(CoreRepository):
         m = Migrations()
         m.id = "session failure"
         return [m]
-
-    def next_number(self, class_: type) -> int:
-        if class_.__name__ == "Rule":
-            xobject = XRule()
-        elif class_.__name__ == "Condition":
-            xobject = XCondition()
-        else:
-            xobject = XObject()
-            xobject.object_name = class_.__name__
-
-        with Session(self.engine) as s:
-            s.add(xobject)
-            s.flush()
-            _id = xobject.id
-            s.commit()
-            return _id
 
     def __before_insert(self, _, __, target):
         """ Hook """
@@ -166,3 +120,6 @@ class CoreAdapter(CoreRepository):
 
         if isinstance(target, Versioned):
             target.version += 1
+
+    def next_number(self, class_) -> str:
+        return str(uuid.uuid4())

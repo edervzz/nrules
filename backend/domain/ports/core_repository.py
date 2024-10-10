@@ -33,7 +33,7 @@ class RuleRepository(
         self.engine = engine
 
 
-class CaseRepository(
+class ExpressionRepository(
         ABC, Creator, Updater,
         ReaderSingle, ReaderByParentID):
     """_summary_"""
@@ -47,53 +47,6 @@ class CaseRepository(
 class ConditionRepository(
         ABC, Creator, Updater,
         ReaderSingle, ReaderByParentID):
-    """_summary_"""
-
-    def __init__(self, engine):
-        ABC.__init__(self)
-        Creator.__init__(self)
-        self.engine = engine
-
-
-class ConditionRepository(
-        ABC, Creator, Updater,
-        ReaderSingle, ReaderByParentID):
-    """_summary_"""
-
-    def __init__(self, engine):
-        ABC.__init__(self)
-        Creator.__init__(self)
-        self.engine = engine
-
-
-class EntrypointRepository(ABC, Creator, ReaderSingle, ReaderSingleByExternalID):
-    """_summary_"""
-
-    def __init__(self, engine):
-        ABC.__init__(self)
-        Creator.__init__(self)
-        self.engine = engine
-
-
-class XObjectRepository(ABC, Creator):
-    """_summary_"""
-
-    def __init__(self, engine):
-        ABC.__init__(self)
-        Creator.__init__(self)
-        self.engine = engine
-
-
-class XRuleRepository(ABC, Creator):
-    """_summary_"""
-
-    def __init__(self, engine):
-        ABC.__init__(self)
-        Creator.__init__(self)
-        self.engine = engine
-
-
-class XConditionRepository(ABC, Creator):
     """_summary_"""
 
     def __init__(self, engine):
@@ -110,9 +63,8 @@ class CoreRepository:
         self.kvs: KVSRepository
         self.kvitem: KVItemRepository
         self.rule: RuleRepository
-        self.matrix: CaseRepository
+        self.expression: ExpressionRepository
         self.condition: ConditionRepository
-        self.entrypoint: EntrypointRepository
 
     @abstractmethod
     def begin(self, autoflush=False):
@@ -135,5 +87,5 @@ class CoreRepository:
         """ Run Migration """
 
     @abstractmethod
-    def next_number(self, class_) -> int:
+    def next_number(self, class_) -> str:
         """ Get next number """

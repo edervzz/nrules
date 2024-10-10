@@ -6,16 +6,12 @@ from .base import Base
 
 
 class Parameters(Base, TenantSpecific, Auditable, Versioned):
-    """ Rule entity """
+    """ A Parameter is a variable into expression """
 
-    __tablename__ = "conditions"
+    __tablename__ = "parameters"
 
-    id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
+    key: Mapped[str] = mapped_column(nullable=False)
 
-    field: Mapped[str] = mapped_column(nullable=False)
+    rule_id: Mapped[str] = mapped_column(nullable=False)
 
-    param_type: Mapped[str] = mapped_column(nullable=False)
-
-    field: Mapped[str] = mapped_column(nullable=False)
-
-    typeof: Mapped[str] = mapped_column(nullable=False)
+    value_type: Mapped[str] = mapped_column(nullable=False)

@@ -2,7 +2,7 @@ import { useState } from "react";
 import Menu from "../components/Menu";
 import NewRule from "../components/NewRule";
 
-export default function New() {
+export default function NewPage() {
     const [showNewRule, setShowNewRule] = useState(true);
 
     const handleHideNewRule = () => {

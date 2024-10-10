@@ -24,6 +24,7 @@ function NewRule({ onHide }: Props) {
     const [headerRule, setHeaderRule] = useState({
         rulename: "",
         ruletype: 0,
+        rulestrategy: 0,
     });
     const [conditionsRule, setConditionsRule] = useState<NewRuleCondition[]>([
         { id: 1, variable: "", type: ConditionType.STR },
@@ -56,14 +57,27 @@ function NewRule({ onHide }: Props) {
     const handleRulenameChange = (v: string) => {
         setHeaderRule({ ...headerRule, rulename: v });
         setDisableNextButton(
-            headerRule.ruletype == 0 || headerRule.rulename.length <= 5
+            headerRule.rulestrategy == 0 ||
+                headerRule.ruletype == 0 ||
+                headerRule.rulename.length <= 5
         );
     };
 
     const handleRuleTypeChange = (v: number) => {
         setHeaderRule({ ...headerRule, ruletype: v });
         setDisableNextButton(
-            headerRule.ruletype != 0 && headerRule.rulename.length >= 5
+            headerRule.rulestrategy != 0 &&
+                headerRule.ruletype != 0 &&
+                headerRule.rulename.length >= 5
+        );
+    };
+
+    const handleRuleStrategyChange = (v: number) => {
+        setHeaderRule({ ...headerRule, rulestrategy: v });
+        setDisableNextButton(
+            headerRule.rulestrategy != 0 &&
+                headerRule.ruletype != 0 &&
+                headerRule.rulename.length >= 5
         );
     };
 
@@ -142,8 +156,10 @@ function NewRule({ onHide }: Props) {
                     currentStep={currentStep}
                     rulename={headerRule.rulename}
                     ruletype={headerRule.ruletype}
+                    rulestrategy={headerRule.rulestrategy}
                     handleRulenameChange={handleRulenameChange}
                     handleRuleTypeChange={handleRuleTypeChange}
+                    handleRuleStrategyChange={handleRuleStrategyChange}
                     isError={isError}
                     conditions={conditionsRule}
                     onAddCondition={handleAddCondition}

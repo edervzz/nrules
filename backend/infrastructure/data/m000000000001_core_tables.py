@@ -1,6 +1,6 @@
 """ migration file """
 
-from sqlalchemy import Column, Integer, String, Boolean, Index
+from sqlalchemy import Column, Integer, String, Index
 from sqlalchemy import MetaData, Table,  CheckConstraint, UniqueConstraint, Engine, select
 from sqlalchemy.orm import Session
 from domain.entities import Migrations

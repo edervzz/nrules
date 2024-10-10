@@ -1,7 +1,5 @@
 """_summary_"""
-from typing import List
 from application.messages import CreateRuleRequest
-from domain.entities import Rule, Condition, Expression
 from domain.ports import CoreRepository
 from toolkit import Validator
 from toolkit.localization import Localizer, Codes

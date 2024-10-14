@@ -1,6 +1,6 @@
 
 """ Extensions """
-from decimal import Decimal
+from decimal import InvalidOperation, Decimal
 from typing import List
 from toolkit import Validator
 from toolkit.localization import Localizer, Codes
@@ -111,7 +111,10 @@ class ExpressionValidator(Validator):
                 value = value.replace("'", "")
                 value = value.replace("\"", "")
             else:
-                value = Decimal(value)
+                try:
+                    value = Decimal(value)
+                except InvalidOperation:
+                    pass
 
             item = ExpressionComponent(variable, inner_oper, value)
             # move cursor
@@ -121,7 +124,8 @@ class ExpressionValidator(Validator):
 
         if len(components) > 0:
             self.components = components
-        if len(operators) > 0 and len(operators) == len(components) - 1:
+
+        if operators is not None and len(operators) > 0 and len(operators) == len(components) - 1:
             self.operators = operators
 
     def __create_translate(self) -> str:

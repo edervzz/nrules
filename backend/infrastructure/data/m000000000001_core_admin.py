@@ -33,26 +33,6 @@ def core_admin(engine: Engine) -> str:
     )
     set_auditable(xobjects)
 
-    # xrules Storage ----------------------------------------------
-    xrules = Table(
-        "xrules",
-        metadata_obj,
-        Column(
-            "id", BigInteger, primary_key=True, autoincrement=True, comment="ID for Rules"),
-        comment="Number generator por rules"
-    )
-    set_auditable(xrules)
-
-    # xconditions Storage ----------------------------------------------
-    xconditions = Table(
-        "xconditions",
-        metadata_obj,
-        Column(
-            "id", BigInteger, primary_key=True, autoincrement=True, comment="ID for Conditions"),
-        comment="Number generator por rules"
-    )
-    set_auditable(xconditions)
-
     metadata_obj.create_all(engine)
 
     with Session(engine) as session:

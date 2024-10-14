@@ -1,4 +1,5 @@
 """_summary_"""
+import uuid
 from application.messages import CreateRuleRequest
 from domain.ports import CoreRepository
 from toolkit import Validator
@@ -20,3 +21,6 @@ class CreateRuleBizValidator(Validator):
             raise self.as_duplicated(
                 Codes.RU_CREA_005,
                 self._local.get(Codes.RU_CREA_005))
+
+        if len(request.default_kvs.id) > 0:
+            request.rule.kvs_id_nok = request.default_kvs.id

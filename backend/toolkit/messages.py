@@ -204,8 +204,8 @@ class Codes:
     es_messages[RU_CREA_005] = "Ya existe una Regla con el mismo nombre."
 
     RU_CREA_004 = "RU-CREA-004"
-    en_messages[RU_CREA_004] = "Rule Type must be 'SWITCH'."
-    es_messages[RU_CREA_004] = "Tipo Regla deber ser 'SWITCH'."
+    en_messages[RU_CREA_004] = "Rule Type must be 'MATRIX'."
+    es_messages[RU_CREA_004] = "Tipo Regla deber ser 'MATRIX'."
 
     RU_CREA_003 = "RU-CREA-003"
     en_messages[RU_CREA_003] = "Expression is mandatory."

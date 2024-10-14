@@ -22,7 +22,7 @@ const navDropdownTitle = (
     </>
 );
 
-function Menu({ link_new = "/new", onClickNew = () => {} }: Props) {
+function Menubar({ link_new = "/new", onClickNew = () => {} }: Props) {
     const [showLogout, setShowLogout] = useState(false);
 
     return (
@@ -109,4 +109,4 @@ function Menu({ link_new = "/new", onClickNew = () => {} }: Props) {
     );
 }
 
-export default Menu;
+export default Menubar;

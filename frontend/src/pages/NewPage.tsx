@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Menu from "../components/Menu";
+import Menubar from "../components/Menubar";
 import NewRule from "../components/NewRule";
 
 export default function NewPage() {
@@ -15,7 +15,7 @@ export default function NewPage() {
 
     return (
         <>
-            <Menu link_new="#" onClickNew={handleShowNewRule} />
+            <Menubar link_new="#" onClickNew={handleShowNewRule} />
             {showNewRule && <NewRule onHide={handleHideNewRule} />}
         </>
     );

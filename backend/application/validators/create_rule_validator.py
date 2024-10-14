@@ -45,10 +45,14 @@ class CreateRuleValidator(Validator):
 
             idx = 0
             for c in request.expressions:
+                c.variable = c.variable.strip()
+                c.operator = c.operator.strip()
+                c.value = c.value.strip()
                 idx += 1
-                if c.expression == "":
+                if c.variable == "" or c.operator == "":
                     self.add_failure(
                         Codes.RU_CREA_003,
                         self._localizer.get(Codes.RU_CREA_003))
 
-                validator.validate_and_throw(c.expression)
+                if c.variable != "" and c.operator != "" and c.value != "":
+                    validator.validate_and_throw(c.expression)

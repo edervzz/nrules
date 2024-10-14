@@ -1,3 +1,4 @@
+export  * from "./RuleDto"
 
 export type NewRuleCondition = {
     id:number;

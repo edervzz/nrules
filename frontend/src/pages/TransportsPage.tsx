@@ -1,9 +1,9 @@
-import Menu from "../components/Menu";
+import Menubar from "../components/Menubar";
 
 export default function Transports() {
     return (
         <>
-            <Menu></Menu>
+            <Menubar></Menubar>
             Home
         </>
     );

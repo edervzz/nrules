@@ -38,6 +38,10 @@ class CreateRuleHandler:
         for e in request.expressions:
             self.repository.expression.create(e)
 
+        self.repository.kvs.create(request.default_kvs)
+        for e in request.default_kvitems:
+            self.repository.kvitem.create(e)
+
         self.repository.commit_work()
 
         return CreateRuleResponse(request.rule.id)

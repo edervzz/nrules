@@ -1,5 +1,5 @@
 """ migration file """
-
+from datetime import datetime
 from sqlalchemy import Column, Integer, String, Index
 from sqlalchemy import MetaData, Table,  CheckConstraint, UniqueConstraint, Engine, select
 from sqlalchemy.orm import Session
@@ -27,15 +27,11 @@ def core_tables(engine: Engine) -> str:
         Column(
             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
         Column(
-            "id", String(32), primary_key=True, comment="Key-Value Storage ID"),
+            "id", String(36), primary_key=True, comment="Key-Value Storage ID"),
         comment="KVS is a container for many Key-Values"
     )
     set_version(kvs)
     set_auditable(kvs)
-    Index(
-        "ix_kvs_001",
-        kvs.c.tenant_id,
-        kvs.c.name)
 
     # Key-Value Items ----------------------------------------------
     kvitems = Table(
@@ -44,13 +40,13 @@ def core_tables(engine: Engine) -> str:
         Column(
             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
         Column(
-            "key", String(50), comment="Key"),
+            "key", String(50), primary_key=True, comment="Key"),
         Column(
-            "kv_id", String(32), primary_key=True, comment="Key-Value Storage ID"),
+            "kv_id", String(36), primary_key=True, comment="Key-Value Storage ID"),
         Column(
             "value", String(500), nullable=False, comment="Value"),
         Column(
-            "calculation", String(3), CheckConstraint("calculation = 'ADD' OR calculation = 'MOD' OR calculation = 'FN'", name="kv_items_chk_calculation"), nullable=False, comment="Calculation method"),
+            "calculation", String(3), CheckConstraint("calculation = 'ADD' OR calculation = 'MOD' OR calculation = 'FN'", name="kv_items_chk_calculation"), nullable=True, comment="Calculation method"),
         Column(
             "typeof", String(10), nullable=True, comment="Type of value. E.g. 'json', 'string', 'int'"),
         UniqueConstraint("tenant_id", "kv_id", "key", name="kv_items_unk"),
@@ -70,15 +66,15 @@ def core_tables(engine: Engine) -> str:
         Column(
             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
         Column(
-            "id", String(32), primary_key=True, comment="Rule ID"),
+            "id", String(36), primary_key=True, comment="Rule ID"),
         Column(
             "name", String(50), nullable=False, unique=True, comment="Rule's Name"),
         Column(
-            "rule_type", String(4), CheckConstraint("rule_type = 'MATRIX' OR rule_type = 'TREE'", name="rules_chk_rule_type"), nullable=False, comment="Type of Rule (MATRIX, TREE)"),
+            "rule_type", String(6), CheckConstraint("rule_type = 'MATRIX' OR rule_type = 'TREE'", name="rules_chk_rule_type"), nullable=False, comment="Type of Rule (MATRIX, TREE)"),
         Column(
-            "strategy", String(4), CheckConstraint("strategy = 'EARLY' OR strategy = 'BASE' OR strategy = 'ALL'", name="rules_chk_rule_type"), nullable=False, comment="Strategy of rule depending of Type"),
+            "strategy", String(5), CheckConstraint("strategy = 'EARLY' OR strategy = 'BASE' OR strategy = 'ALL'", name="rules_chk_strategy"), nullable=False, comment="Strategy of rule depending of Type"),
         Column(
-            "kvs_id_nok", String(32), nullable=True, comment="KVS associated when no condition was success"),
+            "kvs_id_nok", String(36), nullable=True, comment="KVS associated when no condition was success"),
         comment="Rule Catalog"
     )
     set_version(rule)
@@ -97,7 +93,7 @@ def core_tables(engine: Engine) -> str:
         Column(
             "key", String(50), primary_key=True, comment="Paramater Key"),
         Column(
-            "rule_id", String(32), primary_key=True, comment="Rule ID"),
+            "rule_id", String(36), primary_key=True, comment="Rule ID"),
         Column(
             "value_type", String(10), nullable=False, comment="Type of Value: String, Numeric, Date"),
         comment="Extra information for expressions"
@@ -115,17 +111,17 @@ def core_tables(engine: Engine) -> str:
         Column(
             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
         Column(
-            "id", String(32), primary_key=True, comment="ID"),
+            "id", String(36), primary_key=True, comment="ID"),
         Column(
-            "rule_id", String(32), primary_key=True, comment="Rule ID"),
+            "rule_id", String(36), primary_key=True, comment="Rule ID"),
         Column(
             "position", Integer, nullable=False, comment="Position"),
         Column(
             "parent_id", Integer, nullable=True, comment="Condition Parent ID"),
         Column(
-            "kvs_id_ok", String(32), nullable=True, comment="KVS associated when condition was successful"),
+            "kvs_id_ok", String(36), nullable=True, comment="KVS associated when condition was successful"),
         Column(
-            "kvs_id_nok", String(32), nullable=True, comment="KVS associated when condition was failed"),
+            "kvs_id_nok", String(36), nullable=True, comment="KVS associated when condition was failed"),
         comment="Matrix's Rows. Set execution order"
     )
     set_version(conditions)
@@ -146,11 +142,17 @@ def core_tables(engine: Engine) -> str:
         Column(
             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
         Column(
-            "id", String(32), primary_key=True, comment="ID"),
+            "id", String(36), primary_key=True, comment="ID"),
         Column(
-            "condition_id", String(32), primary_key=True, comment="Condition ID"),
+            "condition_id", String(36), primary_key=True, comment="Condition ID"),
         Column(
-            "expression", String(500), nullable=False, comment="Expression"),
+            "variable", String(50), nullable=False, comment="Variable Name"),
+        Column(
+            "operator", String(10), nullable=False, comment="Operator"),
+        Column(
+            "value", String(50), nullable=False, comment="Value"),
+        Column(
+            "typeof", String(10), nullable=False, comment="Type of Value"),
         UniqueConstraint(
             "tenant_id", "id", name="kv_expressions_unk"),
         comment="Matrix's Columns. Set expressions to evaluate"
@@ -161,3 +163,13 @@ def core_tables(engine: Engine) -> str:
         "ix_expressions_001",
         expressions.c.tenant_id,
         expressions.c.condition_id)
+
+    metadata_obj.create_all(engine)
+
+    with Session(engine) as session:
+        m = Migrations()
+        m.id = name
+        m.exec_date = datetime.now()
+        session.add(m)
+        session.commit()
+        return name

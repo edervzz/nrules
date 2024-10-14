@@ -1,11 +1,11 @@
 import { Col, Container, Row, Image, Badge } from "react-bootstrap";
-import Menu from "../components/Menu";
+import Menubar from "../components/Menubar";
 import Footer from "./Footer";
 
 export default function HomePage() {
     return (
         <>
-            <Menu></Menu>
+            <Menubar></Menubar>
 
             <Container>
                 <Row></Row>

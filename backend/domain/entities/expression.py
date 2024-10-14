@@ -14,4 +14,10 @@ class Expression(Base, TenantSpecific, Auditable, Versioned):
 
     condition_id: Mapped[str] = mapped_column(nullable=False)
 
-    expression: Mapped[str] = mapped_column(nullable=False)
+    variable: Mapped[str] = mapped_column(nullable=False)
+
+    operator: Mapped[str] = mapped_column(nullable=False)
+
+    value: Mapped[str] = mapped_column(nullable=False)
+
+    typeof: Mapped[str] = mapped_column(nullable=False)

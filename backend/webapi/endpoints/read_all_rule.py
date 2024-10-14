@@ -35,7 +35,8 @@ def read_all_rules_endpoint(tid=None):
                 tenant_id,
                 r.id,
                 r.name,
-                r.is_zero_condition,
+                r.rule_type,
+                r.strategy,
                 r.kvs_id_nok,
                 r.version)
             rules.append(rule)
@@ -58,6 +59,7 @@ def read_all_rules_endpoint(tid=None):
             ("Next-Page", f"{result.pagination.next_page}"),
             ("Previous-Page", f"{result.pagination.previous_page}"),
             ("Total-Pages", f"{result.pagination.total_pages}"),
-            ("Total-Count", f"{result.pagination.total_count}")
+            ("Total-Count", f"{result.pagination.total_count}"),
+            ('Access-Control-Allow-Origin', '*')
         ]
     )

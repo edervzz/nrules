@@ -121,6 +121,10 @@ class Codes:
     es_messages[TE_CREA_001] = "Id Tenant debe ser entre 1 y 99."
 
     # Read Rule
+    RU_READ_006 = "RU-READ-006"
+    en_messages[RU_READ_006] = "Rule's Key is mandatory."
+    es_messages[RU_READ_006] = "Clave de búsqueda es obligatorio."
+
     RU_READ_005 = "RU-READ-005"
     en_messages[RU_READ_005] = "Rules not found."
     es_messages[RU_READ_005] = "No se encontraron Reglas."

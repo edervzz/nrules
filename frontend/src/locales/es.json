@@ -18,6 +18,21 @@
     "button_cancel": "Cancelar",
     "button_close": "Cerrar",
 
+    "connecting": "Conectando",
+    "some_wrong": "¡Algo salió mal!",
+    "error_user_pwd": "Usuario y/o contraseña son incorrectos",
+
+    "tenant_id": "ID Compañia",
+    "username": "Usuario",
+    "password": "Contraseña",
+    "login": "Inicio de Sesión",
+
+    "nrule_info": "Un Motor de Reglas diseñado en productos actuales del mercado",
+    "nrule_help": "NRule le ayuda en los procesos diarios de servicios financieros, seguros, logística y más.",
+    "nrule_specs": "Especificación Técnica",
+    "nrule_capabilities": "Capacidades Actuales",
+    "nrule_to_start": "Para comenzar seleccione \"Nueva Regla\" y complete el formulario.",
+
     "settings": "Configuración",
     "sign_out": "Cerrar Sesión",
     "new_rule":"Nueva Regla",

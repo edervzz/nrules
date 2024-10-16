@@ -12,3 +12,4 @@ from .update_rule_message import UpdateRuleRequest, UpdateRuleResponse
 from .read_rule_message import ReadRuleRequest, ReadRuleResponse
 from .create_rule_message import CreateRuleRequest, CreateRuleResponse
 from .create_rule_message import CreateRuleRequest, CreateRuleResponse
+from .read_rules_index_message import ReadRulesByKeyIndexRequest, ReadRulesByKeyIndexResponse

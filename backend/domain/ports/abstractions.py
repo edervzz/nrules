@@ -76,3 +76,24 @@ class ReaderPagination:
             tuple[list, any]: return list of entites and data pagination
         """
         raise NotImplementedError(__name__)
+
+
+class ReaderByKeyIndex:
+    """ reader all using pagination """
+
+    @abstractmethod
+    def read_keyindex_page(self, key, page_no: int, page_size: int) -> tuple[list, any]:
+        """ read by key index
+
+        Args:
+            key (_type_): _description_
+            page_no (int): _description_
+            page_size (int): _description_
+
+        Raises:
+            NotImplementedError: _description_
+
+        Returns:
+            tuple[list, any]: _description_
+        """
+        raise NotImplementedError(__name__)

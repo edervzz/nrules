@@ -1,7 +1,7 @@
 """ core repositories """
 from abc import ABC, abstractmethod
 from .abstractions import Creator, Updater
-from .abstractions import ReaderByParentID, ReaderPagination, ReaderSingle, ReaderSingleByExternalID
+from .abstractions import ReaderByParentID, ReaderPagination, ReaderSingle, ReaderSingleByExternalID, ReaderByKeyIndex
 
 
 class KVSRepository(ABC, Creator, ReaderSingle, ReaderSingleByExternalID):
@@ -24,7 +24,7 @@ class KVItemRepository(ABC, Creator, Updater, ReaderSingle, ReaderByParentID):
 
 class RuleRepository(
         ABC, Creator, Updater,
-        ReaderSingle, ReaderSingleByExternalID, ReaderPagination):
+        ReaderSingle, ReaderSingleByExternalID, ReaderByKeyIndex, ReaderPagination):
     """_summary_"""
 
     def __init__(self, engine):

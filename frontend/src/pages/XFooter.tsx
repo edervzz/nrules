@@ -2,7 +2,7 @@ import { Container, Row, Col, Image } from "react-bootstrap";
 
 type Props = {};
 
-function Footer({}: Props) {
+function XFooter({}: Props) {
     return (
         <>
             <br />
@@ -37,4 +37,4 @@ function Footer({}: Props) {
     );
 }
 
-export default Footer;
+export default XFooter;

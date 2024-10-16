@@ -3,6 +3,10 @@
 https://overapi.com/python
 https://overapi.com/regex
 
+-   cockies
+-   local storage
+-   session storage
+
 Tipo de Regla: Match | Tree
 
 Parámetros de entrada:

@@ -1,13 +1,13 @@
 import Menubar from "../components/Menubar";
 import Tables from "../components/Tables";
-import Footer from "./Footer";
+import XFooter from "./XFooter";
 
 export default function TablesTage() {
     return (
         <>
             <Menubar></Menubar>
             <Tables></Tables>
-            <Footer></Footer>
+            <XFooter></XFooter>
         </>
     );
 }

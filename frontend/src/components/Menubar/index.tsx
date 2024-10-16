@@ -3,11 +3,11 @@ import { Badge, Container } from "react-bootstrap";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-
 import Messages from "../../locales/Messages";
 import styles from "./MainMenu.module.css";
 import { useState } from "react";
 import Logout from "../Logout";
+import { switchLocale } from "../../locales/i18n";
 
 type Props = {
     link_new?: string;
@@ -22,7 +22,10 @@ const navDropdownTitle = (
     </>
 );
 
-function Menubar({ link_new = "/new", onClickNew = () => {} }: Props) {
+export default function Menubar({
+    link_new = "/new",
+    onClickNew = () => {},
+}: Props) {
     const [showLogout, setShowLogout] = useState(false);
 
     return (
@@ -81,12 +84,12 @@ function Menubar({ link_new = "/new", onClickNew = () => {} }: Props) {
                             id="basic-nav-dropdown"
                         >
                             <NavDropdown.ItemText>
-                                TID: 101
+                                TID: {sessionStorage.getItem("tid")}
                             </NavDropdown.ItemText>
 
                             <NavDropdown.ItemText>
-                                <i className="bi bi-person-circle" />
-                                {" osvelazquez"}
+                                <i className="bi bi-person-circle" />{" "}
+                                {sessionStorage.getItem("username")}
                             </NavDropdown.ItemText>
 
                             <NavDropdown.ItemText>
@@ -108,5 +111,3 @@ function Menubar({ link_new = "/new", onClickNew = () => {} }: Props) {
         </>
     );
 }
-
-export default Menubar;

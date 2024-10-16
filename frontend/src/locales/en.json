@@ -19,6 +19,21 @@
     "button_cancel": "Cancel",
     "button_close": "Close",
 
+    "connecting": "Connecting",
+    "some_wrong": "Something is wrong!",
+    "error_user_pwd": "User or password incorrect",
+
+    "tenant_id": "Tenant ID",
+    "username": "Username",
+    "password": "Password",
+    "login": "Login",
+
+    "nrule_info": "A Rule Engine based-on current products on the market",
+    "nrule_help": "NRule helps you on daily financial, insurance, logistics process and more.",
+    "nrule_specs": "Technical Specs",
+    "nrule_capabilities": "Capabilities",
+    "nrule_to_start": "To Begin click-on \"New Rule\" y complete de form.",
+
     "settings": "Settings",
     "sign_out": "Sign Out",
     "new_rule":"New Rule",

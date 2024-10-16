@@ -5,7 +5,7 @@ import * as esCommon from './es.json';
 export const defaultNS = 'common'; // Default name space
 
 i18next.init({
-    lng: 'es', 
+    lng: localStorage.getItem("langu") || "en", 
     fallbackLng: 'en', 
     debug: true, // Enable debug mode (optional)
     resources: {
@@ -19,3 +19,10 @@ i18next.init({
 });
 
 export default i18next;
+
+export function switchLocale(){
+    const currentLangu = localStorage.getItem("langu");
+    const newLangu =  currentLangu == "es" ? "en" : "es";
+    i18next.changeLanguage(newLangu);
+    localStorage.setItem("langu",newLangu);
+}

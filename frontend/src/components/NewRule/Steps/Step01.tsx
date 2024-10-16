@@ -1,7 +1,7 @@
 import { Form } from "react-bootstrap";
 import Messages from "../../../locales/Messages";
 
-type Props = {
+interface Props {
     rulename: string;
     ruletype: number;
     rulestrategy: number;
@@ -9,7 +9,7 @@ type Props = {
     onRuleTypeChange: (v: number) => void;
     onRuleStrategyChange: (v: number) => void;
     isError: boolean;
-};
+}
 
 function Step01({
     rulename,

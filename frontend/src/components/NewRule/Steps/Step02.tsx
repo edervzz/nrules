@@ -3,13 +3,13 @@ import { NewRuleCondition } from "../../../typings";
 import { ConditionType } from "../../../enums";
 import Messages from "../../../locales/Messages";
 
-type Props = {
+interface Props {
     conditions: NewRuleCondition[];
     onDeleteCondition: (id: number) => void;
     onChangeCondition: (id: number, value: string) => void;
     onChangeConditionType: (id: number, value: string) => void;
     onAddCondition: () => void;
-};
+}
 
 function Step02({
     conditions,

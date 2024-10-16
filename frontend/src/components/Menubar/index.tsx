@@ -7,13 +7,12 @@ import Messages from "../../locales/Messages";
 import styles from "./MainMenu.module.css";
 import { useState } from "react";
 import Logout from "../Logout";
-import { switchLocale } from "../../locales/i18n";
 
-type Props = {
+interface Props {
     link_new?: string;
     onClickNew?: () => void;
     link_tables?: string;
-};
+}
 
 const navDropdownTitle = (
     <>

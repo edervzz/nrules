@@ -11,12 +11,12 @@ import {
     Tooltip,
 } from "react-bootstrap";
 
-type Props = {
+interface Props {
     title: string;
     pagination?: boolean;
     action01Icon?: string; // e.g. bi-arrow-clockwise
     action01?: () => void;
-};
+}
 
 const Toolbar = ({
     title,

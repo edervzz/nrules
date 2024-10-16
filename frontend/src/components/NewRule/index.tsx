@@ -7,9 +7,9 @@ import Steps from "./Steps";
 import { NewRuleCondition, NewRuleOutput } from "../../typings";
 import { ConditionType } from "../../enums";
 
-type Props = {
+interface Props {
     onHide: () => void;
-};
+}
 
 const totalSteps = 4;
 

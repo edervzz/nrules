@@ -3,13 +3,13 @@ import { NewRuleOutput } from "../../../typings";
 import { ConditionType } from "../../../enums";
 import Messages from "../../../locales/Messages";
 
-type Props = {
+interface Props {
     outputs: NewRuleOutput[];
     onDeleteOutput: (id: number) => void;
     onChangeOutput: (id: number, value: string) => void;
     onChangeOutputType: (id: number, value: string) => void;
     onAddOutput: () => void;
-};
+}
 
 function Step03({
     outputs,

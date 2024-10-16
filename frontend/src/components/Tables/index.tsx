@@ -4,7 +4,7 @@ import { RuleDto } from "../../typings";
 import axios from "axios";
 import Toolbar from "../Toolbar";
 
-type Props = {};
+interface Props {}
 
 function Tables({}: Props) {
     const [rules, setRules] = useState<RuleDto[]>([]);

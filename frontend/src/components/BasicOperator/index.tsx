@@ -2,13 +2,13 @@ import { Button, Card, CardBody } from "react-bootstrap";
 import { Operator } from "../../enums";
 import styles from "./OperatorTypes.module.css";
 
-type Props = {
+interface Props {
     operator: string;
     operText: string;
     operDescription: string;
     operEnum: Operator;
     onClickOperator: (op: Operator) => void;
-};
+}
 
 export default function BasicOperator({
     operator,

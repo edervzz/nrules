@@ -1,6 +1,6 @@
 import { Col, Container, Modal, Row, Spinner } from "react-bootstrap";
 
-type Props = {};
+interface Props {}
 
 function Logout({}: Props) {
     return (

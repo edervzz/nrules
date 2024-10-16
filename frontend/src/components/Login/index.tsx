@@ -2,12 +2,12 @@ import { Button, Card, Container, Form } from "react-bootstrap";
 import Messages from "../../locales/Messages";
 import { useNavigate } from "react-router-dom";
 import { FormEvent, useRef, useState } from "react";
-import i18next, { switchLocale } from "../../locales/i18n";
+import { switchLocale } from "../../locales/i18n";
 
-type Props = {
+interface Props {
     onTryConnecting: () => void;
     onFailureConnection: (messageError: string) => void;
-};
+}
 
 export default function Login({ onTryConnecting, onFailureConnection }: Props) {
     const [langu, setLangu] = useState(localStorage.getItem("langu") || "es");
@@ -23,7 +23,7 @@ export default function Login({ onTryConnecting, onFailureConnection }: Props) {
         const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
         await delay(2000);
         if (
-            parseInt(tidRef.current?.value!) === 105 &&
+            parseInt(tidRef.current?.value!) === 101 &&
             usernameRef.current?.value === "osvelazquez" &&
             passwordRef.current?.value === "1234"
         ) {

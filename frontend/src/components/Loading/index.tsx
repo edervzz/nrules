@@ -1,12 +1,12 @@
 import { Button, Container, Modal, Spinner } from "react-bootstrap";
 import Messages from "../../locales/Messages";
 
-type Props = {
+interface Props {
     title: string;
     messageOnFailure: string;
     isFailure: boolean;
     onClose: () => void;
-};
+}
 
 export default function Loading01({
     title,

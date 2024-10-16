@@ -12,13 +12,12 @@ import { Operator } from "../../enums";
 import { useState } from "react";
 import BasicOperatorSelector from "../BasicOperatorSelector";
 import Messages from "../../locales/Messages";
-import styles from "./BasicOperatorSelector.module.css";
 
-type Props = {
+interface Props {
     operator: Operator;
     betweenText: string;
     onOperationConditionSelected: (op: Operator) => void;
-};
+}
 
 const Conditionsss = ({ operator, onOperationConditionSelected }: Props) => {
     const [show, setShow] = useState(false);

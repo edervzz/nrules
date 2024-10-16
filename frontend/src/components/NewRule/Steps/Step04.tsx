@@ -1,12 +1,12 @@
 import { NewRuleCondition, NewRuleOutput } from "../../../typings";
 import { Col, Container, Row, Spinner } from "react-bootstrap";
 
-type Props = {
+interface Props {
     rulename: string;
     ruletype: number;
     conditions: NewRuleCondition[];
     outputs: NewRuleOutput[];
-};
+}
 
 function Step04({}: Props) {
     return (

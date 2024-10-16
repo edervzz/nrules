@@ -6,9 +6,17 @@ function XFooter({}: Props) {
     return (
         <>
             <br />
-            <Container>
+            <Container fluid>
                 <Row>
-                    <Col></Col>
+                    <Col sm="1"></Col>
+                    <Col className="text-center">
+                        <hr></hr>
+                    </Col>
+                    <Col sm="1"></Col>
+                </Row>
+
+                <Row>
+                    <Col sm="2"></Col>
                     <Col>
                         <Image height={110} src="/concredito.png" rounded />
                     </Col>
@@ -18,7 +26,7 @@ function XFooter({}: Props) {
                     <Col>
                         <Image height={110} src="/aterna.png" rounded />
                     </Col>
-                    <Col>
+                    <Col className="text-center">
                         <Image height={110} src="/gentera.png" rounded />
                     </Col>
                     <Col>
@@ -30,7 +38,7 @@ function XFooter({}: Props) {
                     <Col>
                         <Image height={110} src="/financiera.png" rounded />
                     </Col>
-                    <Col></Col>
+                    <Col sm="2"></Col>
                 </Row>
             </Container>
         </>

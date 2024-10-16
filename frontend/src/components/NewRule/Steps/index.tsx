@@ -4,7 +4,7 @@ import Step02 from "./Step02";
 import Step03 from "./Step03";
 import Step04 from "./Step04";
 
-type Props = {
+interface Props {
     currentStep: Number;
     rulename: string;
     ruletype: number;
@@ -23,7 +23,7 @@ type Props = {
     onChangeOutput: (id: number, value: string) => void;
     onChangeOutputType: (id: number, value: string) => void;
     onDeleteOutput: (id: number) => void;
-};
+}
 
 export default function Steps({
     currentStep,

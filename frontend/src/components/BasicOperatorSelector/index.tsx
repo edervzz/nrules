@@ -3,9 +3,9 @@ import { Operator } from "../../enums";
 import BasicOperator from "../BasicOperator";
 import Messages from "../../locales/Messages";
 
-type Props = {
+interface Props {
     onOperatorSelected: (op: Operator) => void;
-};
+}
 
 function BasicOperatorSelector({ onOperatorSelected }: Props) {
     return (

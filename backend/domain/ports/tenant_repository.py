@@ -64,7 +64,7 @@ class TenancyRepository(ABC):
         """ Rollback transaction """
 
     @abstractmethod
-    def migrate(self):
+    def migrate(self) -> list:
         """ Run Migration """
 
     @abstractmethod

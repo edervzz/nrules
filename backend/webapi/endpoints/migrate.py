@@ -1,4 +1,5 @@
 """ Run Migration """
+import json
 from flask import Blueprint, Response, abort, current_app
 from domain.ports import TenancyRepository, CoreRepository
 
@@ -13,9 +14,15 @@ def run_tenancy_migration_endpoint():
     try:
         repository = current_app.config["tenancy_repository"]
         if isinstance(repository, TenancyRepository):
-            r = repository.migrate()
+            result = repository.migrate()
 
-            response = Response(r, status=200, mimetype='application/json')
+            jsonobj = {
+                "migrations": result
+            }
+            jsonstr = json.dumps(jsonobj)
+            response = Response(jsonstr, status=200,
+                                mimetype='application/json')
+
             return response
         else:
             raise ValueError("Tenancy repository not found")
@@ -31,8 +38,14 @@ def run_core_migration_endpoint(tid=None):
     try:
         repository = current_app.config[str(tid)]
         if isinstance(repository, CoreRepository):
-            r = repository.migrate()
-            response = Response(r, status=200, mimetype='application/json')
+            result = repository.migrate()
+
+            jsonobj = {
+                "migrations": result
+            }
+            jsonstr = json.dumps(jsonobj)
+            response = Response(jsonstr, status=200,
+                                mimetype='application/json')
             return response
         else:
             raise ValueError("TID not found")

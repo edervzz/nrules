@@ -6,7 +6,7 @@ import Loading01 from "../components/Loading";
 import Messages from "../locales/Messages";
 import MainContainer from "../components/MainContainer";
 
-export default function LoginPage() {
+export default function InitPage() {
     const [showLoad, setShowLoad] = useState(false);
     const [isFailure, setIsFailure] = useState(false);
     const [messageError, setMessageError] = useState("");

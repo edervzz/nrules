@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Session from "../../session";
+import MyVars from "../../myvars";
 
 interface Props {
     children: ReactNode;
@@ -12,9 +12,9 @@ export default function MainContainer({ children, isLoginPage }: Props) {
     const navigate = useNavigate();
 
     const validateLogin = () => {
-        const tenantData = Session.tenant;
+        const tenantData = MyVars.tenant;
         if (isLoginPage) {
-            if (tenantData == null) {
+            if (tenantData == "") {
                 setShow(true);
             } else {
                 navigate("/home");

@@ -12,7 +12,7 @@ import axios, { AxiosError } from "axios";
 import Toolbar from "../Toolbar";
 import Messages from "../../locales/Messages";
 import { READ_RULES_PAGE } from "../../api";
-import Session from "../../session";
+import MyVars from "../../myvars";
 
 interface Props {}
 
@@ -28,7 +28,7 @@ function Tables({}: Props) {
         setMessageError(Messages.LOADING);
         setRules([]);
 
-        const tenant = Session.tenant;
+        const tenant = MyVars.tenant;
         const tenantDto = JSON.parse(tenant) as TenantDto;
 
         axios

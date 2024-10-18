@@ -5,13 +5,13 @@ import TablesTage from "./pages/TablesPage";
 import Transports from "./pages/TransportsPage";
 import TenancyPage from "./pages/TenancyPage";
 import UsersPage from "./pages/UsersPage";
-import LoginPage from "./pages/LoginPage";
+import InitPage from "./pages/InitPage";
 import HomePage from "./pages/HomePage";
 
 export const router = createBrowserRouter([
     {
         path: "/",
-        element: <LoginPage />,
+        element: <InitPage />,
     },
     {
         path: "/home",

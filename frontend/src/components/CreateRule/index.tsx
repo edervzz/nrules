@@ -21,7 +21,7 @@ import Toolbar from "../Toolbar";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { CREA_RULE } from "../../api";
-import Session from "../../session";
+import MyVars from "../../myvars";
 
 interface Props {}
 
@@ -110,7 +110,7 @@ function CreateRule({}: Props) {
             parameters: [...conds, ...outs],
         };
 
-        const tenant = Session.tenant;
+        const tenant = MyVars.tenant;
         const tenantDto = JSON.parse(tenant) as TenantDto;
         console.log(newRule);
 

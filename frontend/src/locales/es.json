@@ -1,6 +1,9 @@
 {
     "crea_rule_001": "Longitud debe ser entre 5 y 50 caracteres",
 
+    "outname_default": "Salida por defecto",
+    "cond_name": "Condiciones",
+    "out_name": "Salidas",
     "name": "Nombre",
     "type": "Tipo",
 
@@ -9,6 +12,9 @@
     "input_params": "2. Ingrese las Condiciones de Entrada",
     "start_new_rule": "1. Ingrese el Nombre y Tipo de Regla",
 
+    "create_rule": "Crear Nueva Regla",
+
+    "button_output_default": "Salida por defecto",
     "button_output": "Salida",
     "button_condition": "Condición",
     "button_add": "Agregar",
@@ -19,6 +25,8 @@
     "button_close": "Cerrar",
 
     "connecting": "Conectando",
+    "loading": "Cargando",
+    "loging_out": "Cerrando Sesiòn",
     "some_wrong": "¡Algo salió mal!",
     "error_user_pwd": "Usuario y/o contraseña son incorrectos",
 
@@ -46,10 +54,10 @@
     "ruletype":"Tipo",
     "ruletype_select":"- Seleccione tipo de regla -",
     "rules":"Reglas",
-    "table":"Tabla de Decisión",
+    "matrix":"Matrices de Decisión",
     "tree":"Árbol de Decisión",
     "flow":"Flujo de Decisión",
-    "tables":"Tablas",
+    "matrixes":"Matrices",
     "trees":"Árboles",
     "flows":"Flujos",
     "runner":"Runner",

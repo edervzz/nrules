@@ -3,6 +3,8 @@ import Messages from "../../locales/Messages";
 import { useNavigate } from "react-router-dom";
 import { FormEvent, useRef, useState } from "react";
 import { switchLocale } from "../../locales/i18n";
+import { TenantDto } from "../../typings";
+import Session from "../../session";
 
 interface Props {
     onTryConnecting: () => void;
@@ -27,9 +29,15 @@ export default function Login({ onTryConnecting, onFailureConnection }: Props) {
             usernameRef.current?.value === "osvelazquez" &&
             passwordRef.current?.value === "1234"
         ) {
-            sessionStorage.setItem("tid", tidRef.current?.value!);
-            sessionStorage.setItem("username", usernameRef.current?.value!);
-            sessionStorage.setItem("access_token", "1234567890");
+            const tenant: TenantDto = {
+                id: 101,
+                tenantName: "Compartamos Banco",
+                tokenDev: "1234567890",
+                tokenTest: "1234567890",
+                tokenProd: "1234567890",
+                username: usernameRef.current?.value,
+            };
+            Session.tenant = JSON.stringify(tenant);
             navigate("/home");
         } else {
             onFailureConnection(Messages.ERROR_USR_PWD);

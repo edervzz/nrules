@@ -16,11 +16,8 @@ const totalSteps = 4;
 function NewRule({ onHide }: Props) {
     // 1. states
     const [currentStep, setCurrentStep] = useState(1);
-
     const [disableNextButton, setDisableNextButton] = useState(true);
-
     const [isError, setIsError] = useState(false);
-
     const [headerRule, setHeaderRule] = useState({
         rulename: "",
         ruletype: 0,
@@ -29,7 +26,6 @@ function NewRule({ onHide }: Props) {
     const [conditionsRule, setConditionsRule] = useState<NewRuleCondition[]>([
         { id: 1, variable: "", type: ConditionType.STR },
     ]);
-
     const [outputsRule, setOutputRule] = useState<NewRuleOutput[]>([
         { id: 1, variable: "", type: ConditionType.STR },
     ]);

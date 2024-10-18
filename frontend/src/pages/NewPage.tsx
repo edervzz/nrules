@@ -1,22 +1,15 @@
-import { useState } from "react";
 import Menubar from "../components/Menubar";
-import NewRule from "../components/NewRule";
-
+import MainContainer from "../components/MainContainer";
+import CreateRule from "../components/CreateRule";
+import Footer from "../components/Footer/Footer";
 export default function NewPage() {
-    const [showNewRule, setShowNewRule] = useState(true);
-
-    const handleHideNewRule = () => {
-        setShowNewRule(false);
-    };
-
-    const handleShowNewRule = () => {
-        setShowNewRule(true);
-    };
-
     return (
         <>
-            <Menubar link_new="#" onClickNew={handleShowNewRule} />
-            {showNewRule && <NewRule onHide={handleHideNewRule} />}
+            <MainContainer>
+                <Menubar link_new="#" />
+                <CreateRule></CreateRule>
+                <Footer></Footer>
+            </MainContainer>
         </>
     );
 }

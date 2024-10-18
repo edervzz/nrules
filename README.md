@@ -114,6 +114,7 @@ $ pip install flask
 ```bash
 pip install -r .\requirements.txt
 pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org -r .\requirements.txt
+pip freeze > .\requirements.txt
 ```
 
 ## 2.3 Otros paquetes

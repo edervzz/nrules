@@ -1,9 +1,10 @@
 import { Badge, Col, Container, Row } from "react-bootstrap";
 import Login from "../components/Login";
-import XFooter from "./XFooter";
+import Footer from "../components/Footer/Footer";
 import { useState } from "react";
 import Loading01 from "../components/Loading";
 import Messages from "../locales/Messages";
+import MainContainer from "../components/MainContainer";
 
 export default function LoginPage() {
     const [showLoad, setShowLoad] = useState(false);
@@ -24,7 +25,7 @@ export default function LoginPage() {
     };
 
     return (
-        <>
+        <MainContainer isLoginPage>
             {showLoad && (
                 <Loading01
                     title={Messages.CONNECTING}
@@ -92,7 +93,7 @@ export default function LoginPage() {
                     <Col></Col>
                 </Row>
             </Container>
-            <XFooter></XFooter>
-        </>
+            <Footer></Footer>
+        </MainContainer>
     );
 }

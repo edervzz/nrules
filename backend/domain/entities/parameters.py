@@ -5,8 +5,8 @@ from .extra_fields import Auditable, Versioned, TenantSpecific
 from .base import Base
 
 
-class Parameters(Base, TenantSpecific, Auditable, Versioned):
-    """ A Parameter is a variable into expression """
+class Parameter(Base, TenantSpecific, Auditable, Versioned):
+    """ A Parameter is a variable into expression or output """
 
     __tablename__ = "parameters"
 
@@ -14,4 +14,6 @@ class Parameters(Base, TenantSpecific, Auditable, Versioned):
 
     rule_id: Mapped[str] = mapped_column(nullable=False)
 
-    value_type: Mapped[str] = mapped_column(nullable=False)
+    usefor: Mapped[str] = mapped_column(nullable=False)
+
+    typeof: Mapped[str] = mapped_column(nullable=False)

@@ -6,7 +6,7 @@ from flask import session
 from sqlalchemy import Engine, create_engine, select, event
 from sqlalchemy.orm import Session
 from sqlalchemy.orm import Query
-from domain.entities import Rule, Expression, Condition
+from domain.entities import Rule, Parameter, Expression, Condition
 from domain.entities import TenantSpecific, Versioned, Auditable, Migrations
 from domain.entities import KV, KVItem
 from domain.ports import CoreRepository
@@ -14,6 +14,7 @@ from infrastructure.data import initial, core_tables, core_admin
 from .kvs_adapter import KVSAdapter
 from .kvitem_adapter import KVItemAdapter
 from .rule_adapter import RuleAdapter
+from .parameter_adapter import ParameterAdapter
 from .condition_adapter import ConditionAdapter
 from .expression_adapter import ExpressionAdapter
 
@@ -31,23 +32,26 @@ class CoreAdapter(CoreRepository):
         self.engine: Engine = create_engine(connstr, echo=True)
 
         self.kvs = KVSAdapter(self.engine)
-        self.kvitem = KVItemAdapter(self.engine)
-        self.rule = RuleAdapter(self.engine)
-        self.expression = ExpressionAdapter(self.engine)
-        self.condition = ConditionAdapter(self.engine)
-
         event.listen(KV, 'before_insert', self.__before_insert)
         event.listen(KV, 'before_update', self.__before_update)
 
+        self.kvitem = KVItemAdapter(self.engine)
         event.listen(KVItem, 'before_insert', self.__before_insert)
         event.listen(KVItem, 'before_update', self.__before_update)
 
+        self.rule = RuleAdapter(self.engine)
         event.listen(Rule, 'before_insert', self.__before_insert)
         event.listen(Rule, 'before_update', self.__before_update)
 
+        self.parameter = ParameterAdapter(self.engine)
+        event.listen(Parameter, 'before_insert', self.__before_insert)
+        event.listen(Parameter, 'before_update', self.__before_update)
+
+        self.expression = ExpressionAdapter(self.engine)
         event.listen(Expression, 'before_insert', self.__before_insert)
         event.listen(Expression, 'before_update', self.__before_update)
 
+        self.condition = ConditionAdapter(self.engine)
         event.listen(Condition, 'before_insert', self.__before_insert)
         event.listen(Condition, 'before_update', self.__before_update)
 
@@ -61,6 +65,7 @@ class CoreAdapter(CoreRepository):
         self.kvs.set_session(self.session)
         self.kvitem.set_session(self.session)
         self.rule.set_session(self.session)
+        self.parameter.set_session(self.session)
         self.expression.set_session(self.session)
         self.condition.set_session(self.session)
 

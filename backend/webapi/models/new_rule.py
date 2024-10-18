@@ -2,7 +2,7 @@
 import json
 import uuid
 from typing import List
-from domain.entities import Condition, Expression, KVItem, KV
+from domain.entities import Condition, Expression, KVItem, KV, Parameter
 
 
 class NewRuleModel:
@@ -15,6 +15,9 @@ class NewRuleModel:
         self.rule_type = self.__dict__.get("rule_type", False)
         self.strategy = self.__dict__.get("strategy", "")
 
+        parameter_raw = self.__dict__.get("parameters", None)
+        self.parameters: List[Parameter] = []
+
         conditions_raw = self.__dict__.get("conditions", None)
         default_output = self.__dict__.get("default_output", None)
 
@@ -24,6 +27,24 @@ class NewRuleModel:
         self.expressions: List[Expression] = []
         self.default_kvs: KV
         self.default_kvitems: List[KVItem] = []
+
+        if isinstance(parameter_raw, list):
+            for p in parameter_raw:
+                one_parameter = Parameter()
+                key = ""
+                typeof = ""
+                usefor = ""
+                if "key" in p:
+                    key = p["key"]
+                if "typeof" in p:
+                    typeof = p["typeof"]
+                if "usefor" in p:
+                    usefor = p["usefor"]
+
+                one_parameter.key = key
+                one_parameter.usefor = usefor
+                one_parameter.typeof = typeof
+                self.parameters.append(one_parameter)
 
         if isinstance(conditions_raw, list):
             for cond_raw in conditions_raw:

@@ -2,7 +2,6 @@
 from application.messages import CreateRuleRequest
 from toolkit import Validator
 from toolkit.localization import Localizer, Codes
-from .expression_validator import ExpressionValidator
 
 
 class CreateRuleValidator(Validator):
@@ -41,18 +40,13 @@ class CreateRuleValidator(Validator):
                 Codes.RU_CREA_002,
                 self._localizer.get(Codes.RU_CREA_002))
         else:
-            validator = ExpressionValidator(self._localizer)
+            for c in request.paramters:
+                c.key = c.key.strip()
+                c.usefor = c.usefor.strip()
+                c.typeof = c.typeof.strip()
+                c.rule_id = request.rule.id
 
-            idx = 0
-            for c in request.expressions:
-                c.variable = c.variable.strip()
-                c.operator = c.operator.strip()
-                c.value = c.value.strip()
-                idx += 1
-                if c.variable == "" or c.operator == "":
+                if c.usefor == "" or c.typeof == "":
                     self.add_failure(
-                        Codes.RU_CREA_003,
-                        self._localizer.get(Codes.RU_CREA_003))
-
-                if c.variable != "" and c.operator != "" and c.value != "":
-                    validator.validate_and_throw(c.expression)
+                        Codes.RU_CREA_012,
+                        self._localizer.get(Codes.RU_CREA_012))

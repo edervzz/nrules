@@ -1,6 +1,7 @@
 """ Create a new workflow """
 import json
 from flask import Blueprint, request, Response, current_app
+from flask_cors import cross_origin
 from webapi.models import NewRuleModel
 from application.messages import CreateRuleRequest
 from application.commands import CreateRuleHandler
@@ -10,6 +11,7 @@ from toolkit import Identification
 new_rule_bp = Blueprint("New Rule", __name__)
 
 
+@cross_origin
 @new_rule_bp.post("/t/<tid>/rules")
 def new_rules_endpoint(tid=None):
     """ New rules Endpoint """
@@ -25,12 +27,7 @@ def new_rules_endpoint(tid=None):
         new_rules.name,
         new_rules.rule_type,
         new_rules.strategy,
-        new_rules.kvs,
-        new_rules.kvitems,
-        new_rules.conditions,
-        new_rules.expressions,
-        new_rules.default_kvs,
-        new_rules.default_kvitems
+        new_rules.parameters
     )
 
     result = CreateRuleHandler(
@@ -42,5 +39,7 @@ def new_rules_endpoint(tid=None):
     return Response(
         response="",
         status=201,
-        headers=[("Item", f"/t/{tenant_id}/rules/{result.id}")]
+        headers=[
+            ("Item", f"/t/{tenant_id}/rules/{result.id}"),
+        ]
     )

@@ -4,6 +4,9 @@ export default class Messages{
 
     static get CREA_RULE_001():string { return i18n.t("common:crea_rule_001"); }
 
+    static get OUTNAME_DEFAULT():string { return i18n.t("common:outname_default"); }
+    static get CONDNAME():string { return i18n.t("common:cond_name"); }
+    static get OUTNAME():string { return i18n.t("common:out_name"); }
     static get NAME():string { return i18n.t("common:name"); }
     static get TYPE():string { return i18n.t("common:type"); }
 
@@ -12,6 +15,9 @@ export default class Messages{
     static get OUTPUT_PARAMS():string { return i18n.t("common:output_params"); }
     static get SEND_CREA_RULE():string { return i18n.t("common:send_crea_rule"); }
 
+    static get CREA_RULE():string { return i18n.t("common:create_rule"); }
+
+    static get BUTTON_OUTPUT_DEFAULT():string { return i18n.t("common:button_output_default"); }
     static get BUTTON_OUTPUT():string { return i18n.t("common:button_output"); }
     static get BUTTON_CONDITION():string { return i18n.t("common:button_condition"); }
     static get BUTTON_ADD():string { return i18n.t("common:button_add"); }
@@ -22,6 +28,8 @@ export default class Messages{
     static get BUTTON_CLOSE():string { return i18n.t("common:button_close"); }
     
     static get CONNECTING():string { return i18n.t("common:connecting"); }
+    static get LOADING():string { return i18n.t("common:loading"); }
+    static get LOGINGOUT():string { return i18n.t("common:loging_out"); }
     static get SOME_WRONG():string { return i18n.t("common:some_wrong"); }
     static get ERROR_USR_PWD():string { return i18n.t("common:error_user_pwd"); }
 
@@ -48,11 +56,11 @@ export default class Messages{
     static get RULESTRATEGY_ALL():string { return i18n.t("common:rulestrategy_all"); }
     static get RULETYPE():string { return i18n.t("common:ruletype"); }
     static get RULETYPE_SELECT():string { return i18n.t("common:ruletype_select"); }
-    static get TABLE():string { return i18n.t("common:table"); }
+    static get MATRIX():string { return i18n.t("common:matrix"); }
     static get TREE():string { return i18n.t("common:tree"); }
     static get FLOW():string { return i18n.t("common:flow"); }
     static get RULES():string { return i18n.t("common:rules"); }
-    static get TABLES():string { return i18n.t("common:tables"); }
+    static get MATRIXES():string { return i18n.t("common:matrixes"); }
     static get TREES():string { return i18n.t("common:trees"); }
     static get FLOWS():string { return i18n.t("common:flows"); }
     static get RUNNER():string { return i18n.t("common:runner"); }

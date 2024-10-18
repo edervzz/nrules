@@ -1,6 +1,7 @@
 """ Create a new workflow """
 import json
 from flask import Blueprint, Response, request, current_app
+from flask_cors import cross_origin
 from application.messages import ReadAllRulesRequest
 from application.queries import ReadAllRulesHandler
 from webapi.models import RuleModel
@@ -8,6 +9,7 @@ from webapi.models import RuleModel
 read_all_rule_bp = Blueprint("Read All Rules", __name__)
 
 
+@cross_origin
 @read_all_rule_bp.get("/t/<tid>/rules")
 def read_all_rules_endpoint(tid=None):
     """ Read rules Endpoint """
@@ -60,6 +62,5 @@ def read_all_rules_endpoint(tid=None):
             ("Previous-Page", f"{result.pagination.previous_page}"),
             ("Total-Pages", f"{result.pagination.total_pages}"),
             ("Total-Count", f"{result.pagination.total_count}"),
-            ('Access-Control-Allow-Origin', '*')
         ]
     )

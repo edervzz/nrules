@@ -44,7 +44,7 @@ function Step01({
                     value={ruletype}
                 >
                     <option value={0}>{Messages.RULETYPE_SELECT}</option>
-                    <option value={1}>{Messages.TABLE}</option>
+                    <option value={1}>{Messages.MATRIX}</option>
                 </Form.Select>
             </Form.Group>
             <Form.Group className="mb-3" controlId="rulestrategy">

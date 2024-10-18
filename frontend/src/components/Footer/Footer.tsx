@@ -2,7 +2,7 @@ import { Container, Row, Col, Image } from "react-bootstrap";
 
 type Props = {};
 
-function XFooter({}: Props) {
+function Footer({}: Props) {
     return (
         <>
             <br />
@@ -45,4 +45,4 @@ function XFooter({}: Props) {
     );
 }
 
-export default XFooter;
+export default Footer;

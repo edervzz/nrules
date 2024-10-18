@@ -1,35 +1,95 @@
 import { useEffect, useState } from "react";
-import { Container, Form, Row, Table, Toast } from "react-bootstrap";
-import { RuleDto } from "../../typings";
-import axios from "axios";
+import {
+    Container,
+    Form,
+    Row,
+    Table,
+    Toast,
+    ToastContainer,
+} from "react-bootstrap";
+import { RuleDto, TenantDto } from "../../typings";
+import axios, { AxiosError } from "axios";
 import Toolbar from "../Toolbar";
+import Messages from "../../locales/Messages";
+import { READ_RULES_PAGE } from "../../api";
+import Session from "../../session";
 
 interface Props {}
 
 function Tables({}: Props) {
     const [rules, setRules] = useState<RuleDto[]>([]);
+    const [showInfoMessage, setShowInfoMessage] = useState(false);
+    const [showErrorMessage, setShowErrorMessage] = useState(false);
+    const [messageError, setMessageError] = useState("");
 
-    const reload = () => {
+    const handleAction01 = () => {
+        setShowInfoMessage(true);
+        setShowErrorMessage(false);
+        setMessageError(Messages.LOADING);
         setRules([]);
+
+        const tenant = Session.tenant;
+        const tenantDto = JSON.parse(tenant) as TenantDto;
+
         axios
             .get<RuleDto[]>(
-                "http://localhost:5000/nr/api/v1/t/105/rules?pageNo=1&pageSize=20"
+                READ_RULES_PAGE(tenantDto.id.toString(), "1", "100")
             )
             .then((res) => {
+                setShowInfoMessage(false);
                 setRules(res.data);
+            })
+            .catch(function (error: AxiosError) {
+                setShowErrorMessage(true);
+                setShowInfoMessage(false);
+                setMessageError(error.message);
             });
     };
 
     useEffect(() => {
-        reload();
+        handleAction01();
     }, []);
 
     return (
         <>
+            {/* Error */}
+            <ToastContainer position="top-center" style={{ zIndex: 1 }}>
+                <Toast
+                    onClose={() => setShowErrorMessage(false)}
+                    show={showErrorMessage}
+                    delay={2000}
+                    autohide
+                    bg="danger"
+                >
+                    <Toast.Body className={"text-white text-center"}>
+                        {messageError}
+                    </Toast.Body>
+                </Toast>
+            </ToastContainer>
+            {/* Information */}
+            <ToastContainer position="top-center" style={{ zIndex: 1 }}>
+                <Toast
+                    onClose={() => setShowInfoMessage(false)}
+                    show={showInfoMessage}
+                    delay={20000}
+                    autohide
+                    bg="secondary"
+                >
+                    <Toast.Body className="text-white text-center">
+                        {Messages.LOADING}
+                    </Toast.Body>
+                </Toast>
+            </ToastContainer>
+
             <Toolbar
-                title="Tablas de Decisión"
-                pagination
-                action01={reload}
+                title={Messages.MATRIX}
+                isPaginated
+                pagination={{
+                    from: 10,
+                    to: 30,
+                    total: 2,
+                }}
+                onAction01={handleAction01}
                 action01Icon="bi-arrow-clockwise"
             ></Toolbar>
 
@@ -39,7 +99,11 @@ function Tables({}: Props) {
                         <thead>
                             <tr>
                                 <th style={{ width: "0rem" }}>
-                                    <Form.Check checked onChange={() => {}} />
+                                    <Form.Check
+                                        name="masterCheck"
+                                        checked
+                                        onChange={() => {}}
+                                    />
                                 </th>
                                 <th>Regla</th>
                                 <th>Estrategia</th>
@@ -54,7 +118,10 @@ function Tables({}: Props) {
                             {rules.map((x) => (
                                 <tr key={x.id}>
                                     <td>
-                                        <Form.Check onChange={() => {}} />
+                                        <Form.Check
+                                            name={x.id}
+                                            onChange={() => {}}
+                                        />
                                     </td>
                                     <td>{x.name}</td>
                                     <td>{x.strategy}</td>

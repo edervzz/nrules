@@ -2,6 +2,9 @@
     
     "crea_rule_001": "Length must be between 5 and 50 characteres",
 
+    "outname_default": "Output default",
+    "cond_name": "Conditions",
+    "out_name": "Outputs",
     "name": "Name",
     "type": "Type",
 
@@ -10,6 +13,9 @@
     "input_params": "2. Enter Incoming Conditions",
     "start_new_rule": "1. Enter Name and Type of Rule",
 
+    "create_rule": "Create New Rule",
+
+    "button_output_default": "Output default",
     "button_output": "Output",
     "button_condition": "Condition",
     "button_add": "Add",
@@ -19,6 +25,8 @@
     "button_cancel": "Cancel",
     "button_close": "Close",
 
+    "loging_out": "Closing Session",
+    "loading": "Loading",
     "connecting": "Connecting",
     "some_wrong": "Something is wrong!",
     "error_user_pwd": "User or password incorrect",
@@ -47,10 +55,10 @@
     "ruletype":"Type",
     "ruletype_select":"- Select type of rule -",
     "rules":"Rules",
-    "table":"Decision Table",
+    "matrix":"Matrix Table",
     "tree":"Decision Tree",
     "flow":"Decision Flow",
-    "tables":"Tables",
+    "matrixes":"Matrix",
     "trees":"Trees",
     "flows":"Flows",
     "runner":"Runner",

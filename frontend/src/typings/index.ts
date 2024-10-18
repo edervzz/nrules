@@ -1,14 +1,16 @@
-export  * from "./RuleDto"
+export * from "./RuleDto"
+export * from "./TenantDto"
+export * from "./CreateRuleDto"
 
 export type NewRuleCondition = {
-    id:number;
+    id:string;
     variable: string;
     type: string;
 };
 
 
 export type NewRuleOutput = {
-    id:number;
+    id:string;
     variable: string;
     type: string;
 };

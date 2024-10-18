@@ -1,12 +1,15 @@
 // import { useState } from "react";
-import { Badge, Container } from "react-bootstrap";
+import { Col, Container, Modal, Row, Spinner } from "react-bootstrap";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Messages from "../../locales/Messages";
 import styles from "./MainMenu.module.css";
 import { useState } from "react";
-import Logout from "../Logout";
+
+import { TenantDto } from "../../typings";
+import { useNavigate } from "react-router-dom";
+import Session from "../../session";
 
 interface Props {
     link_new?: string;
@@ -14,40 +17,57 @@ interface Props {
     link_tables?: string;
 }
 
-const navDropdownTitle = (
-    <>
-        <i className="bi bi-building-fill" />
-        {" Compartamos"}
-    </>
-);
-
-export default function Menubar({
-    link_new = "/new",
-    onClickNew = () => {},
-}: Props) {
+export default function Menubar({ link_new = "/new", onClickNew }: Props) {
     const [showLogout, setShowLogout] = useState(false);
+    const navigate = useNavigate();
+
+    const tenantData = Session.tenant;
+    if (tenantData == null) return <></>;
+    const tenant = JSON.parse(tenantData) as TenantDto;
+
+    const handleClickLogout = () => {
+        Session.clear();
+        setShowLogout(true);
+        navigate("/");
+    };
 
     return (
         <>
-            {showLogout && <Logout></Logout>}
-            {/* Navigation Bar*/}
+            {showLogout && (
+                <Modal size="lg" show={true} backdrop="static">
+                    <Modal.Header closeButton>
+                        <Modal.Title>{Messages.LOGINGOUT}</Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+                        <Container>
+                            <Row className="justify-content-md-center">
+                                <Col md="auto">
+                                    <Spinner animation="border" />
+                                </Col>
+                            </Row>
+                        </Container>
+                    </Modal.Body>
+                </Modal>
+            )}
+
             <Navbar expand="md" className={`bg-body-tertiary`}>
                 <Container fluid="xl">
                     <Navbar.Text></Navbar.Text>
-                    <Navbar.Brand href="/">NRule</Navbar.Brand>
+                    <Navbar.Brand href="/home">NRule</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             <Nav.Link
                                 className={styles.link}
                                 href={link_new}
-                                onClick={() => onClickNew()}
+                                onClick={() => onClickNew?.()}
                             >
                                 {Messages.NEW_RULE}
                             </Nav.Link>
 
                             <Nav.Link className={styles.link} href="/tables">
-                                {Messages.TABLES}
+                                {Messages.MATRIXES}
                             </Nav.Link>
 
                             <Nav.Link className={styles.link} href="/runner">
@@ -79,26 +99,26 @@ export default function Menubar({
                         id="basic-navbar-nav"
                     >
                         <NavDropdown
-                            title={navDropdownTitle}
+                            title={
+                                <>
+                                    <i className="bi bi-building-fill" />
+                                    {tenant.tenantName}
+                                </>
+                            }
                             id="basic-nav-dropdown"
                         >
                             <NavDropdown.ItemText>
-                                TID: {sessionStorage.getItem("tid")}
-                            </NavDropdown.ItemText>
-
-                            <NavDropdown.ItemText>
                                 <i className="bi bi-person-circle" />{" "}
-                                {sessionStorage.getItem("username")}
+                                {tenant.username}
                             </NavDropdown.ItemText>
-
                             <NavDropdown.ItemText>
-                                <Badge bg="success">v0.0.1</Badge>
+                                TID: {tenant.id}
                             </NavDropdown.ItemText>
 
                             <NavDropdown.Divider />
                             <NavDropdown.Item
                                 className={styles.link}
-                                onClick={() => setShowLogout(true)}
+                                onClick={handleClickLogout}
                             >
                                 <i className="bi bi-box-arrow-right"></i>
                                 {" " + Messages.SIGN_OUT}

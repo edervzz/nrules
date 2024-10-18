@@ -13,7 +13,7 @@
         }
     ],
     "configurations": [        
-        {
+        {   
             "name": "frontend",
             "command": "npm run dev",
             "request": "launch",

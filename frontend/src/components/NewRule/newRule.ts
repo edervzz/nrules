@@ -4,7 +4,7 @@ import Messages from "../../locales/Messages";
 export function ruleTypeText(rulename: string, ruletype: number) {
     switch (ruletype) {
         case 1:
-            return Messages.TABLE + ": " + rulename;
+            return Messages.MATRIX + ": " + rulename;
         case 2:
             return Messages.TREE + ": " + rulename;
     }

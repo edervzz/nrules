@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ReactNode } from "react";
 import {
     Button,
     Col,
@@ -7,75 +7,95 @@ import {
     InputGroup,
     OverlayTrigger,
     Row,
-    Toast,
     Tooltip,
 } from "react-bootstrap";
 
+interface Pagination {
+    from: number;
+    to: number;
+    total: number;
+}
+
 interface Props {
     title: string;
-    pagination?: boolean;
+    titleInfo?: ReactNode;
     action01Icon?: string; // e.g. bi-arrow-clockwise
-    action01?: () => void;
+    onAction01?: () => void;
+    action02Icon?: string; // e.g. bi-arrow-clockwise
+    onAction02?: () => void;
+    action03Icon?: string; // e.g. bi-arrow-clockwise
+    onAction03?: () => void;
+    isPaginated?: boolean;
+    pagination?: Pagination;
+    hideSearch?: boolean;
 }
 
 const Toolbar = ({
     title,
-    pagination = false,
+    titleInfo,
     action01Icon,
-    action01,
+    onAction01,
+    isPaginated = false,
+    pagination,
+    hideSearch = false,
 }: Props) => {
-    const [show, setShow] = useState(false);
-
     return (
-        <Container className="mb-2">
-            <div
-                className="position-fixed top-0 start-50 translate-middle-x"
-                style={{ zIndex: 11 }}
-            >
-                <Toast
-                    onClose={() => setShow(false)}
-                    show={show}
-                    delay={2000}
-                    autohide
-                >
-                    <Toast.Body>Cargando...</Toast.Body>
-                </Toast>
-            </div>
+        <Container className="mb-2 mt-2">
             <Row className="align-items-center">
-                <Col>
+                <Col sm="3" className="fs-3">
                     {title}
-                    <span className="ms-5">
-                        {action01 != undefined && (
-                            <Button
-                                onClick={() => {
-                                    setShow(true);
-                                    action01();
+                    <span className="fs-5">
+                        {titleInfo && (
+                            <OverlayTrigger
+                                placement="bottom"
+                                delay={{ show: 250, hide: 400 }}
+                                overlay={(props) => {
+                                    return (
+                                        <Tooltip id="button-tooltip" {...props}>
+                                            {titleInfo}
+                                        </Tooltip>
+                                    );
                                 }}
-                                className="me-1"
-                                size="sm"
-                                variant="primary"
                             >
-                                <i className={"bi " + action01Icon}></i>
-                            </Button>
+                                <i className="bi bi-info-circle-fill ms-2"></i>
+                            </OverlayTrigger>
                         )}
                     </span>
                 </Col>
+                <Col>
+                    {onAction01 != undefined && (
+                        <Button
+                            onClick={() => {
+                                onAction01();
+                            }}
+                            className="me-1"
+                            size="sm"
+                            variant="primary"
+                        >
+                            <i className={"bi " + action01Icon}></i>
+                        </Button>
+                    )}
+                </Col>
 
                 <Col sm="3">
-                    <InputGroup>
-                        <Form.Control
-                            placeholder="busqueda"
-                            aria-label="buscar"
-                            aria-describedby="basic-addon1"
-                        />
-                        <Button size="sm" variant="secondary">
-                            <i className="bi bi-search"></i>
-                        </Button>
-                    </InputGroup>
+                    {!hideSearch && (
+                        <InputGroup>
+                            <Form.Control
+                                name="search"
+                                placeholder="busqueda"
+                                aria-label="buscar"
+                                aria-describedby="basic-addon1"
+                            />
+                            <Button size="sm" variant="secondary">
+                                <i className="bi bi-search"></i>
+                            </Button>
+                        </InputGroup>
+                    )}
                 </Col>
-                {pagination && (
+                {isPaginated && (
                     <Col sm="3" className="text-end">
-                        20-40 de 1500
+                        {pagination?.from}-{pagination?.to} Total{" "}
+                        {pagination?.total}
                         <Button
                             disabled
                             className="ms-3 me-1"

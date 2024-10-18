@@ -179,6 +179,10 @@ class Codes:
     es_messages[RU_UPD_001] = "Nombre de Regla es obligatorio."
 
     # Create Rule
+    RU_CREA_012 = "RU-CREA-012"
+    en_messages[RU_CREA_012] = "Parameter's fields are mandatory."
+    es_messages[RU_CREA_012] = "Complete todos los campos de los parámetros."
+
     RU_CREA_011 = "RU-CREA-011"
     en_messages[RU_CREA_011] = "Strategy must be EARLY / BASIC / ALL."
     es_messages[RU_CREA_011] = "La estrategia debe ser EARLY / BASIC / ALL."

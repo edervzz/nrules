@@ -30,8 +30,8 @@ class ExpressionAdapter(ExpressionRepository):
                 Expression.id == _id).one_or_none()
             return condition
 
-    def read_by_parent_id(self, parent_id: int) -> List[Expression]:
+    def read_by_parent_id(self, parent_id: str) -> List[Expression]:
         with Session(self.engine) as session:
             conditions = session.query(Expression).where(
-                Expression.rule_id == parent_id).all()
+                Expression.condition_id == parent_id).all()
             return conditions

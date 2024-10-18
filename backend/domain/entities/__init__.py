@@ -12,6 +12,7 @@ from .condition import Condition
 from .expression import Expression
 from .rule import Rule
 from .rule_result import RunRuleResult
+from .parameters import Parameter
 
 
 from .pagination import Pagination

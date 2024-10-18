@@ -34,6 +34,17 @@ class RuleRepository(
         self.engine = engine
 
 
+class ParametersRepository(
+        ABC, Creator, Updater,
+        ReaderSingle, ReaderByParentID):
+    """_summary_"""
+
+    def __init__(self, engine):
+        ABC.__init__(self)
+        Creator.__init__(self)
+        self.engine = engine
+
+
 class ExpressionRepository(
         ABC, Creator, Updater,
         ReaderSingle, ReaderByParentID):
@@ -64,6 +75,7 @@ class CoreRepository:
         self.kvs: KVSRepository
         self.kvitem: KVItemRepository
         self.rule: RuleRepository
+        self.parameter: ParametersRepository
         self.expression: ExpressionRepository
         self.condition: ConditionRepository
 

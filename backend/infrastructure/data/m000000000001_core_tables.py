@@ -95,7 +95,9 @@ def core_tables(engine: Engine) -> str:
         Column(
             "rule_id", String(36), primary_key=True, comment="Rule ID"),
         Column(
-            "value_type", String(10), nullable=False, comment="Type of Value: String, Numeric, Date"),
+            "usefor", String(10), CheckConstraint("usefor = 'CONDITION' OR usefor = 'OUTPUT'", name="parameters_chk_usefor"), nullable=False, comment="Use for: CONDITION, OUTPUT"),
+        Column(
+            "typeof", String(10), nullable=False, comment="Type of Value: String, Numeric, Date"),
         comment="Extra information for expressions"
     )
     set_version(parameters)

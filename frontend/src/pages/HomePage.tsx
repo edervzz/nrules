@@ -1,13 +1,12 @@
 import { Col, Container, Row, Badge } from "react-bootstrap";
-import XFooter from "./XFooter";
+import Footer from "../components/Footer/Footer";
 import Menubar from "../components/Menubar";
-// import Messages from "../locales/Messages";
-import i18n from "../locales/i18n";
 import Messages from "../locales/Messages";
+import MainContainer from "../components/MainContainer";
 
 export default function HomePage() {
     return (
-        <>
+        <MainContainer>
             <Menubar></Menubar>
             <Container>
                 <Row></Row>
@@ -34,8 +33,7 @@ export default function HomePage() {
                     <Col sm="1"></Col>
                 </Row>
             </Container>
-
-            <XFooter></XFooter>
-        </>
+            <Footer></Footer>
+        </MainContainer>
     );
 }

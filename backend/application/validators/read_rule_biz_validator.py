@@ -26,8 +26,6 @@ class ReadRuleBizValidator(Validator):
                 request.rule_name)
 
         if rule is None:
-            raise self.as_not_found(
-                Codes.RU_READ_002,
-                self._localizer.get(Codes.RU_READ_002))
+            raise self.as_not_found(self._localizer.get(Codes.RU_READ_002))
 
         request.rule = rule

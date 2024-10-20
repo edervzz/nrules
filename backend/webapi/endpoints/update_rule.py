@@ -25,8 +25,8 @@ def update_rules_endpoint(tid=None, rule_id=None):
     command = UpdateRuleRequest(
         rule_id,
         rule_name,
-        update_rule.kvs_id_nok,
-        update_rule.conditions
+        update_rule.rule_type,
+        update_rule.strategy,
     )
 
     handler = UpdateRuleHandler(

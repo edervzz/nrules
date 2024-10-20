@@ -21,7 +21,5 @@ class ReadRulesKeyIndexBizValidator(Validator):
             request.page_size)
 
         if len(request.rules) == 0:
-            raise self.as_not_found(
-                Codes.RU_READ_005,
-                self._localizer.get(Codes.RU_READ_005)
-            )
+            raise self.as_not_found(self._localizer.get(Codes.RU_READ_005)
+                                    )

@@ -22,11 +22,8 @@ class RunRuleBizValidator(Validator):
             request.rule_id) if request.rule_id != 0 else self._repo.rule.read_by_external_id(request.rule_name)
 
         if rule is None:
-            self.add_failure(
-                Codes.RUNNER_003,
-                self._local.get(
-                    Codes.RUNNER_003, request.rule_id)
-            )
+            self.add_failure(self._local.get(Codes.RUNNER_003, request.rule_id)
+                             )
             return
 
         request.trace.append(f"rule: {rule.name}, type:{rule.rule_type}")
@@ -41,11 +38,8 @@ class RunRuleBizValidator(Validator):
         if request.kvs_id != 0:
             kvitems_input = self._repo.kvitem.read_by_parent_id(request.kvs_id)
             if kvitems_input is None:
-                self.add_failure(
-                    Codes.RUNNER_003,
-                    self._local.get(
-                        Codes.RUNNER_003, request.rule_id if request.rule_id != 0 else request.rule_name)
-                )
+                self.add_failure(self._local.get(Codes.RUNNER_003, request.rule_id if request.rule_id != 0 else request.rule_name)
+                                 )
                 return
 
         if self.any_error():
@@ -68,10 +62,8 @@ class RunRuleBizValidator(Validator):
                     if cx.variable in request.payload:
                         value = request.payload[cx.variable]
                     else:
-                        self.add_failure(
-                            Codes.RUNNER_002,
-                            self._local.get(Codes.RUNNER_002, cx.variable)
-                        )
+                        self.add_failure(self._local.get(
+                            Codes.RUNNER_002, cx.variable))
                         return
 
                     passed = False

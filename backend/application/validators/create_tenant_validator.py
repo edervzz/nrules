@@ -15,6 +15,4 @@ class CreateTenantValidator(Validator):
         """ Validate request format """
 
         if len(request.tenant_name) < 5 or len(request.tenant_name) > 50:
-            raise self.as_error(
-                Codes.TE_CREA_002,
-                self._localizer.get(Codes.TE_CREA_002))
+            raise self.as_error(self._localizer.get(Codes.TE_CREA_002))

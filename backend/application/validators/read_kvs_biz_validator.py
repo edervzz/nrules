@@ -15,14 +15,10 @@ class ReadKVSBizValidator(Validator):
     def __validate__(self, request: ReadKVSRequest):
         request.kv = self.repo.kvs.read(request.kvid)
         if request.kv is None:
-            raise self.as_error(
-                Codes.KV_READ_002,
-                self.local.get(Codes.KV_READ_002)
-            )
+            raise self.as_error(self.local.get(Codes.KV_READ_002)
+                                )
 
         request.kvitems = self.repo.kvitem.read_by_parent_id(request.kvid)
         if request.kvitems is None:
-            raise self.as_error(
-                Codes.KV_READ_003,
-                self.local.get(Codes.KV_READ_003)
-            )
+            raise self.as_error(self.local.get(Codes.KV_READ_003)
+                                )

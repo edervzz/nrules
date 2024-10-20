@@ -146,6 +146,18 @@ class Codes:
     es_messages[RU_READ_001] = "Id Regla o Nombre Regla es obligatorio."
 
     # Update Rule
+    RU_UPD_011 = "RU-UPD-011"
+    en_messages[RU_UPD_011] = "Strategy must be EARLY / BASIC / ALL."
+    es_messages[RU_UPD_011] = "La estrategia debe ser EARLY / BASIC / ALL."
+
+    RU_UPD_010 = "RU-UPD-010"
+    en_messages[RU_UPD_010] = "Rule Type must be 'MATRIX'."
+    es_messages[RU_UPD_010] = "Tipo Regla deber ser 'MATRIX'."
+
+    RU_UPD_009 = "RU-UPD-009"
+    en_messages[RU_UPD_009] = "Rule Type is mandatory."
+    es_messages[RU_UPD_009] = "Tipo de Regla es obligatorio."
+
     RU_UPD_008 = "RU-UPD-008"
     en_messages[RU_UPD_008] = "Rule ID or Rule Name must be provided."
     es_messages[RU_UPD_008] = "Id Regla o Nombre Regla es obligatorio."

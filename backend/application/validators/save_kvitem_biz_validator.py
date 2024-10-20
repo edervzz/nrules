@@ -21,9 +21,7 @@ class SaveKVItemBizValidator(Validator):
         keys_to_insert = []
 
         if kvs is None:
-            self.add_failure(
-                Codes.KVI_CREA_007,
-                self.localizer.get(Codes.KVI_CREA_007))
+            self.add_failure(self.localizer.get(Codes.KVI_CREA_007))
 
         for kvit in request.kvitems:
             key = KVItemKey(kvit.kv_id, kvit.key)
@@ -43,6 +41,4 @@ class SaveKVItemBizValidator(Validator):
         unique_keys = set(keys_to_insert)
 
         if len(unique_keys) != len(request.kvitems_to_insert):
-            self.add_failure(
-                Codes.KVI_CREA_007,
-                self.localizer.get(Codes.KVI_CREA_007))
+            self.add_failure(self.localizer.get(Codes.KVI_CREA_007))

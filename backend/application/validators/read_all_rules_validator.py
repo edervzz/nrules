@@ -15,14 +15,10 @@ class ReadAllRulesValidator(Validator):
         """ Validate request format """
 
         if request.page_no < 0:
-            self.add_failure(
-                Codes.RU_READ_001,
-                self._localizer.get(Codes.RU_READ_003))
+            self.add_failure(self._localizer.get(Codes.RU_READ_003))
 
         if request.page_size < 0:
-            self.add_failure(
-                Codes.RU_READ_001,
-                self._localizer.get(Codes.RU_READ_004))
+            self.add_failure(self._localizer.get(Codes.RU_READ_004))
 
         if request.page_no == 0:
             request.page_no = 1

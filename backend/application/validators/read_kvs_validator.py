@@ -12,7 +12,5 @@ class ReadKVSValidator(Validator):
 
     def __validate__(self, request: ReadKVSRequest):
         if request.kvid == 0:
-            raise self.as_error(
-                Codes.KV_READ_001,
-                self.local.get(Codes.KV_READ_001)
-            )
+            raise self.as_error(self.local.get(Codes.KV_READ_001)
+                                )

@@ -18,8 +18,6 @@ class CreateKVBizValidator(Validator):
         kv = self.repository.kvs.read_by_external_id(request.kv.name)
 
         if kv is not None:
-            raise self.as_duplicated(
-                Codes.KV_CREA_003,
-                self.localizer.get(Codes.KV_CREA_003))
+            raise self.as_duplicated(self.localizer.get(Codes.KV_CREA_003))
 
         request.kv.id = self.repository.next_number(KV)

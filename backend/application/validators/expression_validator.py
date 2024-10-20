@@ -57,11 +57,8 @@ class ExpressionValidator(Validator):
             # collect operator
             if len(components) != 0:
                 if var_value.find(self._oper, cursor_exp, length) == -1:
-                    raise self.as_error(
-                        Codes.RU_CREA_006,
-                        self._localizer.get(
-                            Codes.RU_CREA_006, "operator not found")
-                    )
+                    raise self.as_error(self._localizer.get(Codes.RU_CREA_006, "operator not found")
+                                        )
                 else:
                     oper_start = var_value.find(
                         self._oper, cursor_exp, length)
@@ -71,21 +68,15 @@ class ExpressionValidator(Validator):
                     cursor_exp = oper_end
             # collect variable
             if var_value.find(self._inoper, cursor_exp, length) == -1:
-                raise self.as_error(
-                    Codes.RU_CREA_006,
-                    self._localizer.get(
-                        Codes.RU_CREA_006, "variable not found")
-                )
+                raise self.as_error(self._localizer.get(Codes.RU_CREA_006, "variable not found")
+                                    )
             variable_end = var_value.find(self._inoper, cursor_exp, length)
             variable = translated[cursor_exp:variable_end]
             cursor_exp = variable_end
             # collect inner operator
             if var_value.find(self._inoper, cursor_exp, length) == -1:
-                raise self.as_error(
-                    Codes.RU_CREA_006,
-                    self._localizer.get(
-                        Codes.RU_CREA_006, "inner operator not found")
-                )
+                raise self.as_error(self._localizer.get(Codes.RU_CREA_006, "inner operator not found")
+                                    )
             inner_oper_start = var_value.find(self._inoper, cursor_exp, length)
             inner_oper_end = inner_oper_start + 4
             inner_oper = translated[inner_oper_start:inner_oper_end]
@@ -99,11 +90,8 @@ class ExpressionValidator(Validator):
                     value = translated[cursor_exp:]
                     is_end_expression = True
                 else:
-                    raise self.as_error(
-                        Codes.RU_CREA_006,
-                        self._localizer.get(
-                            Codes.RU_CREA_006, "inner operator at end of expression")
-                    )
+                    raise self.as_error(self._localizer.get(
+                        Codes.RU_CREA_006, "inner operator at end of expression"))
             else:
                 value = translated[cursor_exp:value_end]
 

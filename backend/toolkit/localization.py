@@ -20,7 +20,7 @@ class Localizer:
         if params is not None:
             mess = mess.format(*params)
 
-        return mess
+        return (code, mess)
 
     def set_langu(self, langu: str):
         """ define langu for current request """

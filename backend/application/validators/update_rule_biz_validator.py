@@ -4,7 +4,6 @@ from domain.entities import Rule
 from domain.ports import CoreRepository
 from toolkit import Validator
 from toolkit.localization import Localizer, Codes
-from .expression_validator import ExpressionValidator
 
 
 class UpdateRuleBizValidator(Validator):
@@ -23,29 +22,20 @@ class UpdateRuleBizValidator(Validator):
                 request.rule.tenant_id,
                 request.rule.id)
             if rule is None:
-                raise self.as_not_found(
-                    Codes.RU_UPD_007,
-                    self._local.get(Codes.RU_UPD_007))
+                raise self.as_not_found(self._local.get(Codes.RU_UPD_007))
         else:
             rule = self._repo.rule.read_by_external_id(
                 request.rule.tenant_id,
                 request.rule.name)
             if rule is None:
-                raise self.as_not_found(
-                    Codes.RU_UPD_007,
-                    self._local.get(Codes.RU_UPD_007))
-
-        # todo: validar cada condition
+                raise self.as_not_found(self._local.get(Codes.RU_UPD_007))
 
         if isinstance(rule, Rule):
-            if rule.rule_type != request.rule.rule_type or rule.kvs_id_nok != request.rule.kvs_id_nok or rule.name != request.rule.name:
-                rule.name = request.rule.name
+            if rule.rule_type != request.rule.rule_type or rule.strategy != request.rule.strategy:
                 rule.rule_type = request.rule.rule_type
-                rule.kvs_id_nok = request.rule.kvs_id_nok
+                rule.strategy = request.rule.strategy
                 rule.version += 1
                 request.rule = rule
             else:
-                raise self.as_error(
-                    Codes.OBJ_UPD_001,
-                    self._local.get(Codes.OBJ_UPD_001)
-                )
+                raise self.as_error(self._local.get(Codes.OBJ_UPD_001)
+                                    )

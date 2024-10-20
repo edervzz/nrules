@@ -19,16 +19,10 @@ class ReadRulesKeyIndexValidator(Validator):
             request.page_size = 100
 
         if len(request.key) == 0:
-            self.add_failure(
-                Codes.RU_READ_006,
-                self._localizer.get(Codes.RU_READ_006))
+            self.add_failure(self._localizer.get(Codes.RU_READ_006))
 
         if request.page_no < 0:
-            self.add_failure(
-                Codes.RU_READ_003,
-                self._localizer.get(Codes.RU_READ_003))
+            self.add_failure(self._localizer.get(Codes.RU_READ_003))
 
         if request.page_size < 0:
-            self.add_failure(
-                Codes.RU_READ_004,
-                self._localizer.get(Codes.RU_READ_004))
+            self.add_failure(self._localizer.get(Codes.RU_READ_004))

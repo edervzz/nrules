@@ -22,20 +22,24 @@ class Validator(ABC):
         """ return true when any error was collected """
         return len(self.__messages_codes) > 0
 
-    def add_failure(self, code: str, message: str):
+    def add_failure(self, code_message: tuple[str, str]):
         """ Add a message code into collection. """
+        code, message = code_message
         self.__messages_codes.append({'code': code, 'message': message})
 
-    def as_error(self, code: str, message: str):
+    def as_error(self, code_message: tuple[str, str]):
         """ Raise a single Validation Error """
+        code, message = code_message
         return BadRequest(json.dumps({'code': code, 'message': message}))
 
-    def as_not_found(self, code: str, message: str):
+    def as_not_found(self, code_message: tuple[str, str]):
         """ Raise a single Not Found Error """
+        code, message = code_message
         return NotFound(json.dumps({'code': code, 'message': message}))
 
-    def as_duplicated(self,  code: str, message: str):
+    def as_duplicated(self, code_message: tuple[str, str]):
         """ Raise a single  Duplicated Error """
+        code, message = code_message
         return Conflict(json.dumps({'code': code, 'message': message}))
 
     @abstractmethod

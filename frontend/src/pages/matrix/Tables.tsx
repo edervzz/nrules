@@ -9,10 +9,10 @@ import {
 } from "react-bootstrap";
 import { RuleDto, TenantDto } from "../../typings";
 import axios, { AxiosError } from "axios";
-import Toolbar from "../Toolbar";
+import Toolbar from "../../components/Toolbar";
 import Messages from "../../locales/Messages";
 import { READ_RULES_PAGE } from "../../api";
-import MyVars from "../../myvars";
+import Vars from "../../vars";
 
 interface Props {}
 
@@ -28,7 +28,7 @@ function Tables({}: Props) {
         setMessageError(Messages.LOADING);
         setRules([]);
 
-        const tenant = MyVars.tenant;
+        const tenant = Vars.tenant;
         const tenantDto = JSON.parse(tenant) as TenantDto;
 
         axios

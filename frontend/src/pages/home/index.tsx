@@ -1,8 +1,8 @@
 import { Col, Container, Row, Badge } from "react-bootstrap";
-import Footer from "../components/Footer/Footer";
-import Menubar from "../components/Menubar";
-import Messages from "../locales/Messages";
-import MainContainer from "../components/MainContainer";
+import Footer from "../../components/Footer/Footer";
+import Menubar from "../../components/Menubar";
+import Messages from "../../locales/Messages";
+import MainContainer from "../../components/MainContainer";
 
 export default function HomePage() {
     return (

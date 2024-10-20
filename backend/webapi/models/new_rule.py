@@ -12,10 +12,10 @@ class NewRuleModel:
         self.__dict__ = json.loads(j)
         self.ruleid = str(uuid.uuid4())
         self.name = self.__dict__.get("name", "")
-        self.rule_type = self.__dict__.get("rule_type", False)
+        self.rule_type = self.__dict__.get("rule_type", "")
         self.strategy = self.__dict__.get("strategy", "")
 
-        parameter_raw = self.__dict__.get("parameters", None)
+        parameter_raw = self.__dict__.get("parameters", [])
         self.parameters: List[Parameter] = []
 
         conditions_raw = self.__dict__.get("conditions", None)

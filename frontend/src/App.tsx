@@ -1,17 +1,17 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import NewPage from "./pages/NewPage";
-import TablesTage from "./pages/TablesPage";
+import NewPage from "./pages/new";
+import TablesTage from "./pages/matrix";
 import Transports from "./pages/TransportsPage";
 import TenancyPage from "./pages/TenancyPage";
 import UsersPage from "./pages/UsersPage";
-import InitPage from "./pages/InitPage";
-import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/login";
+import HomePage from "./pages/home";
 
 export const router = createBrowserRouter([
     {
         path: "/",
-        element: <InitPage />,
+        element: <LoginPage />,
     },
     {
         path: "/home",

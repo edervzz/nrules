@@ -9,7 +9,7 @@ import { useState } from "react";
 
 import { TenantDto } from "../../typings";
 import { useNavigate } from "react-router-dom";
-import MyVars from "../../myvars";
+import Vars from "../../vars";
 
 interface Props {
     link_new?: string;
@@ -21,12 +21,12 @@ export default function Menubar({ link_new = "/new", onClickNew }: Props) {
     const [showLogout, setShowLogout] = useState(false);
     const navigate = useNavigate();
 
-    const tenantData = MyVars.tenant;
+    const tenantData = Vars.tenant;
     if (tenantData == null) return <></>;
     const tenant = JSON.parse(tenantData) as TenantDto;
 
     const handleClickLogout = () => {
-        MyVars.clear();
+        Vars.clear();
         setShowLogout(true);
         navigate("/");
     };

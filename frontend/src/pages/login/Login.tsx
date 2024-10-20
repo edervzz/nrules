@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { FormEvent, useRef, useState } from "react";
 import { switchLocale } from "../../locales/i18n";
 import { TenantDto } from "../../typings";
-import MyVars from "../../myvars";
+import Vars from "../../vars";
 
 interface Props {
     onTryConnecting: () => void;
@@ -12,7 +12,7 @@ interface Props {
 }
 
 export default function Login({ onTryConnecting, onFailureConnection }: Props) {
-    const [langu, setLangu] = useState(MyVars.language);
+    const [langu, setLangu] = useState(Vars.language);
 
     const languRef = useRef<HTMLSelectElement>(null);
     const tidRef = useRef<HTMLInputElement>(null);
@@ -37,7 +37,7 @@ export default function Login({ onTryConnecting, onFailureConnection }: Props) {
                 tokenProd: "1234567890",
                 username: usernameRef.current?.value,
             };
-            MyVars.tenant = JSON.stringify(tenant);
+            Vars.tenant = JSON.stringify(tenant);
             navigate("/home");
         } else {
             onFailureConnection(Messages.ERROR_USR_PWD);

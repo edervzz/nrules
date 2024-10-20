@@ -1,6 +1,7 @@
 export * from "./RuleDto"
 export * from "./TenantDto"
 export * from "./CreateRuleDto"
+export * from "./ErrorDto"
 
 export type NewRuleCondition = {
     id:string;

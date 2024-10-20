@@ -1,4 +1,4 @@
-export default class MyVars{
+export default class Vars{
     public static get tenant(){
         return sessionStorage.getItem("tenant") || "";
     }

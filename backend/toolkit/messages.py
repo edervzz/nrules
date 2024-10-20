@@ -191,6 +191,10 @@ class Codes:
     es_messages[RU_UPD_001] = "Nombre de Regla es obligatorio."
 
     # Create Rule
+    RU_CREA_013 = "RU-CREA-013"
+    en_messages[RU_CREA_013] = "All paramter's name must be unique."
+    es_messages[RU_CREA_013] = "Todos los nombres de los parámetros deben ser únicos."
+
     RU_CREA_012 = "RU-CREA-012"
     en_messages[RU_CREA_012] = "Parameter's fields are mandatory."
     es_messages[RU_CREA_012] = "Complete todos los campos de los parámetros."

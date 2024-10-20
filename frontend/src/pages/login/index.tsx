@@ -1,12 +1,12 @@
 import { Badge, Col, Container, Row } from "react-bootstrap";
-import Login from "../components/Login";
-import Footer from "../components/Footer/Footer";
+import Login from "./Login";
+import Footer from "../../components/Footer/Footer";
 import { useState } from "react";
-import Loading01 from "../components/Loading";
-import Messages from "../locales/Messages";
-import MainContainer from "../components/MainContainer";
+import { Loading01 } from "../../components/Loading";
+import Messages from "../../locales/Messages";
+import MainContainer from "../../components/MainContainer";
 
-export default function InitPage() {
+export default function LoginPage() {
     const [showLoad, setShowLoad] = useState(false);
     const [isFailure, setIsFailure] = useState(false);
     const [messageError, setMessageError] = useState("");

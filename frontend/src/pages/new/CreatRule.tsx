@@ -14,18 +14,22 @@ import {
     CreateRuleDto,
     ParametersDto,
     TenantDto,
+    ErrorDto,
 } from "../../typings";
 import { ConditionType } from "../../enums";
 import { FormEvent, useRef, useState } from "react";
-import Toolbar from "../Toolbar";
+import Toolbar from "../../components/Toolbar";
 import { v4 as uuidv4 } from "uuid";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { CREA_RULE } from "../../api";
-import MyVars from "../../myvars";
+import Vars from "../../vars";
+import { Loading02 } from "../../components/Loading";
 
 interface Props {}
 
 function CreateRule({}: Props) {
+    const [showSending, setShowSending] = useState(false);
+    const [isError, setIsError] = useState<ErrorDto[]>([]);
     const [conditions, setConditions] = useState<NewRuleCondition[]>([
         { id: uuidv4(), variable: "", type: ConditionType.STR },
     ]);
@@ -81,9 +85,14 @@ function CreateRule({}: Props) {
     const handleDelOutput = (id: string) => {
         setOutputs(outputs.filter((x) => x.id !== id));
     };
+    // handle sending close
+    const handleClose = () => {
+        setShowSending(false);
+    };
     // submit
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
+        setShowSending(true);
 
         const conds = conditions.map((x) => {
             const c: ParametersDto = {
@@ -110,23 +119,43 @@ function CreateRule({}: Props) {
             parameters: [...conds, ...outs],
         };
 
-        const tenant = MyVars.tenant;
+        const tenant = Vars.tenant;
         const tenantDto = JSON.parse(tenant) as TenantDto;
-        console.log(newRule);
 
         axios
             .post<CreateRuleDto>(CREA_RULE(tenantDto.id.toString()), newRule, {
                 headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*",
+                    "Accept-Language": Vars.language,
                 },
             })
-            .then()
-            .catch();
+            .then((res) => {
+                console.log(res);
+                switch (res.status) {
+                    case 201:
+                        setShowSending(false);
+                        break;
+                    default:
+                        break;
+                }
+            })
+            .catch((err: AxiosError) => {
+                if (err.response) {
+                    const data = err.response!.data as ErrorDto[];
+                    setIsError(data);
+                }
+            });
     };
 
     return (
         <>
+            {showSending && (
+                <Loading02
+                    title="Sending"
+                    isFailure={isError.length > 0}
+                    errorList={isError}
+                    onClose={handleClose}
+                ></Loading02>
+            )}
             <Toolbar
                 title={Messages.CREA_RULE}
                 titleInfo={
@@ -134,7 +163,10 @@ function CreateRule({}: Props) {
                         <p>
                             Cree una regla indicando nombre, tipo y estrategia.
                         </p>
-                        <p>Defina las variables de condiciones y salidas.</p>
+                        <p>
+                            Defina los parámetros que serviran como condiciones
+                            y salidas.
+                        </p>
                     </div>
                 }
                 hideSearch
@@ -284,7 +316,7 @@ function CreateRule({}: Props) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {outputs.map((x, idx) => (
+                                    {outputs.map((x) => (
                                         <tr key={x.id}>
                                             <td>
                                                 <Button

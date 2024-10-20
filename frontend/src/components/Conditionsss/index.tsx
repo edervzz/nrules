@@ -78,7 +78,7 @@ const Conditionsss = ({ operator, onOperationConditionSelected }: Props) => {
 
             <Modal size="xl" show={show} onHide={handleClose} centered>
                 <Modal.Header closeButton>
-                    <Modal.Title>{Messages.SELECT_OPERATOR}</Modal.Title>
+                    <Modal.Title>{Messages.COMMON_SELECT_OPERATOR}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <BasicOperatorSelector

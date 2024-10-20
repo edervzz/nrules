@@ -40,7 +40,7 @@ export default function Login({ onTryConnecting, onFailureConnection }: Props) {
             Vars.tenant = JSON.stringify(tenant);
             navigate("/home");
         } else {
-            onFailureConnection(Messages.ERROR_USR_PWD);
+            onFailureConnection(Messages.MESSAGE_ERROR_USR_PWD);
         }
     };
 
@@ -53,7 +53,7 @@ export default function Login({ onTryConnecting, onFailureConnection }: Props) {
         <Form onSubmit={handleSubmit}>
             <Card style={{ width: "18rem" }}>
                 <Card.Body>
-                    <Card.Title>{Messages.LOGIN}</Card.Title>
+                    <Card.Title>{Messages.LOGIN_LOGIN}</Card.Title>
                     <Card.Text>
                         <Form.Select
                             className="mb-2"
@@ -71,19 +71,19 @@ export default function Login({ onTryConnecting, onFailureConnection }: Props) {
 
                         <Form.Control
                             className="mb-2"
-                            placeholder={Messages.TENANTID}
+                            placeholder={Messages.LOGIN_TENANTID}
                             aria-describedby="basic-addon1"
                             ref={tidRef}
                         />
                         <Form.Control
                             className="mb-2"
-                            placeholder={Messages.USERNAME}
+                            placeholder={Messages.LOGIN_USERNAME}
                             aria-label="Username"
                             aria-describedby="basic-addon1"
                             ref={usernameRef}
                         />
                         <Form.Control
-                            placeholder={Messages.PASSWORD}
+                            placeholder={Messages.LOGIN_PASSWORD}
                             type="password"
                             id="inputPassword5"
                             aria-describedby="passwordHelpBlock"

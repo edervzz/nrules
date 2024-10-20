@@ -36,7 +36,7 @@ export default function Menubar({ link_new = "/new", onClickNew }: Props) {
             {showLogout && (
                 <Modal size="lg" show={true} backdrop="static">
                     <Modal.Header closeButton>
-                        <Modal.Title>{Messages.LOGINGOUT}</Modal.Title>
+                        <Modal.Title>{Messages.MENUBAR_LOGING_OUT}</Modal.Title>
                     </Modal.Header>
 
                     <Modal.Body>
@@ -63,32 +63,32 @@ export default function Menubar({ link_new = "/new", onClickNew }: Props) {
                                 href={link_new}
                                 onClick={() => onClickNew?.()}
                             >
-                                {Messages.NEW_RULE}
+                                {Messages.MENUBAR_NEW_RULE}
                             </Nav.Link>
 
                             <Nav.Link className={styles.link} href="/tables">
-                                {Messages.MATRIXES}
+                                {Messages.MENUBAR_MATRIXES}
                             </Nav.Link>
 
                             <Nav.Link className={styles.link} href="/runner">
-                                {Messages.RUNNER}
+                                {Messages.MENUBAR_RUNNER}
                             </Nav.Link>
 
                             <NavDropdown
-                                title={Messages.MANAGEMENT}
+                                title={Messages.MENUBAR_MANAGEMENT}
                                 id="basic-nav-dropdown"
                             >
                                 <NavDropdown.Item
                                     className={styles.link}
                                     href="/transports"
                                 >
-                                    {Messages.TRANSPORTS}
+                                    {Messages.MENUBAR_TRANSPORTS}
                                 </NavDropdown.Item>
                                 <NavDropdown.Item
                                     className={styles.link}
                                     href="/tenancy"
                                 >
-                                    {Messages.TENANTS}
+                                    {Messages.MENUBAR_TENANTS}
                                 </NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
@@ -121,7 +121,7 @@ export default function Menubar({ link_new = "/new", onClickNew }: Props) {
                                 onClick={handleClickLogout}
                             >
                                 <i className="bi bi-box-arrow-right"></i>
-                                {" " + Messages.SIGN_OUT}
+                                {" " + Messages.MENUBAR_SIGN_OUT}
                             </NavDropdown.Item>
                         </NavDropdown>
                     </Navbar.Collapse>

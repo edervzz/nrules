@@ -28,7 +28,7 @@ export default function LoginPage() {
         <MainContainer isLoginPage>
             {showLoad && (
                 <Loading01
-                    title={Messages.CONNECTING}
+                    title={Messages.MESSAGE_CONNECTING}
                     isFailure={isFailure}
                     messageOnFailure={messageError}
                     onClose={handleClose}

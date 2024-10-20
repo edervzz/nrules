@@ -157,7 +157,7 @@ function CreateRule({}: Props) {
                 ></Loading02>
             )}
             <Toolbar
-                title={Messages.CREA_RULE}
+                title={Messages.NEWRULE_CREA_RULE}
                 titleInfo={
                     <div>
                         <p>
@@ -178,7 +178,9 @@ function CreateRule({}: Props) {
                     <Row>
                         <Col>
                             <Form.Group className="mb-3" controlId="rulename">
-                                <Form.Label>{Messages.RULENAME}</Form.Label>
+                                <Form.Label>
+                                    {Messages.NEWRULE_RULENAME}
+                                </Form.Label>
                                 <Form.Control
                                     placeholder="ru.domain.detail"
                                     required={true}
@@ -190,10 +192,16 @@ function CreateRule({}: Props) {
                         </Col>
                         <Col>
                             <Form.Group className="mb-3" controlId="ruletype">
-                                <Form.Label>{Messages.RULETYPE}</Form.Label>
+                                <Form.Label>
+                                    {Messages.NEWRULE_RULETYPE}
+                                </Form.Label>
                                 <Form.Select required={true} ref={ruletypeRef}>
-                                    <option>{Messages.RULETYPE_SELECT}</option>
-                                    <option value={1}>{Messages.MATRIX}</option>
+                                    <option>
+                                        {Messages.NEWRULE_RULETYPE_SELECT}
+                                    </option>
+                                    <option value={1}>
+                                        {Messages.COMMON_MATRIX}
+                                    </option>
                                 </Form.Select>
                             </Form.Group>
                         </Col>
@@ -202,22 +210,24 @@ function CreateRule({}: Props) {
                                 className="mb-3"
                                 controlId="rulestrategy"
                             >
-                                <Form.Label>{Messages.RULESTRATEGY}</Form.Label>
+                                <Form.Label>
+                                    {Messages.NEWRULE_RULESTRATEGY}
+                                </Form.Label>
                                 <Form.Select
                                     required={true}
                                     ref={rulestrategyRef}
                                 >
                                     <option>
-                                        {Messages.RULESTRATEGY_SELECT}
+                                        {Messages.NEWRULE_RULESTRATEGY_SELECT}
                                     </option>
                                     <option value={1}>
-                                        {Messages.RULESTRATEGY_EARLY}
+                                        {Messages.NEWRULE_RULESTRATEGY_EARLY}
                                     </option>
                                     <option value={2}>
-                                        {Messages.RULESTRATEGY_BASE}
+                                        {Messages.NEWRULE_RULESTRATEGY_BASE}
                                     </option>
                                     <option value={3}>
-                                        {Messages.RULESTRATEGY_ALL}
+                                        {Messages.NEWRULE_RULESTRATEGY_ALL}
                                     </option>
                                 </Form.Select>
                             </Form.Group>

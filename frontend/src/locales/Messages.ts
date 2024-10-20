@@ -10,13 +10,6 @@ export default class Messages{
     static get NAME():string { return i18n.t("common:name"); }
     static get TYPE():string { return i18n.t("common:type"); }
 
-    static get START_NEW_RULE():string { return i18n.t("common:start_new_rule"); }
-    static get INPUT_PARAMS():string { return i18n.t("common:input_params"); }
-    static get OUTPUT_PARAMS():string { return i18n.t("common:output_params"); }
-    static get SEND_CREA_RULE():string { return i18n.t("common:send_crea_rule"); }
-
-    static get CREA_RULE():string { return i18n.t("common:create_rule"); }
-
     static get BUTTON_OUTPUT_DEFAULT():string { return i18n.t("common:button_output_default"); }
     static get BUTTON_OUTPUT():string { return i18n.t("common:button_output"); }
     static get BUTTON_CONDITION():string { return i18n.t("common:button_condition"); }
@@ -27,48 +20,43 @@ export default class Messages{
     static get BUTTON_CANCEL():string { return i18n.t("common:button_cancel"); }
     static get BUTTON_CLOSE():string { return i18n.t("common:button_close"); }
     
-    static get CONNECTING():string { return i18n.t("common:connecting"); }
-    static get LOADING():string { return i18n.t("common:loading"); }
-    static get LOGINGOUT():string { return i18n.t("common:loging_out"); }
-    static get SOME_WRONG():string { return i18n.t("common:some_wrong"); }
-    static get ERROR_USR_PWD():string { return i18n.t("common:error_user_pwd"); }
+    static get NEWRULE_CREA_RULE():string { return i18n.t("common:newrule_create_rule"); }
+    static get NEWRULE_RULENAME():string { return i18n.t("common:newrule_rulename"); }
+    static get NEWRULE_RULESTRATEGY():string { return i18n.t("common:newrule_rulestrategy"); }
+    static get NEWRULE_RULESTRATEGY_SELECT():string { return i18n.t("common:newrule_rulestrategy_select"); }
+    static get NEWRULE_RULESTRATEGY_EARLY():string { return i18n.t("common:newrule_rulestrategy_early"); }
+    static get NEWRULE_RULESTRATEGY_BASE():string { return i18n.t("common:newrule_rulestrategy_base"); }
+    static get NEWRULE_RULESTRATEGY_ALL():string { return i18n.t("common:newrule_rulestrategy_all"); }
+    static get NEWRULE_RULETYPE():string { return i18n.t("common:newrule_ruletype"); }
+    static get NEWRULE_RULETYPE_SELECT():string { return i18n.t("common:newrule_ruletype_select"); }
+    
+    static get MENUBAR_NEW_RULE():string { return i18n.t("common:menubar_new_rule"); }
+    static get MENUBAR_MATRIXES():string { return i18n.t("common:menubar_matrixes"); }
+    static get MENUBAR_RUNNER():string { return i18n.t("common:menubar_runner"); }
+    static get MENUBAR_MANAGEMENT():string { return i18n.t("common:menubar_management"); }
+    static get MENUBAR_TRANSPORTS():string { return i18n.t("common:menubar_transports"); }
+    static get MENUBAR_TENANTS():string { return i18n.t("common:menubar_tenants"); }
+    static get MENUBAR_SIGN_OUT():string { return i18n.t("common:menubar_sign_out"); }
+    static get MENUBAR_LOGING_OUT():string { return i18n.t("common:menubar_loging_out"); }
 
-    static get TENANTID():string { return i18n.t("common:tenant_id"); }
-    static get USERNAME():string { return i18n.t("common:username"); }
-    static get PASSWORD():string { return i18n.t("common:password"); }
-    static get LOGIN():string { return i18n.t("common:login"); }
+    static get MESSAGE_SOME_WRONG():string { return i18n.t("common:message_some_wrong"); }
+    static get MESSAGE_CONNECTING():string { return i18n.t("common:message_connecting"); }
+    static get MESSAGE_LOADING():string { return i18n.t("common:message_loading"); }
+    static get MESSAGE_ERROR_USR_PWD():string { return i18n.t("common:message_error_user_pwd"); }
+    
+    static get LOGIN_TENANTID():string { return i18n.t("common:login_tenant_id"); }
+    static get LOGIN_USERNAME():string { return i18n.t("common:login_username"); }
+    static get LOGIN_PASSWORD():string { return i18n.t("common:login_password"); }
+    static get LOGIN_LOGIN():string { return i18n.t("common:login_login"); }
 
     static get NRULE_INFO():string { return i18n.t("common:nrule_info"); }
     static get NRULE_HELP():string { return i18n.t("common:nrule_help"); }
     static get NRULE_SPECS():string { return i18n.t("common:nrule_specs"); }
     static get NRULE_CAPABILITIES():string { return i18n.t("common:nrule_capabilities"); }
-    static get NRULE_TO_START():string { return i18n.t("common:nrule_to_start"); } 
+    static get NRULE_TO_START():string { return i18n.t("common:nrule_to_start"); }     
     
-    static get SETTINGS():string { return i18n.t("common:settings"); }
-    static get SIGN_OUT():string { return i18n.t("common:sign_out"); }
-    static get NEW_RULE():string { return i18n.t("common:new_rule"); }
-    static get NEW_RULE_PARAMS():string { return i18n.t("common:new_rule_params"); }
-    static get RULENAME():string { return i18n.t("common:rulename"); }
-    static get RULESTRATEGY():string { return i18n.t("common:rulestrategy"); }
-    static get RULESTRATEGY_SELECT():string { return i18n.t("common:rulestrategy_select"); }
-    static get RULESTRATEGY_EARLY():string { return i18n.t("common:rulestrategy_early"); }
-    static get RULESTRATEGY_BASE():string { return i18n.t("common:rulestrategy_base"); }
-    static get RULESTRATEGY_ALL():string { return i18n.t("common:rulestrategy_all"); }
-    static get RULETYPE():string { return i18n.t("common:ruletype"); }
-    static get RULETYPE_SELECT():string { return i18n.t("common:ruletype_select"); }
-    static get MATRIX():string { return i18n.t("common:matrix"); }
-    static get TREE():string { return i18n.t("common:tree"); }
-    static get FLOW():string { return i18n.t("common:flow"); }
-    static get RULES():string { return i18n.t("common:rules"); }
-    static get MATRIXES():string { return i18n.t("common:matrixes"); }
-    static get TREES():string { return i18n.t("common:trees"); }
-    static get FLOWS():string { return i18n.t("common:flows"); }
-    static get RUNNER():string { return i18n.t("common:runner"); }
-    static get MANAGEMENT():string { return i18n.t("common:management"); }
-    static get TRANSPORTS():string { return i18n.t("common:transports"); }
-    static get TENANTS():string { return i18n.t("common:tenants"); }
-    static get USERS():string { return i18n.t("common:users"); }
-    static get SELECT_OPERATOR():string { return i18n.t("common:select_operator"); }
+    static get COMMON_MATRIX():string { return i18n.t("common:common_matrix"); }
+    static get COMMON_SELECT_OPERATOR():string { return i18n.t("common:common_select_operator"); }
 
     // operators descriptions
     static get EQUAL():string { return i18n.t("common:equal"); }

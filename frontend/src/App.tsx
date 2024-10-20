@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import NewPage from "./pages/new";
+import NewRulePage from "./pages/newRule";
 import TablesTage from "./pages/matrix";
 import Transports from "./pages/TransportsPage";
 import TenancyPage from "./pages/TenancyPage";
@@ -19,7 +19,7 @@ export const router = createBrowserRouter([
     },
     {
         path: "/new",
-        element: <NewPage />,
+        element: <NewRulePage />,
     },
     {
         path: "/tables",

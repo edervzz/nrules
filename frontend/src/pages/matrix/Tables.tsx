@@ -25,7 +25,7 @@ function Tables({}: Props) {
     const handleAction01 = () => {
         setShowInfoMessage(true);
         setShowErrorMessage(false);
-        setMessageError(Messages.LOADING);
+        setMessageError(Messages.MESSAGE_LOADING);
         setRules([]);
 
         const tenant = Vars.tenant;
@@ -76,13 +76,13 @@ function Tables({}: Props) {
                     bg="secondary"
                 >
                     <Toast.Body className="text-white text-center">
-                        {Messages.LOADING}
+                        {Messages.MESSAGE_LOADING}
                     </Toast.Body>
                 </Toast>
             </ToastContainer>
 
             <Toolbar
-                title={Messages.MATRIX}
+                title={Messages.COMMON_MATRIX}
                 isPaginated
                 pagination={{
                     from: 10,

@@ -19,7 +19,7 @@ export function Loading01({
         <Modal show size="lg" backdrop="static" keyboard={false}>
             <Modal.Header>
                 <Modal.Title>
-                    {isFailure ? Messages.SOME_WRONG : title}
+                    {isFailure ? Messages.MESSAGE_SOME_WRONG : title}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -48,7 +48,7 @@ export function Loading02({ title, errorList, isFailure, onClose }: Props02) {
         <Modal show size="lg" backdrop="static" keyboard={false}>
             <Modal.Header>
                 <Modal.Title>
-                    {isFailure ? Messages.SOME_WRONG : title}
+                    {isFailure ? Messages.MESSAGE_SOME_WRONG : title}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>

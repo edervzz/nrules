@@ -1,12 +1,13 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import NewRulePage from "./pages/newRule";
-import TablesTage from "./pages/matrix";
+import MatrixPage from "./pages/matrix";
 import Transports from "./pages/TransportsPage";
 import TenancyPage from "./pages/TenancyPage";
 import UsersPage from "./pages/UsersPage";
 import LoginPage from "./pages/login";
 import HomePage from "./pages/home";
+import EditorPage from "./pages/editor";
 
 export const router = createBrowserRouter([
     {
@@ -22,8 +23,12 @@ export const router = createBrowserRouter([
         element: <NewRulePage />,
     },
     {
-        path: "/tables",
-        element: <TablesTage />,
+        path: "/editor/:id",
+        element: <EditorPage />,
+    },
+    {
+        path: "/matrix",
+        element: <MatrixPage />,
     },
     {
         path: "/transports",

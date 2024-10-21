@@ -7,7 +7,7 @@ import {
     Toast,
     ToastContainer,
 } from "react-bootstrap";
-import { RuleDto, TenantDto } from "../../typings";
+import { Pagination, RuleDto, TenantDto } from "../../typings";
 import axios, { AxiosError } from "axios";
 import Toolbar from "../../components/Toolbar";
 import Messages from "../../locales/Messages";
@@ -16,13 +16,30 @@ import Vars from "../../vars";
 
 interface Props {}
 
-function Tables({}: Props) {
+function Matrixes({}: Props) {
+    const pageSize = 10;
+    const [localPagination, setLocalPagination] = useState<Pagination>({
+        currentPageNo: 0,
+        nextPageNo: 0,
+        prevPageNo: 0,
+        pageSize: pageSize,
+        totalPages: 0,
+        totalCount: 0,
+    });
     const [rules, setRules] = useState<RuleDto[]>([]);
     const [showInfoMessage, setShowInfoMessage] = useState(false);
     const [showErrorMessage, setShowErrorMessage] = useState(false);
     const [messageError, setMessageError] = useState("");
 
     const handleAction01 = () => {
+        callApiGetRules(1);
+    };
+
+    const handleGotoPage = (nextPage: number) => {
+        callApiGetRules(nextPage);
+    };
+
+    const callApiGetRules = (pageNo: number) => {
         setShowInfoMessage(true);
         setShowErrorMessage(false);
         setMessageError(Messages.MESSAGE_LOADING);
@@ -33,11 +50,28 @@ function Tables({}: Props) {
 
         axios
             .get<RuleDto[]>(
-                READ_RULES_PAGE(tenantDto.id.toString(), "1", "100")
+                READ_RULES_PAGE(
+                    tenantDto.id.toString(),
+                    pageNo.toString(),
+                    pageSize.toString()
+                )
             )
             .then((res) => {
                 setShowInfoMessage(false);
                 setRules(res.data);
+                const nextPage = res.headers["next-page"];
+                const prevPage = res.headers["previous-page"];
+                const totalPages = res.headers["total-pages"];
+                const totalCount = res.headers["total-count"];
+
+                setLocalPagination({
+                    nextPageNo: nextPage,
+                    prevPageNo: prevPage,
+                    pageSize: localPagination.pageSize,
+                    currentPageNo: pageNo,
+                    totalPages: totalPages,
+                    totalCount: totalCount,
+                });
             })
             .catch(function (error: AxiosError) {
                 setShowErrorMessage(true);
@@ -84,13 +118,10 @@ function Tables({}: Props) {
             <Toolbar
                 title={Messages.COMMON_MATRIX}
                 isPaginated
-                pagination={{
-                    from: 10,
-                    to: 30,
-                    total: 2,
-                }}
+                pagination={localPagination}
                 onAction01={handleAction01}
                 action01Icon="bi-arrow-clockwise"
+                onGotoPage={handleGotoPage}
             ></Toolbar>
 
             <Container>
@@ -173,4 +204,4 @@ function Tables({}: Props) {
     );
 }
 
-export default Tables;
+export default Matrixes;

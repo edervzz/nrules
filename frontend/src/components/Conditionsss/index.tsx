@@ -25,7 +25,6 @@ const Conditionsss = ({ operator, onOperationConditionSelected }: Props) => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const handleOperatorSelected = (op: Operator) => {
-        console.log(op);
         onOperationConditionSelected(op);
         handleClose();
     };

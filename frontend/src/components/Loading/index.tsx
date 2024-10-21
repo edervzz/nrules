@@ -39,8 +39,8 @@ export function Loading01({
 
 interface Props02 {
     title: string;
-    isFailure: boolean;
     errorList: ErrorDto[];
+    isFailure: boolean;
     onClose: () => void;
 }
 export function Loading02({ title, errorList, isFailure, onClose }: Props02) {
@@ -53,16 +53,19 @@ export function Loading02({ title, errorList, isFailure, onClose }: Props02) {
             </Modal.Header>
             <Modal.Body>
                 <Container className="d-flex justify-content-center">
-                    <Table>
-                        <tbody>
-                            {errorList.map((x) => (
-                                <tr id={x.code}>
-                                    <td>{x.code}</td>
-                                    <td>{x.message}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </Table>
+                    {!isFailure && <Spinner animation="border" />}
+                    {isFailure && (
+                        <Table>
+                            <tbody>
+                                {errorList.map((x) => (
+                                    <tr id={x.code}>
+                                        <td>{x.code}</td>
+                                        <td>{x.message}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </Table>
+                    )}
                 </Container>
             </Modal.Body>
             <Modal.Footer>

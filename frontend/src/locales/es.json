@@ -26,6 +26,8 @@
     "newrule_rulestrategy_all": "ALL - Todos los Resultados",
     "newrule_ruletype":"Tipo",
     "newrule_ruletype_select":"- Seleccione tipo de regla -",
+    "newrule_info_01": "Cree una regla indicando nombre, tipo y estrategia.",
+    "newrule_info_02": "Defina los parámetros que serviran como condiciones y salidas.",
 
     "menubar_new_rule":"Nueva Regla",
     "menubar_matrixes":"Matrices",
@@ -53,7 +55,8 @@
     "nrule_to_start": "Para comenzar seleccione \"Nueva Regla\" y complete el formulario.",
     
     "common_matrix":"Matrices de Decisión",    
-    "common_select_operator": "Seleccione Operador",  
+    "common_select_operator": "Seleccione Operador",
+    "common_sending": "Enviando",  
 
     "equal": "Igual",
     "not_equal": "No Igual",

@@ -11,7 +11,8 @@ URL_API_PREFIX = "/nr/api/v1"
 
 app = Flask(__name__)
 
-CORS(app)
+CORS(app, expose_headers=[
+    "Next-Page", "Previous-Page", "Total-Pages", "Total-Count", "Item"])
 
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(seconds=60)

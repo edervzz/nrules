@@ -9,12 +9,7 @@ import {
     Row,
     Tooltip,
 } from "react-bootstrap";
-
-interface Pagination {
-    from: number;
-    to: number;
-    total: number;
-}
+import { Pagination } from "../../typings";
 
 interface Props {
     title: string;
@@ -27,6 +22,7 @@ interface Props {
     onAction03?: () => void;
     isPaginated?: boolean;
     pagination?: Pagination;
+    onGotoPage?: (nextPage: number) => void;
     hideSearch?: boolean;
 }
 
@@ -37,8 +33,17 @@ const Toolbar = ({
     onAction01,
     isPaginated = false,
     pagination,
+    onGotoPage: onGotoPage,
     hideSearch = false,
 }: Props) => {
+    const from =
+        (pagination?.pageSize || 0) * (pagination?.currentPageNo || 0) -
+        (pagination?.pageSize || 0) +
+        1;
+    let to = (pagination?.pageSize || 0) * (pagination?.currentPageNo || 0);
+    if (to > (pagination?.totalCount || 0)) {
+        to = pagination?.totalCount || 0;
+    }
     return (
         <Container className="mb-2 mt-2">
             <Row className="align-items-center">
@@ -94,23 +99,51 @@ const Toolbar = ({
                 </Col>
                 {isPaginated && (
                     <Col sm="3" className="text-end">
-                        {pagination?.from}-{pagination?.to} Total{" "}
-                        {pagination?.total}
+                        {from.toString() +
+                            " - " +
+                            to.toString() +
+                            " Total " +
+                            pagination?.totalCount.toString()}
                         <Button
-                            disabled
+                            disabled={pagination?.prevPageNo == 0}
+                            onClick={() => onGotoPage?.(1)}
                             className="ms-3 me-1"
                             size="sm"
                             variant="secondary"
                         >
                             <i className="bi bi-chevron-bar-left"></i>
                         </Button>
-                        <Button className="me-1" size="sm" variant="secondary">
+                        <Button
+                            disabled={(pagination?.prevPageNo || 0) == 0}
+                            onClick={() =>
+                                onGotoPage?.(pagination?.prevPageNo || 0)
+                            }
+                            className="me-1"
+                            size="sm"
+                            variant="secondary"
+                        >
                             <i className="bi bi-chevron-compact-left"></i>
                         </Button>
-                        <Button className="me-1" size="sm" variant="secondary">
+                        <Button
+                            disabled={(pagination?.nextPageNo || 0) == 0}
+                            onClick={() =>
+                                onGotoPage?.(pagination?.nextPageNo || 0)
+                            }
+                            className="me-1"
+                            size="sm"
+                            variant="secondary"
+                        >
                             <i className="bi bi-chevron-compact-right"></i>
                         </Button>
-                        <Button className="me-1" size="sm" variant="secondary">
+                        <Button
+                            disabled={pagination?.nextPageNo == 0}
+                            onClick={() =>
+                                onGotoPage?.(pagination?.totalPages || 0)
+                            }
+                            className="me-1"
+                            size="sm"
+                            variant="secondary"
+                        >
                             <i className="bi bi-chevron-bar-right"></i>
                         </Button>
                     </Col>

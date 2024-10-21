@@ -24,12 +24,14 @@ import axios, { AxiosError } from "axios";
 import { CREA_RULE } from "../../api";
 import Vars from "../../vars";
 import { Loading02 } from "../../components/Loading";
+import { useNavigate } from "react-router-dom";
 
 interface Props {}
 
 function CreateRule({}: Props) {
+    const navigate = useNavigate();
     const [showSending, setShowSending] = useState(false);
-    const [isError, setIsError] = useState<ErrorDto[]>([]);
+    const [errorList, setErrorList] = useState<ErrorDto[]>([]);
     const [conditions, setConditions] = useState<NewRuleCondition[]>([
         { id: uuidv4(), variable: "", type: ConditionType.STR },
     ]);
@@ -90,9 +92,10 @@ function CreateRule({}: Props) {
         setShowSending(false);
     };
     // submit
-    const handleSubmit = (event: FormEvent) => {
+    const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
         setShowSending(true);
+        setErrorList([]);
 
         const conds = conditions.map((x) => {
             const c: ParametersDto = {
@@ -129,10 +132,13 @@ function CreateRule({}: Props) {
                 },
             })
             .then((res) => {
-                console.log(res);
                 switch (res.status) {
                     case 201:
                         setShowSending(false);
+                        const item = (res.headers["item"] || "") as string;
+                        const elements = item.split("/");
+                        const uuidobj = elements[elements.length - 1];
+                        navigate(`/editor/${uuidobj}`);
                         break;
                     default:
                         break;
@@ -141,7 +147,7 @@ function CreateRule({}: Props) {
             .catch((err: AxiosError) => {
                 if (err.response) {
                     const data = err.response!.data as ErrorDto[];
-                    setIsError(data);
+                    setErrorList(data);
                 }
             });
     };
@@ -150,9 +156,9 @@ function CreateRule({}: Props) {
         <>
             {showSending && (
                 <Loading02
-                    title="Sending"
-                    isFailure={isError.length > 0}
-                    errorList={isError}
+                    title={Messages.COMMON_SENDING}
+                    isFailure={errorList.length > 0}
+                    errorList={errorList}
                     onClose={handleClose}
                 ></Loading02>
             )}
@@ -160,13 +166,8 @@ function CreateRule({}: Props) {
                 title={Messages.NEWRULE_CREA_RULE}
                 titleInfo={
                     <div>
-                        <p>
-                            Cree una regla indicando nombre, tipo y estrategia.
-                        </p>
-                        <p>
-                            Defina los parámetros que serviran como condiciones
-                            y salidas.
-                        </p>
+                        <p>{Messages.NEWRULE_INFO_01}</p>
+                        <p>{Messages.NEWRULE_INFO_02}</p>
                     </div>
                 }
                 hideSearch

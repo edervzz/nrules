@@ -1,14 +1,16 @@
+import { useParams } from "react-router-dom";
 import MainContainer from "../../components/MainContainer";
 import Menubar from "../../components/Menubar";
-import Matrixes from "./Matrixes";
-import Footer from "../../components/Footer/Footer";
+import Editor from "./Editor";
 
-export default function MatrixPage() {
+export default function EditorPage() {
+    const { id } = useParams();
+    console.log(id);
+
     return (
         <MainContainer>
             <Menubar></Menubar>
-            <Matrixes></Matrixes>
-            <Footer></Footer>
+            <Editor></Editor>
         </MainContainer>
     );
 }

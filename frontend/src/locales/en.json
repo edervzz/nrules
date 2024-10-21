@@ -26,6 +26,8 @@
     "newrule_rulestrategy_all": "ALL - Go over all exits",
     "newrule_ruletype":"Type",
     "newrule_ruletype_select":"- Select type of rule -",
+    "newrule_info_01": "Create a rule setting name, type and strategy.",
+    "newrule_info_02": "Define parameters for conditions and outputs.",
 
     "menubar_new_rule":"New Rule",
     "menubar_matrixes":"Matrix",
@@ -52,8 +54,9 @@
     "nrule_capabilities": "Capabilities",
     "nrule_to_start": "To Begin click-on \"New Rule\" y complete de form.",
 
-    "common_matrix":"Matrix Table",
-    "common_select_operator": "Seleccione Operador",
+    "common_matrix":"Matrix",
+    "common_select_operator": "Select Operator",
+    "common_sending": "Sending",
 
     "equal": "Equal",
     "not_equal": "Not Equal",    

@@ -29,6 +29,8 @@ export default class Messages{
     static get NEWRULE_RULESTRATEGY_ALL():string { return i18n.t("common:newrule_rulestrategy_all"); }
     static get NEWRULE_RULETYPE():string { return i18n.t("common:newrule_ruletype"); }
     static get NEWRULE_RULETYPE_SELECT():string { return i18n.t("common:newrule_ruletype_select"); }
+    static get NEWRULE_INFO_01():string { return i18n.t("common:newrule_info_01"); }
+    static get NEWRULE_INFO_02():string { return i18n.t("common:newrule_info_02"); }
     
     static get MENUBAR_NEW_RULE():string { return i18n.t("common:menubar_new_rule"); }
     static get MENUBAR_MATRIXES():string { return i18n.t("common:menubar_matrixes"); }
@@ -57,6 +59,7 @@ export default class Messages{
     
     static get COMMON_MATRIX():string { return i18n.t("common:common_matrix"); }
     static get COMMON_SELECT_OPERATOR():string { return i18n.t("common:common_select_operator"); }
+    static get COMMON_SENDING():string { return i18n.t("common:common_sending"); }
 
     // operators descriptions
     static get EQUAL():string { return i18n.t("common:equal"); }

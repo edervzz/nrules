@@ -14,7 +14,7 @@ export default function MainContainer({ children, isLoginPage }: Props) {
     const validateLogin = () => {
         const tenantData = Vars.tenant;
         if (isLoginPage) {
-            if (tenantData == "") {
+            if (tenantData.id == 0) {
                 setShow(true);
             } else {
                 navigate("/home");

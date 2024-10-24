@@ -34,8 +34,8 @@ def read_rules_endpoint(tid=None, rule_id=None):
         result.rule.tenant_id,
         result.rule.id,
         result.rule.name,
-        result.rule.expression,
-        result.rule.is_exclusive,
+        result.rule.rule_type,
+        result.rule.strategy,
         result.rule.version)
 
     js = json.dumps(rule.__dict__)

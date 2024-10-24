@@ -19,6 +19,8 @@ export default class Messages{
     static get BUTTON_BACK():string { return i18n.t("common:button_back"); }
     static get BUTTON_CANCEL():string { return i18n.t("common:button_cancel"); }
     static get BUTTON_CLOSE():string { return i18n.t("common:button_close"); }
+    static get BUTTON_FIRST():string { return i18n.t("common:button_first"); }
+    static get BUTTON_LAST():string { return i18n.t("common:button_last"); }
     
     static get NEWRULE_CREA_RULE():string { return i18n.t("common:newrule_create_rule"); }
     static get NEWRULE_RULENAME():string { return i18n.t("common:newrule_rulename"); }
@@ -29,6 +31,7 @@ export default class Messages{
     static get NEWRULE_RULESTRATEGY_ALL():string { return i18n.t("common:newrule_rulestrategy_all"); }
     static get NEWRULE_RULETYPE():string { return i18n.t("common:newrule_ruletype"); }
     static get NEWRULE_RULETYPE_SELECT():string { return i18n.t("common:newrule_ruletype_select"); }
+    static get NEWRULE_STATUS():string { return i18n.t("common:newrule_status"); }
     static get NEWRULE_INFO_01():string { return i18n.t("common:newrule_info_01"); }
     static get NEWRULE_INFO_02():string { return i18n.t("common:newrule_info_02"); }
     
@@ -60,6 +63,8 @@ export default class Messages{
     static get COMMON_MATRIX():string { return i18n.t("common:common_matrix"); }
     static get COMMON_SELECT_OPERATOR():string { return i18n.t("common:common_select_operator"); }
     static get COMMON_SENDING():string { return i18n.t("common:common_sending"); }
+    static get COMMON_OF():string { return i18n.t("common:common_of"); }
+
 
     // operators descriptions
     static get EQUAL():string { return i18n.t("common:equal"); }

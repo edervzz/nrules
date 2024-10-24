@@ -17,7 +17,8 @@ class ReadAllRulesBizValidator(Validator):
         """ Validate request format """
         request.rules, request.pagination = self.repository.rule.read_page(
             request.page_no,
-            request.page_size)
+            request.page_size,
+            request.word)
 
         if len(request.rules) == 0:
             raise self.as_not_found(self._localizer.get(Codes.RU_READ_005)

@@ -1,3 +1,5 @@
+import { AxiosResponseHeaders, RawAxiosResponseHeaders } from "axios";
+
 export * from "./RuleDto"
 export * from "./TenantDto"
 export * from "./CreateRuleDto"
@@ -23,4 +25,15 @@ export type Pagination = {
     pageSize: number,
     totalPages: number,
     totalCount: number,
+}
+
+export type ResultAPI<T> = {
+    data?: T,
+    nextPage: number,
+    prevPage: number,
+    totalPages: number,
+    totalCount: number,
+    item: string,
+    ok: boolean,
+    errorMessage: string
 }

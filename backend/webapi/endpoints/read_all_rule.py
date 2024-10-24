@@ -16,10 +16,12 @@ def read_all_rules_endpoint(tid=None):
     tenant_id = int(tid)
     page_no = request.args.get("pageNo", "1")
     page_size = request.args.get("pageSize", "5")
+    word = request.args.get("word", "")
     command = ReadAllRulesRequest(
         tenant_id,
         int(page_no),
-        int(page_size)
+        int(page_size),
+        word
     )
 
     handler = ReadAllRulesHandler(
@@ -39,7 +41,6 @@ def read_all_rules_endpoint(tid=None):
                 r.name,
                 r.rule_type,
                 r.strategy,
-                r.kvs_id_nok,
                 r.version)
             rules.append(rule)
     else:

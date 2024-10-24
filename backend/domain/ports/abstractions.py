@@ -62,7 +62,7 @@ class ReaderPagination:
     """ reader all using pagination """
 
     @abstractmethod
-    def read_page(self, page_no: int, page_size: int) -> tuple[list, any]:
+    def read_page(self, page_no: int, page_size: int, word: str) -> tuple[list, any]:
         """_summary_
 
         Args:

@@ -2,7 +2,7 @@ import { Button, Card, Container, Form } from "react-bootstrap";
 import Messages from "../../locales/Messages";
 import { useNavigate } from "react-router-dom";
 import { FormEvent, useRef, useState } from "react";
-import { switchLocale } from "../../locales/i18n";
+import { changeLocale } from "../../locales/i18n";
 import { TenantDto } from "../../typings";
 import Vars from "../../vars";
 
@@ -37,7 +37,7 @@ export default function Login({ onTryConnecting, onFailureConnection }: Props) {
                 tokenProd: "1234567890",
                 username: usernameRef.current?.value,
             };
-            Vars.tenant = JSON.stringify(tenant);
+            Vars.tenant = tenant;
             navigate("/home");
         } else {
             onFailureConnection(Messages.MESSAGE_ERROR_USR_PWD);
@@ -61,12 +61,12 @@ export default function Login({ onTryConnecting, onFailureConnection }: Props) {
                             value={langu}
                             onChange={(v) => {
                                 setLangu(v.currentTarget.value);
-                                switchLocale();
+                                changeLocale(v.currentTarget.value);
                                 window.location.reload();
                             }}
                         >
-                            <option value="es">Es</option>
-                            <option value="en">En</option>
+                            <option value="es">🇲🇽-Español</option>
+                            <option value="en">🇺🇸-English</option>
                         </Form.Select>
 
                         <Form.Control

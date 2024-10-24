@@ -39,11 +39,15 @@ class RuleAdapter(RuleRepository):
                 Rule.name == external_id).one_or_none()
             return rule
 
-    def read_page(self, page_no, page_size) -> tuple[List[Rule], Pagination]:
+    def read_page(self, page_no, page_size, word) -> tuple[List[Rule], Pagination]:
         with Session(self.engine) as session:
             offset = (page_no-1)*page_size
-            rules = session.query(Rule).offset(
-                offset).limit(page_size).all()
-            total = session.query(Rule.id).all()
-
+            if word != "":
+                rules = session.query(
+                    Rule).where(Rule.name.ilike(f'%{word}%')).offset(offset).limit(page_size).all()
+            else:
+                rules = session.query(Rule).offset(
+                    offset).limit(page_size).all()
+            total = session.query(
+                Rule.id).where(Rule.name.ilike(f'%{word}%')).all()
             return rules, Pagination(page_no, page_size, len(total))

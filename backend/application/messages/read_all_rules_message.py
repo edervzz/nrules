@@ -7,10 +7,11 @@ from domain.entities import Rule, Pagination
 class ReadAllRulesRequest:
     """ Read Rules Request """
 
-    def __init__(self, tenant_id: int, page_no: int, page_size: int):
+    def __init__(self, tenant_id: int, page_no: int, page_size: int, word: str):
         self.tenant_id = tenant_id
         self.page_no = page_no
         self.page_size = page_size
+        self.word = word
         self.rules: List[Rule]
         self.pagination: Pagination
 

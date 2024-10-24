@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import {
     Container,
     Form,
+    Nav,
     Row,
     Table,
     Toast,
@@ -11,15 +12,15 @@ import { Pagination, RuleDto, TenantDto } from "../../typings";
 import axios, { AxiosError } from "axios";
 import Toolbar from "../../components/Toolbar";
 import Messages from "../../locales/Messages";
-import { READ_RULES_PAGE } from "../../api";
+import { CallGet, READ_RULES_PAGE } from "../../api";
 import Vars from "../../vars";
 
 interface Props {}
 
 function Matrixes({}: Props) {
-    const pageSize = 10;
+    const pageSize = 12;
     const [localPagination, setLocalPagination] = useState<Pagination>({
-        currentPageNo: 0,
+        currentPageNo: 1,
         nextPageNo: 0,
         prevPageNo: 0,
         pageSize: pageSize,
@@ -30,58 +31,61 @@ function Matrixes({}: Props) {
     const [showInfoMessage, setShowInfoMessage] = useState(false);
     const [showErrorMessage, setShowErrorMessage] = useState(false);
     const [messageError, setMessageError] = useState("");
-
-    const handleAction01 = () => {
-        callApiGetRules(1);
-    };
+    const [wordToSearch, setWordToSearch] = useState("");
 
     const handleGotoPage = (nextPage: number) => {
-        callApiGetRules(nextPage);
+        callApiGetRules(nextPage, wordToSearch);
     };
 
-    const callApiGetRules = (pageNo: number) => {
+    const handleSearch = (word: string) => {
+        setWordToSearch(word);
+        setLocalPagination({
+            currentPageNo: 1,
+            nextPageNo: 0,
+            prevPageNo: 0,
+            pageSize: pageSize,
+            totalPages: 0,
+            totalCount: 0,
+        });
+        callApiGetRules(1, word);
+    };
+
+    const callApiGetRules = (pageNo: number, word: string) => {
+        const tenantDto = Vars.tenant;
         setShowInfoMessage(true);
         setShowErrorMessage(false);
         setMessageError(Messages.MESSAGE_LOADING);
         setRules([]);
 
-        const tenant = Vars.tenant;
-        const tenantDto = JSON.parse(tenant) as TenantDto;
-
-        axios
-            .get<RuleDto[]>(
-                READ_RULES_PAGE(
-                    tenantDto.id.toString(),
-                    pageNo.toString(),
-                    pageSize.toString()
-                )
+        CallGet<RuleDto[]>(
+            READ_RULES_PAGE(
+                tenantDto.id.toString(),
+                pageNo.toString(),
+                pageSize.toString(),
+                word
             )
-            .then((res) => {
+        ).then((result) => {
+            if (result.ok) {
                 setShowInfoMessage(false);
-                setRules(res.data);
-                const nextPage = res.headers["next-page"];
-                const prevPage = res.headers["previous-page"];
-                const totalPages = res.headers["total-pages"];
-                const totalCount = res.headers["total-count"];
-
+                setRules(result.data!);
                 setLocalPagination({
-                    nextPageNo: nextPage,
-                    prevPageNo: prevPage,
+                    nextPageNo: result.nextPage,
+                    prevPageNo: result.prevPage,
                     pageSize: localPagination.pageSize,
                     currentPageNo: pageNo,
-                    totalPages: totalPages,
-                    totalCount: totalCount,
+                    totalPages: result.totalPages,
+                    totalCount: result.totalCount,
                 });
-            })
-            .catch(function (error: AxiosError) {
+            } else {
                 setShowErrorMessage(true);
                 setShowInfoMessage(false);
-                setMessageError(error.message);
-            });
+                setMessageError(result.errorMessage);
+            }
+        });
     };
 
     useEffect(() => {
-        handleAction01();
+        callApiGetRules(localPagination.currentPageNo, wordToSearch);
     }, []);
 
     return (
@@ -117,11 +121,12 @@ function Matrixes({}: Props) {
 
             <Toolbar
                 title={Messages.COMMON_MATRIX}
+                titleInfo="aqui colocar la información general de la pagina"
+                isSearchable
                 isPaginated
                 pagination={localPagination}
-                onAction01={handleAction01}
-                action01Icon="bi-arrow-clockwise"
                 onGotoPage={handleGotoPage}
+                onSearch={handleSearch}
             ></Toolbar>
 
             <Container>
@@ -129,32 +134,38 @@ function Matrixes({}: Props) {
                     <Table striped bordered hover>
                         <thead>
                             <tr>
-                                <th style={{ width: "0rem" }}>
-                                    <Form.Check
-                                        name="masterCheck"
-                                        checked
-                                        onChange={() => {}}
-                                    />
-                                </th>
-                                <th>Regla</th>
-                                <th>Estrategia</th>
+                                <th>{Messages.NEWRULE_RULENAME}</th>
+                                <th>{Messages.NEWRULE_RULESTRATEGY}</th>
                                 <th>Dev</th>
                                 <th>Test</th>
                                 <th>Prod</th>
 
-                                <th className="text-center">Estado</th>
+                                <th className="text-center">
+                                    {Messages.NEWRULE_STATUS}
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
                             {rules.map((x) => (
                                 <tr key={x.id}>
                                     <td>
-                                        <Form.Check
-                                            name={x.id}
-                                            onChange={() => {}}
-                                        />
+                                        <a
+                                            onClick={() =>
+                                                (Vars.ruleInProgress = {
+                                                    tenant_id: 0,
+                                                    id: x.id,
+                                                    name: x.name,
+                                                    version: x.version,
+                                                    strategy: x.strategy,
+                                                    rule_type: x.rule_type,
+                                                    kvs_id: "",
+                                                })
+                                            }
+                                            href={"/editor/" + x.id}
+                                        >
+                                            {x.name}
+                                        </a>
                                     </td>
-                                    <td>{x.name}</td>
                                     <td>{x.strategy}</td>
                                     <td>{x.version}</td>
                                     <td>{x.version}</td>
@@ -171,35 +182,6 @@ function Matrixes({}: Props) {
                     </Table>
                 </Row>
             </Container>
-
-            {/* <Container>
-                <Row
-                    className="align-items-center"
-                    style={{ paddingBottom: "10px", paddingTop: "10px" }}
-                >
-                    <Col></Col>
-                    <Col className="text-end">
-                        20-40 de 1500
-                        <Button
-                            disabled
-                            className="ms-3 me-1"
-                            size="sm"
-                            variant="secondary"
-                        >
-                            <i className="bi bi-chevron-bar-left"></i>
-                        </Button>
-                        <Button className="me-1" size="sm" variant="secondary">
-                            <i className="bi bi-chevron-compact-left"></i>
-                        </Button>
-                        <Button className="me-1" size="sm" variant="secondary">
-                            <i className="bi bi-chevron-compact-right"></i>
-                        </Button>
-                        <Button className="me-1" size="sm" variant="secondary">
-                            <i className="bi bi-chevron-bar-right"></i>
-                        </Button>
-                    </Col>
-                </Row>
-            </Container> */}
         </>
     );
 }

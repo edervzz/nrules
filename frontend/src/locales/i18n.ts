@@ -21,9 +21,7 @@ i18next.init({
 
 export default i18next;
 
-export function switchLocale(){
-    const currentLangu = Vars.language;
-    const newLangu =  currentLangu == "es" ? "en" : "es";
+export function changeLocale(newLangu: string){
     i18next.changeLanguage(newLangu);
     Vars.language=newLangu;
 }

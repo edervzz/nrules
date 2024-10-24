@@ -11,9 +11,9 @@ class Identification:
         """ return object identification """
 
         if id_type is None:
-            return int(_id), ""
+            return (_id), ""
         if id_type == "" or id_type == "__internal":
-            return int(_id), ""
+            return (_id), ""
         elif id_type == "__external" or id_type == "__default":
             return 0, str(_id)
 

@@ -16,13 +16,11 @@ class ReadRuleBizValidator(Validator):
     def __validate__(self, request: ReadRuleRequest):
         """ Validate request format """
         rule = None
-        if request.rule_id != 0:
+        if request.rule_id != "":
             rule = self.__repository.rule.read(
-                request.tenant_id,
                 request.rule_id)
         elif request.rule_name != "":
             rule = self.__repository.rule.read_by_external_id(
-                request.tenant_id,
                 request.rule_name)
 
         if rule is None:

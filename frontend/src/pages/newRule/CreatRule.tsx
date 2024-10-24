@@ -13,7 +13,6 @@ import {
     NewRuleOutput,
     CreateRuleDto,
     ParametersDto,
-    TenantDto,
     ErrorDto,
 } from "../../typings";
 import { ConditionType } from "../../enums";
@@ -21,14 +20,25 @@ import { FormEvent, useRef, useState } from "react";
 import Toolbar from "../../components/Toolbar";
 import { v4 as uuidv4 } from "uuid";
 import axios, { AxiosError } from "axios";
-import { CREA_RULE } from "../../api";
+import { CallPost, CREA_RULE } from "../../api";
 import Vars from "../../vars";
 import { Loading02 } from "../../components/Loading";
 import { useNavigate } from "react-router-dom";
+import {
+    HandleAddCondition,
+    handleAddOutput,
+    handleChangeCondition,
+    handleChangeConditionType,
+    handleChangeOutput,
+    handleChangeOutputType,
+    handleClose,
+    handleDelCondition,
+    handleDelOutput,
+} from "./Handlers";
 
 interface Props {}
 
-function CreateRule({}: Props) {
+export default function CreateRule({}: Props) {
     const navigate = useNavigate();
     const [showSending, setShowSending] = useState(false);
     const [errorList, setErrorList] = useState<ErrorDto[]>([]);
@@ -41,115 +51,52 @@ function CreateRule({}: Props) {
     const rulenameRef = useRef<HTMLInputElement>(null);
     const ruletypeRef = useRef<HTMLSelectElement>(null);
     const rulestrategyRef = useRef<HTMLSelectElement>(null);
-    // handling Conditions
-    const handleAddCondition = () => {
-        const condition: NewRuleCondition = {
-            id: uuidv4(),
-            variable: "",
-            type: ConditionType.STR,
-        };
-        const newasdf = [...conditions, { ...condition }];
 
-        setConditions(newasdf);
-    };
-    const handleChangeCondition = (id: string, value: string) => {
-        setConditions(
-            conditions.map((x) => (x.id === id ? { ...x, variable: value } : x))
-        );
-    };
-    const handleChangeConditionType = (id: string, value: string) => {
-        setConditions(
-            conditions.map((x) => (x.id === id ? { ...x, type: value } : x))
-        );
-    };
-    const handleDelCondition = (id: string) => {
-        setConditions(conditions.filter((x) => x.id !== id));
-    };
-    // handling Outputs
-    const handleAddOutput = () => {
-        const output: NewRuleOutput = {
-            id: uuidv4(),
-            variable: "",
-            type: ConditionType.STR,
-        };
-        setOutputs([...outputs, { ...output }]);
-    };
-    const handleChangeOutput = (id: string, value: string) => {
-        setOutputs(
-            outputs.map((x) => (x.id === id ? { ...x, variable: value } : x))
-        );
-    };
-    const handleChangeOutputType = (id: string, value: string) => {
-        setOutputs(
-            outputs.map((x) => (x.id === id ? { ...x, type: value } : x))
-        );
-    };
-    const handleDelOutput = (id: string) => {
-        setOutputs(outputs.filter((x) => x.id !== id));
-    };
-    // handle sending close
-    const handleClose = () => {
-        setShowSending(false);
-    };
     // submit
-    const handleSubmit = async (event: FormEvent) => {
+    const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
         setShowSending(true);
         setErrorList([]);
 
         const conds = conditions.map((x) => {
-            const c: ParametersDto = {
+            return {
                 key: x.variable,
                 typeof: x.type,
                 usefor: "CONDITION",
-            };
-            return c;
+            } as ParametersDto;
         });
 
         const outs = outputs.map((x) => {
-            const c: ParametersDto = {
+            return {
                 key: x.variable,
                 typeof: x.type,
                 usefor: "OUTPUT",
-            };
-            return c;
+            } as ParametersDto;
         });
 
         const newRule: CreateRuleDto = {
             name: rulenameRef.current?.value!,
-            rule_type: "MATRIX",
-            strategy: "EARLY",
+            rule_type: ruletypeRef.current?.value! == "1" ? "MATRIX" : "TREE",
+            strategy: getStrategy(rulestrategyRef.current?.value!),
             parameters: [...conds, ...outs],
         };
 
-        const tenant = Vars.tenant;
-        const tenantDto = JSON.parse(tenant) as TenantDto;
+        const tenantDto = Vars.tenant;
 
-        axios
-            .post<CreateRuleDto>(CREA_RULE(tenantDto.id.toString()), newRule, {
-                headers: {
-                    "Accept-Language": Vars.language,
-                },
-            })
-            .then((res) => {
-                switch (res.status) {
-                    case 201:
-                        setShowSending(false);
-                        const item = (res.headers["item"] || "") as string;
-                        const elements = item.split("/");
-                        const uuidobj = elements[elements.length - 1];
-                        navigate(`/editor/${uuidobj}`);
-                        break;
-                    default:
-                        break;
-                }
-            })
-            .catch((err: AxiosError) => {
-                if (err.response) {
-                    const data = err.response!.data as ErrorDto[];
+        CallPost<any>(CREA_RULE(tenantDto.id.toString()), newRule).then(
+            (resultAPI) => {
+                if (resultAPI.ok) {
+                    setShowSending(false);
+                    const item = resultAPI.item;
+                    const elements = item.split("/");
+                    const uuidobj = elements[elements.length - 1];
+                    navigate(`/editor/${uuidobj}`);
+                } else {
+                    const data = resultAPI.data as ErrorDto[];
                     setErrorList(data);
                 }
-            });
+            }
+        );
     };
 
     return (
@@ -159,9 +106,10 @@ function CreateRule({}: Props) {
                     title={Messages.COMMON_SENDING}
                     isFailure={errorList.length > 0}
                     errorList={errorList}
-                    onClose={handleClose}
+                    onClose={() => handleClose(setShowSending)}
                 ></Loading02>
             )}
+
             <Toolbar
                 title={Messages.NEWRULE_CREA_RULE}
                 titleInfo={
@@ -170,10 +118,10 @@ function CreateRule({}: Props) {
                         <p>{Messages.NEWRULE_INFO_02}</p>
                     </div>
                 }
-                hideSearch
                 onAction01={() => window.location.reload()}
-                action01Icon="bi-recycle"
+                action01Icon="bi-trash3-fill"
             ></Toolbar>
+
             <Container className="mt-3">
                 <Form onSubmit={handleSubmit}>
                     <Row>
@@ -237,7 +185,15 @@ function CreateRule({}: Props) {
 
                     <Row>
                         <Col>
-                            <Button onClick={handleAddCondition} size="sm">
+                            <Button
+                                onClick={() =>
+                                    HandleAddCondition(
+                                        conditions,
+                                        setConditions
+                                    )
+                                }
+                                size="sm"
+                            >
                                 <i className="bi bi-plus-lg"></i>
                                 {" " + Messages.BUTTON_CONDITION}
                             </Button>
@@ -259,7 +215,11 @@ function CreateRule({}: Props) {
                                                         conditions.length == 1
                                                     }
                                                     onClick={() =>
-                                                        handleDelCondition(x.id)
+                                                        handleDelCondition(
+                                                            conditions,
+                                                            setConditions,
+                                                            x.id
+                                                        )
                                                     }
                                                     size="sm"
                                                     variant="danger"
@@ -273,6 +233,8 @@ function CreateRule({}: Props) {
                                                         name={"cond-" + x.id}
                                                         onChange={(e) =>
                                                             handleChangeCondition(
+                                                                conditions,
+                                                                setConditions,
                                                                 x.id,
                                                                 e.target.value
                                                             )
@@ -287,6 +249,8 @@ function CreateRule({}: Props) {
                                                     name={"condsel-" + x.id}
                                                     onChange={(e) =>
                                                         handleChangeConditionType(
+                                                            conditions,
+                                                            setConditions,
                                                             x.id,
                                                             e.target.value
                                                         )
@@ -314,7 +278,12 @@ function CreateRule({}: Props) {
                             </Table>
                         </Col>
                         <Col>
-                            <Button onClick={handleAddOutput} size="sm">
+                            <Button
+                                onClick={() =>
+                                    handleAddOutput(outputs, setOutputs)
+                                }
+                                size="sm"
+                            >
                                 <i className="bi bi-plus-lg"></i>
                                 {" " + Messages.BUTTON_OUTPUT}
                             </Button>
@@ -332,7 +301,11 @@ function CreateRule({}: Props) {
                                             <td>
                                                 <Button
                                                     onClick={() =>
-                                                        handleDelOutput(x.id)
+                                                        handleDelOutput(
+                                                            outputs,
+                                                            setOutputs,
+                                                            x.id
+                                                        )
                                                     }
                                                     size="sm"
                                                     variant="danger"
@@ -346,6 +319,8 @@ function CreateRule({}: Props) {
                                                         name={"out-" + x.id}
                                                         onChange={(e) =>
                                                             handleChangeOutput(
+                                                                outputs,
+                                                                setOutputs,
                                                                 x.id,
                                                                 e.target.value
                                                             )
@@ -360,6 +335,8 @@ function CreateRule({}: Props) {
                                                     name={"outsel-" + x.id}
                                                     onChange={(e) =>
                                                         handleChangeOutputType(
+                                                            outputs,
+                                                            setOutputs,
                                                             x.id,
                                                             e.target.value
                                                         )
@@ -401,4 +378,13 @@ function CreateRule({}: Props) {
     );
 }
 
-export default CreateRule;
+const getStrategy = (strategyCode: string) => {
+    switch (strategyCode) {
+        case "1":
+            return "EARLY";
+        case "3":
+            return "BASE";
+        default:
+            return "ALL";
+    }
+};

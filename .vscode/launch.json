@@ -22,7 +22,7 @@
         },
         {
             "name": "backend",
-            "justMyCode": true,
+            "justMyCode": false,
             "type": "debugpy",
             "request": "launch",
             "module": "flask",

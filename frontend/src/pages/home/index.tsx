@@ -1,8 +1,9 @@
-import { Col, Container, Row, Badge } from "react-bootstrap";
+import styles from "./Home.module.css";
 import Footer from "../../components/Footer/Footer";
 import Menubar from "../../components/Menubar";
-import Messages from "../../locales/Messages";
 import MainContainer from "../../components/MainContainer";
+import Messages from "../../locales/Messages";
+import { Col, Container, Row, Badge } from "react-bootstrap";
 
 export default function HomePage() {
     return (
@@ -13,18 +14,13 @@ export default function HomePage() {
                 <Row>
                     <Col sm="1"></Col>
                     <Col md="10">
-                        <p style={{ fontSize: "80px" }}>
+                        <p className={`${styles.logo}`}>
                             NRule{" "}
-                            <Badge
-                                style={{
-                                    fontSize: "20px",
-                                }}
-                                bg="success"
-                            >
+                            <Badge className={`${styles.badge}`} bg="success">
                                 v0.0.1
                             </Badge>
                         </p>
-                        <p style={{ fontSize: "28px", fontWeight: "bold" }}>
+                        <p className={`${styles.start}`}>
                             {Messages.NRULE_TO_START}
                         </p>
                         <br />

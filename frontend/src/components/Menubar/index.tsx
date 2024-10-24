@@ -22,8 +22,7 @@ export default function Menubar({ link_new = "/new", onClickNew }: Props) {
     const navigate = useNavigate();
 
     const tenantData = Vars.tenant;
-    if (tenantData == null) return <></>;
-    const tenant = JSON.parse(tenantData) as TenantDto;
+    if (tenantData.id == 0) return <></>;
 
     const handleClickLogout = () => {
         Vars.clear();
@@ -66,7 +65,7 @@ export default function Menubar({ link_new = "/new", onClickNew }: Props) {
                                 {Messages.MENUBAR_NEW_RULE}
                             </Nav.Link>
 
-                            <Nav.Link className={styles.link} href="/tables">
+                            <Nav.Link className={styles.link} href="/matrix">
                                 {Messages.MENUBAR_MATRIXES}
                             </Nav.Link>
 
@@ -102,17 +101,17 @@ export default function Menubar({ link_new = "/new", onClickNew }: Props) {
                             title={
                                 <>
                                     <i className="bi bi-building-fill" />
-                                    {tenant.tenantName}
+                                    {tenantData.tenantName}
                                 </>
                             }
                             id="basic-nav-dropdown"
                         >
                             <NavDropdown.ItemText>
                                 <i className="bi bi-person-circle" />{" "}
-                                {tenant.username}
+                                {tenantData.username}
                             </NavDropdown.ItemText>
                             <NavDropdown.ItemText>
-                                TID: {tenant.id}
+                                TID: {tenantData.id}
                             </NavDropdown.ItemText>
 
                             <NavDropdown.Divider />

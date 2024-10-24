@@ -16,6 +16,8 @@
     "button_back": "Back",
     "button_cancel": "Cancel",
     "button_close": "Close",
+    "button_first": "First Page",
+    "button_last": "Last Page",
 
     "newrule_create_rule": "Create New Rule",
     "newrule_rulename":"Rule Name",
@@ -26,6 +28,7 @@
     "newrule_rulestrategy_all": "ALL - Go over all exits",
     "newrule_ruletype":"Type",
     "newrule_ruletype_select":"- Select type of rule -",
+    "newrule_status": "Status",
     "newrule_info_01": "Create a rule setting name, type and strategy.",
     "newrule_info_02": "Define parameters for conditions and outputs.",
 
@@ -57,6 +60,7 @@
     "common_matrix":"Matrix",
     "common_select_operator": "Select Operator",
     "common_sending": "Sending",
+    "common_of": "of",
 
     "equal": "Equal",
     "not_equal": "Not Equal",    

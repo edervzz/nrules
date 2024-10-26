@@ -30,7 +30,6 @@ def core_tables(engine: Engine) -> str:
             "id", String(36), primary_key=True, comment="Key-Value Storage ID"),
         comment="KVS is a container for many Key-Values"
     )
-    set_version(kvs)
     set_auditable(kvs)
 
     # Key-Value Items ----------------------------------------------
@@ -52,7 +51,6 @@ def core_tables(engine: Engine) -> str:
         UniqueConstraint("tenant_id", "kv_id", "key", name="kv_items_unk"),
         comment="KV Item can be assign to single one KVS"
     )
-    set_version(kvitems)
     set_auditable(kvitems)
     Index(
         "ix_kv_items_001",
@@ -100,7 +98,6 @@ def core_tables(engine: Engine) -> str:
             "typeof", String(10), nullable=False, comment="Type of Value: String, Numeric, Date"),
         comment="Extra information for expressions"
     )
-    set_version(parameters)
     set_auditable(parameters)
     Index(
         "ix_parameters_001",
@@ -126,7 +123,6 @@ def core_tables(engine: Engine) -> str:
             "kvs_id_nok", String(36), nullable=True, comment="KVS associated when condition was failed"),
         comment="Matrix's Rows. Set execution order"
     )
-    set_version(conditions)
     set_auditable(conditions)
     Index(
         "ix_conditions_001",
@@ -159,7 +155,6 @@ def core_tables(engine: Engine) -> str:
             "tenant_id", "id", name="kv_expressions_unk"),
         comment="Matrix's Columns. Set expressions to evaluate"
     )
-    set_version(expressions)
     set_auditable(expressions)
     Index(
         "ix_expressions_001",

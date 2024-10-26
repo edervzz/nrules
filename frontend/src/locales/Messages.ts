@@ -36,13 +36,17 @@ export default class Messages{
     static get NEWRULE_INFO_02():string { return i18n.t("common:newrule_info_02"); }
     
     static get MENUBAR_NEW_RULE():string { return i18n.t("common:menubar_new_rule"); }
+    static get MENUBAR_RULES():string { return i18n.t("common:menubar_rules"); }
     static get MENUBAR_MATRIXES():string { return i18n.t("common:menubar_matrixes"); }
     static get MENUBAR_RUNNER():string { return i18n.t("common:menubar_runner"); }
     static get MENUBAR_MANAGEMENT():string { return i18n.t("common:menubar_management"); }
+    static get MENUBAR_GO():string { return i18n.t("common:menubar_go"); }
     static get MENUBAR_TRANSPORTS():string { return i18n.t("common:menubar_transports"); }
     static get MENUBAR_TENANTS():string { return i18n.t("common:menubar_tenants"); }
     static get MENUBAR_SIGN_OUT():string { return i18n.t("common:menubar_sign_out"); }
     static get MENUBAR_LOGING_OUT():string { return i18n.t("common:menubar_loging_out"); }
+
+    static get MATRIX_INFO():string { return i18n.t("common:matrix_info"); }
 
     static get MESSAGE_SOME_WRONG():string { return i18n.t("common:message_some_wrong"); }
     static get MESSAGE_CONNECTING():string { return i18n.t("common:message_connecting"); }

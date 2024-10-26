@@ -4,8 +4,10 @@ import {
     Container,
     Form,
     InputGroup,
+    OverlayTrigger,
     Row,
     Table,
+    Tooltip,
 } from "react-bootstrap";
 import Messages from "../../locales/Messages";
 import {
@@ -19,9 +21,6 @@ import { ConditionType } from "../../enums";
 import { FormEvent, useRef, useState } from "react";
 import Toolbar from "../../components/Toolbar";
 import { v4 as uuidv4 } from "uuid";
-import axios, { AxiosError } from "axios";
-import { CallPost, CREA_RULE } from "../../api";
-import Vars from "../../vars";
 import { Loading02 } from "../../components/Loading";
 import { useNavigate } from "react-router-dom";
 import {
@@ -35,6 +34,7 @@ import {
     handleDelCondition,
     handleDelOutput,
 } from "./Handlers";
+import { PostRule } from "../../adapters/RuleAdapter";
 
 interface Props {}
 
@@ -81,23 +81,32 @@ export default function CreateRule({}: Props) {
             parameters: [...conds, ...outs],
         };
 
-        const tenantDto = Vars.tenant;
-
-        CallPost<any>(CREA_RULE(tenantDto.id.toString()), newRule).then(
-            (resultAPI) => {
-                if (resultAPI.ok) {
-                    setShowSending(false);
-                    const item = resultAPI.item;
-                    const elements = item.split("/");
-                    const uuidobj = elements[elements.length - 1];
-                    navigate(`/editor/${uuidobj}`);
-                } else {
-                    const data = resultAPI.data as ErrorDto[];
-                    setErrorList(data);
-                }
+        PostRule(newRule).then((result) => {
+            if (result.ok) {
+                setShowSending(false);
+                const item = result.item!;
+                const elements = item.split("/");
+                const uuidobj = elements[elements.length - 1];
+                navigate(`/editor/${uuidobj}`);
+            } else {
+                const data = result.errorList!;
+                setErrorList(data);
             }
-        );
+        });
     };
+
+    const btnAddOutput = (
+        <Button
+            onClick={() => {
+                window.location.reload();
+            }}
+            size="sm"
+            variant="primary"
+            type="submit"
+        >
+            <i className="bi bi-trash-fill"></i>
+        </Button>
+    );
 
     return (
         <>
@@ -118,8 +127,7 @@ export default function CreateRule({}: Props) {
                         <p>{Messages.NEWRULE_INFO_02}</p>
                     </div>
                 }
-                onAction01={() => window.location.reload()}
-                action01Icon="bi-trash3-fill"
+                extraItems={[btnAddOutput]}
             ></Toolbar>
 
             <Container className="mt-3">
@@ -382,7 +390,7 @@ const getStrategy = (strategyCode: string) => {
     switch (strategyCode) {
         case "1":
             return "EARLY";
-        case "3":
+        case "2":
             return "BASE";
         default:
             return "ALL";

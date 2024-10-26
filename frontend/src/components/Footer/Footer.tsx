@@ -5,18 +5,14 @@ type Props = {};
 function Footer({}: Props) {
     return (
         <>
-            <br />
-            <Container fluid>
+            <Container fluid="xxl">
                 <Row>
-                    <Col sm="1"></Col>
-                    <Col className="text-center">
+                    <Col>
                         <hr></hr>
                     </Col>
-                    <Col sm="1"></Col>
                 </Row>
 
                 <Row>
-                    <Col sm="2"></Col>
                     <Col>
                         <Image height={110} src="/concredito.png" rounded />
                     </Col>
@@ -38,7 +34,6 @@ function Footer({}: Props) {
                     <Col>
                         <Image height={110} src="/financiera.png" rounded />
                     </Col>
-                    <Col sm="2"></Col>
                 </Row>
             </Container>
         </>

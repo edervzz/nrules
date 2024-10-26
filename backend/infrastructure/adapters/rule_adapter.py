@@ -44,9 +44,9 @@ class RuleAdapter(RuleRepository):
             offset = (page_no-1)*page_size
             if word != "":
                 rules = session.query(
-                    Rule).where(Rule.name.ilike(f'%{word}%')).offset(offset).limit(page_size).all()
+                    Rule).where(Rule.name.ilike(f'%{word}%')).order_by(Rule.name).offset(offset).limit(page_size).all()
             else:
-                rules = session.query(Rule).offset(
+                rules = session.query(Rule).order_by(Rule.name).offset(
                     offset).limit(page_size).all()
             total = session.query(
                 Rule.id).where(Rule.name.ilike(f'%{word}%')).all()

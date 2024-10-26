@@ -33,13 +33,17 @@
     "newrule_info_02": "Defina los parámetros que serviran como condiciones y salidas.",
 
     "menubar_new_rule":"Nueva Regla",
+    "menubar_rules": "Reglas",
     "menubar_matrixes":"Matrices",
     "menubar_runner":"Runner",
     "menubar_management":"Administración",
+    "menubar_go": "Ir",
     "menubar_transports":"Transportes",
     "menubar_tenants":"Multi-Empresa",
     "menubar_sign_out": "Cerrar Sesión",
     "menubar_loging_out": "Cerrando Sesiòn",
+
+    "matrix_info": "Listado de Reglas creadas como Matriz",
 
     "message_some_wrong": "¡Algo salió mal!",
     "message_connecting": "Conectando",

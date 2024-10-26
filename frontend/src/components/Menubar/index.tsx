@@ -1,5 +1,13 @@
 // import { useState } from "react";
-import { Col, Container, Modal, Row, Spinner } from "react-bootstrap";
+import {
+    Button,
+    Col,
+    Container,
+    InputGroup,
+    Modal,
+    Row,
+    Spinner,
+} from "react-bootstrap";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
@@ -7,17 +15,21 @@ import Messages from "../../locales/Messages";
 import styles from "./MainMenu.module.css";
 import { useState } from "react";
 
-import { TenantDto } from "../../typings";
-import { useNavigate } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 import Vars from "../../vars";
 
 interface Props {
     link_new?: string;
     onClickNew?: () => void;
     link_tables?: string;
+    title?: string;
 }
 
-export default function Menubar({ link_new = "/new", onClickNew }: Props) {
+export default function Menubar({
+    link_new = "/new",
+    onClickNew,
+    title,
+}: Props) {
     const [showLogout, setShowLogout] = useState(false);
     const navigate = useNavigate();
 
@@ -51,7 +63,7 @@ export default function Menubar({ link_new = "/new", onClickNew }: Props) {
             )}
 
             <Navbar expand="md" className={`bg-body-tertiary`}>
-                <Container fluid="xl">
+                <Container fluid="xxl">
                     <Navbar.Text></Navbar.Text>
                     <Navbar.Brand href="/home">NRule</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -65,18 +77,24 @@ export default function Menubar({ link_new = "/new", onClickNew }: Props) {
                                 {Messages.MENUBAR_NEW_RULE}
                             </Nav.Link>
 
-                            <Nav.Link className={styles.link} href="/matrix">
-                                {Messages.MENUBAR_MATRIXES}
-                            </Nav.Link>
+                            <NavDropdown title={Messages.MENUBAR_RULES}>
+                                <Nav.Link
+                                    className={styles.link}
+                                    href="/matrix"
+                                >
+                                    {Messages.MENUBAR_MATRIXES}
+                                </Nav.Link>
+                            </NavDropdown>
 
-                            <Nav.Link className={styles.link} href="/runner">
-                                {Messages.MENUBAR_RUNNER}
-                            </Nav.Link>
+                            <NavDropdown title={<>{Messages.MENUBAR_GO}</>}>
+                                <Nav.Link
+                                    className={styles.link}
+                                    href="/runner"
+                                >
+                                    {Messages.MENUBAR_RUNNER}
+                                </Nav.Link>
+                                <NavDropdown.Divider />
 
-                            <NavDropdown
-                                title={Messages.MENUBAR_MANAGEMENT}
-                                id="basic-nav-dropdown"
-                            >
                                 <NavDropdown.Item
                                     className={styles.link}
                                     href="/transports"
@@ -97,32 +115,33 @@ export default function Menubar({ link_new = "/new", onClickNew }: Props) {
                         className="justify-content-end"
                         id="basic-navbar-nav"
                     >
-                        <NavDropdown
-                            title={
-                                <>
-                                    <i className="bi bi-building-fill" />
-                                    {tenantData.tenantName}
-                                </>
-                            }
-                            id="basic-nav-dropdown"
-                        >
-                            <NavDropdown.ItemText>
-                                <i className="bi bi-person-circle" />{" "}
-                                {tenantData.username}
-                            </NavDropdown.ItemText>
-                            <NavDropdown.ItemText>
-                                TID: {tenantData.id}
-                            </NavDropdown.ItemText>
-
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item
-                                className={styles.link}
-                                onClick={handleClickLogout}
+                        <Nav>
+                            <NavDropdown
+                                title={
+                                    <>
+                                        <i className="bi bi-building-fill" />
+                                        {tenantData.tenantName}
+                                    </>
+                                }
                             >
-                                <i className="bi bi-box-arrow-right"></i>
-                                {" " + Messages.MENUBAR_SIGN_OUT}
-                            </NavDropdown.Item>
-                        </NavDropdown>
+                                <NavDropdown.ItemText>
+                                    <i className="bi bi-person-circle" />{" "}
+                                    {tenantData.username}
+                                </NavDropdown.ItemText>
+                                <NavDropdown.ItemText>
+                                    TID: {tenantData.id}
+                                </NavDropdown.ItemText>
+
+                                <NavDropdown.Divider />
+                                <NavDropdown.Item
+                                    className={styles.link}
+                                    onClick={handleClickLogout}
+                                >
+                                    <i className="bi bi-box-arrow-right"></i>
+                                    {" " + Messages.MENUBAR_SIGN_OUT}
+                                </NavDropdown.Item>
+                            </NavDropdown>
+                        </Nav>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

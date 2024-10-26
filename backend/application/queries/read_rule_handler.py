@@ -25,4 +25,4 @@ class ReadRuleHandler:
         biz_validator.validate_and_throw(request)
         self.logger.info("business rules validated")
 
-        return ReadRuleResponse(request.rule)
+        return ReadRuleResponse(request.rule, request.params)

@@ -5,7 +5,7 @@ from .extra_fields import Auditable, Versioned
 from .base import Base
 
 
-class Order(Base, Auditable, Versioned):
+class Order(Base, Auditable):
     """ Order """
 
     __tablename__ = "orders"

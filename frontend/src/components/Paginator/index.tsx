@@ -1,17 +1,10 @@
-import {
-    Button,
-    Col,
-    Container,
-    Dropdown,
-    DropdownButton,
-    Row,
-} from "react-bootstrap";
+import { Button, Col, Dropdown, DropdownButton, Row } from "react-bootstrap";
 import { Pagination } from "../../typings";
 import Messages from "../../locales/Messages";
 
 interface Props {
-    pagination: Pagination;
-    onGotoPage: (nextPage: number) => void;
+    pagination?: Pagination;
+    onGotoPage?: (nextPage: number) => void;
 }
 
 function Paginator({ pagination, onGotoPage }: Props) {
@@ -27,7 +20,7 @@ function Paginator({ pagination, onGotoPage }: Props) {
 
     return (
         <>
-            <Row className="d-flex justify-content-end align-items-center row-cols-auto">
+            <Row className="align-items-center row-cols-auto">
                 <Col>
                     <DropdownButton
                         id="dropdown-basic-button"

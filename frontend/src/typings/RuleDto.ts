@@ -1,9 +1,8 @@
-export type RuleDto = {
-    tenant_id: number
-    id: string
+import { ParametersDto } from "./CreateRuleDto"
+
+export type CreateRuleDto = {
     name: string
     rule_type: string
     strategy: string
-    kvs_id: string
-    version: number
+    parameters: ParametersDto[]
 }

@@ -33,13 +33,17 @@
     "newrule_info_02": "Define parameters for conditions and outputs.",
 
     "menubar_new_rule":"New Rule",
+    "menubar_rules": "Rules",
     "menubar_matrixes":"Matrix",
     "menubar_runner":"Runner",
     "menubar_management":"Management",
+    "menubar_go": "Go",
     "menubar_transports":"Transports",
     "menubar_tenants":"Multi-tenancy",
     "menubar_sign_out": "Sign Out",
     "menubar_loging_out": "Closing Session",
+
+    "matrix_info": "List of Rule typed as Matrix",
     
     "message_some_wrong": "Something is wrong!",
     "message_connecting": "Connecting",

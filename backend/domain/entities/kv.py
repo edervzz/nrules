@@ -5,7 +5,7 @@ from .extra_fields import TenantSpecific, Auditable, Versioned
 from .base import Base
 
 
-class KV(Base, TenantSpecific, Auditable, Versioned):
+class KV(Base, TenantSpecific, Auditable):
     """ Key-Value Item entity """
 
     __tablename__ = "kvs"

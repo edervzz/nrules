@@ -1,4 +1,4 @@
-import { RuleDto, TenantDto } from "../typings";
+import { CreateRuleDto, TenantDto } from "../typings";
 
 export default class Vars{
     // session storage
@@ -25,7 +25,7 @@ export default class Vars{
         sessionStorage.setItem("tenant",JSON.stringify(value));
     }
 
-    public static set ruleInProgress(value:RuleDto){
+    public static set ruleInProgress(value:CreateRuleDto){
         sessionStorage.setItem("ruleInProgress",JSON.stringify(value));
     }
 
@@ -33,10 +33,10 @@ export default class Vars{
         const r = sessionStorage.getItem("ruleInProgress") || "";
         if (r === ""){
             return {
-                id: "",kvs_id:"",name:"",rule_type:"",strategy:"",tenant_id:0, version:0,
+                id: "",name:"",rule_type:"",strategy:"",tenant_id:0, parameters: [],
             }
         }
-        return JSON.parse(r) as RuleDto
+        return JSON.parse(r) as CreateRuleDto
     }
 
     // local storage

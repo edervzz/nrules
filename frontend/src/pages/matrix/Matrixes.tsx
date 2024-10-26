@@ -1,24 +1,29 @@
 import { useEffect, useState } from "react";
 import {
+    Button,
     Container,
-    Form,
-    Nav,
+    OverlayTrigger,
     Row,
     Table,
     Toast,
     ToastContainer,
+    Tooltip,
 } from "react-bootstrap";
-import { Pagination, RuleDto, TenantDto } from "../../typings";
-import axios, { AxiosError } from "axios";
+import { Pagination, ReadRuleDto } from "../../typings";
 import Toolbar from "../../components/Toolbar";
 import Messages from "../../locales/Messages";
-import { CallGet, READ_RULES_PAGE } from "../../api";
 import Vars from "../../vars";
+import { GetRulesPaged } from "../../adapters/RuleAdapter";
 
 interface Props {}
 
 function Matrixes({}: Props) {
-    const pageSize = 12;
+    const pageSize = 15;
+    const [rules, setRules] = useState<ReadRuleDto[]>([]);
+    const [showInfoMessage, setShowInfoMessage] = useState(false);
+    const [showErrorMessage, setShowErrorMessage] = useState(false);
+    const [messageError, setMessageError] = useState("");
+    const [wordToSearch, setWordToSearch] = useState("");
     const [localPagination, setLocalPagination] = useState<Pagination>({
         currentPageNo: 1,
         nextPageNo: 0,
@@ -27,11 +32,6 @@ function Matrixes({}: Props) {
         totalPages: 0,
         totalCount: 0,
     });
-    const [rules, setRules] = useState<RuleDto[]>([]);
-    const [showInfoMessage, setShowInfoMessage] = useState(false);
-    const [showErrorMessage, setShowErrorMessage] = useState(false);
-    const [messageError, setMessageError] = useState("");
-    const [wordToSearch, setWordToSearch] = useState("");
 
     const handleGotoPage = (nextPage: number) => {
         callApiGetRules(nextPage, wordToSearch);
@@ -51,20 +51,12 @@ function Matrixes({}: Props) {
     };
 
     const callApiGetRules = (pageNo: number, word: string) => {
-        const tenantDto = Vars.tenant;
         setShowInfoMessage(true);
         setShowErrorMessage(false);
         setMessageError(Messages.MESSAGE_LOADING);
         setRules([]);
 
-        CallGet<RuleDto[]>(
-            READ_RULES_PAGE(
-                tenantDto.id.toString(),
-                pageNo.toString(),
-                pageSize.toString(),
-                word
-            )
-        ).then((result) => {
+        GetRulesPaged(pageNo, pageSize, word).then((result) => {
             if (result.ok) {
                 setShowInfoMessage(false);
                 setRules(result.data!);
@@ -79,7 +71,7 @@ function Matrixes({}: Props) {
             } else {
                 setShowErrorMessage(true);
                 setShowInfoMessage(false);
-                setMessageError(result.errorMessage);
+                setMessageError(result.errorMessage || "");
             }
         });
     };
@@ -121,7 +113,7 @@ function Matrixes({}: Props) {
 
             <Toolbar
                 title={Messages.COMMON_MATRIX}
-                titleInfo="aqui colocar la información general de la pagina"
+                titleInfo={Messages.MATRIX_INFO}
                 isSearchable
                 isPaginated
                 pagination={localPagination}
@@ -129,17 +121,17 @@ function Matrixes({}: Props) {
                 onSearch={handleSearch}
             ></Toolbar>
 
-            <Container>
+            <Container fluid="xxl">
                 <Row>
                     <Table striped bordered hover>
                         <thead>
                             <tr>
                                 <th>{Messages.NEWRULE_RULENAME}</th>
                                 <th>{Messages.NEWRULE_RULESTRATEGY}</th>
+                                <th>Default Output</th>
                                 <th>Dev</th>
                                 <th>Test</th>
                                 <th>Prod</th>
-
                                 <th className="text-center">
                                     {Messages.NEWRULE_STATUS}
                                 </th>
@@ -147,26 +139,42 @@ function Matrixes({}: Props) {
                         </thead>
                         <tbody>
                             {rules.map((x) => (
-                                <tr key={x.id}>
+                                <tr
+                                    key={x.id}
+                                    style={{
+                                        fontSize: "14px",
+                                        fontWeight: "bold",
+                                        color: "#868686",
+                                    }}
+                                >
                                     <td>
                                         <a
-                                            onClick={() =>
-                                                (Vars.ruleInProgress = {
-                                                    tenant_id: 0,
-                                                    id: x.id,
-                                                    name: x.name,
-                                                    version: x.version,
-                                                    strategy: x.strategy,
-                                                    rule_type: x.rule_type,
-                                                    kvs_id: "",
-                                                })
-                                            }
+                                            style={{
+                                                fontSize: "14px",
+                                                fontWeight: "bold",
+                                                textTransform: "uppercase",
+                                                textDecoration: "none",
+                                                color: "#0d6efd",
+                                            }}
                                             href={"/editor/" + x.id}
                                         >
                                             {x.name}
                                         </a>
                                     </td>
                                     <td>{x.strategy}</td>
+                                    <td>
+                                        {x.default_kvs ? (
+                                            <i
+                                                className="bi bi-check-circle-fill"
+                                                style={{ color: "green" }}
+                                            ></i>
+                                        ) : (
+                                            <i
+                                                className="bi bi-x-circle-fill"
+                                                style={{ color: "gray" }}
+                                            ></i>
+                                        )}
+                                    </td>
                                     <td>{x.version}</td>
                                     <td>{x.version}</td>
                                     <td>{x.version}</td>

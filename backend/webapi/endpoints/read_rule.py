@@ -36,11 +36,13 @@ def read_rules_endpoint(tid=None, rule_id=None):
         result.rule.name,
         result.rule.rule_type,
         result.rule.strategy,
-        result.rule.version)
-
-    js = json.dumps(rule.__dict__)
+        result.rule.version,
+        result.parameters)
+    aaa = rule.__dict__
+    jsonstr = json.dumps(rule.__dict__)
 
     return Response(
-        response=js,
-        status=200
+        response=jsonstr,
+        status=200,
+        content_type="application/json",
     )

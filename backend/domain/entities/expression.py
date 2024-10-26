@@ -5,7 +5,7 @@ from .extra_fields import Auditable, Versioned, TenantSpecific
 from .base import Base
 
 
-class Expression(Base, TenantSpecific, Auditable, Versioned):
+class Expression(Base, TenantSpecific, Auditable):
     """ expressions entity """
 
     __tablename__ = "expressions"

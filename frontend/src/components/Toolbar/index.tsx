@@ -9,7 +9,7 @@ import {
     Row,
     Tooltip,
 } from "react-bootstrap";
-import { Pagination } from "../../typings";
+import { PaginationDto } from "../../models";
 import Paginator from "../Paginator";
 
 interface Props {
@@ -17,7 +17,7 @@ interface Props {
     title: string;
     titleInfo?: ReactNode;
     isPaginated?: boolean;
-    pagination?: Pagination;
+    pagination?: PaginationDto;
     onGotoPage?: (nextPage: number) => void;
     isSearchable?: boolean;
     onSearch?: (word: string) => void;

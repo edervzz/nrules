@@ -2,7 +2,7 @@ import Menubar from "../../components/Menubar";
 import MainContainer from "../../components/MainContainer";
 import CreateRule from "./CreatRule";
 import Footer from "../../components/Footer/Footer";
-export default function NewRulePage() {
+export default function NewRuleView() {
     return (
         <>
             <MainContainer>

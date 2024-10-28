@@ -1,3 +1,5 @@
+import { ParametersDto } from "./ParameterDto"
+
 export type CreateRuleDto = {
     name: string,
     strategy: string,
@@ -13,11 +15,4 @@ export type ReadRuleDto = {
     default_kvs?: number,
     version: number,
     parameters?: ParametersDto[]
-}
-
-
-export type ParametersDto = {
-    key: string,
-    typeof: string,
-    usefor: string
 }

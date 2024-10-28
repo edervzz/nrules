@@ -4,10 +4,8 @@ import {
     Container,
     Form,
     InputGroup,
-    OverlayTrigger,
     Row,
     Table,
-    Tooltip,
 } from "react-bootstrap";
 import Messages from "../../locales/Messages";
 import {
@@ -16,7 +14,7 @@ import {
     CreateRuleDto,
     ParametersDto,
     ErrorDto,
-} from "../../typings";
+} from "../../models";
 import { ConditionType } from "../../enums";
 import { FormEvent, useRef, useState } from "react";
 import Toolbar from "../../components/Toolbar";
@@ -48,6 +46,7 @@ export default function CreateRule({}: Props) {
     const [outputs, setOutputs] = useState<NewRuleOutput[]>([
         { id: uuidv4(), variable: "", type: ConditionType.STR },
     ]);
+
     const rulenameRef = useRef<HTMLInputElement>(null);
     const ruletypeRef = useRef<HTMLSelectElement>(null);
     const rulestrategyRef = useRef<HTMLSelectElement>(null);
@@ -95,7 +94,7 @@ export default function CreateRule({}: Props) {
         });
     };
 
-    const btnAddOutput = (
+    const btnReload = (
         <Button
             onClick={() => {
                 window.location.reload();
@@ -127,7 +126,7 @@ export default function CreateRule({}: Props) {
                         <p>{Messages.NEWRULE_INFO_02}</p>
                     </div>
                 }
-                extraItems={[btnAddOutput]}
+                extraItems={[btnReload]}
             ></Toolbar>
 
             <Container className="mt-3">

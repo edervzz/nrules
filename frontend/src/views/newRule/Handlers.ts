@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { NewRuleCondition, NewRuleOutput } from "../../typings";
+import { NewRuleCondition, NewRuleOutput } from "../../models";
 import { ConditionType } from "../../enums";
 
 export const HandleAddCondition = (

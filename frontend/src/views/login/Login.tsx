@@ -3,8 +3,8 @@ import Messages from "../../locales/Messages";
 import { useNavigate } from "react-router-dom";
 import { FormEvent, useRef, useState } from "react";
 import { changeLocale } from "../../locales/i18n";
-import { TenantDto } from "../../typings";
-import Vars from "../../vars";
+import { TenantDto } from "../../models";
+import Env from "../../env";
 
 interface Props {
     onTryConnecting: () => void;
@@ -12,7 +12,7 @@ interface Props {
 }
 
 export default function Login({ onTryConnecting, onFailureConnection }: Props) {
-    const [langu, setLangu] = useState(Vars.language);
+    const [langu, setLangu] = useState(Env.language);
 
     const languRef = useRef<HTMLSelectElement>(null);
     const tidRef = useRef<HTMLInputElement>(null);
@@ -37,7 +37,7 @@ export default function Login({ onTryConnecting, onFailureConnection }: Props) {
                 tokenProd: "1234567890",
                 username: usernameRef.current?.value,
             };
-            Vars.tenant = tenant;
+            Env.tenant = tenant;
             navigate("/home");
         } else {
             onFailureConnection(Messages.MESSAGE_ERROR_USR_PWD);

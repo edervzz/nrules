@@ -16,7 +16,7 @@ import styles from "./MainMenu.module.css";
 import { useState } from "react";
 
 import { Form, useNavigate } from "react-router-dom";
-import Vars from "../../vars";
+import Env from "../../env";
 
 interface Props {
     link_new?: string;
@@ -33,11 +33,11 @@ export default function Menubar({
     const [showLogout, setShowLogout] = useState(false);
     const navigate = useNavigate();
 
-    const tenantData = Vars.tenant;
+    const tenantData = Env.tenant;
     if (tenantData.id == 0) return <></>;
 
     const handleClickLogout = () => {
-        Vars.clear();
+        Env.clear();
         setShowLogout(true);
         navigate("/");
     };

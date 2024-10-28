@@ -1,6 +1,6 @@
 import { Button, Container, Modal, Spinner, Table } from "react-bootstrap";
 import Messages from "../../locales/Messages";
-import { ErrorDto } from "../../typings";
+import { ErrorDto } from "../../models";
 
 interface Props01 {
     title: string;

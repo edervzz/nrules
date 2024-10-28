@@ -1,18 +1,18 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import NewRulePage from "./pages/newRule";
-import MatrixPage from "./pages/matrix";
-import Transports from "./pages/TransportsPage";
-import TenancyPage from "./pages/TenancyPage";
-import UsersPage from "./pages/UsersPage";
-import LoginPage from "./pages/login";
-import HomePage from "./pages/home";
-import EditorPage from "./pages/editor";
+import NewRuleView from "./views/newRule";
+import MatrixView from "./views/matrix";
+import TransportsView from "./views/Transports";
+import TenancyView from "./views/Tenancy";
+import UsersView from "./views/Users";
+import LoginView from "./views/login";
+import HomePage from "./views/home";
+import EditorView from "./views/editor";
 
 export const router = createBrowserRouter([
     {
         path: "/",
-        element: <LoginPage />,
+        element: <LoginView />,
     },
     {
         path: "/home",
@@ -20,30 +20,30 @@ export const router = createBrowserRouter([
     },
     {
         path: "/new",
-        element: <NewRulePage />,
+        element: <NewRuleView />,
     },
     {
         path: "/editor/:id",
-        element: <EditorPage />,
+        element: <EditorView />,
     },
     {
         path: "/matrix",
-        element: <MatrixPage />,
+        element: <MatrixView />,
     },
     {
         path: "/transports",
-        element: <Transports />,
+        element: <TransportsView />,
     },
     {
         path: "/tenancy",
-        element: <TenancyPage />,
+        element: <TenancyView />,
     },
     {
         path: "/users",
-        element: <UsersPage />,
+        element: <UsersView />,
     },
     {
         path: "/runner",
-        element: <UsersPage />,
+        element: <UsersView />,
     },
 ]);

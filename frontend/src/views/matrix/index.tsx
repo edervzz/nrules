@@ -4,7 +4,7 @@ import Matrixes from "./Matrixes";
 import Footer from "../../components/Footer/Footer";
 import Messages from "../../locales/Messages";
 
-export default function MatrixPage() {
+export default function MatrixView() {
     return (
         <MainContainer>
             <Menubar title={Messages.COMMON_MATRIX}></Menubar>

@@ -1,5 +1,6 @@
 import {
     Button,
+    Col,
     Container,
     Form,
     OverlayTrigger,
@@ -8,19 +9,22 @@ import {
     Tooltip,
 } from "react-bootstrap";
 import Toolbar from "../../components/Toolbar";
-import Vars from "../../vars";
+import Env from "../../env";
 import Messages from "../../locales/Messages";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { GetRule } from "../../adapters/RuleAdapter";
-import { ParametersDto, ReadRuleDto } from "../../typings";
+import { ParametersDto, ReadRuleDto } from "../../models";
+import AddParameter from "./AddParameter";
+import { Parameters, Rule } from "../../typings";
 
 type Props = {};
 
 function Editor({}: Props) {
+    const { id } = useParams();
     const [conditions, setConditions] = useState<ParametersDto[]>([]);
     const [outputs, setOutputs] = useState<ParametersDto[]>([]);
-    const [rule, setRule] = useState<ReadRuleDto>({
+    const [rule, setRule] = useState<Rule>({
         id: "",
         name: "",
         rule_type: "",
@@ -28,7 +32,7 @@ function Editor({}: Props) {
         version: 0,
         default_kvs: 0,
     });
-    const { id } = useParams();
+    const [parameters, setParameters] = useState<Parameters[]>([]);
 
     const btnAddCondition = (
         <Container>
@@ -40,13 +44,13 @@ function Editor({}: Props) {
                 <Button
                     name="adfas"
                     onClick={() => {
-                        const oneParam = {
-                            key: "qwert",
-                            usefor: "CONDITION",
-                            typeof: "String",
-                        } as ParametersDto;
-                        const newParams = [...conditions, { ...oneParam }];
-                        setConditions(newParams);
+                        // const oneParam = {
+                        //     key: "qwert",
+                        //     usefor: "CONDITION",
+                        //     typeof: "String",
+                        // } as ParametersDto;
+                        // const newParams = [...conditions, { ...oneParam }];
+                        // setConditions(newParams);
                     }}
                     size="sm"
                     variant="primary"
@@ -82,19 +86,17 @@ function Editor({}: Props) {
     );
     const rulename = (
         <div key={121}>
-            {Messages.NEWRULE_RULENAME + ": " + Vars.ruleInProgress.name}
+            {Messages.NEWRULE_RULENAME + ": " + Env.ruleInProgress.name}
         </div>
     );
     const ruletype = (
         <div key={123}>
-            {Messages.NEWRULE_RULETYPE + ": " + Vars.ruleInProgress.rule_type}
+            {Messages.NEWRULE_RULETYPE + ": " + Env.ruleInProgress.rule_type}
         </div>
     );
     const rulestrategy = (
         <div>
-            {Messages.NEWRULE_RULESTRATEGY +
-                ": " +
-                Vars.ruleInProgress.strategy}
+            {Messages.NEWRULE_RULESTRATEGY + ": " + Env.ruleInProgress.strategy}
         </div>
     );
 
@@ -121,6 +123,7 @@ function Editor({}: Props) {
 
     return (
         <>
+            <AddParameter></AddParameter>
             <Toolbar
                 fluid
                 title="Editor"
@@ -155,14 +158,23 @@ function Editor({}: Props) {
                             <td></td>
                             <td>
                                 {
-                                    <Container>
-                                        <Form.Check
-                                            type="switch"
-                                            id="custom-switch"
-                                        />
-                                        <Button size="sm" variant="secondary">
-                                            <i className="bi bi-trash3"></i>
-                                        </Button>
+                                    <Container fluid>
+                                        <Row>
+                                            <Col>
+                                                <Form.Check
+                                                    type="switch"
+                                                    id="custom-switch"
+                                                />
+                                            </Col>
+                                            <Col>
+                                                <Button
+                                                    size="sm"
+                                                    variant="secondary"
+                                                >
+                                                    <i className="bi bi-trash3"></i>
+                                                </Button>
+                                            </Col>
+                                        </Row>
                                     </Container>
                                 }
                             </td>

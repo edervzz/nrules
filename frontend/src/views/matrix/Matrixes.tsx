@@ -9,10 +9,10 @@ import {
     ToastContainer,
     Tooltip,
 } from "react-bootstrap";
-import { Pagination, ReadRuleDto } from "../../typings";
+import { PaginationDto, ReadRuleDto } from "../../models";
 import Toolbar from "../../components/Toolbar";
 import Messages from "../../locales/Messages";
-import Vars from "../../vars";
+import Env from "../../env";
 import { GetRulesPaged } from "../../adapters/RuleAdapter";
 
 interface Props {}
@@ -24,7 +24,7 @@ function Matrixes({}: Props) {
     const [showErrorMessage, setShowErrorMessage] = useState(false);
     const [messageError, setMessageError] = useState("");
     const [wordToSearch, setWordToSearch] = useState("");
-    const [localPagination, setLocalPagination] = useState<Pagination>({
+    const [localPagination, setLocalPagination] = useState<PaginationDto>({
         currentPageNo: 1,
         nextPageNo: 0,
         prevPageNo: 0,

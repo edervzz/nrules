@@ -1,4 +1,4 @@
-import { ReadRuleDto } from "../typings";
+import { ReadRuleDto } from "../models";
 import { _CallGet, _CallPost, ResultGetPage, ResultPost } from "./MethodAdapter";
 
 export async function PostRule(data: any): Promise<ResultPost>{

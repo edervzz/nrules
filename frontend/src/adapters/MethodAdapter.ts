@@ -1,14 +1,14 @@
 import axios, { AxiosError } from "axios";
-import Vars from "../vars";
-import { ErrorDto } from "../typings";
+import Env from "../env";
+import { ErrorDto } from "../models";
 
-const basepath = import.meta.env.VITE_API_URL_HOST + "/nr/api/" + import.meta.env.VITE_API_VER + "/t/" + Vars.tenant.id.toString(); 
+const basepath = import.meta.env.VITE_API_URL_HOST + "/nr/api/" + import.meta.env.VITE_API_VER + "/t/" + Env.tenant.id.toString(); 
 
 export async function _CallPost(url: string, data: any): Promise<ResultPost>{
     try {
         const res = await axios.post(basepath + url, data, {
             headers: {
-                "Accept-Language": Vars.language,
+                "Accept-Language": Env.language,
             },
         });
         
@@ -32,7 +32,7 @@ export async function _CallGet<T>(url: string): Promise<ResultGetPage<T>>{
     try {        
         const res = await axios.get<T>(basepath + url, {
             headers: {
-                "Accept-Language": Vars.language,
+                "Accept-Language": Env.language,
             },
         });
         return {

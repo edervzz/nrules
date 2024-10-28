@@ -6,7 +6,7 @@ export type CreateRuleDto = {
 }
 
 export type ReadRuleDto = {
-    id:string,
+    id: string,
     name: string,
     strategy: string,
     rule_type: string,

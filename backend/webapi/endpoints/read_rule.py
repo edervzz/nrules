@@ -38,7 +38,7 @@ def read_rules_endpoint(tid=None, rule_id=None):
         result.rule.strategy,
         result.rule.version,
         result.parameters)
-    aaa = rule.__dict__
+
     jsonstr = json.dumps(rule.__dict__)
 
     return Response(

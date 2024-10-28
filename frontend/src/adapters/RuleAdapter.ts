@@ -15,4 +15,9 @@ export async function GetRulesPaged(pageno:number = 1, pagesize:number = 10, sea
     return result;
 }
 
-
+export async function GetRule(ruleid: string): Promise<ResultGetPage<ReadRuleDto>>{
+    const url = `/rules/${ruleid}`
+    
+    const result = await _CallGet<ReadRuleDto>(url);
+    return result;
+}

@@ -9,14 +9,14 @@ import {
     Tooltip,
 } from "react-bootstrap";
 import Toolbar from "../../components/Toolbar";
-import Env from "../../env";
+import Envars from "../../envars";
 import Messages from "../../locales/Messages";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { GetRule } from "../../adapters/RuleAdapter";
 import { ParametersDto, ReadRuleDto } from "../../models";
 import AddParameter from "./AddParameter";
 import { Parameters, Rule } from "../../typings";
+import Storage from "../../storage";
 
 type Props = {};
 
@@ -86,22 +86,28 @@ function Editor({}: Props) {
     );
     const rulename = (
         <div key={121}>
-            {Messages.NEWRULE_RULENAME + ": " + Env.ruleInProgress.name}
+            {Messages.NEWRULE_RULENAME +
+                ": " +
+                Storage.Session.ruleInProgress.name}
         </div>
     );
     const ruletype = (
         <div key={123}>
-            {Messages.NEWRULE_RULETYPE + ": " + Env.ruleInProgress.rule_type}
+            {Messages.NEWRULE_RULETYPE +
+                ": " +
+                Storage.Session.ruleInProgress.rule_type}
         </div>
     );
     const rulestrategy = (
         <div>
-            {Messages.NEWRULE_RULESTRATEGY + ": " + Env.ruleInProgress.strategy}
+            {Messages.NEWRULE_RULESTRATEGY +
+                ": " +
+                Storage.Session.ruleInProgress.strategy}
         </div>
     );
 
     const callGetRule = () => {
-        GetRule(id || "").then((res) => {
+        Storage.Rule.GetRule(id || "").then((res) => {
             res.data && setRule(res.data);
             res.data &&
                 setConditions(

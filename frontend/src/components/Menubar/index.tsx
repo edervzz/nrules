@@ -1,13 +1,4 @@
-// import { useState } from "react";
-import {
-    Button,
-    Col,
-    Container,
-    InputGroup,
-    Modal,
-    Row,
-    Spinner,
-} from "react-bootstrap";
+import { Col, Container, Modal, Row, Spinner } from "react-bootstrap";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
@@ -16,7 +7,7 @@ import styles from "./MainMenu.module.css";
 import { useState } from "react";
 
 import { Form, useNavigate } from "react-router-dom";
-import Env from "../../env";
+import Storage from "../../storage";
 
 interface Props {
     link_new?: string;
@@ -33,11 +24,11 @@ export default function Menubar({
     const [showLogout, setShowLogout] = useState(false);
     const navigate = useNavigate();
 
-    const tenantData = Env.tenant;
+    const tenantData = Storage.Session.tenant;
     if (tenantData.id == 0) return <></>;
 
     const handleClickLogout = () => {
-        Env.clear();
+        Storage.Session.clear();
         setShowLogout(true);
         navigate("/");
     };

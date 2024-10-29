@@ -1,19 +1,9 @@
 import { useEffect, useState } from "react";
-import {
-    Button,
-    Container,
-    OverlayTrigger,
-    Row,
-    Table,
-    Toast,
-    ToastContainer,
-    Tooltip,
-} from "react-bootstrap";
+import { Container, Row, Table, Toast, ToastContainer } from "react-bootstrap";
 import { PaginationDto, ReadRuleDto } from "../../models";
 import Toolbar from "../../components/Toolbar";
 import Messages from "../../locales/Messages";
-import Env from "../../env";
-import { GetRulesPaged } from "../../adapters/RuleAdapter";
+import Storage from "../../storage";
 
 interface Props {}
 
@@ -32,10 +22,6 @@ function Matrixes({}: Props) {
         totalPages: 0,
         totalCount: 0,
     });
-
-    const handleGotoPage = (nextPage: number) => {
-        callApiGetRules(nextPage, wordToSearch);
-    };
 
     const handleSearch = (word: string) => {
         setWordToSearch(word);
@@ -56,7 +42,7 @@ function Matrixes({}: Props) {
         setMessageError(Messages.MESSAGE_LOADING);
         setRules([]);
 
-        GetRulesPaged(pageNo, pageSize, word).then((result) => {
+        Storage.Rule.GetRulesPaged(pageNo, pageSize, word).then((result) => {
             if (result.ok) {
                 setShowInfoMessage(false);
                 setRules(result.data!);
@@ -117,7 +103,9 @@ function Matrixes({}: Props) {
                 isSearchable
                 isPaginated
                 pagination={localPagination}
-                onGotoPage={handleGotoPage}
+                onGotoPage={(nextPage) =>
+                    callApiGetRules(nextPage, wordToSearch)
+                }
                 onSearch={handleSearch}
             ></Toolbar>
 

@@ -32,7 +32,7 @@ import {
     handleDelCondition,
     handleDelOutput,
 } from "./Handlers";
-import { PostRule } from "../../adapters/RuleAdapter";
+import Storage from "../../storage";
 
 interface Props {}
 
@@ -80,7 +80,7 @@ export default function CreateRule({}: Props) {
             parameters: [...conds, ...outs],
         };
 
-        PostRule(newRule).then((result) => {
+        Storage.Rule.PostRule(newRule).then((result) => {
             if (result.ok) {
                 setShowSending(false);
                 const item = result.item!;

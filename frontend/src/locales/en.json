@@ -2,8 +2,15 @@
     "crea_rule_001": "Length must be between 5 and 50 characteres",
 
     "outname_default": "Output default",
-    "cond_name": "Conditions",
-    "out_name": "Outputs",
+    "conditions": "Conditions",
+    "condition": "Condition",
+    "condition_name": "Condition Name",
+    "add_condition": "Add Condition",
+    "outputs": "Outputs",
+    "output": "Output",
+    "output_name": "Output Name",
+    "row": "Row",
+    "add_output": "Add Output",
     "name": "Name",
     "type": "Type",
 

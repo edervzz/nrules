@@ -21,17 +21,6 @@ import Toolbar from "../../components/Toolbar";
 import { v4 as uuidv4 } from "uuid";
 import { Loading02 } from "../../components/Loading";
 import { useNavigate } from "react-router-dom";
-import {
-    HandleAddCondition,
-    handleAddOutput,
-    handleChangeCondition,
-    handleChangeConditionType,
-    handleChangeOutput,
-    handleChangeOutputType,
-    handleClose,
-    handleDelCondition,
-    handleDelOutput,
-} from "./Handlers";
 import Storage from "../../storage";
 
 interface Props {}
@@ -51,7 +40,6 @@ export default function CreateRule({}: Props) {
     const ruletypeRef = useRef<HTMLSelectElement>(null);
     const rulestrategyRef = useRef<HTMLSelectElement>(null);
 
-    // submit
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
         setShowSending(true);
@@ -109,14 +97,13 @@ export default function CreateRule({}: Props) {
 
     return (
         <>
-            {showSending && (
-                <Loading02
-                    title={Messages.COMMON_SENDING}
-                    isFailure={errorList.length > 0}
-                    errorList={errorList}
-                    onClose={() => handleClose(setShowSending)}
-                ></Loading02>
-            )}
+            <Loading02
+                show={showSending}
+                title={Messages.COMMON_SENDING}
+                isFailure={errorList.length > 0}
+                errorList={errorList}
+                onClose={() => setShowSending(false)}
+            ></Loading02>
 
             <Toolbar
                 title={Messages.NEWRULE_CREA_RULE}
@@ -208,7 +195,7 @@ export default function CreateRule({}: Props) {
                                 <thead>
                                     <tr>
                                         <th style={{ width: "0rem" }}></th>
-                                        <th>{Messages.CONDNAME}</th>
+                                        <th>{Messages.CONDITIONS}</th>
                                         <th>{Messages.TYPE}</th>
                                     </tr>
                                 </thead>
@@ -247,7 +234,9 @@ export default function CreateRule({}: Props) {
                                                             )
                                                         }
                                                         value={x.variable}
-                                                        placeholder="conditionName"
+                                                        placeholder={
+                                                            Messages.CONDITIONNAME
+                                                        }
                                                     />
                                                 </InputGroup>
                                             </td>
@@ -298,7 +287,7 @@ export default function CreateRule({}: Props) {
                                 <thead>
                                     <tr>
                                         <th style={{ width: "0rem" }}></th>
-                                        <th>{Messages.OUTNAME}</th>
+                                        <th>{Messages.OUTPUTS}</th>
                                         <th>{Messages.TYPE}</th>
                                     </tr>
                                 </thead>
@@ -374,6 +363,11 @@ export default function CreateRule({}: Props) {
                     <br></br>
                     <Row>
                         <Col className="text-end">
+                            <Button variant="secondary" type="reset">
+                                <i className="bi bi-trash-fill"></i>
+                            </Button>
+                        </Col>
+                        <Col className="text-end">
                             <Button variant="primary" type="submit">
                                 {Messages.BUTTON_NEXT}
                             </Button>
@@ -385,6 +379,8 @@ export default function CreateRule({}: Props) {
     );
 }
 
+/* Handlers
+ */
 const getStrategy = (strategyCode: string) => {
     switch (strategyCode) {
         case "1":
@@ -394,4 +390,87 @@ const getStrategy = (strategyCode: string) => {
         default:
             return "ALL";
     }
+};
+
+const HandleAddCondition = (
+    conditions: NewRuleCondition[],
+    setConditions: React.Dispatch<React.SetStateAction<NewRuleCondition[]>>
+) => {
+    const condition: NewRuleCondition = {
+        id: uuidv4(),
+        variable: "",
+        type: ConditionType.STR,
+    };
+    const newConditions = [...conditions, { ...condition }];
+    setConditions(newConditions);
+};
+
+const handleChangeCondition = (
+    conditions: NewRuleCondition[],
+    setConditions: React.Dispatch<React.SetStateAction<NewRuleCondition[]>>,
+    id: string,
+    value: string
+) => {
+    setConditions(
+        conditions.map((x) => (x.id === id ? { ...x, variable: value } : x))
+    );
+};
+
+const handleChangeConditionType = (
+    conditions: NewRuleCondition[],
+    setConditions: React.Dispatch<React.SetStateAction<NewRuleCondition[]>>,
+    id: string,
+    value: string
+) => {
+    setConditions(
+        conditions.map((x) => (x.id === id ? { ...x, type: value } : x))
+    );
+};
+
+const handleDelCondition = (
+    conditions: NewRuleCondition[],
+    setConditions: React.Dispatch<React.SetStateAction<NewRuleCondition[]>>,
+    id: string
+) => {
+    setConditions(conditions.filter((x) => x.id !== id));
+};
+
+const handleAddOutput = (
+    outputs: NewRuleOutput[],
+    setOutputs: React.Dispatch<React.SetStateAction<NewRuleOutput[]>>
+) => {
+    const output: NewRuleOutput = {
+        id: uuidv4(),
+        variable: "",
+        type: ConditionType.STR,
+    };
+    setOutputs([...outputs, { ...output }]);
+};
+
+const handleChangeOutput = (
+    outputs: NewRuleOutput[],
+    setOutputs: React.Dispatch<React.SetStateAction<NewRuleOutput[]>>,
+    id: string,
+    value: string
+) => {
+    setOutputs(
+        outputs.map((x) => (x.id === id ? { ...x, variable: value } : x))
+    );
+};
+
+const handleChangeOutputType = (
+    outputs: NewRuleOutput[],
+    setOutputs: React.Dispatch<React.SetStateAction<NewRuleOutput[]>>,
+    id: string,
+    value: string
+) => {
+    setOutputs(outputs.map((x) => (x.id === id ? { ...x, type: value } : x)));
+};
+
+const handleDelOutput = (
+    outputs: NewRuleOutput[],
+    setOutputs: React.Dispatch<React.SetStateAction<NewRuleOutput[]>>,
+    id: string
+) => {
+    setOutputs(outputs.filter((x) => x.id !== id));
 };

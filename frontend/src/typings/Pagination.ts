@@ -1,4 +1,4 @@
-export type PaginationDto = {
+export type Pagination = {
     currentPageNo: number,
     nextPageNo: number,
     prevPageNo: number,

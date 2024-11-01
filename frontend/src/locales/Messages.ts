@@ -5,8 +5,14 @@ export default class Messages{
     static get CREA_RULE_001():string { return i18n.t("common:crea_rule_001"); }
 
     static get OUTNAME_DEFAULT():string { return i18n.t("common:outname_default"); }
-    static get CONDNAME():string { return i18n.t("common:cond_name"); }
-    static get OUTNAME():string { return i18n.t("common:out_name"); }
+    static get CONDITIONS():string { return i18n.t("common:conditions"); }
+    static get CONDITION():string { return i18n.t("common:condition"); }
+    static get CONDITIONNAME():string { return i18n.t("common:condition_name"); }
+    static get ADDCONDITION():string { return i18n.t("common:add_condition"); }
+    static get OUTPUTS():string { return i18n.t("common:outputs"); }
+    static get OUTPUT():string { return i18n.t("common:output"); }
+    static get OUTPUTNAME():string { return i18n.t("common:output_name"); }
+    static get ROW():string { return i18n.t("common:row"); }
     static get NAME():string { return i18n.t("common:name"); }
     static get TYPE():string { return i18n.t("common:type"); }
 

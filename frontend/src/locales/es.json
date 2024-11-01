@@ -2,8 +2,15 @@
     "crea_rule_001": "Longitud debe ser entre 5 y 50 caracteres",
 
     "outname_default": "Salida por defecto",
-    "cond_name": "Condiciones",
-    "out_name": "Salidas",
+    "conditions": "Condiciones",
+    "condition": "Condición",
+    "condition_name": "Nombre de Condición",
+    "add_condition": "Agregar Condición",
+    "outputs": "Salidas",
+    "output": "Salida",
+    "output_name": "Nombre de Salida",
+    "row": "Fila",
+    "add_output": "Agregar Salida",
     "name": "Nombre",
     "type": "Tipo",
 

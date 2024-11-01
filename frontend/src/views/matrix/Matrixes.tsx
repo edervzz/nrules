@@ -1,20 +1,19 @@
 import { useEffect, useState } from "react";
 import { Container, Row, Table, Toast, ToastContainer } from "react-bootstrap";
-import { PaginationDto, ReadRuleDto } from "../../models";
+import { ReadRuleDto } from "../../models";
 import Toolbar from "../../components/Toolbar";
 import Messages from "../../locales/Messages";
 import Storage from "../../storage";
+import { Pagination } from "../../typings";
+import { ToastError, ToastLoading } from "../../components/Toasts";
 
 interface Props {}
 
 function Matrixes({}: Props) {
     const pageSize = 15;
     const [rules, setRules] = useState<ReadRuleDto[]>([]);
-    const [showInfoMessage, setShowInfoMessage] = useState(false);
-    const [showErrorMessage, setShowErrorMessage] = useState(false);
-    const [messageError, setMessageError] = useState("");
-    const [wordToSearch, setWordToSearch] = useState("");
-    const [localPagination, setLocalPagination] = useState<PaginationDto>({
+    const [showToast, setShowToast] = useState(0);
+    const [localPagination, setLocalPagination] = useState<Pagination>({
         currentPageNo: 1,
         nextPageNo: 0,
         prevPageNo: 0,
@@ -23,28 +22,12 @@ function Matrixes({}: Props) {
         totalCount: 0,
     });
 
-    const handleSearch = (word: string) => {
-        setWordToSearch(word);
-        setLocalPagination({
-            currentPageNo: 1,
-            nextPageNo: 0,
-            prevPageNo: 0,
-            pageSize: pageSize,
-            totalPages: 0,
-            totalCount: 0,
-        });
-        callApiGetRules(1, word);
-    };
-
     const callApiGetRules = (pageNo: number, word: string) => {
-        setShowInfoMessage(true);
-        setShowErrorMessage(false);
-        setMessageError(Messages.MESSAGE_LOADING);
+        setShowToast(1);
         setRules([]);
-
         Storage.Rule.GetRulesPaged(pageNo, pageSize, word).then((result) => {
             if (result.ok) {
-                setShowInfoMessage(false);
+                setShowToast(0);
                 setRules(result.data!);
                 setLocalPagination({
                     nextPageNo: result.nextPage,
@@ -55,60 +38,32 @@ function Matrixes({}: Props) {
                     totalCount: result.totalCount,
                 });
             } else {
-                setShowErrorMessage(true);
-                setShowInfoMessage(false);
-                setMessageError(result.errorMessage || "");
+                setShowToast(2);
             }
         });
     };
 
     useEffect(() => {
-        callApiGetRules(localPagination.currentPageNo, wordToSearch);
+        callApiGetRules(localPagination.currentPageNo, "");
     }, []);
 
     return (
         <>
-            {/* Error */}
-            <ToastContainer position="top-center" style={{ zIndex: 1 }}>
-                <Toast
-                    onClose={() => setShowErrorMessage(false)}
-                    show={showErrorMessage}
-                    delay={2000}
-                    autohide
-                    bg="danger"
-                >
-                    <Toast.Body className={"text-white text-center"}>
-                        {messageError}
-                    </Toast.Body>
-                </Toast>
-            </ToastContainer>
-            {/* Information */}
-            <ToastContainer position="top-center" style={{ zIndex: 1 }}>
-                <Toast
-                    onClose={() => setShowInfoMessage(false)}
-                    show={showInfoMessage}
-                    delay={20000}
-                    autohide
-                    bg="secondary"
-                >
-                    <Toast.Body className="text-white text-center">
-                        {Messages.MESSAGE_LOADING}
-                    </Toast.Body>
-                </Toast>
-            </ToastContainer>
+            {showToast == 1 && <ToastLoading></ToastLoading>}
+            {showToast == 2 && <ToastError></ToastError>}
 
+            {/* Toolbar */}
             <Toolbar
                 title={Messages.COMMON_MATRIX}
                 titleInfo={Messages.MATRIX_INFO}
                 isSearchable
                 isPaginated
                 pagination={localPagination}
-                onGotoPage={(nextPage) =>
-                    callApiGetRules(nextPage, wordToSearch)
-                }
-                onSearch={handleSearch}
+                onGotoPage={(nextPage, word) => callApiGetRules(nextPage, word)}
+                onSearch={(word) => callApiGetRules(1, word)}
             ></Toolbar>
 
+            {/* Main */}
             <Container fluid="xxl">
                 <Row>
                     <Table striped bordered hover>

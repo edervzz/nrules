@@ -2,11 +2,11 @@ import { CreateRuleDto, TenantDto } from "../models";
 
 export default class EnvarsSession{
     // session storage
-    clear(){
+    public static clear(){
         sessionStorage.clear();
     }
 
-    get tenant(){
+    public static get tenant(){
         const t =  sessionStorage.getItem("tenant") || "";
         if (t === ""){
             return {
@@ -21,15 +21,15 @@ export default class EnvarsSession{
         return JSON.parse(t) as TenantDto;
     }
 
-    set tenant(value:TenantDto){
+    public static set tenant(value:TenantDto){
         sessionStorage.setItem("tenant",JSON.stringify(value));
     }
 
-    set ruleInProgress(value:CreateRuleDto){
+    public static set ruleInProgress(value:CreateRuleDto){
         sessionStorage.setItem("ruleInProgress",JSON.stringify(value));
     }
 
-    get ruleInProgress(){
+    public static get ruleInProgress(){
         const r = sessionStorage.getItem("ruleInProgress") || "";
         if (r === ""){
             return {
@@ -42,11 +42,11 @@ export default class EnvarsSession{
 }
 
 export class EnvarsLocal{
-    get language(){
+    public static get language(){
         return localStorage.getItem("langu") || "es";
     }
 
-    set language(value:string){
+    public static set language(value:string){
         localStorage.setItem("langu",value);
     }
 }

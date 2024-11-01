@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Storage from "../../storage";
+import EnvarsSession from "../../envars";
 
 interface Props {
     children: ReactNode;
@@ -12,7 +12,7 @@ export default function MainContainer({ children, isLoginPage }: Props) {
     const navigate = useNavigate();
 
     const validateLogin = () => {
-        const tenantData = Storage.Session.tenant;
+        const tenantData = EnvarsSession.tenant;
         if (isLoginPage) {
             if (tenantData.id == 0) {
                 setShow(true);

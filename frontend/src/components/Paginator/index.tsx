@@ -1,9 +1,10 @@
 import { Button, Col, Dropdown, DropdownButton, Row } from "react-bootstrap";
-import { PaginationDto } from "../../models";
+
 import Messages from "../../locales/Messages";
+import { Pagination } from "../../typings";
 
 interface Props {
-    pagination?: PaginationDto;
+    pagination?: Pagination;
     onGotoPage?: (nextPage: number) => void;
 }
 

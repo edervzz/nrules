@@ -86,8 +86,5 @@ export const handleDelOutput = (outputs: NewRuleOutput[],
     setOutputs(outputs.filter((x) => x.id !== id));
 };
 
-export const handleClose = (setShowSending: React.Dispatch<React.SetStateAction<boolean>>) => {
-    setShowSending(false);
-};
 
 

@@ -5,9 +5,8 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Messages from "../../locales/Messages";
 import styles from "./MainMenu.module.css";
 import { useState } from "react";
-
-import { Form, useNavigate } from "react-router-dom";
-import Storage from "../../storage";
+import { useNavigate } from "react-router-dom";
+import EnvarsSession from "../../envars";
 
 interface Props {
     link_new?: string;
@@ -24,11 +23,11 @@ export default function Menubar({
     const [showLogout, setShowLogout] = useState(false);
     const navigate = useNavigate();
 
-    const tenantData = Storage.Session.tenant;
+    const tenantData = EnvarsSession.tenant;
     if (tenantData.id == 0) return <></>;
 
     const handleClickLogout = () => {
-        Storage.Session.clear();
+        EnvarsSession.clear();
         setShowLogout(true);
         navigate("/");
     };

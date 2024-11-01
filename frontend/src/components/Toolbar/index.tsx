@@ -9,16 +9,16 @@ import {
     Row,
     Tooltip,
 } from "react-bootstrap";
-import { PaginationDto } from "../../models";
 import Paginator from "../Paginator";
+import { Pagination } from "../../typings";
 
 interface Props {
     fluid?: boolean | string | "sm" | "md" | "lg" | "xl" | "xxl";
     title: string;
     titleInfo?: ReactNode;
     isPaginated?: boolean;
-    pagination?: PaginationDto;
-    onGotoPage?: (nextPage: number) => void;
+    pagination?: Pagination;
+    onGotoPage?: (nextPage: number, word: string) => void;
     isSearchable?: boolean;
     onSearch?: (word: string) => void;
     extraItems?: ReactNode[];
@@ -30,7 +30,7 @@ const Toolbar = ({
     titleInfo,
     isPaginated = false,
     pagination,
-    onGotoPage: onGotoPage,
+    onGotoPage,
     isSearchable = false,
     onSearch,
     extraItems,
@@ -102,7 +102,9 @@ const Toolbar = ({
                         <Col xs="auto" className="text-end">
                             <Paginator
                                 pagination={pagination!}
-                                onGotoPage={onGotoPage!}
+                                onGotoPage={(nextPage) =>
+                                    onGotoPage!(nextPage, wordToSearch)
+                                }
                             />
                         </Col>
                     )}

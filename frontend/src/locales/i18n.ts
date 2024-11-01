@@ -1,12 +1,12 @@
 import i18next from 'i18next';
 import * as enCommon from './en.json';
 import * as esCommon from './es.json';
-import Storage from '../storage';
+import { EnvarsLocal } from '../envars';
 
 export const defaultNS = 'common'; // Default name space
 
 i18next.init({
-    lng: Storage.Local.language, 
+    lng: EnvarsLocal.language, 
     fallbackLng: 'en', 
     debug: true, // Enable debug mode (optional)
     resources: {
@@ -23,5 +23,5 @@ export default i18next;
 
 export function changeLocale(newLangu: string){
     i18next.changeLanguage(newLangu);
-    Storage.Local.language=newLangu;
+    EnvarsLocal.language=newLangu;
 }

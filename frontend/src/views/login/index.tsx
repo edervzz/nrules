@@ -26,14 +26,14 @@ export default function LoginView() {
 
     return (
         <MainContainer isLoginPage>
-            {showLoad && (
-                <Loading01
-                    title={Messages.MESSAGE_CONNECTING}
-                    isFailure={isFailure}
-                    messageOnFailure={messageError}
-                    onClose={handleClose}
-                ></Loading01>
-            )}
+            Login
+            <Loading01
+                show={showLoad}
+                title={Messages.MESSAGE_CONNECTING}
+                isFailure={isFailure}
+                messageOnFailure={messageError}
+                onClose={handleClose}
+            ></Loading01>
             <Container fluid="xl" className=" justify-content-center">
                 <Row>
                     <Col></Col>

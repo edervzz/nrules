@@ -14,43 +14,41 @@ type Props = {
 
 const AddParameter = ({ title, onAddParameter, onClose }: Props) => {
     const refParamName = useRef<HTMLInputElement>(null);
-    const refParamType = useRef<HTMLInputElement>(null);
+    const refParamType = useRef<HTMLSelectElement>(null);
     return (
         <Modal show>
             <Modal.Header closeButton onHide={onClose}>
                 <Modal.Title>{title}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Form
-                    onSubmit={(e) => {
-                        e.preventDefault();
+                <InputGroup className="mb-3">
+                    <Form.Control
+                        ref={refParamName}
+                        aria-label="First name"
+                        placeholder={Messages.CONDITIONNAME}
+                    />
+                </InputGroup>
+                <Form.Select
+                    title={Messages.TYPE}
+                    ref={refParamType}
+                    aria-label="Default select example"
+                >
+                    <option>{ConditionType.STR}</option>
+                    <option>{ConditionType.NUM}</option>
+                    <option>{ConditionType.BOOL}</option>
+                    <option>{ConditionType.DATE}</option>
+                </Form.Select>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button
+                    variant="primary"
+                    onClick={() => {
                         onAddParameter(
                             refParamName.current?.value,
                             refParamType.current?.value
                         );
-                        onClose();
                     }}
                 >
-                    <InputGroup className="mb-3">
-                        <Form.Control
-                            ref={refParamName}
-                            aria-label="First name"
-                            placeholder={Messages.CONDITIONNAME}
-                        />
-                    </InputGroup>
-                    <Form.Select
-                        title={Messages.TYPE}
-                        aria-label="Default select example"
-                    >
-                        <option>{ConditionType.STR}</option>
-                        <option>{ConditionType.NUM}</option>
-                        <option>{ConditionType.BOOL}</option>
-                        <option>{ConditionType.DATE}</option>
-                    </Form.Select>
-                </Form>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="primary" type="submit">
                     <i className="bi bi-check-lg"></i>
                 </Button>
             </Modal.Footer>

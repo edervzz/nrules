@@ -12,6 +12,20 @@ export enum Operator {
     ANY,
 }
 
+export enum OperatorDto {
+    EQ = "=",
+    NE = "<>",
+    GT = ">",
+    LT = "<",
+    GE = ">=",
+    LE = "<=>",
+    IN = "IN",
+    NI = "NI",
+    BT = "BT",
+    NB = "NB",
+    ANY = "ANY",
+}
+
 export enum ConditionType {
     STR = "String",
     NUM = "Numeric",

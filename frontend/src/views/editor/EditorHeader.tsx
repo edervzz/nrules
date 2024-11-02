@@ -35,7 +35,7 @@ function EditorHeader({ conditions, outputs }: Props) {
                 colSpan={conditions?.length || 0}
                 id="condition"
             >
-                {Messages.CONDITIONS}
+                {Messages.EXPRESSIONS}
 
                 <Button
                     name="reorder"

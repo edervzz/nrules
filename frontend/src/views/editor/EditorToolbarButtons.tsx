@@ -1,69 +1,94 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Container, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { ParametersDto } from "../../models";
 import Messages from "../../locales/Messages";
+import AddParameter from "./AddParameter";
 
 type Props = {
-    onShowAddParameters: (show: boolean) => void;
-    onSetCondition: (value: React.SetStateAction<ParametersDto[]>) => void;
-    onSetOutputs: (value: React.SetStateAction<ParametersDto[]>) => void;
-    condition: ParametersDto[];
-    outputs: ParametersDto[];
+    onAddParameter: (parameter: ParametersDto) => void;
 };
 
-function EditorToolbarButtons({
-    onShowAddParameters,
-    onSetCondition,
-    onSetOutputs,
-    condition,
-    outputs,
-}: Props) {
+const CONDITION = "CONDITION";
+const OUTPUT = "OUTPUT";
+
+function EditorToolbarButtons({ onAddParameter }: Props) {
+    const [showAdd, setShowAdd] = useState("");
+
     return (
-        <Container>
-            <Button name="adfas" size="sm" variant="primary">
-                <i className="bi bi-plus-lg"></i> {Messages.ROW}
-            </Button>
+        <>
+            {showAdd == CONDITION && (
+                <AddParameter
+                    title={Messages.ADDEXPRESSION}
+                    onClose={() => {
+                        setShowAdd("");
+                    }}
+                    onAddParameter={(
+                        name: string | undefined,
+                        type: string | undefined
+                    ) => {
+                        onAddParameter({
+                            key: name!,
+                            typeof: type!,
+                            usefor: CONDITION,
+                        });
+                        setShowAdd("");
+                    }}
+                ></AddParameter>
+            )}
+            {showAdd == OUTPUT && (
+                <AddParameter
+                    title={Messages.ADDOUTPUT}
+                    onClose={() => {
+                        setShowAdd("");
+                    }}
+                    onAddParameter={(
+                        name: string | undefined,
+                        type: string | undefined
+                    ) => {
+                        onAddParameter({
+                            key: name!,
+                            typeof: type!,
+                            usefor: OUTPUT,
+                        });
+                        setShowAdd("");
+                    }}
+                ></AddParameter>
+            )}
+            <Container>
+                <Button name="adfas" size="sm" variant="primary">
+                    <i className="bi bi-plus-lg"></i> {Messages.ROW}
+                </Button>
 
-            <Button
-                onClick={() => {
-                    const oneParam = {
-                        key: "qwert",
-                        usefor: "CONDITION",
-                        typeof: "String",
-                    } as ParametersDto;
-                    const newParams = [...condition, { ...oneParam }];
-                    onSetCondition(newParams);
-                }}
-                className="ms-3"
-                name="adfas"
-                size="sm"
-                variant="primary"
-            >
-                <i className="bi bi-plus-lg"></i> {Messages.BUTTON_CONDITION}
-            </Button>
+                <Button
+                    onClick={() => setShowAdd("CONDITION")}
+                    className="ms-3"
+                    name="adfas"
+                    size="sm"
+                    variant="primary"
+                >
+                    <i className="bi bi-plus-lg"></i> {Messages.EXPRESSION}
+                </Button>
 
-            <Button
-                name="adfas2"
-                onClick={() => {
-                    const oneParam = {
-                        key: "zxcv",
-                        usefor: "OUTPUT",
-                        typeof: "String",
-                    } as ParametersDto;
-                    const newParams = [...outputs, { ...oneParam }];
-                    onSetOutputs(newParams);
-                }}
-                className="ms-1"
-                size="sm"
-                variant="primary"
-            >
-                <i className="bi bi-plus-lg"></i> {Messages.BUTTON_OUTPUT}
-            </Button>
+                <Button
+                    onClick={() => setShowAdd("OUTPUT")}
+                    name="adfas2"
+                    className="ms-1"
+                    size="sm"
+                    variant="primary"
+                >
+                    <i className="bi bi-plus-lg"></i> {Messages.OUTPUT}
+                </Button>
 
-            <Button name="reorder" className="ms-3" size="sm" variant="primary">
-                <i className="bi bi-arrow-down-up"></i>
-            </Button>
-        </Container>
+                <Button
+                    name="reorder"
+                    className="ms-3"
+                    size="sm"
+                    variant="primary"
+                >
+                    <i className="bi bi-arrow-down-up"></i>
+                </Button>
+            </Container>
+        </>
     );
 }
 

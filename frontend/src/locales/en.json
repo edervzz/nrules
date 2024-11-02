@@ -2,6 +2,10 @@
     "crea_rule_001": "Length must be between 5 and 50 characteres",
 
     "outname_default": "Output default",
+    "expressions": "Expressions",
+    "expression": "Expression",
+    "expression_name": "Expression's Name",
+    "add_expression": "Add Expression",
     "conditions": "Conditions",
     "condition": "Condition",
     "condition_name": "Condition Name",

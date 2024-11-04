@@ -3,7 +3,7 @@ from decimal import Decimal
 from typing import List
 from toolkit import Validator, Localizer, Codes
 from application.messages import RunRuleRequest
-from domain.entities import Rule, KVItem, Condition, Expression, RunRuleResult
+from domain.entities import Rule, KVItem, Case, Condition, RunRuleResult
 from domain.ports import CoreRepository
 from .expression_validator import ExpressionValidator
 
@@ -28,7 +28,7 @@ class RunRuleBizValidator(Validator):
 
         request.trace.append(f"rule: {rule.name}, type:{rule.rule_type}")
 
-        conditions: List[Condition] = self._repo.condition.read_by_parent_id(
+        conditions: List[Case] = self._repo.case.read_by_parent_id(
             rule.id)
         if conditions is None:
             request.ok = True  # by default, non conditions => truthy
@@ -47,7 +47,7 @@ class RunRuleBizValidator(Validator):
 
         condition_ok = False
         for cit in conditions:
-            expressions: List[Expression] = self._repo.expression.read_by_parent_id(
+            expressions: List[Condition] = self._repo.condition.read_by_parent_id(
                 cit.id)
 
             expression_results: List[bool] = []

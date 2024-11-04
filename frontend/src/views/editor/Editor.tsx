@@ -12,7 +12,7 @@ import {
 import Toolbar from "../../components/Toolbar";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Case, ParametersDto } from "../../models";
+import { Case, ExpressionDto, OutputDto, ParametersDto } from "../../models";
 import AddParameter from "./AddParameter";
 import { Rule } from "../../typings";
 import Storage from "../../storage";
@@ -22,54 +22,14 @@ import EditorHeader from "./EditorHeader";
 import EditorSubheader from "./EditorSubheader";
 import EditorRows from "./EditorRows";
 import { expression } from "joi";
+import { ConditionType, Operator, OperatorDto } from "../../enums";
 
 type Props = {};
 
 function Editor({}: Props) {
     const { id } = useParams();
     const [conditions, setConditions] = useState<ParametersDto[]>([]);
-    const [cases, setCases] = useState<Case[]>([
-        {
-            expressions: [
-                {
-                    variable: "ciclos",
-                    operator: "EQ",
-                    value: "2",
-                },
-                {
-                    variable: "diasInactividad",
-                    operator: "EQ",
-                    value: "180",
-                },
-            ],
-            outputs: [
-                {
-                    key: "tasa",
-                    value: "0.15",
-                },
-            ],
-        },
-        {
-            expressions: [
-                {
-                    variable: "ciclos",
-                    operator: "EQ",
-                    value: "2",
-                },
-                {
-                    variable: "diasInactividad",
-                    operator: "EQ",
-                    value: "180",
-                },
-            ],
-            outputs: [
-                {
-                    key: "tasa",
-                    value: "0.15",
-                },
-            ],
-        },
-    ]);
+    const [cases, setCases] = useState<Case[]>([]);
     const [outputs, setOutputs] = useState<ParametersDto[]>([]);
     const [showAddParameter, setShowAddParameter] = useState(false);
     const [checked, setChecked] = useState(true);
@@ -121,6 +81,73 @@ function Editor({}: Props) {
                             } else if (parameter.usefor == "OUTPUT") {
                                 setOutputs([...outputs, parameter]);
                             }
+                        },
+                        onAddRow: () => {
+                            let newExpressions: ExpressionDto[] = [];
+                            conditions.map((x) => {
+                                switch (x.typeof) {
+                                    case ConditionType.STR:
+                                        const exp = {
+                                            operator: OperatorDto.EQ,
+                                            variable: x.key,
+                                            value: "",
+                                        } as ExpressionDto;
+                                        newExpressions.push(exp);
+                                        break;
+                                    case ConditionType.NUM:
+                                        const exp2 = {
+                                            operator: OperatorDto.EQ,
+                                            variable: x.key,
+                                            value: "0",
+                                        } as ExpressionDto;
+                                        newExpressions.push(exp2);
+                                        break;
+                                    case ConditionType.BOOL:
+                                        const exp3 = {
+                                            operator: OperatorDto.EQ,
+                                            variable: x.key,
+                                            value: "false",
+                                        } as ExpressionDto;
+                                        newExpressions.push(exp3);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            });
+
+                            let newOutputs: OutputDto[] = [];
+                            outputs.map((x) => {
+                                switch (x.typeof) {
+                                    case ConditionType.STR:
+                                        const one = {
+                                            key: x.key,
+                                            value: "",
+                                        } as OutputDto;
+                                        newOutputs.push(one);
+                                        break;
+                                    case ConditionType.NUM:
+                                        const one2 = {
+                                            key: x.key,
+                                            value: "0",
+                                        } as OutputDto;
+                                        newOutputs.push(one2);
+                                        break;
+                                    case ConditionType.BOOL:
+                                        const one3 = {
+                                            key: x.key,
+                                            value: "false",
+                                        } as OutputDto;
+                                        newOutputs.push(one3);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            });
+                            const newCase = {
+                                expressions: newExpressions,
+                                outputs: newOutputs,
+                            } as Case;
+                            setCases([...cases, newCase]);
                         },
                     }),
                 ]}

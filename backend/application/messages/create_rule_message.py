@@ -1,6 +1,6 @@
 """ create rule messages """
 from typing import List
-from domain.entities import Condition, Expression, Rule, KVItem, KV, Parameter
+from domain.entities import Case, Condition, Rule, KVItem, KV, Parameter
 
 
 class CreateRuleRequest:

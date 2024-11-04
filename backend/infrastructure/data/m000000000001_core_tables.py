@@ -103,9 +103,9 @@ def core_tables(engine: Engine) -> str:
         "ix_parameters_001",
         parameters.c.rule_id)
 
-    # Conditions ----------------------------------------------
-    conditions = Table(
-        "conditions",
+    # Cases ----------------------------------------------
+    cases = Table(
+        "cases",
         metadata_obj,
         Column(
             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
@@ -123,26 +123,26 @@ def core_tables(engine: Engine) -> str:
             "kvs_id_nok", String(36), nullable=True, comment="KVS associated when condition was failed"),
         comment="Matrix's Rows. Set execution order"
     )
-    set_auditable(conditions)
+    set_auditable(cases)
     Index(
-        "ix_conditions_001",
-        conditions.c.tenant_id,
-        conditions.c.rule_id)
+        "ix_cases_001",
+        cases.c.tenant_id,
+        cases.c.rule_id)
     Index(
-        "ix_conditions_002",
-        conditions.c.tenant_id,
-        conditions.c.parent_id)
+        "ix_cases_002",
+        cases.c.tenant_id,
+        cases.c.parent_id)
 
-    # Expressions  ----------------------------------------------
-    expressions = Table(
-        "expressions",
+    # conditions  ----------------------------------------------
+    conditions = Table(
+        "conditions",
         metadata_obj,
         Column(
             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
         Column(
             "id", String(36), primary_key=True, comment="ID"),
         Column(
-            "condition_id", String(36), primary_key=True, comment="Condition ID"),
+            "case_id", String(36), primary_key=True, comment="Case ID"),
         Column(
             "variable", String(50), nullable=False, comment="Variable Name"),
         Column(
@@ -152,14 +152,14 @@ def core_tables(engine: Engine) -> str:
         Column(
             "typeof", String(10), nullable=False, comment="Type of Value"),
         UniqueConstraint(
-            "tenant_id", "id", name="kv_expressions_unk"),
+            "tenant_id", "id", name="kv_conditions_unk"),
         comment="Matrix's Columns. Set expressions to evaluate"
     )
-    set_auditable(expressions)
+    set_auditable(conditions)
     Index(
-        "ix_expressions_001",
-        expressions.c.tenant_id,
-        expressions.c.condition_id)
+        "ix_conditions_001",
+        conditions.c.tenant_id,
+        conditions.c.case_id)
 
     metadata_obj.create_all(engine)
 

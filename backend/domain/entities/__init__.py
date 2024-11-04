@@ -8,8 +8,8 @@ from .xobject import XObject
 from .tenants import Tenants
 from .kv import KV
 from .kv_item import KVItem
+from .case import Case
 from .condition import Condition
-from .expression import Expression
 from .rule import Rule
 from .rule_result import RunRuleResult
 from .parameters import Parameter

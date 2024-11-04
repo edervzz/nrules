@@ -1,7 +1,7 @@
 """ _module_ """
 import json
 from typing import List
-from domain.entities import Condition
+from domain.entities import Case
 
 
 class UpdateRuleModel:

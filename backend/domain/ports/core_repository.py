@@ -45,7 +45,7 @@ class ParametersRepository(
         self.engine = engine
 
 
-class ExpressionRepository(
+class ConditionRepository(
         ABC, Creator, Updater,
         ReaderSingle, ReaderByParentID):
     """_summary_"""
@@ -56,7 +56,7 @@ class ExpressionRepository(
         self.engine = engine
 
 
-class ConditionRepository(
+class CaseRepository(
         ABC, Creator, Updater,
         ReaderSingle, ReaderByParentID):
     """_summary_"""
@@ -76,8 +76,8 @@ class CoreRepository:
         self.kvitem: KVItemRepository
         self.rule: RuleRepository
         self.parameter: ParametersRepository
-        self.expression: ExpressionRepository
         self.condition: ConditionRepository
+        self.case: CaseRepository
 
     @abstractmethod
     def begin(self, autoflush=False):

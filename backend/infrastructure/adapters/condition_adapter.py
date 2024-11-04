@@ -6,7 +6,7 @@ from domain.ports import ConditionRepository
 
 
 class ConditionAdapter(ConditionRepository):
-    """ Condition Adapter """
+    """ Adapter """
 
     def set_session(self, session: Session):
         self.session = session
@@ -17,24 +17,21 @@ class ConditionAdapter(ConditionRepository):
             self.session.flush()
 
     def update(self,  entity: Condition):
-        element = self.session.query(Condition).where(
+        expression = self.session.query(Condition).where(
             Condition.tenant_id == entity.tenant_id,
-            Condition.rule_id == entity.rule_id,
-            Condition.expression_id == entity.expression_id).one_or_none()
+            Condition.id == entity.id).one_or_none()
 
-        element.position = entity.position
-        element.kvs_id_ok = entity.kvs_id_ok
-        element.kvs_id_nok = entity.kvs_id_nok
-        element.version = entity.version
+        expression.expression = entity.expression
+        expression.version = entity.version
 
     def read(self, _id) -> Condition:
         with Session(self.engine) as session:
             condition = session.query(Condition).where(
-                Condition.expression_id == _id).one_or_none()
+                Condition.id == _id).one_or_none()
             return condition
 
-    def read_by_parent_id(self, parent_id: int) -> List[Condition]:
+    def read_by_parent_id(self, parent_id: str) -> List[Condition]:
         with Session(self.engine) as session:
-            matrix = session.query(Condition).where(
-                Condition.rule_id == parent_id). order_by(Condition.position).all()
-            return matrix
+            conditions = session.query(Condition).where(
+                Condition.condition_id == parent_id).all()
+            return conditions

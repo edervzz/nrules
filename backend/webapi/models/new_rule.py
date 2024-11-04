@@ -2,7 +2,7 @@
 import json
 import uuid
 from typing import List
-from domain.entities import Condition, Expression, KVItem, KV, Parameter
+from domain.entities import Case, Condition, KVItem, KV, Parameter
 
 
 class NewRuleModel:
@@ -23,8 +23,8 @@ class NewRuleModel:
 
         self.kvs: List[KV] = []
         self.kvitems: List[KVItem] = []
-        self.conditions: List[Condition] = []
-        self.expressions: List[Expression] = []
+        self.conditions: List[Case] = []
+        self.expressions: List[Condition] = []
         self.default_kvs: KV
         self.default_kvitems: List[KVItem] = []
 
@@ -48,7 +48,7 @@ class NewRuleModel:
 
         if isinstance(conditions_raw, list):
             for cond_raw in conditions_raw:
-                one_condition = Condition()
+                one_condition = Case()
                 one_condition.id = str(uuid.uuid4())
                 one_condition.rule_id = self.ruleid
                 one_condition.position = len(self.conditions) + 1
@@ -57,7 +57,7 @@ class NewRuleModel:
                     expressions = cond_raw["expressions"]
                     if isinstance(expressions, list):
                         for exp in expressions:
-                            expression = Expression()
+                            expression = Condition()
                             expression.id = str(uuid.uuid4())
                             expression.condition_id = one_condition.id
 

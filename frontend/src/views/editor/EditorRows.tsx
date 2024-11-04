@@ -18,8 +18,8 @@ type Props = {
 
 function EditorRows({ cases, expressions, outputs }: Props) {
     return cases.map((c, idx) => (
-        <tr key={idx}>
-            <td key={idx}>
+        <tr key={"cases" + idx}>
+            <td key={"controls" + idx}>
                 <Container>
                     <Badge bg="dark">1</Badge>
                     <ToggleButton
@@ -44,36 +44,50 @@ function EditorRows({ cases, expressions, outputs }: Props) {
                     (x) => x.variable == e.key
                 );
                 const oneExpression = expression.pop();
-                if (oneExpression === undefined) return <td></td>;
+                if (oneExpression === undefined) return <></>;
 
                 return (
                     <td key={e.key}>
                         <Container>
-                            <Button
-                                className="ms-1"
-                                size="sm"
-                                variant="success"
+                            <Row
+                                style={{ width: "280px" }}
+                                sm="auto"
+                                className="align-items-center"
                             >
-                                {oneExpression.operator}
-                            </Button>
-                            <Form.Control
-                                id={
-                                    "input" +
-                                    idx.toString() +
-                                    oneExpression.variable
-                                }
-                                value={oneExpression.value}
-                            />
+                                <Button size="sm" variant="success">
+                                    {oneExpression.operator}
+                                </Button>
+                                <Form.Control
+                                    className="ms-3"
+                                    size="sm"
+                                    style={{ width: "200px" }}
+                                    id={
+                                        "input" +
+                                        idx.toString() +
+                                        oneExpression.variable
+                                    }
+                                    defaultValue={oneExpression.value}
+                                />
+                            </Row>
                         </Container>
                     </td>
                 );
             })}
             {outputs.map((e) => {
-                const expression = c.outputs.filter((x) => x.key == e.key);
-                const oneExpression = expression.pop();
-                if (oneExpression === undefined) return <td></td>;
-
-                return <td key={e.key}></td>;
+                const out = c.outputs.filter((x) => x.key == e.key);
+                const oneOut = out.pop();
+                if (oneOut === undefined) return <td></td>;
+                return (
+                    <td key={e.key} style={{ width: "275px" }}>
+                        <Form.Control
+                            className="ms-3"
+                            size="sm"
+                            style={{ width: "200px" }}
+                            id={"input" + idx.toString() + oneOut.key}
+                            defaultValue={oneOut.value}
+                        />
+                    </td>
+                );
             })}
         </tr>
     ));

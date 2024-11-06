@@ -6,7 +6,7 @@ from flask import session
 from sqlalchemy import Engine, create_engine, select, event
 from sqlalchemy.orm import Session
 from sqlalchemy.orm import Query
-from domain.entities import Rule, Parameter, Expression, Condition
+from domain.entities import Rule, Parameter, Condition, Case
 from domain.entities import TenantSpecific, Versioned, Auditable, Migrations
 from domain.entities import KV, KVItem
 from domain.ports import CoreRepository
@@ -15,8 +15,8 @@ from .kvs_adapter import KVSAdapter
 from .kvitem_adapter import KVItemAdapter
 from .rule_adapter import RuleAdapter
 from .parameter_adapter import ParameterAdapter
+from .case_adapter import CaseAdapter
 from .condition_adapter import ConditionAdapter
-from .expression_adapter import ExpressionAdapter
 
 
 class CoreAdapter(CoreRepository):
@@ -47,13 +47,13 @@ class CoreAdapter(CoreRepository):
         event.listen(Parameter, 'before_insert', self.__before_insert)
         event.listen(Parameter, 'before_update', self.__before_update)
 
-        self.expression = ExpressionAdapter(self.engine)
-        event.listen(Expression, 'before_insert', self.__before_insert)
-        event.listen(Expression, 'before_update', self.__before_update)
-
         self.condition = ConditionAdapter(self.engine)
         event.listen(Condition, 'before_insert', self.__before_insert)
         event.listen(Condition, 'before_update', self.__before_update)
+
+        self.case = CaseAdapter(self.engine)
+        event.listen(Case, 'before_insert', self.__before_insert)
+        event.listen(Case, 'before_update', self.__before_update)
 
         @event.listens_for(Query, 'before_compile', retval=True)
         def _fn(query: Query):
@@ -66,8 +66,8 @@ class CoreAdapter(CoreRepository):
         self.kvitem.set_session(self.session)
         self.rule.set_session(self.session)
         self.parameter.set_session(self.session)
-        self.expression.set_session(self.session)
         self.condition.set_session(self.session)
+        self.case.set_session(self.session)
 
     def commit_work(self):
         if self.session is not None:

@@ -24,7 +24,7 @@ function EditorSubheader({ conditions, outputs }: Props) {
                             }}
                             key={x.key}
                         >
-                            {x.key} ({x.typeof})
+                            {x.key} <br></br>({x.typeof})
                         </th>
                     ))}
 

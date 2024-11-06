@@ -6,19 +6,20 @@ import AddParameter from "./AddParameter";
 
 type Props = {
     onAddParameter: (parameter: ParametersDto) => void;
+    onAddRow: () => void;
 };
 
 const CONDITION = "CONDITION";
 const OUTPUT = "OUTPUT";
 
-function EditorToolbarButtons({ onAddParameter }: Props) {
+function EditorToolbarButtons({ onAddParameter, onAddRow }: Props) {
     const [showAdd, setShowAdd] = useState("");
 
     return (
         <>
             {showAdd == CONDITION && (
                 <AddParameter
-                    title={Messages.ADDEXPRESSION}
+                    title={Messages.ADDCONDITION}
                     onClose={() => {
                         setShowAdd("");
                     }}
@@ -55,7 +56,12 @@ function EditorToolbarButtons({ onAddParameter }: Props) {
                 ></AddParameter>
             )}
             <Container>
-                <Button name="adfas" size="sm" variant="primary">
+                <Button
+                    onClick={onAddRow}
+                    name="adfas"
+                    size="sm"
+                    variant="primary"
+                >
                     <i className="bi bi-plus-lg"></i> {Messages.ROW}
                 </Button>
 
@@ -66,7 +72,7 @@ function EditorToolbarButtons({ onAddParameter }: Props) {
                     size="sm"
                     variant="primary"
                 >
-                    <i className="bi bi-plus-lg"></i> {Messages.EXPRESSION}
+                    <i className="bi bi-plus-lg"></i> {Messages.CONDITION}
                 </Button>
 
                 <Button

@@ -25,17 +25,14 @@ def update_rules_endpoint(tid=None, rule_id=None):
     command = UpdateRuleRequest(
         rule_id,
         rule_name,
-        update_rule.rule_type,
         update_rule.strategy,
     )
 
-    handler = UpdateRuleHandler(
+    result = UpdateRuleHandler(
         current_app.config[str(tid)],
         current_app.config["logger"],
         current_app.config["localizer"]
-    )
-
-    result = handler.handler(command)
+    ).handler(command)
 
     return Response(
         response="",

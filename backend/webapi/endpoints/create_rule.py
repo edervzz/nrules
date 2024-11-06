@@ -27,7 +27,8 @@ def new_rules_endpoint(tid=None):
         new_rules.name,
         new_rules.rule_type,
         new_rules.strategy,
-        new_rules.parameters
+        new_rules.parameters,
+        new_rules.default_kvs
     )
 
     result = CreateRuleHandler(

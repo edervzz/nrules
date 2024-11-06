@@ -1,6 +1,6 @@
 """ migration file """
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, Index
+from sqlalchemy import Column, Integer, String, Index, Boolean
 from sqlalchemy import MetaData, Table,  CheckConstraint, UniqueConstraint, Engine, select
 from sqlalchemy.orm import Session
 from domain.entities import Migrations
@@ -47,7 +47,7 @@ def core_tables(engine: Engine) -> str:
         Column(
             "calculation", String(3), CheckConstraint("calculation = 'ADD' OR calculation = 'MOD' OR calculation = 'FN'", name="kv_items_chk_calculation"), nullable=True, comment="Calculation method"),
         Column(
-            "typeof", String(10), nullable=True, comment="Type of value. E.g. 'json', 'string', 'int'"),
+            "typeof", String(10), CheckConstraint("typeof = 'JSON' OR typeof = 'STRING' OR typeof = 'NUMERIC' OR typeof = 'DATE' OR typeof = 'TIME' OR typeof = 'DATETIME'", name="parameters_chk_usefor"), nullable=True, comment="Type of value. E.g. 'json', 'string', 'int'"),
         UniqueConstraint("tenant_id", "kv_id", "key", name="kv_items_unk"),
         comment="KV Item can be assign to single one KVS"
     )
@@ -95,7 +95,7 @@ def core_tables(engine: Engine) -> str:
         Column(
             "usefor", String(10), CheckConstraint("usefor = 'CONDITION' OR usefor = 'OUTPUT'", name="parameters_chk_usefor"), nullable=False, comment="Use for: CONDITION, OUTPUT"),
         Column(
-            "typeof", String(10), nullable=False, comment="Type of Value: String, Numeric, Date"),
+            "typeof", String(10), CheckConstraint("typeof = 'STRING' OR typeof = 'NUMERIC' OR typeof = 'DATE' OR typeof = 'TIME' OR typeof = 'DATETIME'", name="parameters_chk_usefor"), nullable=False, comment="Type of Value: String, Numeric, Date"),
         comment="Extra information for expressions"
     )
     set_auditable(parameters)
@@ -150,7 +150,9 @@ def core_tables(engine: Engine) -> str:
         Column(
             "value", String(50), nullable=False, comment="Value"),
         Column(
-            "typeof", String(10), nullable=False, comment="Type of Value"),
+            "is_case_sensitive", Boolean, nullable=False, comment="Case-Sensitive"),
+        Column(
+            "typeof", String(10), CheckConstraint("typeof = 'STRING' OR typeof = 'NUMERIC' OR typeof = 'DATE' OR typeof = 'TIME' OR typeof = 'DATETIME'", name="parameters_chk_usefor"), nullable=False, comment="Type of Value"),
         UniqueConstraint(
             "tenant_id", "id", name="kv_conditions_unk"),
         comment="Matrix's Columns. Set expressions to evaluate"

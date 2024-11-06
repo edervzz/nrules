@@ -20,4 +20,6 @@ class Condition(Base, TenantSpecific, Auditable):
 
     value: Mapped[str] = mapped_column(nullable=False)
 
+    is_case_sensitive: Mapped[bool] = mapped_column(nullable=True)
+
     typeof: Mapped[str] = mapped_column(nullable=False)

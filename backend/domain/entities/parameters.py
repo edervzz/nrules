@@ -14,6 +14,6 @@ class Parameter(Base, TenantSpecific, Auditable):
 
     rule_id: Mapped[str] = mapped_column(primary_key=True, nullable=False)
 
-    usefor: Mapped[str] = mapped_column(nullable=False)
-
     typeof: Mapped[str] = mapped_column(nullable=False)
+
+    usefor: Mapped[str] = mapped_column(nullable=False)

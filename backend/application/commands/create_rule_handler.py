@@ -31,6 +31,7 @@ class CreateRuleHandler:
         self.repository.rule.create(request.rule)
         for x in request.paramters:
             self.repository.parameter.create(x)
+        self.repository.kvs.create(request.default_kvs)
         self.repository.commit_work()
 
         return CreateRuleResponse(request.rule.id)

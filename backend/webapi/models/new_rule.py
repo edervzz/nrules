@@ -19,7 +19,6 @@ class NewRuleModel:
         self.parameters: List[Parameter] = []
 
         conditions_raw = self.__dict__.get("conditions", None)
-        default_output = self.__dict__.get("default_output", None)
 
         self.kvs: List[KV] = []
         self.kvitems: List[KVItem] = []
@@ -109,24 +108,5 @@ class NewRuleModel:
 
                 self.conditions.append(one_condition)
 
-        if isinstance(default_output, list):
-            self.default_kvs = KV()
-            self.default_kvs.id = str(uuid.uuid4())
-            for o in default_output:
-                kvitem = KVItem()
-                kvitem.kv_id = self.default_kvs.id
-
-                key = ""
-                value = ""
-                typeof = ""
-                if "key" in o:
-                    key = o["key"]
-                if "value" in o:
-                    value = o["value"]
-                if "typeof" in o:
-                    typeof = o["typeof"]
-
-                kvitem.key = str(key).strip()
-                kvitem.value = str(value).strip()
-                kvitem.typeof = str(typeof).strip()
-                self.default_kvitems.append(kvitem)
+        self.default_kvs = KV()
+        self.default_kvs.id = str(uuid.uuid4())

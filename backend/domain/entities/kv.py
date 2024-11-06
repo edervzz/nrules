@@ -1,7 +1,7 @@
 """ _summry_ """
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
-from .extra_fields import TenantSpecific, Auditable, Versioned
+from .extra_fields import TenantSpecific, Auditable
 from .base import Base
 
 

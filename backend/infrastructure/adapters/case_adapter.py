@@ -23,7 +23,7 @@ class CaseAdapter(CaseRepository):
             Case.expression_id == entity.expression_id).one_or_none()
 
         element.position = entity.position
-        element.kvs_id_ok = entity.kvs_id_ok
+        element.kvs_id = entity.kvs_id
         element.kvs_id_nok = entity.kvs_id_nok
         element.version = entity.version
 

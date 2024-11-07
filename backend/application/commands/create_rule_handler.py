@@ -28,10 +28,21 @@ class CreateRuleHandler:
         self.logger.info("business rules validated")
 
         self.repository.begin()
-        self.repository.rule.create(request.rule)
-        for x in request.paramters:
-            self.repository.parameter.create(x)
+
+        self.repository.condition_group.create(request.condition_group)
+        for x in request.conditions:
+            self.repository.condition.create(x)
+
+        self.repository.kvs.create(request.kvs)
+        for x in request.kv_items:
+            self.repository.kvitem.create(x)
+
         self.repository.kvs.create(request.default_kvs)
+
+        self.repository.rule.create(request.rule)
+
+        self.repository.case.create(request.case)
+
         self.repository.commit_work()
 
         return CreateRuleResponse(request.rule.id)

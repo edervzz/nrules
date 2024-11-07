@@ -47,7 +47,7 @@ def core_tables(engine: Engine) -> str:
         Column(
             "calculation", String(3), CheckConstraint("calculation = 'ADD' OR calculation = 'MOD' OR calculation = 'FN'", name="kv_items_chk_calculation"), nullable=True, comment="Calculation method"),
         Column(
-            "typeof", String(10), CheckConstraint("typeof = 'JSON' OR typeof = 'STRING' OR typeof = 'NUMERIC' OR typeof = 'DATE' OR typeof = 'TIME' OR typeof = 'DATETIME'", name="parameters_chk_usefor"), nullable=True, comment="Type of value. E.g. 'json', 'string', 'int'"),
+            "typeof", String(10), CheckConstraint("typeof = 'JSON' OR typeof = 'STRING' OR typeof = 'NUMERIC' OR typeof = 'DATE' OR typeof = 'TIME' OR typeof = 'DATETIME'", name="kv_items_chk_usefor"), nullable=True, comment="Type of value. E.g. 'json', 'string', 'int'"),
         UniqueConstraint("tenant_id", "kv_id", "key", name="kv_items_unk"),
         comment="KV Item can be assign to single one KVS"
     )
@@ -72,7 +72,7 @@ def core_tables(engine: Engine) -> str:
         Column(
             "strategy", String(5), CheckConstraint("strategy = 'EARLY' OR strategy = 'BASE' OR strategy = 'ALL'", name="rules_chk_strategy"), nullable=False, comment="Strategy of rule depending of Type"),
         Column(
-            "kvs_id_nok", String(36), nullable=True, comment="KVS associated when no condition was success"),
+            "default_kvs_id", String(36), nullable=True, comment="KVS associated when no condition was success"),
         comment="Rule Catalog"
     )
     set_version(rule)
@@ -81,27 +81,6 @@ def core_tables(engine: Engine) -> str:
         "ix_rules_001",
         rule.c.tenant_id,
         rule.c.name)
-
-    # Parameters ----------------------------------------------
-    parameters = Table(
-        "parameters",
-        metadata_obj,
-        Column(
-            "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
-        Column(
-            "key", String(50), primary_key=True, comment="Paramater Key"),
-        Column(
-            "rule_id", String(36), primary_key=True, comment="Rule ID"),
-        Column(
-            "usefor", String(10), CheckConstraint("usefor = 'CONDITION' OR usefor = 'OUTPUT'", name="parameters_chk_usefor"), nullable=False, comment="Use for: CONDITION, OUTPUT"),
-        Column(
-            "typeof", String(10), CheckConstraint("typeof = 'STRING' OR typeof = 'NUMERIC' OR typeof = 'DATE' OR typeof = 'TIME' OR typeof = 'DATETIME'", name="parameters_chk_usefor"), nullable=False, comment="Type of Value: String, Numeric, Date"),
-        comment="Extra information for expressions"
-    )
-    set_auditable(parameters)
-    Index(
-        "ix_parameters_001",
-        parameters.c.rule_id)
 
     # Cases ----------------------------------------------
     cases = Table(
@@ -116,11 +95,9 @@ def core_tables(engine: Engine) -> str:
         Column(
             "position", Integer, nullable=False, comment="Position"),
         Column(
-            "parent_id", Integer, nullable=True, comment="Condition Parent ID"),
+            "condition_group_id", String(36), nullable=True, comment="Condition Parent ID"),
         Column(
-            "kvs_id_ok", String(36), nullable=True, comment="KVS associated when condition was successful"),
-        Column(
-            "kvs_id_nok", String(36), nullable=True, comment="KVS associated when condition was failed"),
+            "kvs_id", String(36), nullable=True, comment="KVS associated when condition was ok"),
         comment="Matrix's Rows. Set execution order"
     )
     set_auditable(cases)
@@ -128,10 +105,18 @@ def core_tables(engine: Engine) -> str:
         "ix_cases_001",
         cases.c.tenant_id,
         cases.c.rule_id)
-    Index(
-        "ix_cases_002",
-        cases.c.tenant_id,
-        cases.c.parent_id)
+
+    # condition group  ----------------------------------------------
+    condition_group = Table(
+        "condition_groups",
+        metadata_obj,
+        Column(
+            "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
+        Column(
+            "id", String(36), primary_key=True, comment="Condition Group ID"),
+        comment="Matrix's Columns. Set expressions to evaluate"
+    )
+    set_auditable(condition_group)
 
     # conditions  ----------------------------------------------
     conditions = Table(
@@ -140,11 +125,9 @@ def core_tables(engine: Engine) -> str:
         Column(
             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
         Column(
-            "id", String(36), primary_key=True, comment="ID"),
+            "variable", String(50), primary_key=True, nullable=False, comment="Variable Name"),
         Column(
-            "case_id", String(36), primary_key=True, comment="Case ID"),
-        Column(
-            "variable", String(50), nullable=False, comment="Variable Name"),
+            "condition_group_id", String(36), primary_key=True, comment="Condition Group ID"),
         Column(
             "operator", String(10), nullable=False, comment="Operator"),
         Column(
@@ -152,16 +135,10 @@ def core_tables(engine: Engine) -> str:
         Column(
             "is_case_sensitive", Boolean, nullable=False, comment="Case-Sensitive"),
         Column(
-            "typeof", String(10), CheckConstraint("typeof = 'STRING' OR typeof = 'NUMERIC' OR typeof = 'DATE' OR typeof = 'TIME' OR typeof = 'DATETIME'", name="parameters_chk_usefor"), nullable=False, comment="Type of Value"),
-        UniqueConstraint(
-            "tenant_id", "id", name="kv_conditions_unk"),
+            "typeof", String(10), CheckConstraint("typeof = 'STRING' OR typeof = 'NUMERIC' OR typeof = 'DATE' OR typeof = 'TIME' OR typeof = 'DATETIME'", name="conditions_chk_usefor"), nullable=False, comment="Type of Value"),
         comment="Matrix's Columns. Set expressions to evaluate"
     )
     set_auditable(conditions)
-    Index(
-        "ix_conditions_001",
-        conditions.c.tenant_id,
-        conditions.c.case_id)
 
     metadata_obj.create_all(engine)
 
@@ -172,3 +149,25 @@ def core_tables(engine: Engine) -> str:
         session.add(m)
         session.commit()
         return name
+
+
+# # Parameters ----------------------------------------------
+#     parameters = Table(
+#         "parameters",
+#         metadata_obj,
+#         Column(
+#             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
+#         Column(
+#             "key", String(50), primary_key=True, comment="Paramater Key"),
+#         Column(
+#             "rule_id", String(36), primary_key=True, comment="Rule ID"),
+#         Column(
+#             "usefor", String(10), CheckConstraint("usefor = 'CONDITION' OR usefor = 'OUTPUT'", name="parameters_chk_usefor"), nullable=False, comment="Use for: CONDITION, OUTPUT"),
+#         Column(
+#             "typeof", String(10), CheckConstraint("typeof = 'STRING' OR typeof = 'NUMERIC' OR typeof = 'DATE' OR typeof = 'TIME' OR typeof = 'DATETIME'", name="parameters_chk_usefor"), nullable=False, comment="Type of Value: String, Numeric, Date"),
+#         comment="Extra information for expressions"
+#     )
+#     set_auditable(parameters)
+#     Index(
+#         "ix_parameters_001",
+#         parameters.c.rule_id)

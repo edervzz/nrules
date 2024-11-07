@@ -145,6 +145,47 @@ class Codes:
     en_messages[RU_READ_001] = "Rule ID or Rule Name must be provided."
     es_messages[RU_READ_001] = "Id Regla o Nombre Regla es obligatorio."
 
+    # Save Rule's Conditions
+    COND_SAVE_010 = "COND-SAVE-010"
+    en_messages[COND_SAVE_010] = "Condition '{}' must be consistent between parameter and condition."
+    es_messages[COND_SAVE_010] = "Condition '{}' debe ser consistente entre el parámetro y condición."
+
+    COND_SAVE_009 = "COND-SAVE-009"
+    en_messages[COND_SAVE_009] = "Parameters not found for this rule."
+    es_messages[COND_SAVE_009] = "No se encontraron parámetros para esta Regla."
+
+    COND_SAVE_008 = "COND-SAVE-008"
+    en_messages[COND_SAVE_008] = "Rule not found."
+    es_messages[COND_SAVE_008] = "Regla no encontrada."
+
+    COND_SAVE_007 = "COND-SAVE-007"
+    en_messages[COND_SAVE_007] = "Rule ID or Rule Name must be provided."
+    es_messages[COND_SAVE_007] = "Id Regla o Nombre Regla es obligatorio."
+
+    COND_SAVE_006 = "COND-SAVE-006"
+    en_messages[COND_SAVE_006] = "For type of DATE, operator must be: ['=', '<>', '>', '<', '>=', '<=', 'BT', 'NB']"
+    es_messages[COND_SAVE_006] = "Para tipos DATE, operador debe ser: ['=', '<>', '>', '<', '>=', '<=', 'BT', 'NB']"
+
+    COND_SAVE_005 = "COND-SAVE-005"
+    en_messages[COND_SAVE_005] = "For type of NUMERIC, operator must be: ['=', '<>', '>', '<', '>=', '<=', 'IN', 'NI', 'BT', 'NB']"
+    es_messages[COND_SAVE_005] = "Para tipos NUMERIC, operador debe ser: ['=', '<>', '>', '<', '>=', '<=', 'IN', 'NI', 'BT', 'NB']"
+
+    COND_SAVE_004 = "COND-SAVE-004"
+    en_messages[COND_SAVE_004] = "For type of STRING, operator must be: ['=', '<>', 'IN', 'NI']"
+    es_messages[COND_SAVE_004] = "Para tipos STRING, operador debe ser: ['=', '<>', 'IN', 'NI']"
+
+    COND_SAVE_003 = "COND-SAVE-003"
+    en_messages[COND_SAVE_003] = "Operator must be: ['=', '<>', '>', '<', '>=', '<=', 'IN', 'NI', 'BT', 'NB']"
+    es_messages[COND_SAVE_003] = "Operador debe ser: ['=', '<>', '>', '<', '>=', '<=', 'IN', 'NI', 'BT', 'NB']"
+
+    COND_SAVE_002 = "COND-SAVE-002"
+    en_messages[COND_SAVE_002] = "The type of Condition must be: ['STRING', 'NUMERIC', 'DATE']"
+    es_messages[COND_SAVE_002] = "El tipo de la condición debe ser: ['STRING', 'NUMERIC', 'DATE']"
+
+    COND_SAVE_001 = "COND-SAVE-001"
+    en_messages[COND_SAVE_001] = "All variables are mandatory"
+    es_messages[COND_SAVE_001] = "Todas las variables son obligatorias."
+
     # Update Rule
     RU_UPD_011 = "RU-UPD-011"
     en_messages[RU_UPD_011] = "Strategy must be EARLY / BASIC / ALL."
@@ -190,18 +231,48 @@ class Codes:
     en_messages[RU_UPD_001] = "Rule Name is mandatory."
     es_messages[RU_UPD_001] = "Nombre de Regla es obligatorio."
 
+    # Parameter
+    PARAM_004 = "PARAM-004"
+    en_messages[PARAM_004] = "Output Parameter '{}' typeof must be: [JSON, STRING, NUMERIC, DATE]."
+    es_messages[PARAM_004] = "Parámetro de Salida '{}' typeof debe ser: [JSON, STRING, NUMERIC, DATE]."
+
+    PARAM_003 = "PARAM-003"
+    en_messages[PARAM_003] = "Condition Parameter '{}' typeof must be: [STRING, NUMERIC, DATE]."
+    es_messages[PARAM_003] = "Parámetro de Condición '{}' typeof debe ser: [STRING, NUMERIC, DATE]."
+
+    PARAM_002 = "PARAM-002"
+    en_messages[PARAM_002] = "Parameter '{}' use for must be: [CONDITION, OUTPUT]."
+    es_messages[PARAM_002] = "Uso de parámetro '{}' debe ser: [CONDITION, OUTPUT]."
+
+    PARAM_001 = "PARAM-001"
+    en_messages[PARAM_001] = "Parameter's fields are mandatory."
+    es_messages[PARAM_001] = "Complete todos los campos de los parámetros."
+
+    # Rule
+    RULE_005 = "RULE-005"
+    en_messages[RULE_005] = "Rule Name must be between 5 and 50 characters."
+    es_messages[RULE_005] = "Nombre de Regla debe ser de 5 a 50 caracteres."
+
+    RULE_004 = "RULE-004"
+    en_messages[RULE_004] = "Strategy must be EARLY / BASIC / ALL."
+    es_messages[RULE_004] = "La estrategia debe ser EARLY / BASIC / ALL."
+
+    RULE_003 = "RULE-003"
+    en_messages[RULE_003] = "Rule Type must be 'MATRIX'."
+    es_messages[RULE_003] = "Tipo Regla deber ser 'MATRIX'."
+
+    RULE_002 = "RULE-002"
+    en_messages[RULE_002] = "Rule Type must be provided."
+    es_messages[RULE_002] = "Tipo de Regla es obligatorio."
+
+    RULE_001 = "RULE-001"
+    en_messages[RULE_001] = "Rule Name is mandatory."
+    es_messages[RULE_001] = "Nombre de Regla es obligatorio."
+
     # Create Rule
     RU_CREA_013 = "RU-CREA-013"
     en_messages[RU_CREA_013] = "All paramter's name must be unique."
     es_messages[RU_CREA_013] = "Todos los nombres de los parámetros deben ser únicos."
-
-    RU_CREA_012 = "RU-CREA-012"
-    en_messages[RU_CREA_012] = "Parameter's fields are mandatory."
-    es_messages[RU_CREA_012] = "Complete todos los campos de los parámetros."
-
-    RU_CREA_011 = "RU-CREA-011"
-    en_messages[RU_CREA_011] = "Strategy must be EARLY / BASIC / ALL."
-    es_messages[RU_CREA_011] = "La estrategia debe ser EARLY / BASIC / ALL."
 
     RU_CREA_010 = "RU-CREA-010"
     en_messages[RU_CREA_010] = "Rule, KVS {} not found."
@@ -210,10 +281,6 @@ class Codes:
     RU_CREA_009 = "RU-CREA-009"
     en_messages[RU_CREA_009] = "Condition {}, KVS {} not found."
     es_messages[RU_CREA_009] = "Condición {}, KVS {} no encontrado."
-
-    RU_CREA_008 = "RU-CREA-008"
-    en_messages[RU_CREA_008] = "Rule Type must be provided."
-    es_messages[RU_CREA_008] = "Tipo de Regla es obligatorio."
 
     RU_CREA_007 = "RU-CREA-007"
     en_messages[RU_CREA_007] = "At least one conditions is required."
@@ -227,21 +294,9 @@ class Codes:
     en_messages[RU_CREA_005] = "Already exists a Rule with same name."
     es_messages[RU_CREA_005] = "Ya existe una Regla con el mismo nombre."
 
-    RU_CREA_004 = "RU-CREA-004"
-    en_messages[RU_CREA_004] = "Rule Type must be 'MATRIX'."
-    es_messages[RU_CREA_004] = "Tipo Regla deber ser 'MATRIX'."
-
     RU_CREA_003 = "RU-CREA-003"
     en_messages[RU_CREA_003] = "Expression is mandatory."
     es_messages[RU_CREA_003] = "Expresión es obligatoria."
-
-    RU_CREA_002 = "RU-CREA-002"
-    en_messages[RU_CREA_002] = "Rule Name must be between 5 and 50 characters."
-    es_messages[RU_CREA_002] = "Nombre de Regla debe ser de 5 a 50 caracteres."
-
-    RU_CREA_001 = "RU-CREA-001"
-    en_messages[RU_CREA_001] = "Rule Name is mandatory."
-    es_messages[RU_CREA_001] = "Nombre de Regla es obligatorio."
 
     # Read Workflow
     WF_READ_002 = "WF-READ-002"

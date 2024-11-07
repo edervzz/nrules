@@ -24,7 +24,7 @@ class RuleAdapter(RuleRepository):
 
         rule.name = entity.name
         rule.rule_type = entity.rule_type
-        rule.kvs_id_nok = entity.kvs_id_nok
+        rule.default_kvs_id = entity.default_kvs_id
 
         rule.version = entity.version
 

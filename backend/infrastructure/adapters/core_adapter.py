@@ -6,7 +6,7 @@ from flask import session
 from sqlalchemy import Engine, create_engine, select, event
 from sqlalchemy.orm import Session
 from sqlalchemy.orm import Query
-from domain.entities import Rule, Parameter, Condition, Case
+from domain.entities import Rule, Parameter, Condition, ConditionGroup, Case
 from domain.entities import TenantSpecific, Versioned, Auditable, Migrations
 from domain.entities import KV, KVItem
 from domain.ports import CoreRepository
@@ -17,6 +17,7 @@ from .rule_adapter import RuleAdapter
 from .parameter_adapter import ParameterAdapter
 from .case_adapter import CaseAdapter
 from .condition_adapter import ConditionAdapter
+from .condition_group_adapter import ConditionGroupAdapter
 
 
 class CoreAdapter(CoreRepository):
@@ -51,6 +52,10 @@ class CoreAdapter(CoreRepository):
         event.listen(Condition, 'before_insert', self.__before_insert)
         event.listen(Condition, 'before_update', self.__before_update)
 
+        self.condition_group = ConditionGroupAdapter(self.engine)
+        event.listen(ConditionGroup, 'before_insert', self.__before_insert)
+        event.listen(ConditionGroup, 'before_update', self.__before_update)
+
         self.case = CaseAdapter(self.engine)
         event.listen(Case, 'before_insert', self.__before_insert)
         event.listen(Case, 'before_update', self.__before_update)
@@ -67,6 +72,7 @@ class CoreAdapter(CoreRepository):
         self.rule.set_session(self.session)
         self.parameter.set_session(self.session)
         self.condition.set_session(self.session)
+        self.condition_group.set_session(self.session)
         self.case.set_session(self.session)
 
     def commit_work(self):

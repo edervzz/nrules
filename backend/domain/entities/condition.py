@@ -10,11 +10,9 @@ class Condition(Base, TenantSpecific, Auditable):
 
     __tablename__ = "conditions"
 
-    id: Mapped[str] = mapped_column(primary_key=True, nullable=False)
+    variable: Mapped[str] = mapped_column(primary_key=True, nullable=False)
 
-    condition_id: Mapped[str] = mapped_column(nullable=False)
-
-    variable: Mapped[str] = mapped_column(nullable=False)
+    condition_group_id: Mapped[str] = mapped_column(nullable=False)
 
     operator: Mapped[str] = mapped_column(nullable=False)
 

@@ -45,6 +45,17 @@ class ParametersRepository(
         self.engine = engine
 
 
+class ConditionGroupRepository(
+        ABC, Creator, Updater,
+        ReaderSingle):
+    """_summary_"""
+
+    def __init__(self, engine):
+        ABC.__init__(self)
+        Creator.__init__(self)
+        self.engine = engine
+
+
 class ConditionRepository(
         ABC, Creator, Updater,
         ReaderSingle, ReaderByParentID):
@@ -77,6 +88,7 @@ class CoreRepository:
         self.rule: RuleRepository
         self.parameter: ParametersRepository
         self.condition: ConditionRepository
+        self.condition_group: ConditionGroupRepository
         self.case: CaseRepository
 
     @abstractmethod

@@ -19,7 +19,7 @@ class ConditionAdapter(ConditionRepository):
     def update(self,  entity: Condition):
         expression = self.session.query(Condition).where(
             Condition.tenant_id == entity.tenant_id,
-            Condition.id == entity.id).one_or_none()
+            Condition.variable == entity.variable).one_or_none()
 
         expression.expression = entity.expression
         expression.version = entity.version
@@ -27,11 +27,11 @@ class ConditionAdapter(ConditionRepository):
     def read(self, _id) -> Condition:
         with Session(self.engine) as session:
             condition = session.query(Condition).where(
-                Condition.id == _id).one_or_none()
+                Condition.variable == _id).one_or_none()
             return condition
 
     def read_by_parent_id(self, parent_id: str) -> List[Condition]:
         with Session(self.engine) as session:
             conditions = session.query(Condition).where(
-                Condition.condition_id == parent_id).all()
+                Condition.condition_group_id == parent_id).all()
             return conditions

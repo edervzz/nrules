@@ -114,24 +114,24 @@ class RunRuleBizValidator(Validator):
 
             if condition_ok:
                 request.trace.append(
-                    f"success condition: {cit.id}, kvs id: {cit.kvs_id_ok}")
+                    f"success condition: {cit.id}, kvs id: {cit.kvs_id}")
 
                 request.ok = True
 
-                if cit.kvs_id_ok != 0:
+                if cit.kvs_id != 0:
                     rs = RunRuleResult(rule, None, [])
-                    rs.kv = self._repo.kvs.read(cit.kvs_id_ok)
+                    rs.kv = self._repo.kvs.read(cit.kvs_id)
                     rs.kvitems = self._repo.kvitem.read_by_parent_id(
-                        cit.kvs_id_ok)
+                        cit.kvs_id)
                     request.rule_results.append(rs)
                 break
 
         if not condition_ok:
             request.trace.append("failed")
 
-            if rule.kvs_id_nok != 0:
+            if rule.default_kvs_id != 0:
                 rs = RunRuleResult(rule, None, [])
-                rs.kv = self._repo.kvs.read(rule.kvs_id_nok)
+                rs.kv = self._repo.kvs.read(rule.default_kvs_id)
                 rs.kvitems = self._repo.kvitem.read_by_parent_id(
-                    rule.kvs_id_nok)
+                    rule.default_kvs_id)
                 request.rule_results.append(rs)

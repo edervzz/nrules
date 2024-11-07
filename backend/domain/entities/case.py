@@ -16,8 +16,6 @@ class Case(Base, TenantSpecific, Auditable):
 
     position: Mapped[int] = mapped_column(nullable=False)
 
-    parent_id: Mapped[str] = mapped_column(nullable=True)
+    condition_group_id: Mapped[str] = mapped_column(nullable=True)
 
-    kvs_id_ok: Mapped[int] = mapped_column(nullable=True)
-
-    kvs_id_nok: Mapped[int] = mapped_column(nullable=True)
+    kvs_id: Mapped[int] = mapped_column(nullable=True)

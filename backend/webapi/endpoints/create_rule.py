@@ -23,12 +23,8 @@ def new_rules_endpoint(tid=None):
     new_rules = NewRuleModel(json.dumps(json_data))
 
     command = CreateRuleRequest(
-        new_rules.ruleid,
-        new_rules.name,
-        new_rules.rule_type,
-        new_rules.strategy,
-        new_rules.parameters,
-        new_rules.default_kvs
+        new_rules.rule,
+        new_rules.parameters
     )
 
     result = CreateRuleHandler(

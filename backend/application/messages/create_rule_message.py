@@ -1,7 +1,6 @@
 """ create rule messages """
 from typing import List
-from domain.entities import Rule, KV, Parameter
-from domain.entities import Case, Condition, Rule, KVItem, KV, Parameter
+from domain.entities import Rule, KV, Parameter, Case, KVItem, ConditionGroup, Condition
 
 
 class CreateRuleRequest:
@@ -9,21 +8,24 @@ class CreateRuleRequest:
 
     def __init__(
             self,
-            ruleid: str,
-            name: str,
-            rule_type: str,
-            strategy: str,
-            parameters: List[Parameter],
-            default_kvs: KV
+            rule: Rule,
+            parameters: List[Parameter]
     ):
+        self.parameters = parameters
 
-        self.rule = Rule()
-        self.rule.id = ruleid
-        self.rule.name = name
-        self.rule.rule_type = rule_type
-        self.rule.strategy = strategy
-        self.paramters = parameters
-        self.default_kvs = default_kvs
+        self.default_kvs = KV()
+
+        self.rule = rule
+
+        self.condition_group = ConditionGroup()
+
+        self.kvs = KV()
+
+        self.case = Case()
+
+        self.conditions: List[Condition] = []
+
+        self.kv_items: List[KVItem] = []
 
 
 class CreateRuleResponse:

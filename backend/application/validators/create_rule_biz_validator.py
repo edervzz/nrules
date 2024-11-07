@@ -19,5 +19,3 @@ class CreateRuleBizValidator(Validator):
         rule = self._repo.rule.read_by_external_id(request.rule.name)
         if rule is not None:
             raise self.as_duplicated(self._local.get(Codes.RU_CREA_005))
-
-        request.kv.id = str(uuid.uuid4())

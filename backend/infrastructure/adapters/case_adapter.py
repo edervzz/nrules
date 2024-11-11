@@ -20,7 +20,7 @@ class CaseAdapter(CaseRepository):
         element = self.session.query(Case).where(
             Case.tenant_id == entity.tenant_id,
             Case.rule_id == entity.rule_id,
-            Case.expression_id == entity.expression_id).one_or_none()
+            Case.id == entity.expression_id).one_or_none()
 
         element.position = entity.position
         element.kvs_id = entity.kvs_id
@@ -30,7 +30,7 @@ class CaseAdapter(CaseRepository):
     def read(self, _id) -> Case:
         with Session(self.engine) as session:
             condition = session.query(Case).where(
-                Case.expression_id == _id).one_or_none()
+                Case.id == _id).one_or_none()
             return condition
 
     def read_by_parent_id(self, parent_id: int) -> List[Case]:

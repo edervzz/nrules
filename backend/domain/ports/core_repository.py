@@ -86,10 +86,10 @@ class CoreRepository:
         self.kvs: KVSRepository
         self.kvitem: KVItemRepository
         self.rule: RuleRepository
-        self.parameter: ParametersRepository
         self.condition: ConditionRepository
         self.condition_group: ConditionGroupRepository
         self.case: CaseRepository
+        self.parameter: ParametersRepository
 
     @abstractmethod
     def begin(self, autoflush=False):

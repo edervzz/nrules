@@ -22,13 +22,11 @@ def read_rules_endpoint(tid=None, rule_id=None):
         rule_name
     )
 
-    handler = ReadRuleHandler(
+    result = ReadRuleHandler(
         current_app.config[str(tid)],
         current_app.config["logger"],
         current_app.config["localizer"]
-    )
-
-    result = handler.handler(command)
+    ).handler(command)
 
     rule = RuleModel(
         result.rule.tenant_id,
@@ -37,7 +35,10 @@ def read_rules_endpoint(tid=None, rule_id=None):
         result.rule.rule_type,
         result.rule.strategy,
         result.rule.version,
-        result.parameters)
+        result.parameters,
+        result.cases,
+        result.conditions,
+        result.kv_items)
 
     jsonstr = json.dumps(rule.__dict__)
 

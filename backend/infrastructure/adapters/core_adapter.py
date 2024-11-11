@@ -18,6 +18,7 @@ from .parameter_adapter import ParameterAdapter
 from .case_adapter import CaseAdapter
 from .condition_adapter import ConditionAdapter
 from .condition_group_adapter import ConditionGroupAdapter
+from .parameter_adapter import ParameterAdapter
 
 
 class CoreAdapter(CoreRepository):
@@ -60,20 +61,23 @@ class CoreAdapter(CoreRepository):
         event.listen(Case, 'before_insert', self.__before_insert)
         event.listen(Case, 'before_update', self.__before_update)
 
+        self.parameter = ParameterAdapter(self.engine)
+        event.listen(Parameter, 'before_insert', self.__before_insert)
+        event.listen(Parameter, 'before_update', self.__before_update)
+
         @event.listens_for(Query, 'before_compile', retval=True)
         def _fn(query: Query):
             return query.enable_assertions(False).filter_by(tenant_id=self.tid)
 
     def begin(self, autoflush=False):
         self.session = Session(self.engine, autoflush=autoflush)
-
         self.kvs.set_session(self.session)
         self.kvitem.set_session(self.session)
         self.rule.set_session(self.session)
-        self.parameter.set_session(self.session)
         self.condition.set_session(self.session)
         self.condition_group.set_session(self.session)
         self.case.set_session(self.session)
+        self.parameter.set_session(self.session)
 
     def commit_work(self):
         if self.session is not None:
@@ -81,6 +85,10 @@ class CoreAdapter(CoreRepository):
             self.kvs.set_session(None)
             self.kvitem.set_session(None)
             self.rule.set_session(None)
+            self.condition.set_session(None)
+            self.condition_group.set_session(None)
+            self.case.set_session(None)
+            self.parameter.set_session(None)
 
     def rollback_work(self):
         if self.session is not None:
@@ -88,6 +96,10 @@ class CoreAdapter(CoreRepository):
             self.kvs.set_session(None)
             self.kvitem.set_session(None)
             self.rule.set_session(None)
+            self.condition.set_session(None)
+            self.condition_group.set_session(None)
+            self.case.set_session(None)
+            self.parameter.set_session(None)
 
     def migrate(self) -> list:
         initial(self.engine)

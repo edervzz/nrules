@@ -43,6 +43,9 @@ class CreateRuleHandler:
 
         self.repository.case.create(request.case)
 
+        for x in request.parameters:
+            self.repository.parameter.create(x)
+
         self.repository.commit_work()
 
         return CreateRuleResponse(request.rule.id)

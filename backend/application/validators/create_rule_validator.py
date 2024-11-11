@@ -40,6 +40,7 @@ class CreateRuleValidator(Validator):
 
         unique = set()
         for e_param in request.parameters:
+            e_param.rule_id = request.rule.id
             parameter_validator = ParameterValidator(self._localizer)
             parameter_validator.validate_and_throw(e_param)
             unique.add(e_param.key)

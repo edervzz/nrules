@@ -140,6 +140,27 @@ def core_tables(engine: Engine) -> str:
     )
     set_auditable(conditions)
 
+    # Parameters ----------------------------------------------
+    parameters = Table(
+        "parameters",
+        metadata_obj,
+        Column(
+            "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
+        Column(
+            "key", String(50), primary_key=True, comment="Paramater Key"),
+        Column(
+            "rule_id", String(36), primary_key=True, comment="Rule ID"),
+        Column(
+            "usefor", String(10), CheckConstraint("usefor = 'CONDITION' OR usefor = 'OUTPUT'", name="parameters_chk_usefor"), primary_key=True, comment="Use for: CONDITION, OUTPUT"),
+        Column(
+            "typeof", String(10), CheckConstraint("typeof = 'JSON' OR typeof = 'STRING' OR typeof = 'NUMERIC' OR typeof = 'DATE' OR typeof = 'TIME' OR typeof = 'DATETIME'", name="parameters_chk_typeof"), nullable=False, comment="Type of Value: String, Numeric, Date"),
+        comment="Control which parameters serve as input and output"
+    )
+    set_auditable(parameters)
+    Index(
+        "ix_parameters_001",
+        parameters.c.rule_id)
+
     metadata_obj.create_all(engine)
 
     with Session(engine) as session:
@@ -149,25 +170,3 @@ def core_tables(engine: Engine) -> str:
         session.add(m)
         session.commit()
         return name
-
-
-# # Parameters ----------------------------------------------
-#     parameters = Table(
-#         "parameters",
-#         metadata_obj,
-#         Column(
-#             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
-#         Column(
-#             "key", String(50), primary_key=True, comment="Paramater Key"),
-#         Column(
-#             "rule_id", String(36), primary_key=True, comment="Rule ID"),
-#         Column(
-#             "usefor", String(10), CheckConstraint("usefor = 'CONDITION' OR usefor = 'OUTPUT'", name="parameters_chk_usefor"), nullable=False, comment="Use for: CONDITION, OUTPUT"),
-#         Column(
-#             "typeof", String(10), CheckConstraint("typeof = 'STRING' OR typeof = 'NUMERIC' OR typeof = 'DATE' OR typeof = 'TIME' OR typeof = 'DATETIME'", name="parameters_chk_usefor"), nullable=False, comment="Type of Value: String, Numeric, Date"),
-#         comment="Extra information for expressions"
-#     )
-#     set_auditable(parameters)
-#     Index(
-#         "ix_parameters_001",
-#         parameters.c.rule_id)

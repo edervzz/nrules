@@ -17,16 +17,12 @@ class RuleAdapter(RuleRepository):
         if not self.session.autoflush:
             self.session.flush()
 
-    def update(self,  entity: Rule):
+    def update(self, entity: Rule):
         rule: Rule
         rule = self.session.query(Rule).where(
-            Rule.id == entity.id).one_or_none(9)
+            Rule.id == entity.id).one_or_none()
 
-        rule.name = entity.name
-        rule.rule_type = entity.rule_type
-        rule.default_kvs_id = entity.default_kvs_id
-
-        rule.version = entity.version
+        rule.strategy = entity.strategy
 
     def read(self, _id) -> Rule:
         with Session(self.engine) as session:

@@ -71,34 +71,34 @@ class CoreAdapter(CoreRepository):
 
     def begin(self, autoflush=False):
         self.session = Session(self.engine, autoflush=autoflush)
-        self.kvs.set_session(self.session)
-        self.kvitem.set_session(self.session)
         self.rule.set_session(self.session)
+        self.case.set_session(self.session)
         self.condition.set_session(self.session)
         self.condition_group.set_session(self.session)
-        self.case.set_session(self.session)
+        self.kvs.set_session(self.session)
+        self.kvitem.set_session(self.session)
         self.parameter.set_session(self.session)
 
     def commit_work(self):
         if self.session is not None:
             self.session.commit()
-            self.kvs.set_session(None)
-            self.kvitem.set_session(None)
             self.rule.set_session(None)
+            self.case.set_session(None)
             self.condition.set_session(None)
             self.condition_group.set_session(None)
-            self.case.set_session(None)
+            self.kvs.set_session(None)
+            self.kvitem.set_session(None)
             self.parameter.set_session(None)
 
     def rollback_work(self):
         if self.session is not None:
-            self.session.rollback()
-            self.kvs.set_session(None)
-            self.kvitem.set_session(None)
+            self.session.commit()
             self.rule.set_session(None)
+            self.case.set_session(None)
             self.condition.set_session(None)
             self.condition_group.set_session(None)
-            self.case.set_session(None)
+            self.kvs.set_session(None)
+            self.kvitem.set_session(None)
             self.parameter.set_session(None)
 
     def migrate(self) -> list:

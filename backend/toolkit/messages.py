@@ -188,8 +188,8 @@ class Codes:
 
     # Update Rule
     RU_UPD_011 = "RU-UPD-011"
-    en_messages[RU_UPD_011] = "Strategy must be EARLY / BASIC / ALL."
-    es_messages[RU_UPD_011] = "La estrategia debe ser EARLY / BASIC / ALL."
+    en_messages[RU_UPD_011] = "Strategy must be EARLY / BASE / ALL."
+    es_messages[RU_UPD_011] = "La estrategia debe ser EARLY / BASE / ALL."
 
     RU_UPD_010 = "RU-UPD-010"
     en_messages[RU_UPD_010] = "Rule Type must be 'MATRIX'."

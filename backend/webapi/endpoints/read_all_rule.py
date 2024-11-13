@@ -42,7 +42,7 @@ def read_all_rules_endpoint(tid=None):
                 r.rule_type,
                 r.strategy,
                 r.version,
-                [])
+                None, None, None, None)
             rules.append(rule)
     else:
         rules = None

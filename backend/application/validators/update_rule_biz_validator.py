@@ -4,6 +4,7 @@ from domain.entities import Rule
 from domain.ports import CoreRepository
 from toolkit import Validator
 from toolkit.localization import Localizer, Codes
+from domain.validators import RuleValidator
 
 
 class UpdateRuleBizValidator(Validator):
@@ -18,24 +19,21 @@ class UpdateRuleBizValidator(Validator):
         """ Validate request format """
 
         if request.rule.id != 0:
-            rule = self._repo.rule.read(
-                request.rule.tenant_id,
-                request.rule.id)
+            rule = self._repo.rule.read(request.rule.id)
             if rule is None:
                 raise self.as_not_found(self._local.get(Codes.RU_UPD_007))
         else:
-            rule = self._repo.rule.read_by_external_id(
-                request.rule.tenant_id,
-                request.rule.name)
+            rule = self._repo.rule.read_by_external_id(request.rule.name)
             if rule is None:
                 raise self.as_not_found(self._local.get(Codes.RU_UPD_007))
 
         if isinstance(rule, Rule):
-            if rule.rule_type != request.rule.rule_type or rule.strategy != request.rule.strategy:
-                rule.rule_type = request.rule.rule_type
+            if rule.strategy != request.rule.strategy:
                 rule.strategy = request.rule.strategy
-                rule.version += 1
+
+                rule_validator = RuleValidator(self._local)
+                rule_validator.validate_and_throw(rule)
+
                 request.rule = rule
             else:
-                raise self.as_error(self._local.get(Codes.OBJ_UPD_001)
-                                    )
+                raise self.as_error(self._local.get(Codes.OBJ_UPD_001))

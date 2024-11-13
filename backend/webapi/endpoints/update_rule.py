@@ -9,7 +9,7 @@ from toolkit import Identification
 update_rule_bp = Blueprint("Update Rule", __name__)
 
 
-@update_rule_bp.put("/t/<tid>/rules/<_id>")
+@update_rule_bp.put("/t/<tid>/rules/<rule_id>")
 def update_rules_endpoint(tid=None, rule_id=None):
     """ New rules Endpoint """
     tenant_id = Identification.get_tenant_safe(tid)

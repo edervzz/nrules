@@ -4,12 +4,11 @@ from typing import List
 from domain.entities import Parameter
 
 
-class UpdateRuleModel:
-    """ Update Rule request """
+class SaveParametersModel:
+    """ save Rule's paprameters request """
 
     def __init__(self, j):
         self.__dict__ = json.loads(j)
-        self.strategy = self.__dict__.get("strategy", 0)
         self.parameters_to_upsert: List[Parameter]
         self.parameters_to_delete: List[Parameter]
 

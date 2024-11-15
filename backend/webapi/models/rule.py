@@ -1,6 +1,10 @@
 """ _module_ """
 from typing import List
 from domain.entities import Parameter, Case, Condition, KVItem
+from .parameter import ParameterModel
+from .case import CaseModel
+from .condition import ConditionModel
+from .kv_item import KVItemModel
 
 
 class RuleModel:
@@ -43,47 +47,3 @@ class RuleModel:
                 one_item = KVItemModel(
                     e.key, e.kv_id, e.value, e.calculation, e.typeof)
                 self.kvitems.append(one_item.__dict__)
-
-
-class KVItemModel:
-    """ KV Item Model """
-
-    def __init__(self, key, kv_id, value, calculation, typeof):
-        self.key = key
-        self.kv_id = kv_id
-        self.value = value
-        self.calculation = calculation
-        self.typeof = typeof
-
-
-class ConditionModel:
-    """ Condition  Model """
-
-    def __init__(self, variable, condition_group_id, operator, value, is_case_sensitive, typeof):
-        self.variable = variable
-        self.condition_group_id = condition_group_id
-        self.operator = operator
-        self.value = value
-        self.is_case_sensitive = is_case_sensitive
-        self.typeof = typeof
-
-
-class CaseModel:
-    """ Case Model """
-
-    def __init__(self, _id, rule_id, position, condition_group_id, kvs_id):
-        self.id = _id
-        self.rule_id = rule_id
-        self.position = position
-        self.condition_group_id = condition_group_id
-        self.kvs_id = kvs_id
-
-
-class ParameterModel:
-    """ Parameter Model """
-
-    def __init__(self, key: str, rule_id: str, usefor: str, typeof: str):
-        self.key = key
-        self.rule_id = rule_id
-        self.usefor = usefor
-        self.typeof = typeof

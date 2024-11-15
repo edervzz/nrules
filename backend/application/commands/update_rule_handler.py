@@ -16,7 +16,7 @@ class UpdateRuleHandler:
         self.localizer = localizer
         self.rule: Rule = None
 
-    def handler(self, request: UpdateRuleRequest) -> UpdateRuleResponse:
+    def handler(self, request: UpdateRuleRequest):
         """ Handler """
         # 1. request validation
         validator = UpdateRuleValidator(self.localizer)

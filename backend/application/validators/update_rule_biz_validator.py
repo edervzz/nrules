@@ -1,10 +1,11 @@
 """_summary_"""
+from typing import List
 from application.messages import UpdateRuleRequest
-from domain.entities import Rule
+from domain.entities import Rule, Case, Condition, KVItem
 from domain.ports import CoreRepository
+from domain.validators import RuleValidator
 from toolkit import Validator
 from toolkit.localization import Localizer, Codes
-from domain.validators import RuleValidator
 
 
 class UpdateRuleBizValidator(Validator):
@@ -27,13 +28,17 @@ class UpdateRuleBizValidator(Validator):
             if rule is None:
                 raise self.as_not_found(self._local.get(Codes.RU_UPD_007))
 
+        any_change = False
         if isinstance(rule, Rule):
-            if rule.strategy != request.rule.strategy:
-                rule.strategy = request.rule.strategy
+            if rule.strategy != "":
+                if rule.strategy != request.rule.strategy:
+                    rule.strategy = request.rule.strategy
 
-                rule_validator = RuleValidator(self._local)
-                rule_validator.validate_and_throw(rule)
+                    rule_validator = RuleValidator(self._local)
+                    rule_validator.validate_and_throw(rule)
 
-                request.rule = rule
-            else:
-                raise self.as_error(self._local.get(Codes.OBJ_UPD_001))
+                    request.rule = rule
+                    any_change = True
+
+        if not any_change:
+            self.add_failure(self._local.get(Codes.OBJ_UPD_001))

@@ -78,23 +78,25 @@ def register_before_request(app: Flask):
             if isinstance(localizer, Localizer):
                 localizer.set_langu(langu)
 
-        if "/t/" in request.url:
-            fromidx = request.url.index("/t/")
-            toidx = request.url.index("/", fromidx + 3)
-            tid = request.url[fromidx+3: toidx]
+            if "/t/" in request.url:
+                fromidx = request.url.index("/t/")
+                toidx = request.url.index("/", fromidx + 3)
+                tid = request.url[fromidx+3: toidx]
 
-            if not str(tid) in app.config:
-                tenancy_repository = app.config["tenancy_repository"]
+                if not str(tid) in app.config:
+                    tenancy_repository = app.config["tenancy_repository"]
 
-                if isinstance(tenancy_repository, TenancyRepository):
-                    tenant = tenancy_repository.tenant.read(tid)
+                    if isinstance(tenancy_repository, TenancyRepository):
+                        tenant = tenancy_repository.tenant.read(tid)
 
-                if isinstance(tenant, Tenants):
-                    with app.app_context():
-                        cs = base64.b64decode(tenant.option).decode("utf-8")
-                        app.config[str(tid)] = CoreAdapter(tid, cs)
-                else:
-                    raise BadRequest(f"Tenant {tid} is not recognized.")
+                        if isinstance(tenant, Tenants):
+                            app.config[str(tid)] = CoreAdapter(
+                                tid,
+                                base64.b64decode(tenant.option).decode("utf-8")
+                            )
+                        else:
+                            raise BadRequest(
+                                f"Tenant {tid} is not recognized.")
 
 
 def register_services(app: Flask):

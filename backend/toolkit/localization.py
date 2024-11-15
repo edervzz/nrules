@@ -1,5 +1,4 @@
 """ Message catalog """
-from typing import List
 from .messages import Codes
 
 

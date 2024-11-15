@@ -23,15 +23,9 @@ class NewRuleModel:
         if isinstance(parameter_raw, list):
             for p in parameter_raw:
                 one_parameter = Parameter()
-                key = ""
-                typeof = ""
-                usefor = ""
-                if "key" in p:
-                    key = p["key"]
-                if "typeof" in p:
-                    typeof = p["typeof"]
-                if "usefor" in p:
-                    usefor = p["usefor"]
+                key = p["key"] if "key" in p else ""
+                typeof = p["typeof"] if "typeof" in p else ""
+                usefor = p["usefor"] if "usefor" in p else ""
 
                 one_parameter.key = key
                 one_parameter.usefor = usefor

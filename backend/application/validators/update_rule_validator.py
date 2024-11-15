@@ -17,5 +17,11 @@ class UpdateRuleValidator(Validator):
         if request.rule.id == 0 and request.rule.name == "":
             raise self.as_error(self._localizer.get(Codes.RU_UPD_008))
 
-        if request.rule.strategy not in ["EARLY", "BASE", "ALL"]:
-            self.add_failure(self._localizer.get(Codes.RU_UPD_011))
+        any_change = False
+        if request.rule.strategy != "":
+            any_change = True
+            if request.rule.strategy not in ["EARLY", "BASE", "ALL"]:
+                self.add_failure(self._localizer.get(Codes.RU_UPD_011))
+
+        if not any_change:
+            self.add_failure(self._localizer.get(Codes.OBJ_UPD_001))

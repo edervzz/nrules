@@ -1,5 +1,5 @@
 # gentera-nrule
-
+https://www.joshwcomeau.com/css/interactive-guide-to-flexbox/
 https://overapi.com/python
 https://overapi.com/regex
 

@@ -33,11 +33,9 @@ class CreateRuleHandler:
         for x in request.conditions:
             self.repository.condition.create(x)
 
-        self.repository.kvs.create(request.kvs)
+        self.repository.kv_storage.create(request.kvs)
         for x in request.kv_items:
             self.repository.kvitem.create(x)
-
-        self.repository.kvs.create(request.default_kvs)
 
         self.repository.rule.create(request.rule)
 
@@ -45,6 +43,9 @@ class CreateRuleHandler:
 
         for x in request.parameters:
             self.repository.parameter.create(x)
+
+        if request.use_default:
+            self.repository.kv_storage.create(request.default_kvs)
 
         self.repository.commit_work()
 

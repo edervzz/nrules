@@ -24,6 +24,7 @@ def new_rules_endpoint(tid=None):
 
     command = CreateRuleRequest(
         new_rules.rule,
+        new_rules.use_default,
         new_rules.parameters
     )
 

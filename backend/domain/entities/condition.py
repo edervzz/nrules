@@ -12,7 +12,8 @@ class Condition(Base, TenantSpecific, Auditable):
 
     variable: Mapped[str] = mapped_column(primary_key=True, nullable=False)
 
-    condition_group_id: Mapped[str] = mapped_column(nullable=False)
+    condition_group_id: Mapped[str] = mapped_column(
+        primary_key=True, nullable=False)
 
     operator: Mapped[str] = mapped_column(nullable=False)
 
@@ -20,6 +21,8 @@ class Condition(Base, TenantSpecific, Auditable):
 
     typeof: Mapped[str] = mapped_column(nullable=False)
 
-    is_case_sensitive: Mapped[bool] = mapped_column(nullable=True)
+    is_case_sensitive: Mapped[bool] = mapped_column(nullable=False)
 
-    is_hidden: Mapped[bool] = mapped_column(nullable=True)
+    is_visible: Mapped[bool] = mapped_column(nullable=False)
+
+    is_deleted: Mapped[bool] = mapped_column(nullable=False)

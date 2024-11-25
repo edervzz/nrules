@@ -8,10 +8,10 @@ from sqlalchemy.orm import Session
 from sqlalchemy.orm import Query
 from domain.entities import Rule, Parameter, Condition, ConditionGroup, Case
 from domain.entities import TenantSpecific, Versioned, Auditable, Migrations
-from domain.entities import KV, KVItem
+from domain.entities import KVStorage, KVItem
 from domain.ports import CoreRepository
 from infrastructure.data import initial, core_tables, core_admin
-from .kvs_adapter import KVSAdapter
+from .kv_storage_adapter import KVStorageAdapter
 from .kvitem_adapter import KVItemAdapter
 from .rule_adapter import RuleAdapter
 from .parameter_adapter import ParameterAdapter
@@ -33,9 +33,9 @@ class CoreAdapter(CoreRepository):
         self.session: Session = None
         self.engine: Engine = create_engine(connstr, echo=True)
 
-        self.kvs = KVSAdapter(self.engine)
-        event.listen(KV, 'before_insert', self.__before_insert)
-        event.listen(KV, 'before_update', self.__before_update)
+        self.kv_storage = KVStorageAdapter(self.engine)
+        event.listen(KVStorage, 'before_insert', self.__before_insert)
+        event.listen(KVStorage, 'before_update', self.__before_update)
 
         self.kvitem = KVItemAdapter(self.engine)
         event.listen(KVItem, 'before_insert', self.__before_insert)
@@ -75,7 +75,7 @@ class CoreAdapter(CoreRepository):
         self.case.set_session(self.session)
         self.condition.set_session(self.session)
         self.condition_group.set_session(self.session)
-        self.kvs.set_session(self.session)
+        self.kv_storage.set_session(self.session)
         self.kvitem.set_session(self.session)
         self.parameter.set_session(self.session)
 
@@ -86,7 +86,7 @@ class CoreAdapter(CoreRepository):
             self.case.set_session(None)
             self.condition.set_session(None)
             self.condition_group.set_session(None)
-            self.kvs.set_session(None)
+            self.kv_storage.set_session(None)
             self.kvitem.set_session(None)
             self.parameter.set_session(None)
 
@@ -97,7 +97,7 @@ class CoreAdapter(CoreRepository):
             self.case.set_session(None)
             self.condition.set_session(None)
             self.condition_group.set_session(None)
-            self.kvs.set_session(None)
+            self.kv_storage.set_session(None)
             self.kvitem.set_session(None)
             self.parameter.set_session(None)
 

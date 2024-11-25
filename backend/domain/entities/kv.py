@@ -5,10 +5,10 @@ from .extra_fields import TenantSpecific, Auditable
 from .base import Base
 
 
-class KV(Base, TenantSpecific, Auditable):
-    """ Key-Value Item entity """
+class KVStorage(Base, TenantSpecific, Auditable):
+    """ Key-Value Storage entity """
 
-    __tablename__ = "kvs"
+    __tablename__ = "kv_storage"
 
     id: Mapped[str] = mapped_column(
         primary_key=True, nullable=False)

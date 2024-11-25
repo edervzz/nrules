@@ -8,4 +8,4 @@ from .update_rule import UpdateRuleModel
 from .new_rule import NewRuleModel
 from .rule import RuleModel
 from .new_tenant import NewTenantModel
-from .save_parameters import SaveParametersModel
+from .update_rule_parameters import UpdateRuleParametersModel

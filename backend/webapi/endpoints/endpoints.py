@@ -15,37 +15,27 @@ from .migrate import core_migration_bp, tenancy_migration_bp
 from .read_rule import read_rule_bp
 from .create_rule import new_rule_bp
 from .update_rule import update_rule_bp
+from .update_rule_parameters import save_rule_parameters_bp
 from .read_all_rule import read_all_rule_bp
 from .create_tenant import new_tenant_bp
-from .create_kv import new_kvs_bp
-from .save_kvitem import save_kvitem_bp
 from .run_rule import run_rule_bp
 
 
 def register_endpoints(app: Flask, prefix: str):
     """ Map endpoints based on blueprints """
 
-    app.register_blueprint(run_rule_bp, url_prefix=prefix)
-
-    app.register_blueprint(save_kvitem_bp, url_prefix=prefix)
-
-    app.register_blueprint(new_kvs_bp, url_prefix=prefix)
-
-    app.register_blueprint(read_all_rule_bp, url_prefix=prefix)
-
+    app.register_blueprint(new_rule_bp, url_prefix=prefix)
     app.register_blueprint(update_rule_bp, url_prefix=prefix)
-
+    app.register_blueprint(save_rule_parameters_bp, url_prefix=prefix)
+    app.register_blueprint(read_all_rule_bp, url_prefix=prefix)
     app.register_blueprint(read_rule_bp, url_prefix=prefix)
 
-    app.register_blueprint(new_rule_bp, url_prefix=prefix)
+    app.register_blueprint(run_rule_bp, url_prefix=prefix)
 
     app.register_blueprint(new_tenant_bp, url_prefix=prefix)
-
-    app.register_blueprint(hello_bp, url_prefix=prefix)
-
     app.register_blueprint(core_migration_bp, url_prefix=prefix)
-
     app.register_blueprint(tenancy_migration_bp, url_prefix=prefix)
+    app.register_blueprint(hello_bp, url_prefix=prefix)
 
     app.register_blueprint(
         get_swaggerui_blueprint(
@@ -96,7 +86,7 @@ def register_before_request(app: Flask):
                             )
                         else:
                             raise BadRequest(
-                                f"Tenant {tid} is not recognized.")
+                                f'[{{"code":"TEN-001","message":"Tenant {tid} is not recognized."}}]')
 
 
 def register_services(app: Flask):
@@ -129,17 +119,17 @@ def register_error_handlers(app: Flask):
     app.register_error_handler(
         BadRequest,
         lambda error: Response(
-            response=error.description, status=400, mimetype="application/json")
+            response=f'{{"messages":{error.description}}}', status=400, mimetype="application/json")
     )
 
     app.register_error_handler(
         Conflict,
         lambda error: Response(
-            response=error.description, status=409, mimetype="application/json")
+            response=f'{{"messages":{error.description}}}', status=409, mimetype="application/json")
     )
 
     app.register_error_handler(
         NotFound,
         lambda error: Response(
-            response=error.description, status=404, mimetype="application/json")
+            response=f'{{"messages":{error.description}}}', status=404, mimetype="application/json")
     )

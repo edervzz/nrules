@@ -6,10 +6,113 @@
         "description": "Rules Engine built for Gentera.\n t - Tenancy\n nr - NRule"
     },
     "paths": {
-        "/nr/api/v1/t/{tid}/hello": {
+        "/nr/api/v1/t/{tid}/rules": {
+            "post": {
+                "summary": "Create a new rule including initial parameters.",
+                "tags": [
+                    "Rules"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/TenantID"
+                    },
+                    {
+                        "$ref": "#/parameters/NewRule"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Rule Created"
+                    },
+                    "400": {
+                        "description": "Validation errors"
+                    },
+                    "409": {
+                        "description": "Rule already exists"
+                    }
+                }
+            },
             "get": {
-                "summary": "Run a Health Check to NRule API.",
-                "description": "Set Tenant ID to determine DB Adapter. It will show migrations executed.",
+                "summary": "Read all rules by page.",
+                "tags": [
+                    "Rules"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/TenantID"
+                    },
+                    {
+                        "$ref": "#/parameters/PageNo"
+                    },
+                    {
+                        "$ref": "#/parameters/PageSize"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Rules detail"
+                    },
+                    "400": {
+                        "description": "Validation errors"
+                    },
+                    "404": {
+                        "description": "Rules not found"
+                    }
+                }
+            }
+        },
+        "/nr/api/v1/t/{tid}/rules/{rule_id}": {
+            "put": {
+                "summary": "Update rule's attributes.",
+                "tags": [
+                    "Rules"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/TenantID"
+                    },
+                    {
+                        "$ref": "#/parameters/RuleID"
+                    },
+                    {
+                        "name": "Rule Data",
+                        "in": "body",
+                        "description": "Rule definition.",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/UpdateRule"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Rule Updated"
+                    },
+                    "400": {
+                        "description": "Validation errors"
+                    },
+                    "409": {
+                        "description": "Rule already exists"
+                    }
+                }
+            },
+            "get": {
+                "summary": "Read a rule.",
+                "tags": [
+                    "Rules"
+                ],                
+                "consumes": [
+                    "application/json"
+                ],
                 "parameters": [
                     {
                         "name": "tid",
@@ -17,17 +120,59 @@
                         "in": "path",
                         "type": "integer",
                         "required": true
+                    },
+                    {
+                        "$ref": "#/parameters/RuleID"
                     }
-                ],
-                "tags": [
-                    "Hello"
-                ],
-                "produces": [
-                    "application/text"
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation"
+                        "description": "Rule Updated"
+                    },
+                    "400": {
+                        "description": "Validation errors"
+                    },
+                    "409": {
+                        "description": "Rule already exists"
+                    }
+                }
+            }
+        },
+        "/nr/api/v1/t/{tid}/rules/{rule_id}/parameters":{
+            "put": {
+                "summary": "Update rule's parameters",
+                "tags": [
+                    "Rules"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/TenantID"
+                    },
+                    {
+                        "$ref": "#/parameters/RuleID"
+                    },
+                    {
+                        "name": "Rule Data",
+                        "in": "body",
+                        "description": "Rule definition.",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/UpdateRuleParameters"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Rule's parameters updated"
+                    },
+                    "400": {
+                        "description": "Validation errors"
+                    },
+                    "409": {
+                        "description": "Rule already exists"
                     }
                 }
             }
@@ -49,267 +194,13 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/New Tenant"
+                            "$ref": "#/definitions/NewTenant"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "Successful operation"
-                    }
-                }
-            }
-        },
-        "/nr/api/v1/t/{tid}/rules": {
-            "post": {
-                "summary": "Create a new rule.",
-                "tags": [
-                    "Rules"
-                ],
-                "consumes": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "tid",
-                        "description": "Tenant ID",
-                        "in": "path",
-                        "type": "integer",
-                        "required": true
-                    },
-                    {
-                        "name": "Rule Data",
-                        "in": "body",
-                        "description": "Rule definition.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/New Rule"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Rule Created"
-                    },
-                    "400": {
-                        "description": "Validation errors"
-                    },
-                    "409": {
-                        "description": "Rule already exists"
-                    }
-                }
-            },
-            "get": {
-                "summary": "Read All Rules.",
-                "tags": [
-                    "Rules"
-                ],
-                "consumes": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "tid",
-                        "description": "Tenant ID",
-                        "in": "path",
-                        "type": "integer",
-                        "required": true
-                    },
-                    {
-                        "name": "pageNo",
-                        "description": "Number of Page.",
-                        "in": "query",
-                        "required": false,
-                        "type": "number"
-                    },
-                    {
-                        "name": "pageSize",
-                        "description": "Page Size.",
-                        "in": "query",
-                        "required": false,
-                        "type": "number"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Rules detail"
-                    },
-                    "400": {
-                        "description": "Validation errors"
-                    },
-                    "404": {
-                        "description": "Rules not found"
-                    }
-                }
-            }
-        },
-        "/nr/api/v1/t/{tid}/rules/{rule_id}": {
-            "put": {
-                "summary": "Update a rule.",
-                "tags": [
-                    "Rules"
-                ],
-                "consumes": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "tid",
-                        "description": "Tenant ID",
-                        "in": "path",
-                        "type": "integer",
-                        "required": true
-                    },
-                    {
-                        "name": "rule_id",
-                        "description": "Rule Identification",
-                        "in": "path",
-                        "type": "integer",
-                        "required": true
-                    },
-                    {
-                        "name": "Rule Data",
-                        "in": "body",
-                        "description": "Rule definition.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/Update Rule"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Rule Updated"
-                    },
-                    "400": {
-                        "description": "Validation errors"
-                    },
-                    "409": {
-                        "description": "Rule already exists"
-                    }
-                }
-            },
-            "get": {
-                "tags": [
-                    "Rules"
-                ],
-                "description": "Read a rule.",
-                "consumes": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "tid",
-                        "description": "Tenant ID",
-                        "in": "path",
-                        "type": "integer",
-                        "required": true
-                    },
-                    {
-                        "name": "rule_id",
-                        "description": "Rule Identification",
-                        "in": "path",
-                        "type": "integer",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Rule Updated"
-                    },
-                    "400": {
-                        "description": "Validation errors"
-                    },
-                    "409": {
-                        "description": "Rule already exists"
-                    }
-                }
-            }
-        },
-        "/nr/api/v1/t/{tid}/kvs": {
-            "post": {
-                "summary": "Create a new Key Value container.",
-                "description": "Consider name field start with '<b>kv.</b>'\nThis Storage can be hosted in a specialized database.",
-                "tags": [
-                    "Key-Value Storage"
-                ],
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "tid",
-                        "description": "Tenant ID",
-                        "in": "path",
-                        "type": "integer",
-                        "required": true
-                    },
-                    {
-                        "name": "KVS data",
-                        "in": "body",
-                        "description": "KVS definition.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/New KV"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "KVS created"
-                    },
-                    "400": {
-                        "description": "Invalid request data"
-                    }
-                }
-            }
-        },
-        "/nr/api/v1/t/{tid}/kvs/{kid}/items": {
-            "put": {
-                "summary": "Create or Update a KV Item.",
-                "tags": [
-                    "Key-Value Storage"
-                ],
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "tid",
-                        "description": "Tenant ID",
-                        "in": "path",
-                        "type": "integer",
-                        "required": true
-                    },
-                    {
-                        "name": "kid",
-                        "description": "KV Identifier",
-                        "in": "path",
-                        "type": "integer",
-                        "required": true
-                    },
-                    {
-                        "name": "KV Item data",
-                        "in": "body",
-                        "description": "KV Item definition.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/New KV Item"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "KVS created"
-                    },
-                    "400": {
-                        "description": "Invalid request data"
                     }
                 }
             }
@@ -350,11 +241,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "tid",
-                        "description": "Tenant ID",
-                        "in": "path",
-                        "type": "integer",
-                        "required": true
+                        "$ref": "#/parameters/TenantID"
                     }
                 ],
                 "responses": {
@@ -366,62 +253,80 @@
                     }
                 }
             }
+        },
+        "/nr/api/v1/t/{tid}/hello": {
+            "get": {
+                "summary": "Run a Health Check to NRule API.",
+                "description": "Set Tenant ID to determine DB Adapter. It will show migrations executed.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/TenantID"
+                    }
+                ],
+                "tags": [
+                    "Hello"
+                ],
+                "produces": [
+                    "application/text"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        }
+    },
+    "parameters": {
+        "TenantID":{
+            "name": "tid",
+            "description": "Tenant Identification",
+            "in": "path",
+            "type": "integer",
+            "required": true
+        },
+        "RuleID":{
+            "name": "rule_id",
+            "description": "Rule Identification",
+            "in": "path",
+            "type": "string",
+            "required": true
+        },
+        "NewRule":{
+            "name": "Rule information",
+            "in": "body",
+            "description": "Rule information.",
+            "required": false,
+            "schema": {                            
+                "$ref": "#/definitions/NewRule"
+            }            
+        },
+        "UpdateRule":{
+            "name": "Rule information",
+            "in": "body",
+            "description": "Rule information.",
+            "required": false,
+            "schema": {
+                "$ref": "#/definitions/UpdateRule"
+            }
+        },
+        "PageNo":{
+            "name": "pageNo",
+            "description": "Number of Page.",
+            "in": "query",
+            "required": false,
+            "type": "number"            
+        },
+        "PageSize":{
+            "name": "pageSize",
+            "description": "Page Size.",
+            "in": "query",
+            "required": false,
+            "type": "number"
         }
     },
     "definitions": {
-        "New Condition": {
-            "type": "object",
-            "properties": {
-                "expression": {
-                    "type": "string",
-                    "minLength": 5,
-                    "maxLength": 1024,
-                    "required": true,
-                    "example": "quotationAmount > 10000 AND product = 'CCR'"
-                },
-                "kvs_id_ok": {
-                    "type": "integer",
-                    "required": false
-                }
-            }
-        },
-        "New Conditions Tree": {
-            "type": "object",
-            "properties": {
-                "expression": {
-                    "type": "string",
-                    "minLength": 5,
-                    "maxLength": 1024,
-                    "required": true,
-                    "example": "quotationAmount > 10000 AND product = 'CCR'"
-                },
-                "ok": {
-                    "description": "Array of Condition to evaluate",
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "$ref": "#/definitions/New Conditions Tree"
-                    }
-                },
-                "nok": {
-                    "description": "Array of Condition to evaluate",
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "$ref": "#/definitions/New Conditions Tree"
-                    }
-                },
-                "kvs_id_ok": {
-                    "type": "integer",
-                    "required": false
-                },
-                "kvs_id_nok": {
-                    "type": "integer",
-                    "required": false
-                }
-            }
-        },
-        "New Rule": {
+        "NewRule": {
             "type": "object",
             "properties": {
                 "name": {
@@ -434,98 +339,118 @@
                 },
                 "rule_type": {
                     "description": "Type of rule.",
-                    "type": "string",
                     "required": true,
+                    "type": "string",
                     "enum": [
                         "CASE",
                         "TREE"
                     ],
-                    "default": "CASE"
+                    "example": "CASE"
                 },
-                "conditions": {
-                    "description": "Array of conditions.",
-                    "type": "array",
+                "strategy": {
+                    "description": "Type of strategy.",
+                    "required": true,
+                    "type": "string",
+                    "enum": [
+                        "ALL",
+                        "BASE",
+                        "EARLY"
+                    ],
+                    "example": "EARLY"
+                },
+                "use_default": {
+                    "description": "Use default case.",
                     "required": false,
+                    "type": "boolean"
+                },
+                "parameters": {
+                    "description": "Parameters for conditions and outputs.",
+                    "required": true,
+                    "type": "array",
                     "items": {
                         "type": "object",
-                        "$ref": "#/definitions/New Condition"
+                        "properties": {
+                            "key": {
+                                    "type": "string",
+                                    "minLength": 5,
+                                    "maxLength": 50,
+                                    "required": true,
+                                    "example": "quotationAmount"
+                            },
+                            "typeof": {
+                                "type": "string",
+                                "required": true,
+                                "enum": ["JSON", "STRING", "NUMERIC", "DATE", "TIME", "DATETIME"],
+                                "example": "STRING"
+                            },   
+                            "usefor": {
+                                "type": "string",
+                                "required": true,
+                                "enum": ["CONDITION", "OUTPUT"],
+                                "example": "CONDITION"
+                            }
+                        }
                     }
-                },
-                "conditions_tree": {
-                    "description": "Array of conditions tree.",
-                    "type": "array",
-                    "required": false,
-                    "items": {
-                        "type": "object",
-                        "$ref": "#/definitions/New Conditions Tree"
+                }
+            }
+        },
+        "UpdateRule": {
+            "type": "object",
+            "properties": {
+                "strategy": {
+                    "description": "Type of strategy.",
+                    "required": true,
+                    "type": "string",
+                    "enum": [
+                        "ALL",
+                        "BASE",
+                        "EARLY"
+                    ],
+                    "example": "EARLY"
+                }
+            }
+        },
+        "UpdateRuleParameters": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "key": {
+                            "type": "string",
+                            "minLength": 5,
+                            "maxLength": 50,
+                            "required": true,
+                            "example": "quotationAmount"
+                    },
+                    "typeof": {
+                        "type": "string",
+                        "required": true,
+                        "enum": ["JSON", "STRING", "NUMERIC", "DATE", "TIME", "DATETIME"],
+                        "example": "STRING"
+                    },   
+                    "usefor": {
+                        "type": "string",
+                        "required": true,
+                        "enum": ["CONDITION", "OUTPUT"],
+                        "example": "CONDITION"
+
+                    },                    
+                    "is_case_sensitive": {
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "is_visible": {
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "is_deleted": {
+                        "type": "boolean",
+                        "default": false
                     }
-                },
-                "kvs_id_nok": {
-                    "type": "integer",
-                    "required": false
                 }
             }
         },
-        "Update Rule": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "description": "Rule name.",
-                    "type": "string",
-                    "minLength": 5,
-                    "maxLength": 50,
-                    "required": true,
-                    "example": "ru.account.products"
-                },
-                "expression": {
-                    "description": "Expression.",
-                    "type": "string",
-                    "minLength": 5,
-                    "maxLength": 2000,
-                    "required": true
-                }
-            }
-        },
-        "New KV": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "description": "KV name.",
-                    "type": "string",
-                    "minLength": 5,
-                    "maxLength": 50,
-                    "required": true,
-                    "example": "kv.account.products"
-                }
-            }
-        },
-        "New KV Item": {
-            "type": "object",
-            "properties": {
-                "key": {
-                    "description": "Key of Item.",
-                    "type": "string",
-                    "minLength": 5,
-                    "maxLength": 50,
-                    "required": true
-                },
-                "value": {
-                    "description": "Value of Item.",
-                    "type": "string",
-                    "minLength": 5,
-                    "maxLength": 500,
-                    "required": true
-                },
-                "typeof": {
-                    "description": "Type of Item.",
-                    "type": "string",
-                    "minLength": 5,
-                    "maxLength": 50,
-                    "required": true
-                }
-            }
-        },
-        "New Tenant": {
+        "NewTenant": {
             "type": "object",
             "properties": {
                 "tenant_id": {

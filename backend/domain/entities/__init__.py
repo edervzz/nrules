@@ -3,10 +3,10 @@
 from .task import Task
 from .order import Order
 from .historical import Historical
-from .keys import KVItemKey, HistoricalKey
+from .keys import KVItemKey, HistoricalKey, ConditionKey
 from .xobject import XObject
 from .tenants import Tenants
-from .kv import KV
+from .kv import KVStorage
 from .kv_item import KVItem
 from .case import Case
 from .condition import Condition

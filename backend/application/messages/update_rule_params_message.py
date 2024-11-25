@@ -1,29 +1,32 @@
 """ create rule messages """
 from typing import List
-from domain.entities import Rule, Parameter, Condition
+from domain.entities import Rule, Parameter, Condition, KVItem
 
 
-class SaveConditionParamsRequest:
+class UpdateRuleParamsRequest:
     """ Save Parameters Request """
 
     def __init__(
             self,
             _id: int,
             name: str,
-            param_cond_upsert: List[Parameter]):
+            params_upsert: List[Parameter]):
         self.rule = Rule()
         self.rule.id = _id
         self.rule.name = name
-        self.param_cond_upsert = param_cond_upsert
+        self.params_upsert = params_upsert
 
-        self.param_cond_to_insert: List[Parameter] = []
-        self.param_cond_to_update: List[Parameter] = []
+        self.parameters_to_insert: List[Parameter] = []
+        self.parameters_to_update: List[Parameter] = []
 
         self.conditions_to_insert: List[Condition] = []
         self.conditions_to_update: List[Condition] = []
 
+        self.output_to_insert: List[KVItem] = []
+        self.output_to_update: List[KVItem] = []
 
-class SaveConditionParamsResponse:
+
+class UpdateRuleParamsResponse:
     """ Save Parameters Response """
 
     def __init__(self, _id):

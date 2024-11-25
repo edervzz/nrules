@@ -1,7 +1,7 @@
 """ _summary_ """
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
-from .extra_fields import TenantSpecific, Auditable, Versioned
+from .extra_fields import TenantSpecific, Auditable
 from .base import Base
 
 
@@ -19,3 +19,7 @@ class KVItem(Base, TenantSpecific, Auditable):
     calculation: Mapped[str] = mapped_column(nullable=True)
 
     typeof: Mapped[str] = mapped_column(nullable=True)
+
+    is_visible: Mapped[bool] = mapped_column(nullable=False)
+
+    is_deleted: Mapped[bool] = mapped_column(nullable=False)

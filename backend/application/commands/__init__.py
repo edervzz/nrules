@@ -1,4 +1,5 @@
 """ Command Handlers """
+from .update_rule_params_handler import UpdateRuleParamsHandler
 from .run_rule_handler import RunRuleHandler
 from .save_kvitem_handler import SaveKVItemHandler
 from .create_kv_handler import CreateKVHandler

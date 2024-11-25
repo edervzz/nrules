@@ -18,6 +18,8 @@ class Parameter(Base, TenantSpecific, Auditable):
 
     typeof: Mapped[str] = mapped_column(nullable=False)
 
-    is_case_sensitive: Mapped[bool] = mapped_column(nullable=True)
+    is_case_sensitive: Mapped[bool] = mapped_column(nullable=False)
 
-    is_hidden: Mapped[bool] = mapped_column(nullable=True)
+    is_visible: Mapped[bool] = mapped_column(nullable=False)
+
+    is_deleted: Mapped[bool] = mapped_column(nullable=False)

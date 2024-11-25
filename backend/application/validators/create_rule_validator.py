@@ -19,11 +19,8 @@ class CreateRuleValidator(Validator):
         """ Validate request format """
         rule_validator = RuleValidator(self._localizer)
         rule_validator.validate_and_throw(request.rule)
-        # kvs for rule
-        request.default_kvs.id = str(uuid.uuid4())
         # rule
         request.rule.id = str(uuid.uuid4())
-        request.rule.default_kvs_id = request.default_kvs.id
         # condition group
         request.condition_group.id = str(uuid.uuid4())
         # kvs for case
@@ -33,7 +30,15 @@ class CreateRuleValidator(Validator):
         request.case.rule_id = request.rule.id
         request.case.position = 1
         request.case.condition_group_id = request.condition_group.id
-        request.case.kvs_id = request.kvs.id
+        request.case.kv_storage_id = request.kvs.id
+        # default case
+        if request.use_default:
+            # kvs for rule
+            request.default_kvs.id = str(uuid.uuid4())
+            request.case_default.id = str(uuid.uuid4())
+            request.case_default.rule_id = request.rule.id
+            request.case_default.position = 1
+            request.case_default.kv_storage_id = request.default_kvs.id
         # lists of conditions and kv-items
         request.conditions = []
         request.kv_items = []
@@ -41,6 +46,8 @@ class CreateRuleValidator(Validator):
         unique = set()
         for e_param in request.parameters:
             e_param.rule_id = request.rule.id
+            e_param.is_case_sensitive = True
+            e_param.is_visible = True
             parameter_validator = ParameterValidator(self._localizer)
             parameter_validator.validate_and_throw(e_param)
             unique.add(e_param.key)
@@ -50,8 +57,9 @@ class CreateRuleValidator(Validator):
                 onecond.condition_group_id = request.condition_group.id
                 onecond.operator = "EQ"
                 onecond.value = ""
-                onecond.is_case_sensitive = False
                 onecond.typeof = e_param.typeof
+                onecond.is_case_sensitive = True
+                onecond.is_visible = True
                 request.conditions.append(onecond)
             if e_param.usefor == "OUTPUT":
                 kvi = KVItem()
@@ -60,6 +68,7 @@ class CreateRuleValidator(Validator):
                 kvi.value = ""
                 kvi.calculation = "ADD"
                 kvi.typeof = e_param.typeof
+                kvi.is_visible = True
                 request.kv_items.append(kvi)
 
         if len(unique) != len(request.conditions) + len(request.kv_items):

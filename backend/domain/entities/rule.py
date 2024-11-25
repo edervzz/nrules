@@ -18,5 +18,3 @@ class Rule(Base, TenantSpecific, Auditable, Versioned):
     rule_type: Mapped[str] = mapped_column(nullable=False)
 
     strategy: Mapped[str] = mapped_column(nullable=True)
-
-    default_kvs_id: Mapped[int] = mapped_column(nullable=True)

@@ -22,13 +22,13 @@ def core_tables(engine: Engine) -> str:
 
     # Key-Value Storage ----------------------------------------------
     kvs = Table(
-        "kvs",
+        "kv_storage",
         metadata_obj,
         Column(
             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
         Column(
             "id", String(36), primary_key=True, comment="Key-Value Storage ID"),
-        comment="KVS is a container for many Key-Values"
+        comment="KV Storage is a container for many Key-Values"
     )
     set_auditable(kvs)
 
@@ -48,6 +48,10 @@ def core_tables(engine: Engine) -> str:
             "calculation", String(3), CheckConstraint("calculation = 'ADD' OR calculation = 'MOD' OR calculation = 'FN'", name="kv_items_chk_calculation"), nullable=True, comment="Calculation method"),
         Column(
             "typeof", String(10), CheckConstraint("typeof = 'JSON' OR typeof = 'STRING' OR typeof = 'NUMERIC' OR typeof = 'DATE' OR typeof = 'TIME' OR typeof = 'DATETIME'", name="kv_items_chk_usefor"), nullable=True, comment="Type of value. E.g. 'json', 'string', 'int'"),
+        Column(
+            "is_visible", Boolean, nullable=False, comment="Visible Item"),
+        Column(
+            "is_deleted", Boolean, nullable=False, comment="Deleted Item"),
         UniqueConstraint("tenant_id", "kv_id", "key", name="kv_items_unk"),
         comment="KV Item can be assign to single one KVS"
     )
@@ -71,8 +75,6 @@ def core_tables(engine: Engine) -> str:
             "rule_type", String(6), CheckConstraint("rule_type = 'MATRIX' OR rule_type = 'TREE'", name="rules_chk_rule_type"), nullable=False, comment="Type of Rule (MATRIX, TREE)"),
         Column(
             "strategy", String(5), CheckConstraint("strategy = 'EARLY' OR strategy = 'BASE' OR strategy = 'ALL'", name="rules_chk_strategy"), nullable=False, comment="Strategy of rule depending of Type"),
-        Column(
-            "default_kvs_id", String(36), nullable=True, comment="KVS associated when no condition was success"),
         comment="Rule Catalog"
     )
     set_version(rule)
@@ -97,7 +99,7 @@ def core_tables(engine: Engine) -> str:
         Column(
             "condition_group_id", String(36), nullable=True, comment="Condition Parent ID"),
         Column(
-            "kvs_id", String(36), nullable=True, comment="KVS associated when condition was ok"),
+            "kv_storage_id", String(36), nullable=True, comment="KV Storage associated when condition was ok"),
         comment="Matrix's Rows. Set execution order"
     )
     set_auditable(cases)
@@ -133,9 +135,13 @@ def core_tables(engine: Engine) -> str:
         Column(
             "value", String(50), nullable=False, comment="Value"),
         Column(
+            "typeof", String(10), CheckConstraint("typeof = 'STRING' OR typeof = 'NUMERIC' OR typeof = 'DATE' OR typeof = 'TIME' OR typeof = 'DATETIME'", name="conditions_chk_usefor"), nullable=False, comment="Type of Value"),
+        Column(
             "is_case_sensitive", Boolean, nullable=False, comment="Case-Sensitive"),
         Column(
-            "typeof", String(10), CheckConstraint("typeof = 'STRING' OR typeof = 'NUMERIC' OR typeof = 'DATE' OR typeof = 'TIME' OR typeof = 'DATETIME'", name="conditions_chk_usefor"), nullable=False, comment="Type of Value"),
+            "is_visible", Boolean, nullable=False, comment="Visible Condition"),
+        Column(
+            "is_deleted", Boolean, nullable=False, comment="Deleted Item"),
         comment="Matrix's Columns. Set expressions to evaluate"
     )
     set_auditable(conditions)
@@ -154,6 +160,10 @@ def core_tables(engine: Engine) -> str:
             "usefor", String(10), CheckConstraint("usefor = 'CONDITION' OR usefor = 'OUTPUT'", name="parameters_chk_usefor"), primary_key=True, comment="Use for: CONDITION, OUTPUT"),
         Column(
             "typeof", String(10), CheckConstraint("typeof = 'JSON' OR typeof = 'STRING' OR typeof = 'NUMERIC' OR typeof = 'DATE' OR typeof = 'TIME' OR typeof = 'DATETIME'", name="parameters_chk_typeof"), nullable=False, comment="Type of Value: String, Numeric, Date"),
+        Column(
+            "is_case_sensitive", Boolean, nullable=False, comment="Case-Sensitive"),
+        Column(
+            "is_visible", Boolean, nullable=False, comment="Visible Parameter"),
         comment="Control which parameters serve as input and output"
     )
     set_auditable(parameters)

@@ -18,4 +18,4 @@ class Case(Base, TenantSpecific, Auditable):
 
     condition_group_id: Mapped[str] = mapped_column(nullable=True)
 
-    kvs_id: Mapped[int] = mapped_column(nullable=True)
+    kv_storage_id: Mapped[int] = mapped_column(nullable=True)

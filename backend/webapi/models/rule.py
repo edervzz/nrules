@@ -33,7 +33,7 @@ class RuleModel:
         if isinstance(cases, list):
             for c in cases:
                 one_case = CaseModel(
-                    c.id, c.rule_id, c.position, c.condition_group_id, c.kvs_id)
+                    c.id, c.rule_id, c.position, c.condition_group_id, c.kv_storage_id)
                 self.cases.append(one_case.__dict__)
 
         if isinstance(conditions, list):

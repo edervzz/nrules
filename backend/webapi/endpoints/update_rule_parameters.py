@@ -1,17 +1,17 @@
 """ Create a new workflow """
 import json
 from flask import Blueprint, request, Response, current_app
-from webapi.models import SaveParametersModel
-from application.messages import UpdateRuleRequest
-from application.commands import UpdateRuleHandler
+from webapi.models import UpdateRuleParametersModel
+from application.messages import UpdateRuleParamsRequest
+from application.commands import UpdateRuleParamsHandler
 from toolkit import Identification
 
 save_rule_parameters_bp = Blueprint("Save Rule's Parameters", __name__)
 
 
 @save_rule_parameters_bp.put("/t/<tid>/rules/<rule_id>/parameters")
-def save_rule_parameters_endpoint(tid=None, rule_id=None):
-    """ Save rule parameters Endpoint """
+def update_rule_parameters_endpoint(tid=None, rule_id=None):
+    """ Update rule parameters Endpoint """
     tenant_id = Identification.get_tenant_safe(tid)
     id_type = request.args.get("idType", "")
     rule_id, rule_name = Identification.get_object(rule_id, id_type)
@@ -20,14 +20,15 @@ def save_rule_parameters_endpoint(tid=None, rule_id=None):
     if json_data is None:
         return
 
-    update_rule = SaveParametersModel(json.dumps(json_data))
+    update_rule = UpdateRuleParametersModel(json.dumps(json_data))
 
-    command = UpdateRuleRequest(
+    command = UpdateRuleParamsRequest(
         rule_id,
         rule_name,
+        update_rule.parameters_to_upsert
     )
 
-    result = UpdateRuleHandler(
+    result = UpdateRuleParamsHandler(
         current_app.config[str(tid)],
         current_app.config["logger"],
         current_app.config["localizer"]

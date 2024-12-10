@@ -115,11 +115,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "tid",
-                        "description": "Tenant ID",
-                        "in": "path",
-                        "type": "integer",
-                        "required": true
+                        "$ref": "#/parameters/TenantID"
                     },
                     {
                         "$ref": "#/parameters/RuleID"
@@ -155,13 +151,7 @@
                         "$ref": "#/parameters/RuleID"
                     },
                     {
-                        "name": "Rule Data",
-                        "in": "body",
-                        "description": "Rule definition.",
-                        "required": false,
-                        "schema": {
-                            "$ref": "#/definitions/UpdateRuleParameters"
-                        }
+                        "$ref": "#/parameters/UpdateRuleParameters"
                     }
                 ],
                 "responses": {
@@ -310,6 +300,15 @@
                 "$ref": "#/definitions/UpdateRule"
             }
         },
+        "UpdateRuleParameters":{
+            "name": "Rule Data",
+            "in": "body",
+            "description": "Rule definition.",
+            "required": false,
+            "schema": {
+                "$ref": "#/definitions/UpdateRuleParameters"
+            }            
+        },
         "PageNo":{
             "name": "pageNo",
             "description": "Number of Page.",
@@ -411,44 +410,49 @@
             }
         },
         "UpdateRuleParameters": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "key": {
+            "type": "object",
+            "properties": {
+                "parameters":{
+                    "type": "array",
+                    "items": {
+                    "type": "object",
+                    "properties": {
+                        "key": {
+                                "type": "string",
+                                "minLength": 5,
+                                "maxLength": 50,
+                                "required": true,
+                                "example": "quotationAmount"
+                        },
+                        "typeof": {
                             "type": "string",
-                            "minLength": 5,
-                            "maxLength": 50,
                             "required": true,
-                            "example": "quotationAmount"
-                    },
-                    "typeof": {
-                        "type": "string",
-                        "required": true,
-                        "enum": ["JSON", "STRING", "NUMERIC", "DATE", "TIME", "DATETIME"],
-                        "example": "STRING"
-                    },   
-                    "usefor": {
-                        "type": "string",
-                        "required": true,
-                        "enum": ["CONDITION", "OUTPUT"],
-                        "example": "CONDITION"
+                            "enum": ["JSON", "STRING", "NUMERIC", "DATE", "TIME", "DATETIME"],
+                            "example": "STRING"
+                            },   
+                            "usefor": {
+                                "type": "string",
+                                "required": true,
+                                "enum": ["CONDITION", "OUTPUT"],
+                                "example": "CONDITION"
 
-                    },                    
-                    "is_case_sensitive": {
-                        "type": "boolean",
-                        "default": true
-                    },
-                    "is_visible": {
-                        "type": "boolean",
-                        "default": true
-                    },
-                    "is_deleted": {
-                        "type": "boolean",
-                        "default": false
+                            },                    
+                            "is_case_sensitive": {
+                                "type": "boolean",
+                                "default": true
+                            },
+                            "is_visible": {
+                                "type": "boolean",
+                                "default": true
+                            },
+                            "is_deleted": {
+                                "type": "boolean",
+                                "default": false
+                            }
+                        }
                     }
                 }
-            }
+            }            
         },
         "NewTenant": {
             "type": "object",

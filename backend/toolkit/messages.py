@@ -186,7 +186,11 @@ class Codes:
     en_messages[COND_SAVE_001] = "All variables are mandatory"
     es_messages[COND_SAVE_001] = "Todas las variables son obligatorias."
 
-    # Save Parameter
+    # Update Parameter
+    PARAM_UPD_006 = "PARAM-UPD-006"
+    en_messages[PARAM_UPD_006] = "Parameter '{}' cannot determine its use for."
+    es_messages[PARAM_UPD_006] = "Parámetro '{}' no puede determinarse su uso.."
+
     PARAM_UPD_005 = "PARAM-UPD-005"
     en_messages[PARAM_UPD_005] = "Parameter '{}' not found."
     es_messages[PARAM_UPD_005] = "Parámetro '{}' no encontrado."
@@ -251,6 +255,11 @@ class Codes:
     RU_UPD_001 = "RU-UPD-001"
     en_messages[RU_UPD_001] = "Rule Name is mandatory."
     es_messages[RU_UPD_001] = "Nombre de Regla es obligatorio."
+
+    # Condition
+    COND_001 = "COND-001"
+    en_messages[COND_001] = "Condition's Value cannot be converted to '{}'."
+    es_messages[COND_001] = "El Valor de la Condición no puede ser convertido a '{}'"
 
     # Parameter
     PARAM_004 = "PARAM-004"

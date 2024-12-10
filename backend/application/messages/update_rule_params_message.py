@@ -10,11 +10,13 @@ class UpdateRuleParamsRequest:
             self,
             _id: int,
             name: str,
-            params_upsert: List[Parameter]):
+            params_upsert: List[Parameter],
+            force_conv: bool):
         self.rule = Rule()
         self.rule.id = _id
         self.rule.name = name
         self.params_upsert = params_upsert
+        self.force_conv = force_conv
 
         self.parameters_to_insert: List[Parameter] = []
         self.parameters_to_update: List[Parameter] = []

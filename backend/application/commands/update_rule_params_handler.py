@@ -8,7 +8,7 @@ from toolkit import Localizer
 
 
 class UpdateRuleParamsHandler:
-    """ Save Condition Parameters Handler """
+    """ Upsert Conditions and KV Items base on Parameters """
 
     def __init__(self, repository: CoreRepository, logger: logging, localizer: Localizer):
         self.repository = repository
@@ -16,7 +16,7 @@ class UpdateRuleParamsHandler:
         self.localizer = localizer
 
     def handler(self, request: UpdateRuleParamsRequest):
-        """handler"""
+        """ Handler """
         # 1. request validation
         validator = UpdateRuleParamsValidator(self.localizer)
         validator.validate_and_throw(request)

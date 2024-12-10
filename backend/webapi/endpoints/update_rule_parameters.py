@@ -6,15 +6,16 @@ from application.messages import UpdateRuleParamsRequest
 from application.commands import UpdateRuleParamsHandler
 from toolkit import Identification
 
-save_rule_parameters_bp = Blueprint("Save Rule's Parameters", __name__)
+update_rule_parameters_bp = Blueprint("Save Rule's Parameters", __name__)
 
 
-@save_rule_parameters_bp.put("/t/<tid>/rules/<rule_id>/parameters")
+@update_rule_parameters_bp.put("/t/<tid>/rules/<rule_id>/parameters")
 def update_rule_parameters_endpoint(tid=None, rule_id=None):
     """ Update rule parameters Endpoint """
     tenant_id = Identification.get_tenant_safe(tid)
     id_type = request.args.get("idType", "")
     rule_id, rule_name = Identification.get_object(rule_id, id_type)
+    force_conv = bool(request.args.get("forceConversion", False))
 
     json_data = request.get_json(silent=True)
     if json_data is None:
@@ -25,7 +26,8 @@ def update_rule_parameters_endpoint(tid=None, rule_id=None):
     command = UpdateRuleParamsRequest(
         rule_id,
         rule_name,
-        update_rule.parameters_to_upsert
+        update_rule.parameters_to_upsert,
+        force_conv
     )
 
     result = UpdateRuleParamsHandler(

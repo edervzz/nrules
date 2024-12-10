@@ -1,5 +1,4 @@
 """_summary_"""
-from typing import List
 import uuid
 from application.messages import CreateRuleRequest
 from domain.entities import Condition, KVItem
@@ -48,6 +47,7 @@ class CreateRuleValidator(Validator):
             e_param.rule_id = request.rule.id
             e_param.is_case_sensitive = True
             e_param.is_visible = True
+            e_param.is_deleted = False
             parameter_validator = ParameterValidator(self._localizer)
             parameter_validator.validate_and_throw(e_param)
             unique.add(e_param.key)
@@ -60,6 +60,7 @@ class CreateRuleValidator(Validator):
                 onecond.typeof = e_param.typeof
                 onecond.is_case_sensitive = True
                 onecond.is_visible = True
+                onecond.is_deleted = False
                 request.conditions.append(onecond)
             if e_param.usefor == "OUTPUT":
                 kvi = KVItem()
@@ -69,6 +70,7 @@ class CreateRuleValidator(Validator):
                 kvi.calculation = "ADD"
                 kvi.typeof = e_param.typeof
                 kvi.is_visible = True
+                kvi.is_deleted = False
                 request.kv_items.append(kvi)
 
         if len(unique) != len(request.conditions) + len(request.kv_items):

@@ -8,7 +8,7 @@ from toolkit import Localizer
 
 
 class CreateRuleHandler:
-    r""" _summary_ """
+    """ Create a new Rule """
 
     def __init__(self, repository: CoreRepository, logger: logging, localizer: Localizer):
         self.repository = repository
@@ -29,6 +29,9 @@ class CreateRuleHandler:
 
         self.repository.begin()
 
+        if request.use_default:
+            self.repository.kv_storage.create(request.default_kvs)
+
         self.repository.condition_group.create(request.condition_group)
         for x in request.conditions:
             self.repository.condition.create(x)
@@ -43,9 +46,6 @@ class CreateRuleHandler:
 
         for x in request.parameters:
             self.repository.parameter.create(x)
-
-        if request.use_default:
-            self.repository.kv_storage.create(request.default_kvs)
 
         self.repository.commit_work()
 

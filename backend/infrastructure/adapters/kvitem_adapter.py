@@ -24,7 +24,6 @@ class KVItemAdapter(KVItemRepository):
 
         kvitem.value = entity.value
         kvitem.typeof = entity.typeof
-        kvitem.version = entity.version
 
     def read(self, _id: KVItemKey) -> KVItem:
         with Session(self.engine) as session:
@@ -33,7 +32,7 @@ class KVItemAdapter(KVItemRepository):
                 KVItem.key == _id.key).one_or_none()
             return rule
 
-    def read_by_parent_id(self, parent_id) -> List[KVItem]:
+    def read_by_parent_id(self, parent_id: str) -> List[KVItem]:
         with Session(self.engine) as session:
             kvitems = session.query(KVItem).where(
                 KVItem.kv_id == parent_id).all()

@@ -15,7 +15,7 @@ from .migrate import core_migration_bp, tenancy_migration_bp
 from .read_rule import read_rule_bp
 from .create_rule import new_rule_bp
 from .update_rule import update_rule_bp
-from .update_rule_parameters import save_rule_parameters_bp
+from .update_rule_parameters import update_rule_parameters_bp
 from .read_all_rule import read_all_rule_bp
 from .create_tenant import new_tenant_bp
 from .run_rule import run_rule_bp
@@ -26,7 +26,7 @@ def register_endpoints(app: Flask, prefix: str):
 
     app.register_blueprint(new_rule_bp, url_prefix=prefix)
     app.register_blueprint(update_rule_bp, url_prefix=prefix)
-    app.register_blueprint(save_rule_parameters_bp, url_prefix=prefix)
+    app.register_blueprint(update_rule_parameters_bp, url_prefix=prefix)
     app.register_blueprint(read_all_rule_bp, url_prefix=prefix)
     app.register_blueprint(read_rule_bp, url_prefix=prefix)
 

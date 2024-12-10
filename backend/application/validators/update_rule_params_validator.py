@@ -36,7 +36,7 @@ def duplicate_validator(params: List[Parameter], v: Validator, local: Localizer)
     """ duplicate_validator """
     if isinstance(params, list):
         r: List[str] = []
-        if params.count > 0:
+        if len(params) > 0:
             unique = {x.key.upper()+x.usefor.upper() for x in params}
             if len(unique) != len(params):
                 v.add_failure(local.get(Codes.PARAM_UPD_003))

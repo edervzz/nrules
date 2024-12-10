@@ -10,7 +10,7 @@ class KVItem(Base, TenantSpecific, Auditable):
 
     __tablename__ = "kv_items"
 
-    key: Mapped[str] = mapped_column(nullable=False)
+    key: Mapped[str] = mapped_column(primary_key=True, nullable=False)
 
     kv_id: Mapped[str] = mapped_column(primary_key=True, nullable=False)
 

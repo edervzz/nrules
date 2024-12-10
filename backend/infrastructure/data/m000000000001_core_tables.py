@@ -164,6 +164,8 @@ def core_tables(engine: Engine) -> str:
             "is_case_sensitive", Boolean, nullable=False, comment="Case-Sensitive"),
         Column(
             "is_visible", Boolean, nullable=False, comment="Visible Parameter"),
+        Column(
+            "is_deleted", Boolean, nullable=False, comment="Deleted Item"),
         comment="Control which parameters serve as input and output"
     )
     set_auditable(parameters)

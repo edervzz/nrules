@@ -25,6 +25,7 @@ function Matrixes({}: Props) {
     const callApiGetRules = (pageNo: number, word: string) => {
         setShowToast(1);
         setRules([]);
+
         Storage.Rule.GetRulesPaged(pageNo, pageSize, word).then((result) => {
             if (result.ok) {
                 setShowToast(0);
@@ -54,8 +55,8 @@ function Matrixes({}: Props) {
 
             {/* Toolbar */}
             <Toolbar
-                title={Messages.COMMON_MATRIX}
-                titleInfo={Messages.MATRIX_INFO}
+                // title={Messages.COMMON_MATRIX}
+                // titleInfo={Messages.MATRIX_INFO}
                 isSearchable
                 isPaginated
                 pagination={localPagination}

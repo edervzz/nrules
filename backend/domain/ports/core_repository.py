@@ -5,7 +5,7 @@ from .abstractions import ReaderByParentID, ReaderPagination
 from .abstractions import ReaderSingle, ReaderSingleByExternalID
 
 
-class KVSRepository(ABC, Creator, ReaderSingle, ReaderSingleByExternalID):
+class KVSRepository(ABC, Creator, ReaderSingle, ReaderSingleByExternalID, ReaderByParentID):
     """_summary_"""
 
     def __init__(self, engine):
@@ -34,6 +34,17 @@ class RuleRepository(
         self.engine = engine
 
 
+class TagRepository(
+        ABC, Creator, Updater,
+        ReaderSingleByExternalID, ReaderByParentID):
+    """_summary_"""
+
+    def __init__(self, engine):
+        ABC.__init__(self)
+        Creator.__init__(self)
+        self.engine = engine
+
+
 class ParametersRepository(
         ABC, Creator, Updater,
         ReaderSingle, ReaderByParentID):
@@ -47,7 +58,7 @@ class ParametersRepository(
 
 class ConditionGroupRepository(
         ABC, Creator, Updater,
-        ReaderSingle):
+        ReaderSingle, ReaderByParentID):
     """_summary_"""
 
     def __init__(self, engine):
@@ -90,6 +101,7 @@ class CoreRepository:
         self.condition_group: ConditionGroupRepository
         self.case: CaseRepository
         self.parameter: ParametersRepository
+        self.tag: TagRepository
 
     @abstractmethod
     def begin(self, autoflush=False):

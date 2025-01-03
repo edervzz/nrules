@@ -2,7 +2,7 @@ import { Button, Container, Modal, Spinner, Table } from "react-bootstrap";
 import Messages from "../../locales/Messages";
 import { ErrorDto } from "../../models";
 
-interface Props01 {
+interface PropsLoading {
     show: boolean;
     title: string;
     isFailure: boolean;
@@ -10,13 +10,13 @@ interface Props01 {
     onClose: () => void;
 }
 
-export function Loading01({
+export function LoadingModal({
     show,
     title,
     messageOnFailure,
     isFailure,
     onClose,
-}: Props01) {
+}: PropsLoading) {
     return (
         <Modal show={show} size="lg" backdrop="static" keyboard={false}>
             <Modal.Header>
@@ -39,20 +39,20 @@ export function Loading01({
     );
 }
 
-interface Props02 {
+interface PropsLoadingErrorList {
     show: boolean;
     title: string;
     errorList: ErrorDto[];
     isFailure: boolean;
     onClose: () => void;
 }
-export function Loading02({
+export function LoadingErrorListModal({
     show,
     title,
     errorList,
     isFailure,
     onClose,
-}: Props02) {
+}: PropsLoadingErrorList) {
     return (
         <Modal show={show} size="lg" backdrop="static" keyboard={false}>
             <Modal.Header>

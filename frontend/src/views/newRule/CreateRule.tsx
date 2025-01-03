@@ -1,4 +1,5 @@
 import {
+    Accordion,
     Button,
     Col,
     Container,
@@ -14,14 +15,16 @@ import {
     CreateRuleDto,
     ParametersDto,
     ErrorDto,
+    NewRuleTag,
 } from "../../models";
 import { ConditionType } from "../../enums";
 import { FormEvent, useRef, useState } from "react";
 import Toolbar from "../../components/Toolbar";
 import { v4 as uuidv4 } from "uuid";
-import { Loading02 } from "../../components/Loading";
+import { LoadingErrorListModal } from "../../components/Loading";
 import { useNavigate } from "react-router-dom";
 import Storage from "../../storage";
+import { TagDto } from "../../models/TagDto";
 
 interface Props {}
 
@@ -35,6 +38,8 @@ export default function CreateRule({}: Props) {
     const [outputs, setOutputs] = useState<NewRuleOutput[]>([
         { id: uuidv4(), variable: "", type: ConditionType.STR },
     ]);
+
+    const [tags, setTags] = useState<NewRuleTag[]>([]);
 
     const rulenameRef = useRef<HTMLInputElement>(null);
     const ruletypeRef = useRef<HTMLSelectElement>(null);
@@ -61,11 +66,19 @@ export default function CreateRule({}: Props) {
             } as ParametersDto;
         });
 
+        const tgs = tags.map((x) => {
+            return {
+                key: x.key,
+                value: x.value,
+            } as TagDto;
+        });
+
         const newRule: CreateRuleDto = {
             name: rulenameRef.current?.value!,
             rule_type: ruletypeRef.current?.value! == "1" ? "MATRIX" : "TREE",
             strategy: getStrategy(rulestrategyRef.current?.value!),
             parameters: [...conds, ...outs],
+            tags: [...tgs],
         };
 
         Storage.Rule.PostRule(newRule).then((result) => {
@@ -91,29 +104,29 @@ export default function CreateRule({}: Props) {
             variant="primary"
             type="submit"
         >
-            <i className="bi bi-trash-fill"></i>
+            <i className="bi bi-eraser-fill"></i>
         </Button>
     );
 
     return (
         <>
-            <Loading02
+            <LoadingErrorListModal
                 show={showSending}
                 title={Messages.COMMON_SENDING}
                 isFailure={errorList.length > 0}
                 errorList={errorList}
                 onClose={() => setShowSending(false)}
-            ></Loading02>
+            ></LoadingErrorListModal>
 
             <Toolbar
-                title={Messages.NEWRULE_CREA_RULE}
-                titleInfo={
-                    <div>
-                        <p>{Messages.NEWRULE_INFO_01}</p>
-                        <p>{Messages.NEWRULE_INFO_02}</p>
-                    </div>
-                }
-                extraItems={[btnReload]}
+            // title={Messages.NEWRULE_CREA_RULE}
+            // titleInfo={
+            //     <div>
+            //         <p>{Messages.NEWRULE_INFO_01}</p>
+            //         <p>{Messages.NEWRULE_INFO_02}</p>
+            //     </div>
+            // }
+            // extraItems={[btnReload]}
             ></Toolbar>
 
             <Container className="mt-3">
@@ -179,22 +192,22 @@ export default function CreateRule({}: Props) {
 
                     <Row>
                         <Col>
-                            <Button
-                                onClick={() =>
-                                    HandleAddCondition(
-                                        conditions,
-                                        setConditions
-                                    )
-                                }
-                                size="sm"
-                            >
-                                <i className="bi bi-plus-lg"></i>
-                                {" " + Messages.BUTTON_CONDITION}
-                            </Button>
                             <Table striped bordered hover>
                                 <thead>
                                     <tr>
-                                        <th style={{ width: "0rem" }}></th>
+                                        <th style={{ width: "0rem" }}>
+                                            <Button
+                                                onClick={() =>
+                                                    HandleAddCondition(
+                                                        conditions,
+                                                        setConditions
+                                                    )
+                                                }
+                                                size="sm"
+                                            >
+                                                <i className="bi bi-plus-lg"></i>
+                                            </Button>
+                                        </th>
                                         <th>{Messages.CONDITIONS}</th>
                                         <th>{Messages.TYPE}</th>
                                     </tr>
@@ -274,19 +287,22 @@ export default function CreateRule({}: Props) {
                             </Table>
                         </Col>
                         <Col>
-                            <Button
-                                onClick={() =>
-                                    handleAddOutput(outputs, setOutputs)
-                                }
-                                size="sm"
-                            >
-                                <i className="bi bi-plus-lg"></i>
-                                {" " + Messages.BUTTON_OUTPUT}
-                            </Button>
                             <Table striped bordered hover>
                                 <thead>
                                     <tr>
-                                        <th style={{ width: "0rem" }}></th>
+                                        <th style={{ width: "0rem" }}>
+                                            <Button
+                                                onClick={() =>
+                                                    handleAddOutput(
+                                                        outputs,
+                                                        setOutputs
+                                                    )
+                                                }
+                                                size="sm"
+                                            >
+                                                <i className="bi bi-plus-lg"></i>
+                                            </Button>
+                                        </th>
                                         <th>{Messages.OUTPUTS}</th>
                                         <th>{Messages.TYPE}</th>
                                     </tr>
@@ -360,14 +376,115 @@ export default function CreateRule({}: Props) {
                             </Table>
                         </Col>
                     </Row>
+
+                    <Row>
+                        <Accordion defaultActiveKey="0">
+                            <Accordion.Item eventKey="0">
+                                <Accordion.Header>
+                                    {Messages.TAGS}
+                                </Accordion.Header>
+                                <Accordion.Body>
+                                    <Table striped bordered hover>
+                                        <thead>
+                                            <tr>
+                                                <th style={{ width: "0rem" }}>
+                                                    <Button
+                                                        onClick={() =>
+                                                            handleAddTag(
+                                                                tags,
+                                                                setTags
+                                                            )
+                                                        }
+                                                        size="sm"
+                                                    >
+                                                        <i className="bi bi-plus-lg"></i>
+                                                    </Button>
+                                                </th>
+                                                <th>{Messages.KEY}</th>
+                                                <th>{Messages.VALUE}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {tags.map((x) => (
+                                                <tr key={x.id}>
+                                                    <td>
+                                                        <Button
+                                                            onClick={() =>
+                                                                handleDelTag(
+                                                                    tags,
+                                                                    setTags,
+                                                                    x.id
+                                                                )
+                                                            }
+                                                            size="sm"
+                                                            variant="danger"
+                                                        >
+                                                            <i className="bi bi-x-lg"></i>
+                                                        </Button>
+                                                    </td>
+                                                    <td>
+                                                        <InputGroup className="mb-1">
+                                                            <Form.Control
+                                                                name={
+                                                                    "key-" +
+                                                                    x.id
+                                                                }
+                                                                onChange={(e) =>
+                                                                    handleChangeTagKey(
+                                                                        tags,
+                                                                        setTags,
+                                                                        x.id,
+                                                                        e.target
+                                                                            .value
+                                                                    )
+                                                                }
+                                                                value={x.key}
+                                                                placeholder="key"
+                                                            />
+                                                        </InputGroup>
+                                                    </td>
+                                                    <td>
+                                                        <InputGroup className="mb-1">
+                                                            <Form.Control
+                                                                name={
+                                                                    "val-" +
+                                                                    x.id
+                                                                }
+                                                                onChange={(e) =>
+                                                                    handleChangeTagValue(
+                                                                        tags,
+                                                                        setTags,
+                                                                        x.id,
+                                                                        e.target
+                                                                            .value
+                                                                    )
+                                                                }
+                                                                value={x.value}
+                                                                placeholder="value"
+                                                            />
+                                                        </InputGroup>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </Table>
+                                </Accordion.Body>
+                            </Accordion.Item>
+                        </Accordion>
+                    </Row>
                     <br></br>
                     <Row>
                         <Col className="text-end">
-                            <Button variant="secondary" type="reset">
-                                <i className="bi bi-trash-fill"></i>
+                            <Button
+                                onClick={() => {
+                                    window.location.reload();
+                                }}
+                                variant="secondary"
+                                className="me-2"
+                            >
+                                <i className="bi bi-eraser"></i>
                             </Button>
-                        </Col>
-                        <Col className="text-end">
+
                             <Button variant="primary" type="submit">
                                 {Messages.BUTTON_NEXT}
                             </Button>
@@ -473,4 +590,42 @@ const handleDelOutput = (
     id: string
 ) => {
     setOutputs(outputs.filter((x) => x.id !== id));
+};
+
+const handleAddTag = (
+    tags: NewRuleTag[],
+    setOutputs: React.Dispatch<React.SetStateAction<NewRuleTag[]>>
+) => {
+    const tag: NewRuleTag = {
+        id: uuidv4(),
+        key: "",
+        value: "",
+    };
+    setOutputs([...tags, { ...tag }]);
+};
+
+const handleChangeTagKey = (
+    outputs: NewRuleTag[],
+    setOutputs: React.Dispatch<React.SetStateAction<NewRuleTag[]>>,
+    id: string,
+    value: string
+) => {
+    setOutputs(outputs.map((x) => (x.id === id ? { ...x, key: value } : x)));
+};
+
+const handleChangeTagValue = (
+    outputs: NewRuleTag[],
+    setOutputs: React.Dispatch<React.SetStateAction<NewRuleTag[]>>,
+    id: string,
+    value: string
+) => {
+    setOutputs(outputs.map((x) => (x.id === id ? { ...x, value: value } : x)));
+};
+
+const handleDelTag = (
+    tags: NewRuleTag[],
+    setTags: React.Dispatch<React.SetStateAction<NewRuleTag[]>>,
+    id: string
+) => {
+    setTags(tags.filter((x) => x.id !== id));
 };

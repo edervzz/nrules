@@ -25,7 +25,7 @@ const AddParameter = ({ title, onAddParameter, onClose }: Props) => {
                     <Form.Control
                         ref={refParamName}
                         aria-label="First name"
-                        placeholder={Messages.CONDITIONNAME}
+                        placeholder={Messages.NAME}
                     />
                 </InputGroup>
                 <Form.Select

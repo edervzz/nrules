@@ -14,7 +14,7 @@ import { Pagination } from "../../typings";
 
 interface Props {
     fluid?: boolean | string | "sm" | "md" | "lg" | "xl" | "xxl";
-    title: string;
+    title?: string;
     titleInfo?: ReactNode;
     isPaginated?: boolean;
     pagination?: Pagination;
@@ -38,7 +38,7 @@ const Toolbar = ({
     const [wordToSearch, setWordToSearch] = useState("");
     return (
         <>
-            <Container fluid={fluid} className="mb-2 mt-2">
+            <Container fluid={fluid} className="mb-1 mt-1">
                 <Row className="align-items-center">
                     <Col xs="auto" className="fs-5">
                         {title}

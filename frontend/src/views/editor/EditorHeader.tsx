@@ -36,15 +36,6 @@ function EditorHeader({ conditions, outputs }: Props) {
                 id="condition"
             >
                 {Messages.CONDITIONS}
-
-                <Button
-                    name="reorder"
-                    className="ms-1"
-                    size="sm"
-                    variant="primary"
-                >
-                    <i className="bi bi-arrow-left-right"></i>
-                </Button>
             </th>
             <th
                 style={{
@@ -55,15 +46,6 @@ function EditorHeader({ conditions, outputs }: Props) {
                 id="output"
             >
                 {Messages.OUTPUTS}
-
-                <Button
-                    name="reorder"
-                    className="ms-1"
-                    size="sm"
-                    variant="primary"
-                >
-                    <i className="bi bi-arrow-left-right"></i>
-                </Button>
             </th>
         </tr>
     );

@@ -2,7 +2,7 @@ import { Badge, Col, Container, Row } from "react-bootstrap";
 import Login from "./Login";
 import Footer from "../../components/Footer/Footer";
 import { useState } from "react";
-import { Loading01 } from "../../components/Loading";
+import { LoadingModal } from "../../components/Loading";
 import Messages from "../../locales/Messages";
 import MainContainer from "../../components/MainContainer";
 
@@ -26,14 +26,13 @@ export default function LoginView() {
 
     return (
         <MainContainer isLoginPage>
-            Login
-            <Loading01
+            <LoadingModal
                 show={showLoad}
                 title={Messages.MESSAGE_CONNECTING}
                 isFailure={isFailure}
                 messageOnFailure={messageError}
                 onClose={handleClose}
-            ></Loading01>
+            ></LoadingModal>
             <Container fluid="xl" className=" justify-content-center">
                 <Row>
                     <Col></Col>

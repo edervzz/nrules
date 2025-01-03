@@ -6,7 +6,11 @@ from .base import Base
 
 
 class Rule(Base, TenantSpecific, Auditable, Versioned):
-    """ Rule entity """
+    """ Rule entity.
+
+        Works like container of conditions and kv items
+        Depending of type and strategy it run and get result from cases
+    """
 
     __tablename__ = "rules"
 
@@ -20,3 +24,7 @@ class Rule(Base, TenantSpecific, Auditable, Versioned):
     strategy: Mapped[str] = mapped_column(nullable=True)
 
     default_kvs_id: Mapped[int] = mapped_column(nullable=True)
+
+    is_active: Mapped[bool] = mapped_column(nullable=False)
+
+    is_archived: Mapped[bool] = mapped_column(nullable=True)

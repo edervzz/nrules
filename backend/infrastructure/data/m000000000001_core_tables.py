@@ -28,6 +28,8 @@ def core_tables(engine: Engine) -> str:
             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
         Column(
             "id", String(36), primary_key=True, comment="Key-Value Storage ID"),
+        Column(
+            "rule_id", String(36), primary_key=False, comment="Rule ID"),
         comment="KVS is a container for many Key-Values"
     )
     set_auditable(kvs)
@@ -48,6 +50,10 @@ def core_tables(engine: Engine) -> str:
             "calculation", String(3), CheckConstraint("calculation = 'ADD' OR calculation = 'MOD' OR calculation = 'FN'", name="kv_items_chk_calculation"), nullable=True, comment="Calculation method"),
         Column(
             "typeof", String(10), CheckConstraint("typeof = 'JSON' OR typeof = 'STRING' OR typeof = 'NUMERIC' OR typeof = 'DATE' OR typeof = 'TIME' OR typeof = 'DATETIME'", name="kv_items_chk_usefor"), nullable=True, comment="Type of value. E.g. 'json', 'string', 'int'"),
+        Column(
+            "is_active", Boolean, nullable=False, comment="Object is Active"),
+        Column(
+            "is_archived", Boolean, nullable=False, comment="Object is Archived"),
         UniqueConstraint("tenant_id", "kv_id", "key", name="kv_items_unk"),
         comment="KV Item can be assign to single one KVS"
     )
@@ -73,6 +79,10 @@ def core_tables(engine: Engine) -> str:
             "strategy", String(5), CheckConstraint("strategy = 'EARLY' OR strategy = 'BASE' OR strategy = 'ALL'", name="rules_chk_strategy"), nullable=False, comment="Strategy of rule depending of Type"),
         Column(
             "default_kvs_id", String(36), nullable=True, comment="KVS associated when no condition was success"),
+        Column(
+            "is_active", Boolean, nullable=False, comment="Object is Active"),
+        Column(
+            "is_archived", Boolean, nullable=False, comment="Object is Archived"),
         comment="Rule Catalog"
     )
     set_version(rule)
@@ -81,6 +91,22 @@ def core_tables(engine: Engine) -> str:
         "ix_rules_001",
         rule.c.tenant_id,
         rule.c.name)
+
+    # Tags ----------------------------------------------
+    tags = Table(
+        "tags",
+        metadata_obj,
+        Column(
+            "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
+        Column(
+            "rule_id", String(36), primary_key=True, comment="Rule ID"),
+        Column(
+            "key", String(50), primary_key=True, nullable=False, comment="Tag's key"),
+        Column(
+            "value", String(80), nullable=False, comment="Value"),
+        comment="Rule Catalog"
+    )
+    set_auditable(tags)
 
     # Cases ----------------------------------------------
     cases = Table(
@@ -98,6 +124,10 @@ def core_tables(engine: Engine) -> str:
             "condition_group_id", String(36), nullable=True, comment="Condition Parent ID"),
         Column(
             "kvs_id", String(36), nullable=True, comment="KVS associated when condition was ok"),
+        Column(
+            "is_active", Boolean, nullable=False, comment="Object is Active"),
+        Column(
+            "is_archived", Boolean, nullable=False, comment="Object is Archived"),
         comment="Matrix's Rows. Set execution order"
     )
     set_auditable(cases)
@@ -114,6 +144,8 @@ def core_tables(engine: Engine) -> str:
             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
         Column(
             "id", String(36), primary_key=True, comment="Condition Group ID"),
+        Column(
+            "rule_id", String(36), primary_key=False, comment="Rule ID"),
         comment="Matrix's Columns. Set expressions to evaluate"
     )
     set_auditable(condition_group)
@@ -136,6 +168,10 @@ def core_tables(engine: Engine) -> str:
             "is_case_sensitive", Boolean, nullable=False, comment="Case-Sensitive"),
         Column(
             "typeof", String(10), CheckConstraint("typeof = 'STRING' OR typeof = 'NUMERIC' OR typeof = 'DATE' OR typeof = 'TIME' OR typeof = 'DATETIME'", name="conditions_chk_usefor"), nullable=False, comment="Type of Value"),
+        Column(
+            "is_active", Boolean, nullable=False, comment="Object is Active"),
+        Column(
+            "is_archived", Boolean, nullable=False, comment="Object is Archived"),
         comment="Matrix's Columns. Set expressions to evaluate"
     )
     set_auditable(conditions)

@@ -2,7 +2,7 @@
 
     Requests and Responses
 """
-from .save_rule_conditions_message import SaveRuleConditionsRequest, SaveRuleConditionsResponse
+from .save_condition_rule_message import SaveConditionsRuleRequest, SaveConditionsRuleResponse
 from .run_rule_message import RunRuleRequest, RunRuleResponse
 from .read_kvs_message import ReadKVSRequest, ReadKVSResponse
 from .save_kvitem_message import SaveKVItemRequest, SaveKVItemResponse

@@ -17,20 +17,20 @@ def read_all_rules_endpoint(tid=None):
     page_no = request.args.get("pageNo", "1")
     page_size = request.args.get("pageSize", "5")
     word = request.args.get("word", "")
+    tag = request.args.get("tag", "")
     command = ReadAllRulesRequest(
         tenant_id,
         int(page_no),
         int(page_size),
-        word
+        word,
+        tag
     )
 
-    handler = ReadAllRulesHandler(
+    result = ReadAllRulesHandler(
         current_app.config[str(tid)],
         current_app.config["logger"],
         current_app.config["localizer"]
-    )
-
-    result = handler.handler(command)
+    ).handler(command)
 
     if result.rules is not None:
         rules = []

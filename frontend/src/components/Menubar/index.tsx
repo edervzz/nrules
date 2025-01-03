@@ -54,8 +54,7 @@ export default function Menubar({
 
             <Navbar expand="md" className={`bg-body-tertiary`}>
                 <Container fluid="xxl">
-                    <Navbar.Text></Navbar.Text>
-                    <Navbar.Brand href="/home">NRule</Navbar.Brand>
+                    <Navbar.Brand>{title}</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">

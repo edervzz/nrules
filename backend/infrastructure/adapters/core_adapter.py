@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy.orm import Query
 from domain.entities import Rule, Parameter, Condition, ConditionGroup, Case
 from domain.entities import TenantSpecific, Versioned, Auditable, Migrations
-from domain.entities import KV, KVItem
+from domain.entities import KV, KVItem, Tag
 from domain.ports import CoreRepository
 from infrastructure.data import initial, core_tables, core_admin
 from .kvs_adapter import KVSAdapter
@@ -19,6 +19,7 @@ from .case_adapter import CaseAdapter
 from .condition_adapter import ConditionAdapter
 from .condition_group_adapter import ConditionGroupAdapter
 from .parameter_adapter import ParameterAdapter
+from .tag_adapter import TagAdapter
 
 
 class CoreAdapter(CoreRepository):
@@ -65,6 +66,10 @@ class CoreAdapter(CoreRepository):
         event.listen(Parameter, 'before_insert', self.__before_insert)
         event.listen(Parameter, 'before_update', self.__before_update)
 
+        self.tag = TagAdapter(self.engine)
+        event.listen(Tag, 'before_insert', self.__before_insert)
+        event.listen(Tag, 'before_update', self.__before_update)
+
         @event.listens_for(Query, 'before_compile', retval=True)
         def _fn(query: Query):
             return query.enable_assertions(False).filter_by(tenant_id=self.tid)
@@ -78,6 +83,7 @@ class CoreAdapter(CoreRepository):
         self.kvs.set_session(self.session)
         self.kvitem.set_session(self.session)
         self.parameter.set_session(self.session)
+        self.tag.set_session(self.session)
 
     def commit_work(self):
         if self.session is not None:
@@ -89,6 +95,7 @@ class CoreAdapter(CoreRepository):
             self.kvs.set_session(None)
             self.kvitem.set_session(None)
             self.parameter.set_session(None)
+            self.tag.set_session(None)
 
     def rollback_work(self):
         if self.session is not None:
@@ -100,6 +107,7 @@ class CoreAdapter(CoreRepository):
             self.kvs.set_session(None)
             self.kvitem.set_session(None)
             self.parameter.set_session(None)
+            self.tag.set_session(None)
 
     def migrate(self) -> list:
         initial(self.engine)

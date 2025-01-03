@@ -17,6 +17,12 @@ export type NewRuleOutput = {
     type: string;
 };
 
+export type NewRuleTag = {
+    id:string;
+    key:string;
+    value: string;
+};
+
 
 
 

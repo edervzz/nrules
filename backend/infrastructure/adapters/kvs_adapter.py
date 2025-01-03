@@ -1,5 +1,6 @@
 """_summary_
     """
+from typing import List
 from sqlalchemy.orm import Session
 from domain.entities import KV
 from domain.ports import KVSRepository
@@ -21,8 +22,7 @@ class KVSAdapter(KVSRepository):
             rule = session.query(KV).where(KV.id == _id).one_or_none()
             return rule
 
-    def read_by_external_id(self, external_id) -> any:
+    def read_by_parent_id(self, parent_id) -> List[KV]:
         with Session(self.engine) as session:
-            rule = session.query(KV).where(
-                KV.name == external_id).one_or_none()
-            return rule
+            rules = session.query(KV).where(KV.rule_id == parent_id).all()
+            return rules

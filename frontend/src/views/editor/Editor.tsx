@@ -71,7 +71,7 @@ function Editor({}: Props) {
 
             <Toolbar
                 fluid
-                title="Editor"
+                title={rule.name}
                 extraItems={[
                     EditorToolbarButtons({
                         onAddParameter: (parameter: ParametersDto) => {

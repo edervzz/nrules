@@ -41,9 +41,10 @@ class RuleAdapter(RuleRepository):
             if word != "":
                 rules = session.query(
                     Rule).where(Rule.name.ilike(f'%{word}%')).order_by(Rule.name).offset(offset).limit(page_size).all()
+                total = session.query(
+                    Rule.id).where(Rule.name.ilike(f'%{word}%')).all()
             else:
-                rules = session.query(Rule).order_by(Rule.name).offset(
-                    offset).limit(page_size).all()
-            total = session.query(
-                Rule.id).where(Rule.name.ilike(f'%{word}%')).all()
+                rules = session.query(
+                    Rule).order_by(Rule.name).offset(offset).limit(page_size).all()
+                total = session.query(Rule.id).all()
             return rules, Pagination(page_no, page_size, len(total))

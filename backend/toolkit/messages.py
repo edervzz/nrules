@@ -145,7 +145,27 @@ class Codes:
     en_messages[RU_READ_001] = "Rule ID or Rule Name must be provided."
     es_messages[RU_READ_001] = "Id Regla o Nombre Regla es obligatorio."
 
-    # Save Rule's Conditions
+    # Save Rule's Parameters
+    COND_SAVE_015 = "COND-SAVE-015"
+    en_messages[COND_SAVE_015] = "Total of Parameters must be equal to total of Conditions."
+    es_messages[COND_SAVE_015] = "El total de Parámetros debe ser igual al total de Condiciones."
+
+    COND_SAVE_014 = "COND-SAVE-014"
+    en_messages[COND_SAVE_014] = "Nothing to update."
+    es_messages[COND_SAVE_014] = "Nada que actualizar."
+
+    COND_SAVE_013 = "COND-SAVE-013"
+    en_messages[COND_SAVE_013] = "All parameters to update must be exists."
+    es_messages[COND_SAVE_013] = "Todos los parametros para actualización, debe existir."
+
+    COND_SAVE_012 = "COND-SAVE-012"
+    en_messages[COND_SAVE_012] = "Any new parameter must not be exists."
+    es_messages[COND_SAVE_012] = "Ningún nuevo parametro debe existir."
+
+    COND_SAVE_011 = "COND-SAVE-011"
+    en_messages[COND_SAVE_011] = "At least one Parameter must have been created during Rule creation."
+    es_messages[COND_SAVE_011] = "Al menos un Parámetro debío crearse durante la creación de la Regla."
+
     COND_SAVE_010 = "COND-SAVE-010"
     en_messages[COND_SAVE_010] = "Condition '{}' must be consistent between parameter and condition."
     es_messages[COND_SAVE_010] = "Condition '{}' debe ser consistente entre el parámetro y condición."
@@ -159,32 +179,32 @@ class Codes:
     es_messages[COND_SAVE_008] = "Regla no encontrada."
 
     COND_SAVE_007 = "COND-SAVE-007"
-    en_messages[COND_SAVE_007] = "Rule ID or Rule Name must be provided."
-    es_messages[COND_SAVE_007] = "Id Regla o Nombre Regla es obligatorio."
+    en_messages[COND_SAVE_007] = "Rule's ID or Name are mandatory."
+    es_messages[COND_SAVE_007] = "Id o nombre de Regla es obligatorio."
 
     COND_SAVE_006 = "COND-SAVE-006"
-    en_messages[COND_SAVE_006] = "For type of DATE, operator must be: ['=', '<>', '>', '<', '>=', '<=', 'BT', 'NB']"
-    es_messages[COND_SAVE_006] = "Para tipos DATE, operador debe ser: ['=', '<>', '>', '<', '>=', '<=', 'BT', 'NB']"
+    en_messages[COND_SAVE_006] = "At least one Case must have been created during Rule creation."
+    es_messages[COND_SAVE_006] = "Al menos un Caso debío crearse durante la creación de la Regla."
 
     COND_SAVE_005 = "COND-SAVE-005"
-    en_messages[COND_SAVE_005] = "For type of NUMERIC, operator must be: ['=', '<>', '>', '<', '>=', '<=', 'IN', 'NI', 'BT', 'NB']"
-    es_messages[COND_SAVE_005] = "Para tipos NUMERIC, operador debe ser: ['=', '<>', '>', '<', '>=', '<=', 'IN', 'NI', 'BT', 'NB']"
+    en_messages[COND_SAVE_005] = "All Parameters must be unique."
+    es_messages[COND_SAVE_005] = "Todos los Parametros deben ser únicos."
 
     COND_SAVE_004 = "COND-SAVE-004"
-    en_messages[COND_SAVE_004] = "For type of STRING, operator must be: ['=', '<>', 'IN', 'NI']"
-    es_messages[COND_SAVE_004] = "Para tipos STRING, operador debe ser: ['=', '<>', 'IN', 'NI']"
+    en_messages[COND_SAVE_004] = "Type JSON is not available for Conditions."
+    es_messages[COND_SAVE_004] = "El tipo 'JSON' no esta disponible para Conditiones."
 
     COND_SAVE_003 = "COND-SAVE-003"
-    en_messages[COND_SAVE_003] = "Operator must be: ['=', '<>', '>', '<', '>=', '<=', 'IN', 'NI', 'BT', 'NB']"
-    es_messages[COND_SAVE_003] = "Operador debe ser: ['=', '<>', '>', '<', '>=', '<=', 'IN', 'NI', 'BT', 'NB']"
+    en_messages[COND_SAVE_003] = "Use for field must be 'CONDITION' or 'OUTPUT'"
+    es_messages[COND_SAVE_003] = "Campo 'Uso' debe ser 'CONDITION' or 'OUTPUT'"
 
     COND_SAVE_002 = "COND-SAVE-002"
-    en_messages[COND_SAVE_002] = "The type of Condition must be: ['STRING', 'NUMERIC', 'DATE']"
-    es_messages[COND_SAVE_002] = "El tipo de la condición debe ser: ['STRING', 'NUMERIC', 'DATE']"
+    en_messages[COND_SAVE_002] = "Type of Condition must be 'STRING' or 'NUMERIC' or 'DATE' or 'JSON'"
+    es_messages[COND_SAVE_002] = "El tipo del Condición debe ser 'STRING' o 'NUMERIC' o 'DATE' o 'JSON'"
 
     COND_SAVE_001 = "COND-SAVE-001"
-    en_messages[COND_SAVE_001] = "All variables are mandatory"
-    es_messages[COND_SAVE_001] = "Todas las variables son obligatorias."
+    en_messages[COND_SAVE_001] = "'Variable' field are mandatory"
+    es_messages[COND_SAVE_001] = "Campo 'variable' es obligatorio."
 
     # Update Rule
     RU_UPD_011 = "RU-UPD-011"
@@ -268,6 +288,19 @@ class Codes:
     RULE_001 = "RULE-001"
     en_messages[RULE_001] = "Rule Name is mandatory."
     es_messages[RULE_001] = "Nombre de Regla es obligatorio."
+
+    # Condition
+    COND_003 = "COND-003"
+    en_messages[COND_003] = "Type of Condition must be 'STRING' or 'NUMERIC' or 'DATE'"
+    es_messages[COND_003] = "El tipo del Condición debe ser 'STRING' o 'NUMERIC' o 'DATE'"
+
+    COND_002 = "COND-002"
+    en_messages[COND_002] = "Parameter's Operator is mandatory."
+    es_messages[COND_002] = "El Operador del parámetro es obligatorio."
+
+    COND_001 = "COND-001"
+    en_messages[COND_001] = "Variable name is mandatory."
+    es_messages[COND_001] = "Nombre de Variable es obligatorio."
 
     # Create Rule
     RU_CREA_013 = "RU-CREA-013"

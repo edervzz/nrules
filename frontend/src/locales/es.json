@@ -17,6 +17,9 @@
     "add_output": "Agregar Salida",
     "name": "Nombre",
     "type": "Tipo",
+    "tags": "Etiquetas",
+    "key": "Llave",
+    "value": "Valor",
 
     "button_output_default": "Salida por defecto",
     "button_output": "Salida",
@@ -76,6 +79,8 @@
     "common_select_operator": "Seleccione Operador",
     "common_sending": "Enviando",  
     "common_of": "de",  
+
+    "editor": "Editor",  
 
     "equal": "Igual",
     "not_equal": "No Igual",

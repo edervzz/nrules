@@ -20,6 +20,9 @@ export default class Messages{
     static get ADDOUTPUT():string { return i18n.t("common:add_output"); }
     static get NAME():string { return i18n.t("common:name"); }
     static get TYPE():string { return i18n.t("common:type"); }
+    static get TAGS():string { return i18n.t("common:tags"); }
+    static get KEY():string { return i18n.t("common:key"); }
+    static get VALUE():string { return i18n.t("common:value"); }
 
     static get BUTTON_OUTPUT_DEFAULT():string { return i18n.t("common:button_output_default"); }
     static get BUTTON_OUTPUT():string { return i18n.t("common:button_output"); }
@@ -79,6 +82,9 @@ export default class Messages{
     static get COMMON_SELECT_OPERATOR():string { return i18n.t("common:common_select_operator"); }
     static get COMMON_SENDING():string { return i18n.t("common:common_sending"); }
     static get COMMON_OF():string { return i18n.t("common:common_of"); }
+
+    static get EDITOR():string { return i18n.t("common:editor"); }
+
 
 
     // operators descriptions

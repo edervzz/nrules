@@ -26,6 +26,12 @@ class ConditionGroupAdapter(ConditionGroupRepository):
 
     def read(self, _id) -> ConditionGroup:
         with Session(self.engine) as session:
-            condition = session.query(ConditionGroup).where(
+            conditiongroup = session.query(ConditionGroup).where(
                 ConditionGroup.id == _id).one_or_none()
-            return condition
+            return conditiongroup
+
+    def read_by_parent_id(self, parent_id) -> List[ConditionGroup]:
+        with Session(self.engine) as session:
+            conditiongroups = session.query(ConditionGroup).where(
+                ConditionGroup.rule_id == parent_id).all()
+            return conditiongroups

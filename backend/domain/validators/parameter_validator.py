@@ -1,6 +1,6 @@
 """_summary_"""
 from domain.entities import Parameter
-from toolkit import Localizer, Codes, Validator
+from toolkit import Localizer, Codes, Validator, Constants
 
 
 class ParameterValidator(Validator):
@@ -19,12 +19,12 @@ class ParameterValidator(Validator):
         if request.key == "" or request.usefor == "" or request.typeof == "":
             raise self.as_error(self._localizer.get(Codes.PARAM_001))
 
-        if request.usefor == "CONDITION":
-            if not request.typeof in ["STRING", "NUMERIC", "DATE"]:
+        if request.usefor == Constants.CONDITION:
+            if not request.typeof in [Constants.STRING, Constants.NUMERIC, Constants.DATE]:
                 raise self.as_error(self._localizer.get(
                     Codes.PARAM_003, request.key))
-        elif request.usefor == "OUTPUT":
-            if not request.typeof in ["JSON", "STRING", "NUMERIC", "DATE"]:
+        elif request.usefor == Constants.OUTPUT:
+            if not request.typeof in [Constants.JSON, Constants.STRING, Constants.NUMERIC, Constants.DATE]:
                 raise self.as_error(self._localizer.get(
                     Codes.PARAM_004, request.key))
         else:

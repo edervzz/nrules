@@ -35,6 +35,7 @@ def read_rules_endpoint(tid=None, rule_id=None):
         result.rule.rule_type,
         result.rule.strategy,
         result.rule.version,
+        result.rule.is_active,
         result.parameters,
         result.cases,
         result.conditions,

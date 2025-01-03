@@ -12,14 +12,18 @@ type Props = {
 const CONDITION = "CONDITION";
 const OUTPUT = "OUTPUT";
 
+const text = (showAdd: String) => {
+    return showAdd == CONDITION ? Messages.ADDCONDITION : Messages.ADDOUTPUT;
+};
+
 function EditorToolbarButtons({ onAddParameter, onAddRow }: Props) {
     const [showAdd, setShowAdd] = useState("");
 
     return (
         <>
-            {showAdd == CONDITION && (
+            {(showAdd == CONDITION || showAdd == OUTPUT) && (
                 <AddParameter
-                    title={Messages.ADDCONDITION}
+                    title={text(showAdd)}
                     onClose={() => {
                         setShowAdd("");
                     }}
@@ -30,26 +34,7 @@ function EditorToolbarButtons({ onAddParameter, onAddRow }: Props) {
                         onAddParameter({
                             key: name!,
                             typeof: type!,
-                            usefor: CONDITION,
-                        });
-                        setShowAdd("");
-                    }}
-                ></AddParameter>
-            )}
-            {showAdd == OUTPUT && (
-                <AddParameter
-                    title={Messages.ADDOUTPUT}
-                    onClose={() => {
-                        setShowAdd("");
-                    }}
-                    onAddParameter={(
-                        name: string | undefined,
-                        type: string | undefined
-                    ) => {
-                        onAddParameter({
-                            key: name!,
-                            typeof: type!,
-                            usefor: OUTPUT,
+                            usefor: showAdd,
                         });
                         setShowAdd("");
                     }}

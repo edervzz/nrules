@@ -6,9 +6,13 @@ from .base import Base
 
 
 class KV(Base, TenantSpecific, Auditable):
-    """ Key-Value Item entity """
+    """ Key-Value entity. 
+
+        Group many KV Items.
+    """
 
     __tablename__ = "kvs"
 
-    id: Mapped[str] = mapped_column(
-        primary_key=True, nullable=False)
+    id: Mapped[str] = mapped_column(primary_key=True, nullable=False)
+
+    rule_id: Mapped[str] = mapped_column(nullable=False)

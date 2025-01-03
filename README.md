@@ -60,6 +60,16 @@ ELSE
 -   Create Workflow
 -   Save Rules
 
+## Matrix
+
+Case( Condition Group ID, KVS ID )
+
+| Case | Condition 1 | Condition 2 | Output |
+| ---- | ----------- | ----------- | -----: |
+| AH34 | X = 1       | Y = 0       |   1600 |
+| BD21 | X = 2       | Y = 0       |     12 |
+| Cf78 | x = 3       | Y = 0       |      1 |
+
 ## New Features
 
 -   Dockerized

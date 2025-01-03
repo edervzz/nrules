@@ -1,7 +1,6 @@
 """_summary_"""
 from application.messages import UpdateRuleRequest
-from toolkit import Validator
-from toolkit.localization import Localizer, Codes
+from toolkit import Validator, Localizer, Codes, Constants
 
 
 class UpdateRuleValidator(Validator):
@@ -17,5 +16,5 @@ class UpdateRuleValidator(Validator):
         if request.rule.id == 0 and request.rule.name == "":
             raise self.as_error(self._localizer.get(Codes.RU_UPD_008))
 
-        if request.rule.strategy not in ["EARLY", "BASE", "ALL"]:
+        if request.rule.strategy not in [Constants.EARLY, Constants.BASE, Constants.ALL]:
             self.add_failure(self._localizer.get(Codes.RU_UPD_011))

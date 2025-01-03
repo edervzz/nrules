@@ -14,6 +14,7 @@ from .condition_group import ConditionGroup
 from .rule import Rule
 from .rule_result import RunRuleResult
 from .parameters import Parameter
+from .tags import Tag
 
 
 from .pagination import Pagination

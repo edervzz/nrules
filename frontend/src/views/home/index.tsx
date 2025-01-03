@@ -8,7 +8,7 @@ import { Col, Container, Row, Badge } from "react-bootstrap";
 export default function HomePage() {
     return (
         <MainContainer>
-            <Menubar></Menubar>
+            <Menubar title="NRule"></Menubar>
             <Container>
                 <Row></Row>
                 <Row>

@@ -5,7 +5,7 @@ from .abstractions import ReaderByParentID, ReaderPagination
 from .abstractions import ReaderSingle, ReaderSingleByExternalID
 
 
-class KVSRepository(ABC, Creator, ReaderSingle, ReaderSingleByExternalID, ReaderByParentID):
+class KVSRepository(ABC, Creator, ReaderSingle, ReaderByParentID):
     """_summary_"""
 
     def __init__(self, engine):
@@ -94,7 +94,7 @@ class CoreRepository:
 
     # "mysql+pymysql://root:my-secret-pw@localhost/nrule-core", echo=True)
     def __init__(self):
-        self.kvs: KVSRepository
+        self.kv_storage: KVSRepository
         self.kvitem: KVItemRepository
         self.rule: RuleRepository
         self.condition: ConditionRepository

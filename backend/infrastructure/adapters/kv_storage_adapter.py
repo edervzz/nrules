@@ -7,7 +7,7 @@ from domain.ports import KVSRepository
 
 
 class KVSAdapter(KVSRepository):
-    """ KVS Adapter """
+    """ KV Storage Adapter """
 
     def set_session(self, session: Session):
         self.session = session
@@ -19,7 +19,8 @@ class KVSAdapter(KVSRepository):
 
     def read(self, _id) -> KV:
         with Session(self.engine) as session:
-            rule = session.query(KV).where(KV.id == _id).one_or_none()
+            rule = session.query(KV).where(
+                KV.id == _id).one_or_none()
             return rule
 
     def read_by_parent_id(self, parent_id) -> List[KV]:

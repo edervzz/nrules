@@ -17,8 +17,6 @@ class CreateRuleValidator(Validator):
         """ Validate request format """
         rule_validator = RuleValidator(self._localizer)
         rule_validator.validate_and_throw(request.rule)
-        # kvs for rule
-        request.default_kvs.id = str(uuid.uuid4())
         # rule
         request.rule.id = str(uuid.uuid4())
         request.rule.default_kvs_id = request.default_kvs.id
@@ -43,6 +41,9 @@ class CreateRuleValidator(Validator):
         unique = set()
         for e_param in request.parameters:
             e_param.rule_id = request.rule.id
+            e_param.is_case_sensitive = True
+            e_param.is_visible = True
+            e_param.is_deleted = False
             parameter_validator = ParameterValidator(self._localizer)
             parameter_validator.validate_and_throw(e_param)
             unique.add(e_param.key)
@@ -52,7 +53,6 @@ class CreateRuleValidator(Validator):
                 onecond.condition_group_id = request.condition_group.id
                 onecond.operator = "EQ"
                 onecond.value = ""
-                onecond.is_case_sensitive = False
                 onecond.typeof = e_param.typeof
                 onecond.is_active = True
                 onecond.is_archived = False

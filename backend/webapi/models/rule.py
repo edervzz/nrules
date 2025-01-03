@@ -1,6 +1,10 @@
 """ _module_ """
 from typing import List
 from domain.entities import Parameter, Case, Condition, KVItem
+from .parameter import ParameterModel
+from .case import CaseModel
+from .condition import ConditionModel
+from .kv_item import KVItemModel
 
 
 class RuleModel:

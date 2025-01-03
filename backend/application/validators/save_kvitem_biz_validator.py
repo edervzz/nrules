@@ -16,7 +16,7 @@ class SaveKVItemBizValidator(Validator):
 
     def __validate__(self, request: SaveKVItemRequest):
 
-        kvs = self.repository.kvs.read(request.kv_id)
+        kvs = self.repository.kv_storage.read(request.kv_id)
 
         keys_to_insert = []
 

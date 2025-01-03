@@ -39,7 +39,7 @@ class ReadRuleBizValidator(Validator):
                             case.condition_group_id)
                         request.conditions = request.conditions + conditions
                         kvitems = self.__repository.kvitem.read_by_parent_id(
-                            case.kvs_id)
+                            case.kv_storage_id)
                         request.kvs_items = request.kvs_items + kvitems
 
         request.rule = rule

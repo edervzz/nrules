@@ -9,6 +9,7 @@ class CreateRuleRequest:
     def __init__(
             self,
             rule: Rule,
+            use_default: bool,
             parameters: List[Parameter],
             tags: List[Tag]
     ):
@@ -16,13 +17,17 @@ class CreateRuleRequest:
 
         self.tags = tags
 
+        self.tags = tags
+
         self.default_kvs = KV()
 
         self.rule = rule
 
+        self.use_default = use_default
+
         self.condition_group = ConditionGroup()
 
-        self.kvs = KV()
+        self.kvs = KVStorage()
 
         self.default_case = Case()
 

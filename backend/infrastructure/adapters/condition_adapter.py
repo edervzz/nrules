@@ -1,7 +1,7 @@
 """_summary_"""
 from typing import List
 from sqlalchemy.orm import Session
-from domain.entities import Condition
+from domain.entities import Condition, ConditionKey
 from domain.ports import ConditionRepository
 
 
@@ -17,17 +17,22 @@ class ConditionAdapter(ConditionRepository):
             self.session.flush()
 
     def update(self,  entity: Condition):
-        expression = self.session.query(Condition).where(
-            Condition.tenant_id == entity.tenant_id,
-            Condition.variable == entity.variable).one_or_none()
+        condition = self.session.query(Condition).where(
+            Condition.variable == entity.variable,
+            Condition.condition_group_id == entity.condition_group_id
+        ).one_or_none()
 
-        expression.expression = entity.expression
-        expression.version = entity.version
+        condition.value = entity.value
+        condition.typeof = entity.typeof
+        condition.is_case_sensitive = entity.is_case_sensitive
+        condition.is_visible = entity.is_visible
+        condition.is_deleted = entity.is_deleted
 
-    def read(self, _id) -> Condition:
+    def read(self, _id: ConditionKey) -> Condition:
         with Session(self.engine) as session:
             condition = session.query(Condition).where(
-                Condition.variable == _id).one_or_none()
+                Condition.variable == _id.variable,
+                Condition.condition_group_id == _id.condition_group_id).one_or_none()
             return condition
 
     def read_by_parent_id(self, parent_id: str) -> List[Condition]:

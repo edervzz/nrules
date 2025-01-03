@@ -1,7 +1,7 @@
 """_summary_
     """
 from application.messages import CreateKVRequest
-from domain.entities import KV
+from domain.entities import KVStorage
 from domain.ports import CoreRepository
 from toolkit import Validator, Localizer, Codes
 
@@ -15,9 +15,9 @@ class CreateKVBizValidator(Validator):
         self.repository = repository
 
     def __validate__(self, request: CreateKVRequest):
-        kv = self.repository.kvs.read_by_external_id(request.kv.name)
+        kv = self.repository.kv_storage.read_by_external_id(request.kv.name)
 
         if kv is not None:
             raise self.as_duplicated(self.localizer.get(Codes.KV_CREA_003))
 
-        request.kv.id = self.repository.next_number(KV)
+        request.kv.id = self.repository.next_number(KVStorage)

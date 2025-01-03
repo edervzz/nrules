@@ -22,7 +22,7 @@ def core_tables(engine: Engine) -> str:
 
     # Key-Value Storage ----------------------------------------------
     kvs = Table(
-        "kvs",
+        "kv_storage",
         metadata_obj,
         Column(
             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
@@ -165,6 +165,8 @@ def core_tables(engine: Engine) -> str:
         Column(
             "value", String(50), nullable=False, comment="Value"),
         Column(
+            "typeof", String(10), CheckConstraint("typeof = 'STRING' OR typeof = 'NUMERIC' OR typeof = 'DATE' OR typeof = 'TIME' OR typeof = 'DATETIME'", name="conditions_chk_usefor"), nullable=False, comment="Type of Value"),
+        Column(
             "is_case_sensitive", Boolean, nullable=False, comment="Case-Sensitive"),
         Column(
             "typeof", String(10), CheckConstraint("typeof = 'STRING' OR typeof = 'NUMERIC' OR typeof = 'DATE' OR typeof = 'TIME' OR typeof = 'DATETIME'", name="conditions_chk_usefor"), nullable=False, comment="Type of Value"),
@@ -190,6 +192,12 @@ def core_tables(engine: Engine) -> str:
             "usefor", String(10), CheckConstraint("usefor = 'CONDITION' OR usefor = 'OUTPUT'", name="parameters_chk_usefor"), primary_key=True, comment="Use for: CONDITION, OUTPUT"),
         Column(
             "typeof", String(10), CheckConstraint("typeof = 'JSON' OR typeof = 'STRING' OR typeof = 'NUMERIC' OR typeof = 'DATE' OR typeof = 'TIME' OR typeof = 'DATETIME'", name="parameters_chk_typeof"), nullable=False, comment="Type of Value: String, Numeric, Date"),
+        Column(
+            "is_case_sensitive", Boolean, nullable=False, comment="Case-Sensitive"),
+        Column(
+            "is_visible", Boolean, nullable=False, comment="Visible Parameter"),
+        Column(
+            "is_deleted", Boolean, nullable=False, comment="Deleted Item"),
         comment="Control which parameters serve as input and output"
     )
     set_auditable(parameters)

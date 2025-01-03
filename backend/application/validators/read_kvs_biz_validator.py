@@ -13,7 +13,7 @@ class ReadKVSBizValidator(Validator):
         self.local = localizer
 
     def __validate__(self, request: ReadKVSRequest):
-        request.kv = self.repo.kvs.read(request.kvid)
+        request.kv = self.repo.kv_storage.read(request.kvid)
         if request.kv is None:
             raise self.as_error(self.local.get(Codes.KV_READ_002)
                                 )

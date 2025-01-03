@@ -1,6 +1,6 @@
 """ message """
 from typing import List
-from domain.entities import KV, RunRuleResult
+from domain.entities import KVStorage, RunRuleResult
 
 
 class RunRuleRequest:
@@ -15,7 +15,7 @@ class RunRuleRequest:
         self.trace = []
 
         self.ok = False
-        self.kvs: KV
+        self.kvs: KVStorage
 
 
 class RunRuleResponse:

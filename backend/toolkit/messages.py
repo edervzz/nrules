@@ -206,6 +206,31 @@ class Codes:
     en_messages[COND_SAVE_001] = "'Variable' field are mandatory"
     es_messages[COND_SAVE_001] = "Campo 'variable' es obligatorio."
 
+    # Update Parameter
+    PARAM_UPD_006 = "PARAM-UPD-006"
+    en_messages[PARAM_UPD_006] = "Parameter '{}' cannot determine its use for."
+    es_messages[PARAM_UPD_006] = "Parámetro '{}' no puede determinarse su uso.."
+
+    PARAM_UPD_005 = "PARAM-UPD-005"
+    en_messages[PARAM_UPD_005] = "Parameter '{}' not found."
+    es_messages[PARAM_UPD_005] = "Parámetro '{}' no encontrado."
+
+    PARAM_UPD_004 = "PARAM-UPD-004"
+    en_messages[PARAM_UPD_004] = "Parameters must not be in different lists."
+    es_messages[PARAM_UPD_004] = "Ningún parámetro puede estar en diferentes listas."
+
+    PARAM_UPD_003 = "PARAM-UPD-003"
+    en_messages[PARAM_UPD_003] = "All Parameters must not be duplicated."
+    es_messages[PARAM_UPD_003] = "Ningún parámetero puede estar duplicado."
+
+    PARAM_UPD_002 = "PARAM-UPD-002"
+    en_messages[PARAM_UPD_002] = "Rule ID or Rule Name must be provided."
+    es_messages[PARAM_UPD_002] = "Id Regla o Nombre Regla es obligatorio."
+
+    PARAM_UPD_001 = "PARAM-UPD-001"
+    en_messages[PARAM_UPD_001] = "Exists more than one parameter with same key '{}'."
+    es_messages[PARAM_UPD_001] = "Existe mas de una parámetro con la misma key '{}'."
+
     # Update Rule
     RU_UPD_011 = "RU-UPD-011"
     en_messages[RU_UPD_011] = "Strategy must be EARLY / BASE / ALL."
@@ -250,6 +275,11 @@ class Codes:
     RU_UPD_001 = "RU-UPD-001"
     en_messages[RU_UPD_001] = "Rule Name is mandatory."
     es_messages[RU_UPD_001] = "Nombre de Regla es obligatorio."
+
+    # Condition
+    COND_001 = "COND-001"
+    en_messages[COND_001] = "Condition's Value cannot be converted to '{}'."
+    es_messages[COND_001] = "El Valor de la Condición no puede ser convertido a '{}'"
 
     # Parameter
     PARAM_004 = "PARAM-004"

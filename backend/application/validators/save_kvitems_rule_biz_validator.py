@@ -1,7 +1,7 @@
 """_summary_
     """
 from toolkit import Localizer, Validator, Codes
-from application.messages import SaveKVItemRequest
+from application.messages import SaveKVItemsRuleRequest
 from domain.entities import KVItem, KVItemKey
 from domain.ports import CoreRepository
 
@@ -14,7 +14,7 @@ class SaveKVItemBizValidator(Validator):
         self.localizer = localizer
         self.repository = repository
 
-    def __validate__(self, request: SaveKVItemRequest):
+    def __validate__(self, request: SaveKVItemsRuleRequest):
 
         kvs = self.repository.kv_storage.read(request.kv_id)
 
@@ -32,7 +32,7 @@ class SaveKVItemBizValidator(Validator):
                 dbitem.calculation = kvit.calculation
                 dbitem.value = kvit.value
                 dbitem.typeof = kvit.typeof
-                request.kvitems_to_update.append(dbitem)
+                request.insert_kvitems.append(dbitem)
             else:
                 kvit.id = self.repository.next_number(KVItem)
                 request.kvitems_to_insert.append(kvit)

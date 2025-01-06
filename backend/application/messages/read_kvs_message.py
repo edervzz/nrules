@@ -1,6 +1,6 @@
 """ message """
 from typing import List
-from domain.entities import KVStorage, KVItem
+from domain.entities import KV, KVItem
 
 
 class ReadKVSRequest:
@@ -8,13 +8,13 @@ class ReadKVSRequest:
 
     def __init__(self, kvid: int):
         self.kvid = kvid
-        self.kv = KVStorage()
+        self.kv = KV()
         self.kvitems = KVItem()
 
 
 class ReadKVSResponse:
     """ Read KVS response """
 
-    def __init__(self, kv: KVStorage, kvitems: List[KVItem]):
+    def __init__(self, kv: KV, kvitems: List[KVItem]):
         self.kv = kv
         self.kvitems = kvitems

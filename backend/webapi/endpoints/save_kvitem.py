@@ -3,8 +3,8 @@ import json
 from flask import Blueprint, request, Response, current_app
 from webapi.models import SaveKVItem
 from domain.entities import KVItem
-from application.messages import SaveKVItemRequest
-from application.commands import SaveKVItemHandler
+from application.messages import SaveKVItemsRuleRequest
+from application.commands import SaveKVItemsHandler
 from toolkit import Identification
 
 
@@ -29,14 +29,14 @@ def wrapper(tid: int = None, kid: int = None):
         item.typeof = newitem.typeof
         kvitems.append(item)
 
-    command = SaveKVItemRequest(
+    command = SaveKVItemsRuleRequest(
         tid,
         int(kid),
         item.key,
         item.value,
         item.typeof, kvitems)
 
-    result = SaveKVItemHandler(
+    result = SaveKVItemsHandler(
         current_app.config[str(tid)],
         current_app.config["logger"],
         current_app.config["localizer"]

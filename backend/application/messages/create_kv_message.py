@@ -1,15 +1,13 @@
 """ Create Container messages
     """
-from domain.entities import KVStorage
+from domain.entities import KV
 
 
 class CreateKVRequest:
     """_summary_"""
 
     def __init__(self, name: str):
-        self.kv = KVStorage()
-        self.kv.name = name
-        self.kv.version = 1
+        self.kv = KV()
 
 
 class CreateKVResponse:

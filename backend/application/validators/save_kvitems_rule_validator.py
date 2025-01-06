@@ -1,7 +1,7 @@
 """_summary_
     """
 from toolkit import Localizer, Validator, Codes
-from application.messages import SaveKVItemRequest
+from application.messages import SaveKVItemsRuleRequest
 
 
 class SaveKVItemValidator(Validator):
@@ -11,7 +11,7 @@ class SaveKVItemValidator(Validator):
         super().__init__()
         self.localizer = localizer
 
-    def __validate__(self, request: SaveKVItemRequest):
+    def __validate__(self, request: SaveKVItemsRuleRequest):
 
         if len(request.kvitems) == 0:
             raise self.as_error(self.localizer.get(Codes.KVI_CREA_008))

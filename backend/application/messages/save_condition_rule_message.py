@@ -12,6 +12,7 @@ class SaveConditionsRuleRequest:
             name: str,
             insert_cond_parameters: List[Condition],
             update_cond_parameters: List[Condition]):
+
         self.id = _id
         self.name = name
         self.insert_cond_parameters: List[Condition] = insert_cond_parameters

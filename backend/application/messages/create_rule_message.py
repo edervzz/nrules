@@ -27,7 +27,7 @@ class CreateRuleRequest:
 
         self.condition_group = ConditionGroup()
 
-        self.kvs = KVStorage()
+        self.kvs = KV()
 
         self.default_case = Case()
 

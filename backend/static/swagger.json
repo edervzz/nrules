@@ -20,7 +20,13 @@
                         "$ref": "#/parameters/TenantID"
                     },
                     {
-                        "$ref": "#/parameters/NewRule"
+                        "name": "Rule Information",
+                        "in": "body",
+                        "description": "Rule information.",
+                        "required": false,
+                        "schema": {                            
+                            "$ref": "#/definitions/NewRule"
+                        }    
                     }
                 ],
                 "responses": {
@@ -84,9 +90,9 @@
                         "$ref": "#/parameters/RuleID"
                     },
                     {
-                        "name": "Rule Data",
+                        "name": "Rule information",
                         "in": "body",
-                        "description": "Rule definition.",
+                        "description": "Rule information.",
                         "required": false,
                         "schema": {
                             "$ref": "#/definitions/UpdateRule"
@@ -134,15 +140,16 @@
                 }
             }
         },
-        "/nr/api/v1/t/{tid}/rules/{rule_id}/parameters":{
+        "/nr/api/v1/t/{tid}/rules/{rule_id}/conditions":{
             "put": {
-                "summary": "Update rule's parameters",
+                "summary": "Update rule's conditions",
                 "tags": [
                     "Rules"
                 ],
                 "consumes": [
                     "application/json"
                 ],
+
                 "parameters": [
                     {
                         "$ref": "#/parameters/TenantID"
@@ -151,7 +158,13 @@
                         "$ref": "#/parameters/RuleID"
                     },
                     {
-                        "$ref": "#/parameters/UpdateRuleParameters"
+                        "name": "Conditions of Rule",
+                        "in": "body",
+                        "description": "Conditions of Rule.",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/SaveConditionsRule"
+                        }  
                     }
                 ],
                 "responses": {
@@ -282,33 +295,6 @@
             "type": "string",
             "required": true
         },
-        "NewRule":{
-            "name": "Rule information",
-            "in": "body",
-            "description": "Rule information.",
-            "required": false,
-            "schema": {                            
-                "$ref": "#/definitions/NewRule"
-            }            
-        },
-        "UpdateRule":{
-            "name": "Rule information",
-            "in": "body",
-            "description": "Rule information.",
-            "required": false,
-            "schema": {
-                "$ref": "#/definitions/UpdateRule"
-            }
-        },
-        "UpdateRuleParameters":{
-            "name": "Rule Data",
-            "in": "body",
-            "description": "Rule definition.",
-            "required": false,
-            "schema": {
-                "$ref": "#/definitions/UpdateRuleParameters"
-            }            
-        },
         "PageNo":{
             "name": "pageNo",
             "description": "Number of Page.",
@@ -405,54 +391,67 @@
                         "BASE",
                         "EARLY"
                     ],
-                    "example": "EARLY"
+                    "default": "BASE"
                 }
             }
         },
-        "UpdateRuleParameters": {
+        "SaveConditionsRule":{
             "type": "object",
             "properties": {
-                "parameters":{
-                    "type": "array",
+                "insert_conditions":{
+                    "type":"array",
                     "items": {
-                    "type": "object",
-                    "properties": {
-                        "key": {
-                                "type": "string",
-                                "minLength": 5,
-                                "maxLength": 50,
-                                "required": true,
-                                "example": "quotationAmount"
-                        },
-                        "typeof": {
-                            "type": "string",
-                            "required": true,
-                            "enum": ["JSON", "STRING", "NUMERIC", "DATE", "TIME", "DATETIME"],
-                            "example": "STRING"
-                            },   
-                            "usefor": {
-                                "type": "string",
-                                "required": true,
-                                "enum": ["CONDITION", "OUTPUT"],
-                                "example": "CONDITION"
-
-                            },                    
-                            "is_case_sensitive": {
-                                "type": "boolean",
-                                "default": true
-                            },
-                            "is_visible": {
-                                "type": "boolean",
-                                "default": true
-                            },
-                            "is_deleted": {
-                                "type": "boolean",
-                                "default": false
-                            }
-                        }
-                    }
+                        "$ref": "#/definitions/ConditionsRule"
+                    },
+                    "required": "false"
+                },
+                "update_conditions":{
+                    "type":"array",
+                    "items": {
+                        "$ref": "#/definitions/ConditionsRule"
+                    },
+                    "required": "false"
                 }
-            }            
+            }
+        },
+        "ConditionsRule": {
+            "type": "object",
+            "properties": {
+                "variable": {
+                    "type": "string",
+                    "minLength": 5,
+                    "maxLength": 50,
+                    "required": true,
+                    "example": "quotationAmount"
+                },
+                "operator": {
+                    "type": "string",
+                    "required": true,
+                    "enum": ["EQ", "NE", "GT", "GE", "LT", "LE", "IN", "NI", "BT"],
+                    "default": "EQ"
+                },
+                "value": {
+                    "type": "string",
+                    "minLength": 5,
+                    "maxLength": 50,
+                    "required": true,
+                    "example": "1000.98"
+                },   
+                "typeof": {
+                    "type": "string",
+                    "required": true,
+                    "enum": ["STRING", "NUMERIC", "DATE", "TIME", "DATETIME"],
+                    "default": "STRING"
+                },  
+                "is_active": {
+                    "type": "boolean",
+                    "default": true
+                },
+                "is_archived": {
+                    "type": "boolean",
+                    "default": false
+                }
+            }    
         },
         "NewTenant": {
             "type": "object",

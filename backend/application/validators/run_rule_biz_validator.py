@@ -120,7 +120,7 @@ class RunRuleBizValidator(Validator):
 
                 if cit.kv_storage_id != 0:
                     rs = RunRuleResult(rule, None, [])
-                    rs.kv = self._repo.kv_storage.read(cit.kv_storage_id)
+                    rs.kv = self._repo.kvs.read(cit.kv_storage_id)
                     rs.kvitems = self._repo.kvitem.read_by_parent_id(
                         cit.kv_storage_id)
                     request.rule_results.append(rs)
@@ -131,7 +131,7 @@ class RunRuleBizValidator(Validator):
 
             if rule.default_kvs_id != 0:
                 rs = RunRuleResult(rule, None, [])
-                rs.kv = self._repo.kv_storage.read(rule.default_kvs_id)
+                rs.kv = self._repo.kvs.read(rule.default_kvs_id)
                 rs.kvitems = self._repo.kvitem.read_by_parent_id(
                     rule.default_kvs_id)
                 request.rule_results.append(rs)

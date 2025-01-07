@@ -26,10 +26,6 @@ class Codes:
     en_messages[KVI_CREA_010] = "Duplicated Keys are not allowed."
     es_messages[KVI_CREA_010] = "Keys duplicadas no están permitidas."
 
-    KVI_CREA_009 = "KVI-CREA-009"
-    en_messages[KVI_CREA_009] = "KV Item Calculation value must be 'ADD' or 'MOD'."
-    es_messages[KVI_CREA_009] = "El valor de cálculo del KV Item debe ser 'ADD' o  'MOD'."
-
     KVI_CREA_008 = "KVI-CREA-008"
     en_messages[KVI_CREA_008] = "List must not be empty."
     es_messages[KVI_CREA_008] = "La lista no debe estar vacía."
@@ -37,30 +33,6 @@ class Codes:
     KVI_CREA_007 = "KVI-CREA-007"
     en_messages[KVI_CREA_007] = "KV Parent ID not found."
     es_messages[KVI_CREA_007] = "KV padre no fue encontrado."
-
-    KVI_CREA_006 = "KVI-CREA-006"
-    en_messages[KVI_CREA_006] = "Type Of must not be greater than 50 characteres."
-    es_messages[KVI_CREA_006] = "Tipo debe tener un máximo de 50 caracteres."
-
-    KVI_CREA_005 = "KVI-CREA-005"
-    en_messages[KVI_CREA_005] = "Value must not be greater than 500 characteres."
-    es_messages[KVI_CREA_005] = "Valor debe tener un máximo de 500 caracteres."
-
-    KVI_CREA_004 = "KVI-CREA-004"
-    en_messages[KVI_CREA_004] = "Value must not be empty."
-    es_messages[KVI_CREA_004] = "Valor es obligatorio."
-
-    KVI_CREA_003 = "KVI-CREA-003"
-    en_messages[KVI_CREA_003] = "KV Parent ID must not be empty."
-    es_messages[KVI_CREA_003] = "ID padre es obligatorio."
-
-    KVI_CREA_002 = "KVI-CREA-002"
-    en_messages[KVI_CREA_002] = "KV Item Name must be between 5 and 50 characters."
-    es_messages[KVI_CREA_002] = "Nombre de KV Item debe ser de 5 a 50 caracteres."
-
-    KVI_CREA_001 = "KVI-CREA-001"
-    en_messages[KVI_CREA_001] = "Nombre de KV Item es obligatorio."
-    es_messages[KVI_CREA_001] = "KV Item Name must not be empty."
 
     KV_READ_003 = "KVI-READ-003"
     en_messages[KV_READ_003] = "KV Items not found."
@@ -85,6 +57,15 @@ class Codes:
     KV_CREA_001 = "KV-CREA-001"
     en_messages[KV_CREA_001] = "KVS Name is mandatory."
     es_messages[KV_CREA_001] = "Nombre de KVS es obligatorio."
+
+    # Save KV Item
+    KVI_SAVE_002 = "KVI-SAVE-002"
+    en_messages[KVI_SAVE_002] = "Total of Parameters must be equal to total of KV Items."
+    es_messages[KVI_SAVE_002] = "El total de Parámetros debe ser igual al total de KV Items."
+
+    KVI_SAVE_001 = "KVI-SAVE-001"
+    en_messages[KVI_SAVE_001] = "All Parameters must be unique."
+    es_messages[KVI_SAVE_001] = "Todos los Parámetros deber ser únicos."
 
     # Create Container
     CO_CREA_004 = "CO-CREA-004"
@@ -276,12 +257,49 @@ class Codes:
     en_messages[RU_UPD_001] = "Rule Name is mandatory."
     es_messages[RU_UPD_001] = "Nombre de Regla es obligatorio."
 
+    # KV Item
+    KVI_005 = "KVI-005"
+    en_messages[KVI_005] = "Type Of must not be greater than 50 characteres."
+    es_messages[KVI_005] = "Tipo debe tener un máximo de 50 caracteres."
+
+    KVI_004 = "KVI-004"
+    en_messages[KVI_004] = "Value must be between 1 and 500 characteres."
+    es_messages[KVI_004] = "Valor debe tener una longitud entre 1 y 500 caracteres."
+
+    KVI_003 = "KVI-003"
+    en_messages[KVI_003] = "KV Item Name must be between 5 and 50 characters."
+    es_messages[KVI_003] = "Nombre de KV Item debe ser de 5 a 50 caracteres."
+
+    KVI_002 = "KVI-002"
+    en_messages[KVI_002] = "Nombre de KV Item es obligatorio."
+    es_messages[KVI_002] = "KV Item Name must not be empty."
+
+    KVI_001 = "KVI-001"
+    en_messages[KVI_001] = "KV Item's Value '{}' cannot be converted to '{}'."
+    es_messages[KVI_001] = "El Valor del KV Item '{}' no puede ser convertido a '{}'"
+
     # Condition
+    COND_004 = "COND-004"
+    en_messages[COND_004] = "Condition's Value '{}' cannot be converted to '{}'."
+    es_messages[COND_004] = "El Valor de la Condición '{}' no puede ser convertido a '{}'"
+
+    COND_003 = "COND-003"
+    en_messages[COND_003] = "Type of Condition must be 'STRING' or 'NUMERIC' or 'DATE'"
+    es_messages[COND_003] = "El tipo del Condición debe ser 'STRING' o 'NUMERIC' o 'DATE'"
+
+    COND_002 = "COND-002"
+    en_messages[COND_002] = "Parameter's Operator is mandatory."
+    es_messages[COND_002] = "El Operador del parámetro es obligatorio."
+
     COND_001 = "COND-001"
-    en_messages[COND_001] = "Condition's Value cannot be converted to '{}'."
-    es_messages[COND_001] = "El Valor de la Condición no puede ser convertido a '{}'"
+    en_messages[COND_001] = "Variable name is mandatory."
+    es_messages[COND_001] = "Nombre de Variable es obligatorio."
 
     # Parameter
+    PARAM_005 = "PARAM-005"
+    en_messages[PARAM_005] = "Parameter length must be between 5 and 50 characteres."
+    es_messages[PARAM_005] = "La longitud de los Parámetros debe ser entre 5 y 50 caracteres."
+
     PARAM_004 = "PARAM-004"
     en_messages[PARAM_004] = "Output Parameter '{}' typeof must be: [JSON, STRING, NUMERIC, DATE]."
     es_messages[PARAM_004] = "Parámetro de Salida '{}' typeof debe ser: [JSON, STRING, NUMERIC, DATE]."
@@ -318,19 +336,6 @@ class Codes:
     RULE_001 = "RULE-001"
     en_messages[RULE_001] = "Rule Name is mandatory."
     es_messages[RULE_001] = "Nombre de Regla es obligatorio."
-
-    # Condition
-    COND_003 = "COND-003"
-    en_messages[COND_003] = "Type of Condition must be 'STRING' or 'NUMERIC' or 'DATE'"
-    es_messages[COND_003] = "El tipo del Condición debe ser 'STRING' o 'NUMERIC' o 'DATE'"
-
-    COND_002 = "COND-002"
-    en_messages[COND_002] = "Parameter's Operator is mandatory."
-    es_messages[COND_002] = "El Operador del parámetro es obligatorio."
-
-    COND_001 = "COND-001"
-    en_messages[COND_001] = "Variable name is mandatory."
-    es_messages[COND_001] = "Nombre de Variable es obligatorio."
 
     # Create Rule
     RU_CREA_013 = "RU-CREA-013"

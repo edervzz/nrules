@@ -25,8 +25,6 @@ class ConditionAdapter(ConditionRepository):
         condition.value = entity.value
         condition.typeof = entity.typeof
         condition.is_case_sensitive = entity.is_case_sensitive
-        condition.is_visible = entity.is_visible
-        condition.is_deleted = entity.is_deleted
 
     def read(self, _id: ConditionKey) -> Condition:
         with Session(self.engine) as session:

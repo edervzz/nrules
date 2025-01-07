@@ -3,12 +3,14 @@
 from datetime import date
 import json
 from domain.entities import KVItem
-from toolkit import Codes
-from toolkit import Localizer, Validator
+from toolkit import Codes, Localizer, Validator, Constants
 
 
 class KVItemValidator(Validator):
-    """_summary_"""
+    """ Validate KV Item
+
+        force_conv: when True raise a exception if conversion cannot be performed
+    """
 
     def __init__(self, localizer: Localizer, force_conv: bool):
         super().__init__()
@@ -18,39 +20,49 @@ class KVItemValidator(Validator):
     def __validate__(self, request: KVItem):
         """ Validate request format """
 
-        c_json = "JSON"
-        c_date = "DATE"
-        c_numeric = "NUMERIC"
+        request.key = request.key.upper().strip()
+        request.value = request.value.upper().strip()
         request.typeof = request.typeof.upper().strip()
 
-        if request.typeof == c_json:
-            try:
-                json.loads(request.value)
-            except ValueError:
-                self.add_failure(
-                    self.loc.get(Codes.COND_001, c_json))
+        if len(request.key) == 0:
+            self.add_failure(self.loc.get(Codes.KVI_002))
+        if request.kv_id == 0:
+            self.add_failure(self.loc.get(Codes.KVI_CREA_003))
+        if len(request.key) < 5 or len(request.key) > 50:
+            self.add_failure(self.loc.get(Codes.KVI_003))
+        if len(request.value) <= 0 or len(request.value) > 500:
+            self.add_failure(self.loc.get(Codes.KVI_004))
+        if len(request.typeof) > 50:
+            self.add_failure(self.loc.get(Codes.KVI_005))
 
-        if request.typeof == c_numeric:
-            try:
-                request.value = str(float(request.value))
-            except ValueError:
-                if not self.force_conv:
-                    request.value = ""
-                else:
-                    self.add_failure(
-                        self.loc.get(Codes.COND_001, c_numeric))
-                    return
+        request.calculation = "ADD" if request.calculation is None else request.calculation
 
-        if request.typeof == c_date:
-            dte = request.value.split("-")
-            if len(dte) != 3:
-                return
-            try:
-                request.value = str(date(dte[0], dte[1], dte[2]))
-            except ValueError:
-                if not self.force_conv:
-                    request.value = ""
-                else:
+        if request.calculation not in ["ADD", "MOD"]:
+            self.add_failure(self.loc.get(Codes.KVI_CREA_009))
+
+        if self.force_conv:
+            if request.typeof == Constants.JSON:
+                try:
+                    json.loads(request.value)
+                except ValueError:
                     self.add_failure(
-                        self.loc.get(Codes.COND_001, c_date))
+                        self.loc.get(Codes.KVI_001, request.value, Constants.JSON))
+
+            if request.typeof == Constants.NUMERIC:
+                try:
+                    request.value = str(float(request.value))
+                except ValueError:
+                    self.add_failure(
+                        self.loc.get(Codes.KVI_001, request.value, Constants.NUMERIC))
+
+            if request.typeof == Constants.DATE:
+                dte = request.value.split("-")
+                if len(dte) != 3:
+                    self.add_failure(self.loc.get(
+                        Codes.KVI_001, request.value, Constants.DATE))
                     return
+                try:
+                    request.value = str(date(dte[0], dte[1], dte[2]))
+                except TypeError:
+                    self.add_failure(
+                        self.loc.get(Codes.KVI_001, request.value, Constants.DATE))

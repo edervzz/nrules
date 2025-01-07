@@ -169,8 +169,6 @@ def core_tables(engine: Engine) -> str:
         Column(
             "is_case_sensitive", Boolean, nullable=False, comment="Case-Sensitive"),
         Column(
-            "typeof", String(10), CheckConstraint("typeof = 'STRING' OR typeof = 'NUMERIC' OR typeof = 'DATE' OR typeof = 'TIME' OR typeof = 'DATETIME'", name="conditions_chk_usefor"), nullable=False, comment="Type of Value"),
-        Column(
             "is_active", Boolean, nullable=False, comment="Object is Active"),
         Column(
             "is_archived", Boolean, nullable=False, comment="Object is Archived"),

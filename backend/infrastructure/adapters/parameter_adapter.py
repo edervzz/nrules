@@ -17,9 +17,14 @@ class ParameterAdapter(ParametersRepository):
             self.session.flush()
 
     def update(self,  entity: Parameter):
-        expression = self.session.query(Parameter).where(
-            Parameter.tenant_id == entity.tenant_id,
-            Parameter.key == entity.key).one_or_none()
+        param = self.session.query(Parameter).where(
+            Parameter.key == entity.key,
+            Parameter.rule_id == entity.rule_id,
+            Parameter.usefor == entity.usefor).one_or_none()
+
+        param.typeof = entity.typeof
+        param.is_active = entity.is_active
+        param.is_archived = entity.is_archived
 
     def read(self, _id) -> Parameter:
         with Session(self.engine) as session:

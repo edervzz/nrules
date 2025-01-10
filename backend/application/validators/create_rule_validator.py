@@ -27,6 +27,7 @@ class CreateRuleValidator(Validator):
         request.rule.default_kvs_id = request.default_kvs.id
         # condition group
         request.condition_group.id = str(uuid.uuid4())
+        request.condition_group.rule_id = request.rule.id
         # kvs for case
         request.kvs.id = str(uuid.uuid4())
         request.kvs.rule_id = request.rule.id
@@ -46,15 +47,15 @@ class CreateRuleValidator(Validator):
         for e_param in request.parameters:
             # complete condition
             e_param.rule_id = request.rule.id
-            e_param.is_case_sensitive = True
-            e_param.is_visible = True
-            e_param.is_deleted = False
+            e_param.is_active = True
+            e_param.is_archived = False
+            e_param.key = e_param.key.lower()
             # parameter validator
             parameter_validator = ParameterValidator(self.local)
             parameter_validator.validate_and_throw(e_param)
             # collect unique keys
             unique.add(e_param.key)
-            if e_param.usefor == Constants.CONDITION:
+            if e_param.usefor == Constants.INPUT:
                 # prepare condition
                 onecond = Condition()
                 onecond.variable = e_param.key
@@ -62,7 +63,6 @@ class CreateRuleValidator(Validator):
                 onecond.operator = "EQ"
                 onecond.value = ""
                 onecond.typeof = e_param.typeof
-                onecond.is_case_sensitive = False
                 onecond.is_active = True
                 onecond.is_archived = False
                 # validate condition

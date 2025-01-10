@@ -11,11 +11,11 @@ class Identification:
         """ return object identification """
 
         if id_type is None:
-            return (_id), ""
+            return _id, ""
         if id_type == "" or id_type == "__internal":
-            return (_id), ""
+            return _id, ""
         elif id_type == "__external" or id_type == "__default":
-            return 0, str(_id)
+            return "", _id
 
     @classmethod
     def get_tenant_safe(cls, tenant_id: int) -> int:

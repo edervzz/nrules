@@ -19,11 +19,11 @@ class Case(Base, TenantSpecific, Auditable):
 
     rule_id: Mapped[str] = mapped_column(primary_key=True, nullable=False)
 
-    position: Mapped[int] = mapped_column(nullable=False)
-
     condition_group_id: Mapped[str] = mapped_column(nullable=True)
 
     kvs_id: Mapped[int] = mapped_column(nullable=True)
+
+    position: Mapped[int] = mapped_column(nullable=False)
 
     is_active: Mapped[bool] = mapped_column(nullable=False)
 

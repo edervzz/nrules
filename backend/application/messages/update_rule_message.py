@@ -6,7 +6,7 @@ from domain.entities import Rule, Parameter
 class UpdateRuleRequest:
     """ Update Rule Request """
 
-    def __init__(self, _id: int, name: str, strategy: str):
+    def __init__(self, _id: str, name: str, strategy: str):
         self.rule = Rule()
         self.rule.id = _id
         self.rule.name = name

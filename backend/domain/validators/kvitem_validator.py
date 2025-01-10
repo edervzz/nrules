@@ -27,18 +27,13 @@ class KVItemValidator(Validator):
         if len(request.key) == 0:
             self.add_failure(self.loc.get(Codes.KVI_002))
         if request.kv_id == 0:
-            self.add_failure(self.loc.get(Codes.KVI_CREA_003))
+            self.add_failure(self.loc.get(Codes.KVI_003))
         if len(request.key) < 5 or len(request.key) > 50:
             self.add_failure(self.loc.get(Codes.KVI_003))
-        if len(request.value) <= 0 or len(request.value) > 500:
+        if len(request.value) > 500:
             self.add_failure(self.loc.get(Codes.KVI_004))
-        if len(request.typeof) > 50:
-            self.add_failure(self.loc.get(Codes.KVI_005))
 
         request.calculation = "ADD" if request.calculation is None else request.calculation
-
-        if request.calculation not in ["ADD", "MOD"]:
-            self.add_failure(self.loc.get(Codes.KVI_CREA_009))
 
         if self.force_conv:
             if request.typeof == Constants.JSON:

@@ -11,7 +11,7 @@ class KV(Base, TenantSpecific, Auditable):
         Group many KV Items.
     """
 
-    __tablename__ = "kv_storage"
+    __tablename__ = "kvs"
 
     id: Mapped[str] = mapped_column(primary_key=True, nullable=False)
 

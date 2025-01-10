@@ -7,4 +7,5 @@ from .update_rule import UpdateRuleModel
 from .new_rule import NewRuleModel
 from .rule import RuleModel
 from .new_tenant import NewTenantModel
-from .save_conditions_rule import SaveConditionsRuleModel
+from .new_conditions_rule import NewConditionsRuleModel
+from .upd_conditions_rule import UpdConditionsRuleModel

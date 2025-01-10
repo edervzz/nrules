@@ -139,10 +139,10 @@
             }
         },
         "/nr/api/v1/t/{tid}/rules/{rid}/conditions":{
-            "put": {
-                "summary": "Update rule's conditions",
+            "post": {
+                "summary": "Create rule's conditions",
                 "tags": [
-                    "Rules"
+                    "Conditions"
                 ],
                 "consumes": [
                     "application/json"
@@ -156,23 +156,60 @@
                         "$ref": "#/parameters/RuleID"
                     },
                     {
+                        "$ref": "#/parameters/IdType"
+                    },
+                    {
                         "name": "body",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/SaveConditionsRule"
+                            "$ref": "#/definitions/NewConditionsRule"
                         }  
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Rule's parameters updated"
+                        "description": "Rule's conditions saved"
                     },
                     "400": {
                         "description": "Validation errors"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update rule's conditions",
+                "tags": [
+                    "Conditions"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/TenantID"
                     },
-                    "409": {
-                        "description": "Rule already exists"
+                    {
+                        "$ref": "#/parameters/RuleID"
+                    },
+                    {
+                        "$ref": "#/parameters/IdType"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/UpdateConditionsRule"
+                        }  
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Rule's conditions updated"
+                    },
+                    "400": {
+                        "description": "Validation errors"
                     }
                 }
             }
@@ -292,6 +329,15 @@
             "type": "string",
             "required": true
         },
+        "IdType":{
+            "name": "idType",
+            "description": "Rule Identification Type",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "enum": ["__internal", "__external", "__default"],
+            "default": "__default"
+        },
         "PageNo":{
             "name": "pageNo",
             "description": "Number of Page.",
@@ -356,7 +402,7 @@
                                     "minLength": 5,
                                     "maxLength": 50,
                                     "required": true,
-                                    "example": "quotationAmount"
+                                    "example": "quotation_amount"
                             },
                             "typeof": {
                                 "type": "string",
@@ -367,8 +413,8 @@
                             "usefor": {
                                 "type": "string",
                                 "required": true,
-                                "enum": ["CONDITION", "OUTPUT"],
-                                "example": "CONDITION"
+                                "enum": ["INPUT", "OUTPUT"],
+                                "example": "INPUT"
                             }
                         }
                     }
@@ -391,17 +437,22 @@
                 }
             }
         },
-        "SaveConditionsRule":{
+        "NewConditionsRule":{
             "type": "object",
             "properties": {
-                "insert_conditions":{
+                "items":{
                     "type":"array",
                     "items": {
                         "$ref": "#/definitions/ConditionsRule"
                     },
                     "required": "false"
-                },
-                "update_conditions":{
+                }
+            }
+        },
+        "UpdateConditionsRule":{
+            "type": "object",
+            "properties": {
+                "items":{
                     "type":"array",
                     "items": {
                         "$ref": "#/definitions/ConditionsRule"
@@ -418,7 +469,7 @@
                     "minLength": 5,
                     "maxLength": 50,
                     "required": true,
-                    "example": "quotationAmount"
+                    "example": "quotation_amount"
                 },
                 "operator": {
                     "type": "string",

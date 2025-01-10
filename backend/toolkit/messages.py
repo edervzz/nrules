@@ -126,66 +126,87 @@ class Codes:
     en_messages[RU_READ_001] = "Rule ID or Rule Name must be provided."
     es_messages[RU_READ_001] = "Id Regla o Nombre Regla es obligatorio."
 
-    # Save Rule's Parameters
-    COND_SAVE_015 = "COND-SAVE-015"
-    en_messages[COND_SAVE_015] = "Total of Parameters must be equal to total of Conditions."
-    es_messages[COND_SAVE_015] = "El total de Parámetros debe ser igual al total de Condiciones."
+    # Create Rule's Parameters
+    COND_CREA_015 = "COND-CREA-015"
+    en_messages[COND_CREA_015] = "Total of Parameters must be equal to total of Conditions."
+    es_messages[COND_CREA_015] = "El total de Parámetros debe ser igual al total de Condiciones."
 
-    COND_SAVE_014 = "COND-SAVE-014"
-    en_messages[COND_SAVE_014] = "Nothing to update."
-    es_messages[COND_SAVE_014] = "Nada que actualizar."
+    COND_CREA_014 = "COND-CREA-014"
+    en_messages[COND_CREA_014] = "Nothing to update."
+    es_messages[COND_CREA_014] = "Nada que actualizar."
 
-    COND_SAVE_013 = "COND-SAVE-013"
-    en_messages[COND_SAVE_013] = "All parameters to update must be exists."
-    es_messages[COND_SAVE_013] = "Todos los parametros para actualización, debe existir."
+    COND_CREA_013 = "COND-CREA-013"
+    en_messages[COND_CREA_013] = "All parameters to update must be exists."
+    es_messages[COND_CREA_013] = "Todos los parametros para actualización, debe existir."
 
-    COND_SAVE_012 = "COND-SAVE-012"
-    en_messages[COND_SAVE_012] = "Any new parameter must not be exists."
-    es_messages[COND_SAVE_012] = "Ningún nuevo parametro debe existir."
+    COND_CREA_012 = "COND-SAVE-012"
+    en_messages[COND_CREA_012] = "Any new parameter must not be exists."
+    es_messages[COND_CREA_012] = "Ningún nuevo parametro debe existir."
 
-    COND_SAVE_011 = "COND-SAVE-011"
-    en_messages[COND_SAVE_011] = "At least one Parameter must have been created during Rule creation."
-    es_messages[COND_SAVE_011] = "Al menos un Parámetro debío crearse durante la creación de la Regla."
+    COND_CREA_011 = "COND-CREA-011"
+    en_messages[COND_CREA_011] = "At least one Parameter must have been created during Rule creation."
+    es_messages[COND_CREA_011] = "Al menos un Parámetro debío crearse durante la creación de la Regla."
 
-    COND_SAVE_010 = "COND-SAVE-010"
-    en_messages[COND_SAVE_010] = "Condition '{}' must be consistent between parameter and condition."
-    es_messages[COND_SAVE_010] = "Condition '{}' debe ser consistente entre el parámetro y condición."
+    COND_CREA_010 = "COND-CREA-010"
+    en_messages[COND_CREA_010] = "Condition '{}' must be consistent between parameter and condition."
+    es_messages[COND_CREA_010] = "Condition '{}' debe ser consistente entre el parámetro y condición."
 
-    COND_SAVE_009 = "COND-SAVE-009"
-    en_messages[COND_SAVE_009] = "Parameters not found for this rule."
-    es_messages[COND_SAVE_009] = "No se encontraron parámetros para esta Regla."
+    COND_CREA_009 = "COND-CREA-009"
+    en_messages[COND_CREA_009] = "Parameters not found for this rule."
+    es_messages[COND_CREA_009] = "No se encontraron parámetros para esta Regla."
 
-    COND_SAVE_008 = "COND-SAVE-008"
-    en_messages[COND_SAVE_008] = "Rule not found."
-    es_messages[COND_SAVE_008] = "Regla no encontrada."
+    COND_CREA_008 = "COND-CREA-008"
+    en_messages[COND_CREA_008] = "Rule not found."
+    es_messages[COND_CREA_008] = "Regla no encontrada."
 
-    COND_SAVE_007 = "COND-SAVE-007"
-    en_messages[COND_SAVE_007] = "Rule's ID or Name are mandatory."
-    es_messages[COND_SAVE_007] = "Id o nombre de Regla es obligatorio."
+    COND_CREA_007 = "COND-CREA-007"
+    en_messages[COND_CREA_007] = "Rule's ID or Name are mandatory."
+    es_messages[COND_CREA_007] = "Id o nombre de Regla es obligatorio."
 
-    COND_SAVE_006 = "COND-SAVE-006"
-    en_messages[COND_SAVE_006] = "At least one Case must have been created during Rule creation."
-    es_messages[COND_SAVE_006] = "Al menos un Caso debío crearse durante la creación de la Regla."
+    COND_CREA_006 = "COND-CREA-006"
+    en_messages[COND_CREA_006] = "At least one Case must have been created during Rule creation."
+    es_messages[COND_CREA_006] = "Al menos un Caso debío crearse durante la creación de la Regla."
 
-    COND_SAVE_005 = "COND-SAVE-005"
-    en_messages[COND_SAVE_005] = "All Parameters must be unique."
-    es_messages[COND_SAVE_005] = "Todos los Parametros deben ser únicos."
+    COND_CREA_005 = "COND-CREA-005"
+    en_messages[COND_CREA_005] = "All Parameters must be unique."
+    es_messages[COND_CREA_005] = "Todos los Parametros deben ser únicos."
 
-    COND_SAVE_004 = "COND-SAVE-004"
-    en_messages[COND_SAVE_004] = "Type JSON is not available for Conditions."
-    es_messages[COND_SAVE_004] = "El tipo 'JSON' no esta disponible para Conditiones."
+    COND_CREA_004 = "COND-CREA-004"
+    en_messages[COND_CREA_004] = "Type JSON is not available for Conditions."
+    es_messages[COND_CREA_004] = "El tipo 'JSON' no esta disponible para Conditiones."
 
-    COND_SAVE_003 = "COND-SAVE-003"
-    en_messages[COND_SAVE_003] = "Use for field must be 'CONDITION' or 'OUTPUT'"
-    es_messages[COND_SAVE_003] = "Campo 'Uso' debe ser 'CONDITION' or 'OUTPUT'"
+    COND_CREA_003 = "COND-CREA-003"
+    en_messages[COND_CREA_003] = "Use for field must be 'CONDITION' or 'OUTPUT'"
+    es_messages[COND_CREA_003] = "Campo 'Uso' debe ser 'CONDITION' or 'OUTPUT'"
 
-    COND_SAVE_002 = "COND-SAVE-002"
-    en_messages[COND_SAVE_002] = "Type of Condition must be 'STRING' or 'NUMERIC' or 'DATE' or 'JSON'"
-    es_messages[COND_SAVE_002] = "El tipo del Condición debe ser 'STRING' o 'NUMERIC' o 'DATE' o 'JSON'"
+    COND_CREA_002 = "COND-CREA-002"
+    en_messages[COND_CREA_002] = "Type of Condition must be 'STRING' or 'NUMERIC' or 'DATE' or 'JSON'"
+    es_messages[COND_CREA_002] = "El tipo del Condición debe ser 'STRING' o 'NUMERIC' o 'DATE' o 'JSON'"
 
-    COND_SAVE_001 = "COND-SAVE-001"
-    en_messages[COND_SAVE_001] = "'Variable' field are mandatory"
-    es_messages[COND_SAVE_001] = "Campo 'variable' es obligatorio."
+    COND_CREA_001 = "COND-CREA-001"
+    en_messages[COND_CREA_001] = "'Variable' field are mandatory"
+    es_messages[COND_CREA_001] = "Campo 'variable' es obligatorio."
+
+    # Update Condition
+    COND_UPD_005 = "COND-UPD-005"
+    en_messages[COND_UPD_005] = "All parameters to update must be exists."
+    es_messages[COND_UPD_005] = "Todos los parametros para actualización, debe existir."
+
+    COND_UPD_004 = "COND-UPD-004"
+    en_messages[COND_UPD_004] = "Total of Parameters must be equal to total of Conditions."
+    es_messages[COND_UPD_004] = "El total de Parámetros debe ser igual al total de Condiciones."
+
+    COND_UPD_003 = "COND-UPD-003"
+    en_messages[COND_UPD_003] = "All Parameters must be unique."
+    es_messages[COND_UPD_003] = "Todos los Parametros deben ser únicos."
+
+    COND_UPD_002 = "COND-UPD-002"
+    en_messages[COND_UPD_002] = "Nothing to update."
+    es_messages[COND_UPD_002] = "Nada que actualizar."
+
+    COND_UPD_001 = "COND-UPD-001"
+    en_messages[COND_UPD_001] = "Rule's ID or Name are mandatory."
+    es_messages[COND_UPD_001] = "Id o nombre de Regla es obligatorio."
 
     # Update Parameter
     PARAM_UPD_006 = "PARAM-UPD-006"

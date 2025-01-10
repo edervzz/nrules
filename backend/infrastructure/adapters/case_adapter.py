@@ -23,9 +23,8 @@ class CaseAdapter(CaseRepository):
             Case.id == entity.expression_id).one_or_none()
 
         element.position = entity.position
-        element.kv_storage_id = entity.kv_storage_id
-        element.kvs_id_nok = entity.kvs_id_nok
-        element.version = entity.version
+        element.is_active = entity.is_active
+        element.is_archived = entity.is_archived
 
     def read(self, _id) -> Case:
         with Session(self.engine) as session:

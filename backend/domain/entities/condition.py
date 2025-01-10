@@ -25,8 +25,6 @@ class Condition(Base, TenantSpecific, Auditable):
 
     typeof: Mapped[str] = mapped_column(nullable=False)
 
-    is_case_sensitive: Mapped[bool] = mapped_column(nullable=False)
-
     is_active: Mapped[bool] = mapped_column(nullable=False)
 
     is_archived: Mapped[bool] = mapped_column(nullable=True)

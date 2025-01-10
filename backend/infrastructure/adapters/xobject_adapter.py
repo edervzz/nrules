@@ -16,7 +16,7 @@ class XObjectAdapter():
         new_entity.object_name = entity.object_name
 
         with Session(self.engine) as session:
-            entity.object_name = entity.object_name.lower()
+            entity.object_name = entity.object_name.upper()
             session.add(new_entity)
             session.flush()
             entity.id = new_entity.id

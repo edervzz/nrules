@@ -22,7 +22,7 @@ def core_tables(engine: Engine) -> str:
 
     # Key-Value Storage ----------------------------------------------
     kvs = Table(
-        "kv_storage",
+        "kvs",
         metadata_obj,
         Column(
             "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
@@ -51,9 +51,9 @@ def core_tables(engine: Engine) -> str:
         Column(
             "typeof", String(10), CheckConstraint("typeof = 'JSON' OR typeof = 'STRING' OR typeof = 'NUMERIC' OR typeof = 'DATE' OR typeof = 'TIME' OR typeof = 'DATETIME'", name="kv_items_chk_usefor"), nullable=True, comment="Type of value. E.g. 'json', 'string', 'int'"),
         Column(
-            "is_active", Boolean, nullable=False, comment="Object is Active"),
+            "is_active", Boolean, nullable=False, comment="Kv Item is Active"),
         Column(
-            "is_archived", Boolean, nullable=False, comment="Object is Archived"),
+            "is_archived", Boolean, nullable=False, comment="KV Item is Archived"),
         UniqueConstraint("tenant_id", "kv_id", "key", name="kv_items_unk"),
         comment="KV Item can be assign to single one KVS"
     )
@@ -80,9 +80,9 @@ def core_tables(engine: Engine) -> str:
         Column(
             "default_kvs_id", String(36), nullable=True, comment="KVS associated when no condition was success"),
         Column(
-            "is_active", Boolean, nullable=False, comment="Object is Active"),
+            "is_active", Boolean, nullable=False, comment="Rule is Active"),
         Column(
-            "is_archived", Boolean, nullable=False, comment="Object is Archived"),
+            "is_archived", Boolean, nullable=False, comment="Rule is Archived"),
         comment="Rule Catalog"
     )
     set_version(rule)
@@ -119,15 +119,15 @@ def core_tables(engine: Engine) -> str:
         Column(
             "rule_id", String(36), primary_key=True, comment="Rule ID"),
         Column(
-            "position", Integer, nullable=False, comment="Position"),
-        Column(
             "condition_group_id", String(36), nullable=True, comment="Condition Parent ID"),
         Column(
             "kvs_id", String(36), nullable=True, comment="KVS associated when condition was ok"),
         Column(
-            "is_active", Boolean, nullable=False, comment="Object is Active"),
+            "position", Integer, nullable=False, comment="Position"),
         Column(
-            "is_archived", Boolean, nullable=False, comment="Object is Archived"),
+            "is_active", Boolean, nullable=False, comment="Case is Active"),
+        Column(
+            "is_archived", Boolean, nullable=False, comment="Case is Archived"),
         comment="Matrix's Rows. Set execution order"
     )
     set_auditable(cases)
@@ -145,7 +145,7 @@ def core_tables(engine: Engine) -> str:
         Column(
             "id", String(36), primary_key=True, comment="Condition Group ID"),
         Column(
-            "rule_id", String(36), primary_key=False, comment="Rule ID"),
+            "rule_id", String(36), primary_key=False, nullable=False, comment="Rule ID"),
         comment="Matrix's Columns. Set expressions to evaluate"
     )
     set_auditable(condition_group)
@@ -167,11 +167,9 @@ def core_tables(engine: Engine) -> str:
         Column(
             "typeof", String(10), CheckConstraint("typeof = 'STRING' OR typeof = 'NUMERIC' OR typeof = 'DATE' OR typeof = 'TIME' OR typeof = 'DATETIME'", name="conditions_chk_usefor"), nullable=False, comment="Type of Value"),
         Column(
-            "is_case_sensitive", Boolean, nullable=False, comment="Case-Sensitive"),
+            "is_active", Boolean, nullable=False, comment="Condition is Active"),
         Column(
-            "is_active", Boolean, nullable=False, comment="Object is Active"),
-        Column(
-            "is_archived", Boolean, nullable=False, comment="Object is Archived"),
+            "is_archived", Boolean, nullable=False, comment="Condition is Archived"),
         comment="Matrix's Columns. Set expressions to evaluate"
     )
     set_auditable(conditions)
@@ -187,15 +185,13 @@ def core_tables(engine: Engine) -> str:
         Column(
             "rule_id", String(36), primary_key=True, comment="Rule ID"),
         Column(
-            "usefor", String(10), CheckConstraint("usefor = 'CONDITION' OR usefor = 'OUTPUT'", name="parameters_chk_usefor"), primary_key=True, comment="Use for: CONDITION, OUTPUT"),
+            "usefor", String(10), CheckConstraint("usefor = 'INPUT' OR usefor = 'OUTPUT'", name="parameters_chk_usefor"), primary_key=True, comment="Use for: INPUT, OUTPUT"),
         Column(
             "typeof", String(10), CheckConstraint("typeof = 'JSON' OR typeof = 'STRING' OR typeof = 'NUMERIC' OR typeof = 'DATE' OR typeof = 'TIME' OR typeof = 'DATETIME'", name="parameters_chk_typeof"), nullable=False, comment="Type of Value: String, Numeric, Date"),
         Column(
-            "is_case_sensitive", Boolean, nullable=False, comment="Case-Sensitive"),
+            "is_active", Boolean, nullable=False, comment="Parameter is active"),
         Column(
-            "is_visible", Boolean, nullable=False, comment="Visible Parameter"),
-        Column(
-            "is_deleted", Boolean, nullable=False, comment="Deleted Item"),
+            "is_archived", Boolean, nullable=False, comment="Parameter is archived"),
         comment="Control which parameters serve as input and output"
     )
     set_auditable(parameters)

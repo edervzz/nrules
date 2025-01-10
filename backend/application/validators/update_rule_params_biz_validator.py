@@ -114,9 +114,8 @@ class UpdateRuleParamsBizValidator(Validator):
                                         # current_condition.operator, must not be change here
                                         # current_cond.value, must not be change here
                                         current_cond.typeof = param2upd.typeof
-                                        current_cond.is_case_sensitive = param2upd.is_case_sensitive
-                                        current_cond.is_visible = param2upd.is_visible
-                                        current_cond.is_deleted = param2upd.is_deleted
+                                        current_cond.is_active = param2upd.is_active
+                                        current_cond.is_archived = param2upd.is_archived
 
                                         validator.validate_and_throw(
                                             current_cond)
@@ -134,7 +133,7 @@ class UpdateRuleParamsBizValidator(Validator):
                                     if isinstance(current_kvi, KVItem) and current_kvi.key == param2upd.key:
                                         # current_kvi.value, must not be change here
                                         current_kvi.typeof = param2upd.typeof
-                                        current_kvi.is_visible = param2upd.is_visible
-                                        current_kvi.is_deleted = param2upd.is_deleted
+                                        current_kvi.is_visible = param2upd.is_active
+                                        current_kvi.is_deleted = param2upd.is_archived
                                         request.output_to_update.append(
                                             current_kvi)

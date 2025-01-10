@@ -4,7 +4,7 @@
 
 class Constants:
     """ Constants """
-    CONDITION = "CONDITION"
+    INPUT = "INPUT"
     OUTPUT = "OUTPUT"
 
     STRING = "STRING"

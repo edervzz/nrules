@@ -22,7 +22,7 @@ class ParameterValidator(Validator):
         if not (len(request.key) >= 5 and len(request.key) <= 50):
             raise self.as_error(self._localizer.get(Codes.PARAM_005))
 
-        if request.usefor == Constants.CONDITION:
+        if request.usefor == Constants.INPUT:
             if not request.typeof in [Constants.STRING, Constants.NUMERIC, Constants.DATE]:
                 raise self.as_error(self._localizer.get(
                     Codes.PARAM_003, request.key))

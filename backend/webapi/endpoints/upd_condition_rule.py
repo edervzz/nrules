@@ -1,18 +1,18 @@
 """ Create a new workflow """
 import json
 from flask import Blueprint, request, Response, current_app
-from webapi.models import SaveConditionsRuleModel
-from application.messages import SaveConditionsRuleRequest
-from application.commands import SaveConditionsRuleHandler
+from webapi.models import UpdConditionsRuleModel
+from application.messages import UpdateConditionsRuleRequest
+from application.commands import UpdateConditionsRuleHandler
 from toolkit import Identification
 
 
-save_condition_rule_bp = Blueprint("Save Condition Rule", __name__)
+upd_condition_rule_bp = Blueprint("Update Conditions by Rule", __name__)
 
 
-@save_condition_rule_bp.put("/t/<tid>/rule/<rid>/conditions")
-def wrapper(tid: int = None, rid: int = None):
-    """ New KV Items Endpoint """
+@upd_condition_rule_bp.put("/t/<tid>/rules/<rid>/conditions")
+def upd_conditions_rule_endpoint(tid=None, rid=None):
+    """ Endpoint """
     tenant_id = Identification.get_tenant_safe(tid)
     id_type = request.args.get("idType", "")
     rule_id, rule_name = Identification.get_object(rid, id_type)
@@ -21,16 +21,15 @@ def wrapper(tid: int = None, rid: int = None):
     if json_data is None:
         return
 
-    save_condition_rule = SaveConditionsRuleModel(json.dumps(json_data))
+    save_condition_rule = UpdConditionsRuleModel(json.dumps(json_data))
 
-    command = SaveConditionsRuleRequest(
+    command = UpdateConditionsRuleRequest(
         rule_id,
         rule_name,
-        save_condition_rule.insert_conditions,
-        save_condition_rule.update_conditions
+        save_condition_rule.conditions
     )
 
-    SaveConditionsRuleHandler(
+    UpdateConditionsRuleHandler(
         current_app.config[str(tenant_id)],
         current_app.config["logger"],
         current_app.config["localizer"]

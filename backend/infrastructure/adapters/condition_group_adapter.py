@@ -17,12 +17,7 @@ class ConditionGroupAdapter(ConditionGroupRepository):
             self.session.flush()
 
     def update(self,  entity: ConditionGroup):
-        expression = self.session.query(ConditionGroup).where(
-            ConditionGroup.tenant_id == entity.tenant_id,
-            ConditionGroup.id == entity.id).one_or_none()
-
-        expression.expression = entity.expression
-        expression.version = entity.version
+        pass
 
     def read(self, _id) -> ConditionGroup:
         with Session(self.engine) as session:

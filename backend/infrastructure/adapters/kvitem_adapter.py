@@ -23,7 +23,10 @@ class KVItemAdapter(KVItemRepository):
             KVItem.key == entity.key).one_or_none()
 
         kvitem.value = entity.value
+        kvitem.calculation = entity.calculation
         kvitem.typeof = entity.typeof
+        kvitem.is_active = entity.is_active
+        kvitem.is_archived = entity.is_archived
 
     def read(self, _id: KVItemKey) -> KVItem:
         with Session(self.engine) as session:

@@ -22,9 +22,11 @@ class ConditionAdapter(ConditionRepository):
             Condition.condition_group_id == entity.condition_group_id
         ).one_or_none()
 
+        condition.operator = entity.operator
         condition.value = entity.value
         condition.typeof = entity.typeof
-        condition.is_case_sensitive = entity.is_case_sensitive
+        condition.is_active = entity.is_active
+        condition.is_archived = entity.is_archived
 
     def read(self, _id: ConditionKey) -> Condition:
         with Session(self.engine) as session:

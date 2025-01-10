@@ -1,4 +1,4 @@
-""" Create a new workflow """
+""" Update Rule """
 import json
 from flask import Blueprint, request, Response, current_app
 from webapi.models import UpdateRuleModel
@@ -12,6 +12,7 @@ update_rule_bp = Blueprint("Update Rule", __name__)
 @update_rule_bp.put("/t/<tid>/rules/<rid>")
 def update_rules_endpoint(tid=None, rid=None):
     """ Update rules Endpoint """
+
     tenant_id = Identification.get_tenant_safe(tid)
     id_type = request.args.get("idType", "")
     rule_id, rule_name = Identification.get_object(rid, id_type)

@@ -5,7 +5,7 @@ from domain.entities import Rule, Parameter, Tag
 
 
 class NewRuleModel:
-    """ New Rule request """
+    """ New Rule model """
 
     def __init__(self, j):
         self.__dict__ = json.loads(j)

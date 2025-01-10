@@ -1,5 +1,4 @@
-"""_summary_
-    """
+""" _module_ """
 import json
 from typing import List
 from domain.entities import RunRuleResult

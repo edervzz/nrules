@@ -1,4 +1,4 @@
-"""_summary_"""
+""" _module_ """
 from datetime import date
 from domain.entities import Condition
 from toolkit import Localizer, Codes, Validator, Constants

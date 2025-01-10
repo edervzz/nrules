@@ -1,5 +1,4 @@
-"""_summary_
-    """
+""" _module_ """
 from typing import List
 
 

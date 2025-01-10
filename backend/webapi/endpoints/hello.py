@@ -1,4 +1,4 @@
-""" Create a new workflow """
+""" health check """
 import json
 from flask import Blueprint, Response, abort, current_app
 from sqlalchemy.exc import OperationalError

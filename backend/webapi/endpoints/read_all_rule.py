@@ -1,4 +1,4 @@
-""" Create a new workflow """
+""" Read all rules paginated """
 import json
 from flask import Blueprint, Response, request, current_app
 from flask_cors import cross_origin
@@ -13,6 +13,7 @@ read_all_rule_bp = Blueprint("Read All Rules", __name__)
 @read_all_rule_bp.get("/t/<tid>/rules")
 def read_all_rules_endpoint(tid=None):
     """ Read rules Endpoint """
+
     tenant_id = int(tid)
     page_no = request.args.get("pageNo", "1")
     page_size = request.args.get("pageSize", "5")

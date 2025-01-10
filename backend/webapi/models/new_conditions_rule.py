@@ -5,7 +5,7 @@ from domain.entities import Condition
 
 
 class NewConditionsRuleModel:
-    """ Save Conditions Rule Model """
+    """ New Conditions Rule Model """
 
     def __init__(self, j):
         self.__dict__ = json.loads(j)

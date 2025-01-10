@@ -1,4 +1,4 @@
-""" Handler Validators """
+""" Validators """
 
 from .update_conditions_rule_validator import UpdateConditionsRuleValidator
 from .update_conditions_rule_biz_validator import UpdateConditionsRuleBizValidator
@@ -9,8 +9,6 @@ from .run_rule_biz_validator import RunRuleBizValidator
 from .run_rule_validator import RunRuleValidator
 from .read_kvs_biz_validator import ReadKVSBizValidator
 from .read_kvs_validator import ReadKVSValidator
-from .save_kvitems_rule_biz_validator import SaveKVItemBizValidator
-from .save_kvitems_rule_validator import SaveKVItemValidator
 from .read_all_rules_biz_validator import ReadAllRulesBizValidator
 from .read_all_rules_validator import ReadAllRulesValidator
 from .update_rule_validator import UpdateRuleValidator

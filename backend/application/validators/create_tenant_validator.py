@@ -1,4 +1,4 @@
-"""_summary_"""
+""" _module_ """
 from application.messages import CreateTenantRequest
 from toolkit import Validator
 from toolkit.localization import Localizer, Codes

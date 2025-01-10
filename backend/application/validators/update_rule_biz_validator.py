@@ -1,7 +1,6 @@
 """_summary_"""
-from typing import List
 from application.messages import UpdateRuleRequest
-from domain.entities import Rule, Case, Condition, KVItem
+from domain.entities import Rule
 from domain.ports import CoreRepository
 from domain.validators import RuleValidator
 from toolkit import Validator

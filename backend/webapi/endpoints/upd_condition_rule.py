@@ -1,4 +1,4 @@
-""" Create a new workflow """
+""" Update Conditions of Rule """
 import json
 from flask import Blueprint, request, Response, current_app
 from webapi.models import UpdConditionsRuleModel
@@ -12,7 +12,8 @@ upd_condition_rule_bp = Blueprint("Update Conditions by Rule", __name__)
 
 @upd_condition_rule_bp.put("/t/<tid>/rules/<rid>/conditions")
 def upd_conditions_rule_endpoint(tid=None, rid=None):
-    """ Endpoint """
+    """ Update Rule's Conditions """
+
     tenant_id = Identification.get_tenant_safe(tid)
     id_type = request.args.get("idType", "")
     rule_id, rule_name = Identification.get_object(rid, id_type)

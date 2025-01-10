@@ -1,9 +1,9 @@
-"""_summary_
-    """
+""" _module_ """
 from toolkit import Validator, Localizer, Codes, Constants
 from application.messages import CreateConditionsRuleRequest
 from domain.entities import Parameter
 from domain.validators import ParameterValidator, ConditionValidator
+from domain.ports import CoreRepository
 
 
 class CreateConditionsRuleValidator(Validator):

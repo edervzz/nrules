@@ -1,4 +1,4 @@
-""" Create a new workflow """
+""" Create a new Rule """
 import json
 from flask import Blueprint, request, Response, current_app
 from flask_cors import cross_origin

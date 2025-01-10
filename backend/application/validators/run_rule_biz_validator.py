@@ -22,8 +22,8 @@ class RunRuleBizValidator(Validator):
             request.rule_id) if request.rule_id != 0 else self._repo.rule.read_by_external_id(request.rule_name)
 
         if rule is None:
-            self.add_failure(self._local.get(Codes.RUNNER_003, request.rule_id)
-                             )
+            self.add_failure(self._local.get(
+                Codes.RUNNER_003, request.rule_id))
             return
 
         request.trace.append(f"rule: {rule.name}, type:{rule.rule_type}")

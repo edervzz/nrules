@@ -1,4 +1,4 @@
-"""_summary_"""
+""" _module_  """
 from application.messages import ReadRuleRequest
 from domain.ports import CoreRepository
 from domain.entities import Rule, Case

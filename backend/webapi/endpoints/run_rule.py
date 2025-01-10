@@ -1,4 +1,4 @@
-""" Create a new workflow """
+""" Run Rule """
 import json
 from flask import Blueprint, request, Response, current_app
 from application.messages import RunRuleRequest
@@ -12,6 +12,7 @@ run_rule_bp = Blueprint("Run Rule", __name__)
 @run_rule_bp.post("/t/<tid>/run/rule/<rid>")
 def run_rule_endpoint(tid: int = 0, rid: int = 0):
     """ Run rules Endpoint """
+
     kvs_id = request.args.get("kvsId", 0)
     json_data = request.json
     if json_data is None:

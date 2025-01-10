@@ -1,4 +1,4 @@
-"""_summary_"""
+""" _module_ """
 from domain.entities import Rule
 from toolkit import Localizer, Codes, Validator
 

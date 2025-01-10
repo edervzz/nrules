@@ -1,4 +1,4 @@
-""" Create a new workflow """
+""" Create a new tenant """
 import json
 from flask import Blueprint, request, Response, current_app
 from webapi.models import NewTenantModel

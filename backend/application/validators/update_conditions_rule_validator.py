@@ -1,5 +1,4 @@
-"""_summary_
-    """
+"""_summary_"""
 from toolkit import Validator, Localizer, Codes, Constants
 from application.messages import UpdateConditionsRuleRequest
 from domain.entities import Parameter

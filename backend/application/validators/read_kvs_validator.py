@@ -1,4 +1,4 @@
-"""  """
+""" _module_ """
 from application.messages import ReadKVSRequest
 from toolkit import Validator, Localizer, Codes
 

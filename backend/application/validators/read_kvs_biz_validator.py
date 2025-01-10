@@ -1,4 +1,4 @@
-"""  """
+""" _module_ """
 from toolkit import Validator, Localizer, Codes
 from application.messages import ReadKVSRequest
 from domain.ports import CoreRepository

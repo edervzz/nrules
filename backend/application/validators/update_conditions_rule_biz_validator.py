@@ -1,5 +1,4 @@
-"""_summary_
-    """
+"""_summary_"""
 from typing import List
 from application.messages import UpdateConditionsRuleRequest
 from domain.entities import Rule, Parameter, Condition, ConditionGroup

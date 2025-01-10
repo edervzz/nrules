@@ -3,7 +3,7 @@ import json
 
 
 class NewTenantModel:
-    """ New Rule request """
+    """ New Rule model """
 
     def __init__(self, j):
         self.__dict__ = json.loads(j)

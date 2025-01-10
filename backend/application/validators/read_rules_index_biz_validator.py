@@ -1,4 +1,4 @@
-"""_summary_"""
+""" _module_ """
 from application.messages import ReadRulesByKeyIndexRequest
 from domain.ports import CoreRepository
 from toolkit import Validator

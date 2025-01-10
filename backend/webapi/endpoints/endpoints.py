@@ -1,4 +1,4 @@
-""" endpoints """
+""" endpoints register """
 
 import logging
 import os

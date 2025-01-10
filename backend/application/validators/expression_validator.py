@@ -1,4 +1,3 @@
-
 """ Extensions """
 from decimal import InvalidOperation, Decimal
 from typing import List

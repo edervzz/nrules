@@ -1,4 +1,4 @@
-"""_summary_"""
+""" _module_ """
 import uuid
 from application.messages import CreateRuleRequest
 from domain.entities import Condition, KVItem

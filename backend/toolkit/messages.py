@@ -6,6 +6,7 @@ class Codes:
     en_messages: dict[str, str] = {}
     es_messages: dict[str, str] = {}
 
+    # Runner
     RUNNER_004 = "RUNNER-004"
     en_messages[RUNNER_004] = "KVS {} not found."
     es_messages[RUNNER_004] = "KVS {}, no encontrada."
@@ -22,18 +23,32 @@ class Codes:
     en_messages[RUNNER_001] = "Rule name and ID must not be empty."
     es_messages[RUNNER_001] = "Nombre o ID de regla son obligatorios."
 
-    KVI_CREA_010 = "KVI-CREA-010"
-    en_messages[KVI_CREA_010] = "Duplicated Keys are not allowed."
-    es_messages[KVI_CREA_010] = "Keys duplicadas no están permitidas."
+    # Create KV Items
+    KVI_CREA_006 = "KVI-CREA-006"
+    en_messages[KVI_CREA_006] = "Any new parameter must not be exists."
+    es_messages[KVI_CREA_006] = "Ningún nuevo parametro debe existir."
 
-    KVI_CREA_008 = "KVI-CREA-008"
-    en_messages[KVI_CREA_008] = "List must not be empty."
-    es_messages[KVI_CREA_008] = "La lista no debe estar vacía."
+    KVI_CREA_005 = "KVI-CREA-005"
+    en_messages[KVI_CREA_005] = "Rule not found."
+    es_messages[KVI_CREA_005] = "Regla no encontrada."
 
-    KVI_CREA_007 = "KVI-CREA-007"
-    en_messages[KVI_CREA_007] = "KV Parent ID not found."
-    es_messages[KVI_CREA_007] = "KV padre no fue encontrado."
+    KVI_CREA_004 = "KVI-CREA-004"
+    en_messages[KVI_CREA_004] = "Total of Parameters must be equal to total of KV Items."
+    es_messages[KVI_CREA_004] = "El total de Parámetros debe ser igual al total de KV Items."
 
+    KVI_CREA_003 = "KVI-CREA-003"
+    en_messages[KVI_CREA_003] = "All Parameters must be unique."
+    es_messages[KVI_CREA_003] = "Todos los Parametros deben ser únicos."
+
+    KVI_CREA_002 = "KVI-CREA-002"
+    en_messages[KVI_CREA_002] = "Nothing to update."
+    es_messages[KVI_CREA_002] = "Nada que actualizar."
+
+    KVI_CREA_001 = "KVI-CREA-001"
+    en_messages[KVI_CREA_001] = "Rule's ID or Name are mandatory."
+    es_messages[KVI_CREA_001] = "Id o nombre de Regla es obligatorio."
+
+    # Read KV Item
     KV_READ_003 = "KVI-READ-003"
     en_messages[KV_READ_003] = "KV Items not found."
     es_messages[KV_READ_003] = "No se encontrado Items del KV."
@@ -45,61 +60,6 @@ class Codes:
     KV_READ_001 = "KVI-READ-001"
     en_messages[KV_READ_001] = "KV ID must not be empty."
     es_messages[KV_READ_001] = "KV ID debe proporcionarse."
-
-    KV_CREA_003 = "KV-CREA-003"
-    en_messages[KV_CREA_003] = "KVS already exists."
-    es_messages[KV_CREA_003] = "KVS ya existe."
-
-    KV_CREA_002 = "KV-CREA-002"
-    en_messages[KV_CREA_002] = "KVS Name must be between 5 and 50 characters."
-    es_messages[KV_CREA_002] = "Nombre de KVS debe ser de 5 a 50 caracteres."
-
-    KV_CREA_001 = "KV-CREA-001"
-    en_messages[KV_CREA_001] = "KVS Name is mandatory."
-    es_messages[KV_CREA_001] = "Nombre de KVS es obligatorio."
-
-    # Save KV Item
-    KVI_SAVE_002 = "KVI-SAVE-002"
-    en_messages[KVI_SAVE_002] = "Total of Parameters must be equal to total of KV Items."
-    es_messages[KVI_SAVE_002] = "El total de Parámetros debe ser igual al total de KV Items."
-
-    KVI_SAVE_001 = "KVI-SAVE-001"
-    en_messages[KVI_SAVE_001] = "All Parameters must be unique."
-    es_messages[KVI_SAVE_001] = "Todos los Parámetros deber ser únicos."
-
-    # Create Container
-    CO_CREA_004 = "CO-CREA-004"
-    en_messages[CO_CREA_004] = "(Internal check) 'Is Full' is badformed."
-    es_messages[CO_CREA_004] = "(Internal check) 'Is Full' está mal formado."
-
-    CO_CREA_003 = "CO-CREA-003"
-    en_messages[CO_CREA_003] = "(Internal check) 'Is Node' is badformed."
-    es_messages[CO_CREA_003] = "(Internal check) 'Is Node' está mal formado."
-
-    CO_CREA_002 = "CO-CREA-002"
-    en_messages[CO_CREA_002] = "Container Name must be between 5 and 50 characters."
-    es_messages[CO_CREA_002] = "Container de Regla debe ser de 5 a 50 caracteres."
-
-    CO_CREA_001 = "CO-CREA-001"
-    en_messages[CO_CREA_001] = "Container Name is mandatory."
-    es_messages[CO_CREA_001] = "Nombre de Contenedor es obligatorio."
-
-    # Create Tenant
-    TE_CREA_004 = "TE-CREA-004"
-    en_messages[TE_CREA_004] = "Tenant Name already exists."
-    es_messages[TE_CREA_004] = "Nombre de Tenant ya existe."
-
-    TE_CREA_003 = "TE-CREA-003"
-    en_messages[TE_CREA_003] = "Tenant ID already exists."
-    es_messages[TE_CREA_003] = "ID de Tenant ya existe."
-
-    TE_CREA_002 = "TE-CREA-002"
-    en_messages[TE_CREA_002] = "Tenant Name must be between 5 and 50 characteres."
-    es_messages[TE_CREA_002] = "Nombre de Tenant debe ser entre 5 y 50 caracteres."
-
-    TE_CREA_001 = "TE-CREA-001"
-    en_messages[TE_CREA_001] = "Tenant ID must be between 1 and 99."
-    es_messages[TE_CREA_001] = "Id Tenant debe ser entre 1 y 99."
 
     # Read Rule
     RU_READ_006 = "RU-READ-006"
@@ -387,52 +347,24 @@ class Codes:
     en_messages[RU_CREA_003] = "Expression is mandatory."
     es_messages[RU_CREA_003] = "Expresión es obligatoria."
 
-    # Read Workflow
-    WF_READ_002 = "WF-READ-002"
-    en_messages[WF_READ_002] = "Workflow not found."
-    es_messages[WF_READ_002] = "No se encontró Workflow."
-
-    WF_READ_001 = "WF-READ-001"
-    en_messages[WF_READ_001] = "Workflow ID or name is mandatory."
-    es_messages[WF_READ_001] = "Nombre o ID de 'Workflow' es obligatorio."
-
-    # Create Workflow
-    WF_CREA_009 = "WF-CREA-009"
-    en_messages[WF_CREA_009] = "Rule with name {} already exists."
-    es_messages[WF_CREA_009] = "'Rule' con nombre {} ya existe.",
-
-    WF_CREA_008 = "WF-CREA-008"
-    en_messages[WF_CREA_008] = "All Rule Names must be unique."
-    es_messages[WF_CREA_008] = "Todos los nombres de 'Rule' debe ser únicos.",
-
-    WF_CREA_007 = "WF-CREA-007"
-    en_messages[WF_CREA_007] = "Rules. Operator must be 'AND', 'OR' or empty value."
-    es_messages[WF_CREA_007] = "'Rules'. Operador debe ser 'AND', 'OR' or vacío."
-
-    WF_CREA_006 = "WF-CREA-006"
-    en_messages[WF_CREA_006] = "At least one rule must be defined."
-    es_messages[WF_CREA_006] = "Al menos una 'Rule' debe ser definida."
-
-    WF_CREA_005 = "WF-CREA-005"
-    en_messages[WF_CREA_005] = "Rule Name must be between 5 and 50 characters."
-    es_messages[WF_CREA_005] = "Nombre de 'Rule' debe ser de 5 a 50 caracteres."
-
-    WF_CREA_004 = "WF-CREA-004"
-    en_messages[WF_CREA_004] = "Type Of must be 'BASE' or 'FULL' or 'NODE'."
-    es_messages[WF_CREA_004] = "'Rules'. Nombre y Expresión son obligatorios."
-
-    WF_CREA_003 = "WF-CREA-003"
-    en_messages[WF_CREA_003] = "A Workflow already exists with same name."
-    es_messages[WF_CREA_003] = "Un 'Workflow' ya existe con el mismo nombre."
-
-    WF_CREA_002 = "WF-CREA-002"
-    en_messages[WF_CREA_002] = "Workflow Name must be between 5 and 50 characters."
-    es_messages[WF_CREA_002] = "Nombre de 'Workflow' debe ser de 5 a 50 caracteres."
-
-    WF_CREA_001 = "WF-CREA-001"
-    en_messages[WF_CREA_001] = "Workflow Name must not be empty."
-    es_messages[WF_CREA_001] = "Nombre de 'Workflow' es requerido."
-
+    # Update Object
     OBJ_UPD_001 = "OBJ_UPD_001"
     en_messages[OBJ_UPD_001] = "No modificactions."
     es_messages[OBJ_UPD_001] = "Sin modificaciones."
+
+    # Create Tenant
+    TE_CREA_004 = "TE-CREA-004"
+    en_messages[TE_CREA_004] = "Tenant Name already exists."
+    es_messages[TE_CREA_004] = "Nombre de Tenant ya existe."
+
+    TE_CREA_003 = "TE-CREA-003"
+    en_messages[TE_CREA_003] = "Tenant ID already exists."
+    es_messages[TE_CREA_003] = "ID de Tenant ya existe."
+
+    TE_CREA_002 = "TE-CREA-002"
+    en_messages[TE_CREA_002] = "Tenant Name must be between 5 and 50 characteres."
+    es_messages[TE_CREA_002] = "Nombre de Tenant debe ser entre 5 y 50 caracteres."
+
+    TE_CREA_001 = "TE-CREA-001"
+    en_messages[TE_CREA_001] = "Tenant ID must be between 1 and 99."
+    es_messages[TE_CREA_001] = "Id Tenant debe ser entre 1 y 99."

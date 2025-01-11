@@ -27,7 +27,7 @@ class ReadRuleBizValidator(Validator):
         if rule is None:
             raise self.as_not_found(self._localizer.get(Codes.RU_READ_002))
 
-        if isinstance(rule, Rule):
+        if isinstance(rule, Rule) and request.full:
             request.parameters = self.__repository.parameter.read_by_parent_id(
                 request.rule_id)
             cases = self.__repository.case.read_by_parent_id(request.rule_id)

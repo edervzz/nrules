@@ -18,7 +18,6 @@ def read_rules_endpoint(tid=None, rule_id=None):
     rule_id, rule_name = Identification.get_object(rule_id, id_type)
 
     command = ReadRuleRequest(
-        tenant_id,
         rule_id,
         rule_name
     )

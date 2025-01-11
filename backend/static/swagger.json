@@ -214,6 +214,45 @@
                 }
             }
         },
+        "/nr/api/v1/t/{tid}/rules/{rid}/kv-items":{
+            "post": {
+                "summary": "Create rule's kv items",
+                "tags": [
+                    "KV Items"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/TenantID"
+                    },
+                    {
+                        "$ref": "#/parameters/RuleID"
+                    },
+                    {
+                        "$ref": "#/parameters/IdType"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NewConditionsRule"
+                        }  
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Rule's kv items saved"
+                    },
+                    "400": {
+                        "description": "Validation errors"
+                    }
+                }
+            }
+        },
         "/tenancy/api/v1/tenants": {
             "post": {
                 "summary": "Create a New Tenant",
@@ -437,6 +476,18 @@
                 }
             }
         },
+        "NewKVItemsRule":{
+            "type": "object",
+            "properties": {
+                "items":{
+                    "type":"array",
+                    "items": {
+                        "$ref": "#/definitions/KVItemRule"
+                    },
+                    "required": "false"
+                }
+            }
+        },
         "NewConditionsRule":{
             "type": "object",
             "properties": {
@@ -483,6 +534,45 @@
                     "maxLength": 50,
                     "required": true,
                     "example": "1000.98"
+                },   
+                "typeof": {
+                    "type": "string",
+                    "required": true,
+                    "enum": ["STRING", "NUMERIC", "DATE", "TIME", "DATETIME"],
+                    "default": "STRING"
+                },  
+                "is_active": {
+                    "type": "boolean",
+                    "default": true
+                },
+                "is_archived": {
+                    "type": "boolean",
+                    "default": false
+                }
+            }    
+        },
+        "KVItemRule": {
+            "type": "object",
+            "properties": {
+                "key": {
+                    "type": "string",
+                    "minLength": 5,
+                    "maxLength": 50,
+                    "required": true,
+                    "example": "total_amount"
+                },
+                "value": {
+                    "type": "string",
+                    "minLength": 5,
+                    "maxLength": 50,
+                    "required": true,
+                    "example": "1000.98"
+                },
+                "calculation": {
+                    "type": "string",
+                    "required": true,
+                    "enum": ["ADD", "MOD"],
+                    "default": "ADD"
                 },   
                 "typeof": {
                     "type": "string",

@@ -20,6 +20,7 @@ from .read_all_rule import read_all_rule_bp
 from .create_tenant import new_tenant_bp
 from .create_condition_rule import new_condition_rule_bp
 from .upd_condition_rule import upd_condition_rule_bp
+from .create_kvitem_rule import new_kvitem_rule_bp
 
 
 def register_endpoints(app: Flask, prefix: str):
@@ -27,6 +28,8 @@ def register_endpoints(app: Flask, prefix: str):
 
     app.register_blueprint(new_rule_bp, url_prefix=prefix)
     app.register_blueprint(update_rule_bp, url_prefix=prefix)
+
+    app.register_blueprint(new_kvitem_rule_bp, url_prefix=prefix)
 
     app.register_blueprint(new_condition_rule_bp, url_prefix=prefix)
     app.register_blueprint(upd_condition_rule_bp, url_prefix=prefix)

@@ -8,3 +8,4 @@ from .rule import RuleModel
 from .new_tenant import NewTenantModel
 from .new_conditions_rule import NewConditionsRuleModel
 from .upd_conditions_rule import UpdConditionsRuleModel
+from .new_kvitems_rule import NewKVItemsRuleModel

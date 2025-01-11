@@ -7,8 +7,7 @@ from domain.entities import Rule, Condition,  KVItem, Case, Parameter
 class ReadRuleRequest:
     """ Read Rule Request """
 
-    def __init__(self, tenantid: int, rule_id: str = "", rule_name: str = ""):
-        self.tenant_id = tenantid
+    def __init__(self, rule_id: str = "", rule_name: str = "", full: bool = True):
         self.rule_id = rule_id
         self.rule_name = rule_name
         self.rule: Rule = None
@@ -16,6 +15,8 @@ class ReadRuleRequest:
         self.cases: List[Case] = []
         self.conditions: List[Condition] = []
         self.kvs_items: List[KVItem] = []
+
+        self.full = full
 
 
 class ReadRuleResponse:

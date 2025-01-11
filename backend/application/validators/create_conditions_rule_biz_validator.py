@@ -1,7 +1,7 @@
 """ _module_ """
 from typing import List
 from application.messages import CreateConditionsRuleRequest
-from domain.entities import Rule, Parameter, Condition, ConditionGroup
+from domain.entities import Parameter, Condition, ConditionGroup, Rule
 from domain.ports import CoreRepository
 from toolkit import Validator, Localizer, Codes, Constants
 
@@ -23,7 +23,7 @@ class CreateConditionsRuleBizValidator(Validator):
         elif request.name != "":
             rule = self.repo.rule.read_by_external_id(request.name)
         if rule is None:
-            raise self.as_not_found(self.localizer.get(Codes.COND_CREA_008))
+            raise self.as_not_found(self.localizer.get(Codes.RU_READ_002))
         # retrieve parameters
         my_params: List[Parameter] = self.repo.parameter.read_by_parent_id(
             rule.id)

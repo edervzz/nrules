@@ -24,7 +24,8 @@ class CreateRuleHandler:
         validator.validate_and_throw(request)
         self.logger.info("request validated")
         # 2. business rule validation
-        biz_validator = CreateRuleBizValidator(self.repository, self.localizer)
+        biz_validator = CreateRuleBizValidator(
+            self.repository, self.logger, self.localizer)
         biz_validator.validate_and_throw(request)
         self.logger.info("business rules validated")
 

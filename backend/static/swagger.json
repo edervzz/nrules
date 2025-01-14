@@ -239,7 +239,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/NewConditionsRule"
+                            "$ref": "#/definitions/NewKVItemsRule"
                         }  
                     }
                 ],
@@ -370,12 +370,12 @@
         },
         "IdType":{
             "name": "idType",
-            "description": "Rule Identification Type",
+            "description": "Rule Identification Type.",
             "in": "query",
             "type": "string",
             "required": false,
-            "enum": ["__internal", "__external", "__default"],
-            "default": "__default"
+            "enum": ["__external", "__internal"],
+            "default": "__internal"
         },
         "PageNo":{
             "name": "pageNo",

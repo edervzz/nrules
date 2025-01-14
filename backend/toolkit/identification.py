@@ -10,11 +10,9 @@ class Identification:
     def get_object(cls, _id: str, id_type: str) -> tuple:
         """ return object identification """
 
-        if id_type is None:
+        if id_type is None or id_type == "" or id_type == "__internal":
             return _id, ""
-        if id_type == "" or id_type == "__internal":
-            return _id, ""
-        elif id_type == "__external" or id_type == "__default":
+        elif id_type == "__external":
             return "", _id
 
     @classmethod

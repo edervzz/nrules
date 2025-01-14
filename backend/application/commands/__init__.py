@@ -1,5 +1,5 @@
 """ Command Handlers """
-
+from .update_kvitems_rule_handler import UpdateKVItemsRuleHandler
 from .create_kvitems_rule_handler import CreateKVItemsRuleHandler
 from .update_conditions_rule_handler import UpdateConditionsRuleHandler
 from .create_conditions_rule_handler import CreateConditionsRuleHandler

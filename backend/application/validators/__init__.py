@@ -1,5 +1,7 @@
 """ Validators """
 
+from .update_kvitems_rule_biz_validator import UpdateKVItemsRuleBizValidator
+from .update_kvitems_rule_validator import UpdateKVItemsRuleValidator
 from .create_kvitems_rule_biz_validator import CreateKVItemsRuleBizValidator
 from .create_kvitems_rule_validator import CreateKVItemsRuleValidator
 from .update_conditions_rule_validator import UpdateConditionsRuleValidator

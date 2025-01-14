@@ -2,6 +2,7 @@
 
     Requests and Responses
 """
+from .update_kvitem_rule_message import UpdateKVItemsRuleRequest, UpdateKVItemsRuleResponse
 from .create_kvitem_rule_message import CreateKVItemsRuleRequest, CreateKVItemsRuleResponse
 from .create_condition_rule_message import CreateConditionsRuleRequest, CreateConditionsRuleResponse
 from .update_condition_rule_message import UpdateConditionsRuleRequest, UpdateConditionsRuleResponse

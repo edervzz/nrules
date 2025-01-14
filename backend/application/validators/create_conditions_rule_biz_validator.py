@@ -27,15 +27,6 @@ class CreateConditionsRuleBizValidator(Validator):
         # retrieve parameters
         my_params: List[Parameter] = self.repo.parameter.read_by_parent_id(
             rule.id)
-        # retrieve condition groups
-        my_cond_groups: List[ConditionGroup] = self.repo.condition_group.read_by_parent_id(
-            rule.id)
-        # retrieve conditions
-        my_conds: List[Condition] = []
-        for e_group in my_cond_groups:
-            x_conds = self.repo.condition.read_by_parent_id(e_group.id)
-            if isinstance(x_conds, list):
-                my_conds.extend(x_conds)
         # prepare and check new parameters
         for e_param in request.new_parameters:
             # confirm new condition must not be exists
@@ -46,6 +37,15 @@ class CreateConditionsRuleBizValidator(Validator):
 
             e_param.rule_id = rule.id
 
+        # retrieve condition groups
+        my_cond_groups: List[ConditionGroup] = self.repo.condition_group.read_by_parent_id(
+            rule.id)
+        # retrieve conditions
+        my_conds: List[Condition] = []
+        for e_group in my_cond_groups:
+            x_conds = self.repo.condition.read_by_parent_id(e_group.id)
+            if isinstance(x_conds, list):
+                my_conds.extend(x_conds)
         # check new conditions
         for e_cond in request.income_conditions:
             # confirm new condition must not be exists

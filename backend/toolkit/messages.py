@@ -23,9 +23,22 @@ class Codes:
     en_messages[RUNNER_001] = "Rule name and ID must not be empty."
     es_messages[RUNNER_001] = "Nombre o ID de regla son obligatorios."
 
+    # Update KV Items
+    KVI_UPD_003 = "KVI-UPD-003"
+    en_messages[KVI_UPD_003] = "All parameters must exists."
+    es_messages[KVI_UPD_003] = "Todos los parámetros deben existir."
+
+    KVI_UPD_002 = "KVI-UPD-002"
+    en_messages[KVI_UPD_002] = "Nothing to update."
+    es_messages[KVI_UPD_002] = "Nada que actualizar."
+
+    KVI_UPD_001 = "KVI-UPD-001"
+    en_messages[KVI_UPD_001] = "Rule's ID or Name are mandatory."
+    es_messages[KVI_UPD_001] = "Id o nombre de Regla es obligatorio."
+
     # Create KV Items
     KVI_CREA_006 = "KVI-CREA-006"
-    en_messages[KVI_CREA_006] = "Any new parameter must not be exists."
+    en_messages[KVI_CREA_006] = "Any new parameter must not exists."
     es_messages[KVI_CREA_006] = "Ningún nuevo parametro debe existir."
 
     KVI_CREA_005 = "KVI-CREA-005"

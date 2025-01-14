@@ -2,16 +2,16 @@
 import json
 from flask import Blueprint, request, Response, current_app
 from webapi.models import NewKVItemsRuleModel
-from application.messages import CreateKVItemsRuleRequest
-from application.commands import CreateKVItemsRuleHandler
+from application.messages import UpdateKVItemsRuleRequest
+from application.commands import UpdateKVItemsRuleHandler
 from toolkit import Identification
 
 
-new_kvitem_rule_bp = Blueprint("New KV Items by Rule", __name__)
+upd_kvitem_rule_bp = Blueprint("New KV Items by Rule", __name__)
 
 
-@new_kvitem_rule_bp.post("/t/<tid>/rules/<rid>/kv-items")
-def new_kvitems_rule_endpoint(tid=None, rid=None):
+@upd_kvitem_rule_bp.put("/t/<tid>/rules/<rid>/kv-items")
+def upd_kvitems_rule_endpoint(tid=None, rid=None):
     """ New Endpoint """
     tenant_id = Identification.get_tenant_safe(tid)
     id_type = request.args.get("idType", "")
@@ -23,13 +23,13 @@ def new_kvitems_rule_endpoint(tid=None, rid=None):
 
     save_kvitems_rule = NewKVItemsRuleModel(json.dumps(json_data))
 
-    command = CreateKVItemsRuleRequest(
+    command = UpdateKVItemsRuleRequest(
         rule_id,
         rule_name,
         save_kvitems_rule.kvitems
     )
 
-    CreateKVItemsRuleHandler(
+    UpdateKVItemsRuleHandler(
         current_app.config[str(tenant_id)],
         current_app.config["logger"],
         current_app.config["localizer"]

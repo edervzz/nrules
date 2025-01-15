@@ -27,7 +27,7 @@ class CoreAdapter(CoreRepository):
         "bXlzcWwrcHlteXNxbDovL3Jvb3Q6bXktc2VjcmV0LXB3QGxvY2FsaG9zdC9ucnVsZS1jb3Jl"
     """
 
-    def __init__(self, tid: int, connstr: str):
+    def __init__(self, tid, connstr: str):
         super().__init__()
         self.tid = int(tid)
         self.session: Session = None

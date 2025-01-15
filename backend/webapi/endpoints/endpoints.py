@@ -3,6 +3,7 @@
 import logging
 import os
 import base64
+import uuid
 from flask import Flask, Response, request, session
 from flask_swagger_ui import get_swaggerui_blueprint
 from werkzeug.exceptions import Conflict, BadRequest, NotFound
@@ -56,64 +57,33 @@ def register_endpoints(app: Flask, prefix: str):
     )
 
 
-def register_before_request(app: Flask):
-    """ Register \n
-        - Authorization
-        - Core Adapter by Tenant
-        - Language used on Localization
-    """
-
-    @app.before_request
-    def _():
-        """ Prepare core repository by tenant """
-
-        session["username"] = "eder@mail.com"  # extraer de jwt
-
-        langu = request.headers["Accept-Language"] if "Accept-Language" in request.headers else "EN"
-        with app.app_context():
-            localizer = app.config["localizer"]
-            if isinstance(localizer, Localizer):
-                localizer.set_langu(langu)
-
-            if "/t/" in request.url:
-                fromidx = request.url.index("/t/")
-                toidx = request.url.index("/", fromidx + 3)
-                tid = request.url[fromidx+3: toidx]
-
-                if not str(tid) in app.config:
-                    tenancy_repository = app.config["tenancy_repository"]
-
-                    if isinstance(tenancy_repository, TenancyRepository):
-                        tenant = tenancy_repository.tenant.read(tid)
-
-                        if isinstance(tenant, Tenants):
-                            app.config[str(tid)] = CoreAdapter(
-                                tid,
-                                base64.b64decode(tenant.option).decode("utf-8")
-                            )
-                        else:
-                            raise BadRequest(
-                                f'[{{"code":"TEN-001","message":"Tenant {tid} is not recognized."}}]')
-
-
-def register_services(app: Flask):
+def register_app_services(app: Flask):
     """ Register services:
-        - Tenancy Adapter
+        - Tenancy Repository
         - Logger
-        - Localizer
+        - Localizer    
     """
 
     with app.app_context():
-        app.config["tenancy_repository"] = TenancyAdapter(
-            os.environ["TENANT_DBUSER"],
-            os.environ["TENANT_DBPWD"],
-            os.environ["TENANT_DBSERVER"],
-            os.environ["TENANT_DBNAME"]
-        )
+        if not "tenancy_repository" in app.config:
+            app.config["tenancy_repository"] = TenancyAdapter(
+                os.environ["TENANT_DBUSER"],
+                os.environ["TENANT_DBPWD"],
+                os.environ["TENANT_DBSERVER"],
+                os.environ["TENANT_DBNAME"]
+            )
 
-        logging.basicConfig()
-        app.config["logger"] = logging.getLogger(__name__)
-        app.config["localizer"] = Localizer()
+        if not "logger" in app.config:
+            logging.basicConfig()
+            app.config["logger"] = logging.getLogger(__name__)
+
+        es_localizer = Localizer()
+        es_localizer.set_langu("ES")
+        app.config["es_localizer"] = es_localizer
+
+        en_localizer = Localizer()
+        en_localizer.set_langu("EN")
+        app.config["en_localizer"] = en_localizer
 
 
 def register_error_handlers(app: Flask):
@@ -140,3 +110,48 @@ def register_error_handlers(app: Flask):
         lambda error: Response(
             response=f'{{"messages":{error.description}}}', status=404, mimetype="application/json")
     )
+
+
+def register_request(app: Flask):
+    """ Register Request \n
+        - Username
+        - Localizer
+        - Repository
+    """
+
+    @app.before_request
+    def _():
+        """ _summary_ """
+        # Set username
+        session["username"] = "eder@mail.com"  # extraer de jwt
+        # Set localizer for each request
+        langu = request.headers["Accept-Language"] if "Accept-Language" in request.headers else "ES"
+        langu = f"{langu.lower()}_localizer"
+        session["localizer"] = langu
+        # Set repository by core tenant
+        if "/t/" in request.url:
+            # Calculate tenant id
+            fromidx = request.url.index("/t/")
+            toidx = request.url.index("/", fromidx + 3)
+            tid = request.url[fromidx+3: toidx]
+            session["tenant_id"] = tid
+            # Prepare core repository
+            if not tid in app.config:
+                tr = app.config["tenancy_repository"]
+                if isinstance(tr, TenancyRepository):
+                    tenant = tr.tenant.read(tid)
+                    if isinstance(tenant, Tenants):
+                        with app.app_context():
+                            app.config[tid] = CoreAdapter(
+                                tid,
+                                base64.b64decode(tenant.option).decode("utf-8"))
+                    else:
+                        raise BadRequest(
+                            f'[{{"code":"TEN-001","message":"Tenant {tid} is not recognized."}}]')
+
+            # Set idempotency
+            if request.method != "GET":
+                session["idempotency_token"] = request.headers["Idempotency-Key"] if "Idempotency-Key" in request.headers else uuid.uuid4()
+                core_adapter = app.config[tid]
+                if isinstance(core_adapter, CoreAdapter):
+                    pass

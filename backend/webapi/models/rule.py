@@ -12,7 +12,6 @@ class RuleModel:
 
     def __init__(
             self,
-            tenantid,
             _id,
             name,
             rule_type,
@@ -24,7 +23,6 @@ class RuleModel:
             conditions: List[Condition],
             kv_items: List[KVItem]
     ):
-        self.tenant_id = tenantid
         self.id = _id
         self.name = name
         self.rule_type = rule_type

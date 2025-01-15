@@ -12,7 +12,6 @@ def hello_endpoint(tid: int = None):
 
     try:
         core_repository = current_app.config[str(tid)]
-
         if isinstance(core_repository, CoreRepository):
             result = core_repository.health_check()
             migrations = []

@@ -18,9 +18,10 @@ class CreateRuleBizValidator(Validator):
         """ Validate request format """
         rule: Rule = None
         if request.rule.id != "":
-            rule = self.repo.rule.read(request.id)
+            rule = self.repo.rule.read(request.rule.id)
         elif request.rule.name != "":
-            rule = self.repo.rule.read_by_external_id(request.name)
+            rule = self.repo.rule.read_by_external_id(request.rule.name)
+
         if rule is None:
             raise self.as_not_found(self.localizer.get(Codes.RU_READ_002))
 

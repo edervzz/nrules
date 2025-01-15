@@ -1,6 +1,6 @@
 """ Create a new workflow """
 import json
-from flask import Blueprint, request, Response, current_app
+from flask import Blueprint, request, Response, current_app, session
 from webapi.models import NewKVItemsRuleModel
 from application.messages import CreateKVItemsRuleRequest
 from application.commands import CreateKVItemsRuleHandler
@@ -13,7 +13,7 @@ new_kvitem_rule_bp = Blueprint("New KV Items by Rule", __name__)
 @new_kvitem_rule_bp.post("/t/<tid>/rules/<rid>/kv-items")
 def new_kvitems_rule_endpoint(tid=None, rid=None):
     """ New Endpoint """
-    tenant_id = Identification.get_tenant_safe(tid)
+    Identification.get_tenant_safe(tid)
     id_type = request.args.get("idType", "")
     rule_id, rule_name = Identification.get_object(rid, id_type)
 
@@ -30,9 +30,9 @@ def new_kvitems_rule_endpoint(tid=None, rid=None):
     )
 
     CreateKVItemsRuleHandler(
-        current_app.config[str(tenant_id)],
+        current_app.config[tid],
         current_app.config["logger"],
-        current_app.config["localizer"]
+        current_app.config[session["localizer"]]
     ).handler(command)
 
     return Response(

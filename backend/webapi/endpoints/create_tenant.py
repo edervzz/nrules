@@ -1,6 +1,6 @@
 """ Create a new tenant """
 import json
-from flask import Blueprint, request, Response, current_app
+from flask import Blueprint, request, Response, current_app, session
 from webapi.models import NewTenantModel
 from application.messages import CreateTenantRequest
 from application.commands import CreateTenantHandler
@@ -28,7 +28,7 @@ def new_tenant_endpoint():
     result = CreateTenantHandler(
         current_app.config["tenancy_repository"],
         current_app.config["logger"],
-        current_app.config["localizer"]
+        current_app.config[session["localizer"]]
     ).handler(command)
 
     return Response(

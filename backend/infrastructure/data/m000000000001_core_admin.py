@@ -1,8 +1,8 @@
 """ migration file """
 
 from datetime import datetime
-from sqlalchemy import Column, BigInteger, String
-from sqlalchemy import MetaData, Table,   Engine, select
+from sqlalchemy import Column, String, DateTime
+from sqlalchemy import MetaData, Table, CheckConstraint, Engine, select
 from sqlalchemy.orm import Session
 from domain.entities import Migrations
 from .audit import set_auditable
@@ -21,17 +21,42 @@ def core_admin(engine: Engine) -> str:
         if result is not None:
             return result.id
 
-    # XObject Storage ----------------------------------------------
-    xobjects = Table(
-        "xobjects",
+    # Idempotency Storage ----------------------------------------------
+    idempotency = Table(
+        "idempotency",
         metadata_obj,
         Column(
-            "id", BigInteger, primary_key=True, autoincrement=True, comment="ID for Variants, Rules, Workflow, Actions, KVS"),
+            "id", String(80),
+            primary_key=True,
+            autoincrement=True,
+            comment="ID for idempotency"),
         Column(
-            "object_name", String(50), nullable=False, comment="Rules / Workflows / Actions / KVS"),
-        comment="Variant is a container for many Key-Values"
+            "status", String(3),
+            CheckConstraint(
+                "status = 'NEW' OR status = 'WIP' OR status = 'OK' OR status = 'NOK'", name="idempotency_chk_status"),
+            nullable=True,
+            comment="Status"),
+        Column(
+            "http_code", String(3),
+            nullable=False,
+            comment=""),
+        Column(
+            "headers", String(),
+            nullable=False,
+            comment=""),
+        Column(
+            "response", String(),
+            nullable=False,
+            comment=""),
+        Column(
+            "start_at", DateTime,
+            comment="Start At", nullable=True),
+        Column(
+            "end_at", DateTime,
+            comment="End At", nullable=True),
+        comment="Idempotency"
     )
-    set_auditable(xobjects)
+    set_auditable(idempotency)
 
     metadata_obj.create_all(engine)
 

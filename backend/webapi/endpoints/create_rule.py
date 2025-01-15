@@ -1,6 +1,6 @@
 """ Create a new Rule """
 import json
-from flask import Blueprint, request, Response, current_app
+from flask import Blueprint, request, Response, current_app, session
 from flask_cors import cross_origin
 from webapi.models import NewRuleModel
 from application.messages import CreateRuleRequest
@@ -15,7 +15,7 @@ new_rule_bp = Blueprint("New Rule", __name__)
 @new_rule_bp.post("/t/<tid>/rules")
 def new_rules_endpoint(tid=None):
     """ New rules Endpoint """
-    tenant_id = Identification.get_tenant_safe(tid)
+    Identification.get_tenant_safe(tid)
     json_data = request.get_json(silent=True)
     if json_data is None:
         return
@@ -30,15 +30,15 @@ def new_rules_endpoint(tid=None):
     )
 
     result = CreateRuleHandler(
-        current_app.config[str(tid)],
+        current_app.config[tid],
         current_app.config["logger"],
-        current_app.config["localizer"]
+        current_app.config[session["localizer"]]
     ).handler(command)
 
     return Response(
         response="",
         status=201,
         headers=[
-            ("Item", f"/t/{tenant_id}/rules/{result.id}"),
+            ("Item", f"/t/{tid}/rules/{result.id}"),
         ]
     )

@@ -1,6 +1,6 @@
 """ Read all rules paginated """
 import json
-from flask import Blueprint, Response, request, current_app
+from flask import Blueprint, Response, request, current_app, session
 from flask_cors import cross_origin
 from application.messages import ReadAllRulesRequest
 from application.queries import ReadAllRulesHandler
@@ -13,14 +13,12 @@ read_all_rule_bp = Blueprint("Read All Rules", __name__)
 @read_all_rule_bp.get("/t/<tid>/rules")
 def read_all_rules_endpoint(tid=None):
     """ Read rules Endpoint """
-
-    tenant_id = int(tid)
     page_no = request.args.get("pageNo", "1")
-    page_size = request.args.get("pageSize", "5")
+    page_size = request.args.get("pageSize", "10")
     word = request.args.get("word", "")
     tag = request.args.get("tag", "")
     command = ReadAllRulesRequest(
-        tenant_id,
+        tid,
         int(page_no),
         int(page_size),
         word,
@@ -28,22 +26,21 @@ def read_all_rules_endpoint(tid=None):
     )
 
     result = ReadAllRulesHandler(
-        current_app.config[str(tid)],
+        current_app.config[tid],
         current_app.config["logger"],
-        current_app.config["localizer"]
+        current_app.config[session["localizer"]]
     ).handler(command)
 
     if result.rules is not None:
         rules = []
         for r in result.rules:
             rule = RuleModel(
-                tenant_id,
                 r.id,
                 r.name,
                 r.rule_type,
                 r.strategy,
                 r.version,
-                None, None, None, None)
+                True, None, None, None, None)
             rules.append(rule)
     else:
         rules = None

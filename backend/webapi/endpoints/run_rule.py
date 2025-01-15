@@ -1,6 +1,6 @@
 """ Run Rule """
 import json
-from flask import Blueprint, request, Response, current_app
+from flask import Blueprint, request, Response, current_app, session
 from application.messages import RunRuleRequest
 from application.commands import RunRuleHandler
 from webapi.models import RunRule
@@ -21,6 +21,7 @@ def run_rule_endpoint(tid: int = 0, rid: int = 0):
     js = json.dumps(json_data)
     data = json.loads(js)
 
+    payload = any
     if "data" in data:
         payload = data["data"]
 
@@ -32,9 +33,9 @@ def run_rule_endpoint(tid: int = 0, rid: int = 0):
     )
 
     result = RunRuleHandler(
-        current_app.config[str(tid)],
+        current_app.config[tid],
         current_app.config["logger"],
-        current_app.config["localizer"]
+        current_app.config[session["localizer"]]
     ).handler(command)
 
     res = RunRule(result.ok, result.rule_results, result.trace)

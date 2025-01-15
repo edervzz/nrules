@@ -1,6 +1,6 @@
 """ Update Rule """
 import json
-from flask import Blueprint, request, Response, current_app
+from flask import Blueprint, request, Response, current_app, session
 from webapi.models import UpdateRuleModel
 from application.messages import UpdateRuleRequest
 from application.commands import UpdateRuleHandler
@@ -30,9 +30,9 @@ def update_rules_endpoint(tid=None, rid=None):
     )
 
     result = UpdateRuleHandler(
-        current_app.config[str(tid)],
+        current_app.config[tid],
         current_app.config["logger"],
-        current_app.config["localizer"]
+        current_app.config[session["localizer"]]
     ).handler(command)
 
     return Response(

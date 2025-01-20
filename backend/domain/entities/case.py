@@ -1,8 +1,8 @@
 """ Entities """
-from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
-from .extra_fields import Auditable, TenantSpecific
+from sqlalchemy.orm import Mapped
 from .base import Base
+from .extra_fields import Auditable, TenantSpecific
 
 
 class Case(Base, TenantSpecific, Auditable):
@@ -17,11 +17,7 @@ class Case(Base, TenantSpecific, Auditable):
 
     id: Mapped[str] = mapped_column(primary_key=True, nullable=False)
 
-    rule_id: Mapped[str] = mapped_column(primary_key=True, nullable=False)
-
-    condition_group_id: Mapped[str] = mapped_column(nullable=True)
-
-    kvs_id: Mapped[int] = mapped_column(nullable=True)
+    rule_id: Mapped[str] = mapped_column(nullable=False)
 
     position: Mapped[int] = mapped_column(nullable=False)
 

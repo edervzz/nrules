@@ -21,24 +21,12 @@ class CreateRuleValidator(Validator):
         request.rule.id = str(uuid.uuid4())
         request.rule.is_active = True
         request.rule.is_archived = False
-        # default kvs
-        request.default_kvs.id = str(uuid.uuid4())
-        request.default_kvs.rule_id = request.rule.id
-        request.rule.default_kvs_id = request.default_kvs.id
-        # condition group
-        request.condition_group.id = str(uuid.uuid4())
-        request.condition_group.rule_id = request.rule.id
-        # kvs for case
-        request.kvs.id = str(uuid.uuid4())
-        request.kvs.rule_id = request.rule.id
         # case
-        request.default_case.id = str(uuid.uuid4())
-        request.default_case.rule_id = request.rule.id
-        request.default_case.position = 1
-        request.default_case.condition_group_id = request.condition_group.id
-        request.default_case.kvs_id = request.kvs.id
-        request.default_case.is_active = True
-        request.default_case.is_archived = False
+        request.case_zero.id = str(uuid.uuid4())
+        request.case_zero.rule_id = request.rule.id
+        request.case_zero.position = 0
+        request.case_zero.is_active = True
+        request.case_zero.is_archived = False
         # lists of conditions and kv-items
         request.conditions = []
         request.kv_items = []
@@ -59,12 +47,9 @@ class CreateRuleValidator(Validator):
                 # prepare condition
                 onecond = Condition()
                 onecond.variable = e_param.key
-                onecond.condition_group_id = request.condition_group.id
+                onecond.case_id = request.case_zero.id
                 onecond.operator = "EQ"
                 onecond.value = ""
-                onecond.typeof = e_param.typeof
-                onecond.is_active = True
-                onecond.is_archived = False
                 # validate condition
                 condition_validator = ConditionValidator(self.local, False)
                 condition_validator.validate_and_throw(onecond)
@@ -74,12 +59,9 @@ class CreateRuleValidator(Validator):
                 # prepare kv item
                 kvi = KVItem()
                 kvi.key = e_param.key
-                kvi.kv_id = request.kvs.id
+                kvi.case_id = request.case_zero.id
                 kvi.value = ""
                 kvi.calculation = "ADD"
-                kvi.typeof = e_param.typeof
-                kvi.is_active = True
-                kvi.is_archived = False
                 # validate kv item
                 kvi_validator = KVItemValidator(self.local, False)
                 kvi_validator.validate_and_throw(kvi)

@@ -31,16 +31,7 @@ class CreateRuleHandler:
         self.repository.begin()
 
         self.repository.rule.create(request.rule)
-        self.repository.kvs.create(request.default_kvs)
-        self.repository.case.create(request.default_case)
-
-        self.repository.condition_group.create(request.condition_group)
-        for x in request.conditions:
-            self.repository.condition.create(x)
-
-        self.repository.kvs.create(request.kvs)
-        for x in request.kv_items:
-            self.repository.kvitem.create(x)
+        self.repository.case.create(request.case_zero)
 
         for x in request.parameters:
             self.repository.parameter.create(x)

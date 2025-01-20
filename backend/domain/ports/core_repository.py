@@ -2,19 +2,12 @@
 from abc import ABC, abstractmethod
 from .abstractions import Creator, Updater
 from .abstractions import ReaderByParentID, ReaderPagination
-from .abstractions import ReaderSingle, ReaderSingleByExternalID
+from .abstractions import ReaderSingle, ReaderSingleByExternalID, ReaderByLink
 
 
-class KVSRepository(ABC, Creator, ReaderSingle, ReaderByParentID):
-    """_summary_"""
-
-    def __init__(self, engine):
-        ABC.__init__(self)
-        Creator.__init__(self)
-        self.engine = engine
-
-
-class KVItemRepository(ABC, Creator, Updater, ReaderSingle, ReaderByParentID):
+class KVItemRepository(
+        ABC, Creator, Updater, ReaderSingle, ReaderByParentID,
+        ReaderByLink):
     """_summary_"""
 
     def __init__(self, engine):
@@ -56,20 +49,9 @@ class ParametersRepository(
         self.engine = engine
 
 
-class ConditionGroupRepository(
-        ABC, Creator, Updater,
-        ReaderSingle, ReaderByParentID):
-    """_summary_"""
-
-    def __init__(self, engine):
-        ABC.__init__(self)
-        Creator.__init__(self)
-        self.engine = engine
-
-
 class ConditionRepository(
         ABC, Creator, Updater,
-        ReaderSingle, ReaderByParentID):
+        ReaderSingle, ReaderByParentID, ReaderByLink):
     """_summary_"""
 
     def __init__(self, engine):
@@ -94,11 +76,9 @@ class CoreRepository:
 
     # "mysql+pymysql://root:my-secret-pw@localhost/nrule-core", echo=True)
     def __init__(self):
-        self.kvs: KVSRepository
         self.kvitem: KVItemRepository
         self.rule: RuleRepository
         self.condition: ConditionRepository
-        self.condition_group: ConditionGroupRepository
         self.case: CaseRepository
         self.parameter: ParametersRepository
         self.tag: TagRepository

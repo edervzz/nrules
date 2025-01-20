@@ -1,7 +1,7 @@
 """_summary_"""
 from typing import List
 from sqlalchemy.orm import Session
-from domain.entities import Parameter
+from domain.entities import Parameter, ParameterKey
 from domain.ports import ParametersRepository
 
 
@@ -26,10 +26,12 @@ class ParameterAdapter(ParametersRepository):
         param.is_active = entity.is_active
         param.is_archived = entity.is_archived
 
-    def read(self, _id) -> Parameter:
+    def read(self, _id: ParameterKey) -> Parameter:
         with Session(self.engine) as session:
             parameters = session.query(Parameter).where(
-                Parameter.key == _id).one_or_none()
+                Parameter.rule_id == _id.rule_id,
+                Parameter.key == _id.key,
+                Parameter.usefor == _id.usefor).one_or_none()
             return parameters
 
     def read_by_parent_id(self, parent_id: int) -> List[Parameter]:

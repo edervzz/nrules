@@ -19,24 +19,34 @@ class ConditionAdapter(ConditionRepository):
     def update(self,  entity: Condition):
         condition = self.session.query(Condition).where(
             Condition.variable == entity.variable,
-            Condition.condition_group_id == entity.condition_group_id
+            Condition.case_id == entity.case_id
         ).one_or_none()
 
         condition.operator = entity.operator
         condition.value = entity.value
-        condition.typeof = entity.typeof
-        condition.is_active = entity.is_active
-        condition.is_archived = entity.is_archived
 
     def read(self, _id: ConditionKey) -> Condition:
         with Session(self.engine) as session:
             condition = session.query(Condition).where(
                 Condition.variable == _id.variable,
-                Condition.condition_group_id == _id.condition_group_id).one_or_none()
+                Condition.case_id == _id.cas).one_or_none()
             return condition
 
     def read_by_parent_id(self, parent_id: str) -> List[Condition]:
         with Session(self.engine) as session:
             conditions = session.query(Condition).where(
-                Condition.condition_group_id == parent_id).all()
+                Condition.case_id == parent_id).all()
+            return conditions
+
+    def read_by_link(self, link_id) -> List[Condition]:
+        with Session(self.engine) as session:
+            conditions = session.query(Condition).where(
+                Condition.rule_id == link_id).all()
+            return conditions
+
+    def read_by_link_single(self, link_id, _id):
+        with Session(self.engine) as session:
+            conditions = session.query(Condition).where(
+                Condition.rule_id == link_id,
+                Condition.variable == _id).one_or_none()
             return conditions

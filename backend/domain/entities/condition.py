@@ -16,15 +16,10 @@ class Condition(Base, TenantSpecific, Auditable):
 
     variable: Mapped[str] = mapped_column(primary_key=True, nullable=False)
 
-    condition_group_id: Mapped[str] = mapped_column(
-        primary_key=True, nullable=False)
+    case_id: Mapped[str] = mapped_column(primary_key=True, nullable=False)
+
+    rule_id: Mapped[str] = mapped_column(nullable=False)
 
     operator: Mapped[str] = mapped_column(nullable=False)
 
     value: Mapped[str] = mapped_column(nullable=False)
-
-    typeof: Mapped[str] = mapped_column(nullable=False)
-
-    is_active: Mapped[bool] = mapped_column(nullable=False)
-
-    is_archived: Mapped[bool] = mapped_column(nullable=True)

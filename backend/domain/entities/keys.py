@@ -4,9 +4,18 @@
 class KVItemKey:
     """ KV Item Key """
 
-    def __init__(self, kvid: int, key: int):
-        self.kv_id = kvid
+    def __init__(self, case_id: int, key: int):
+        self.case_id = case_id
         self.key = key
+
+
+class ParameterKey:
+    """ Parameter Key """
+
+    def __init__(self, rule_id: str, key: str, usefor: str):
+        self.rule_id = rule_id
+        self.key = key
+        self.usefor = usefor
 
 
 class HistoricalKey:
@@ -21,6 +30,6 @@ class HistoricalKey:
 class ConditionKey:
     """ Condition Key """
 
-    def __init__(self, variable: str, condition_group_id: str) -> None:
+    def __init__(self, variable: str, case_id: str) -> None:
         self.variable = variable
-        self.condition_group_id = condition_group_id
+        self.case_id = case_id

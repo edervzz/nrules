@@ -20,20 +20,6 @@ def core_tables(engine: Engine) -> str:
         if result is not None:
             return result.id
 
-    # Key-Value Storage ----------------------------------------------
-    kvs = Table(
-        "kvs",
-        metadata_obj,
-        Column(
-            "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
-        Column(
-            "id", String(36), primary_key=True, comment="Key-Value Storage ID"),
-        Column(
-            "rule_id", String(36), primary_key=False, comment="Rule ID"),
-        comment="KVS is a container for many Key-Values"
-    )
-    set_auditable(kvs)
-
     # Key-Value Items ----------------------------------------------
     kvitems = Table(
         "kv_items",
@@ -43,25 +29,21 @@ def core_tables(engine: Engine) -> str:
         Column(
             "key", String(50), primary_key=True, comment="Key"),
         Column(
-            "kv_id", String(36), primary_key=True, comment="Key-Value Storage ID"),
+            "case_id", String(36), primary_key=True, comment="Case ID"),
+        Column(
+            "rule_id", String(36), primary_key=False, comment="Rule ID"),
         Column(
             "value", String(500), nullable=False, comment="Value"),
         Column(
             "calculation", String(3), CheckConstraint("calculation = 'ADD' OR calculation = 'MOD' OR calculation = 'FN'", name="kv_items_chk_calculation"), nullable=True, comment="Calculation method"),
-        Column(
-            "typeof", String(10), CheckConstraint("typeof = 'JSON' OR typeof = 'STRING' OR typeof = 'NUMERIC' OR typeof = 'DATE' OR typeof = 'TIME' OR typeof = 'DATETIME'", name="kv_items_chk_usefor"), nullable=True, comment="Type of value. E.g. 'json', 'string', 'int'"),
-        Column(
-            "is_active", Boolean, nullable=False, comment="Kv Item is Active"),
-        Column(
-            "is_archived", Boolean, nullable=False, comment="KV Item is Archived"),
-        UniqueConstraint("tenant_id", "kv_id", "key", name="kv_items_unk"),
+        UniqueConstraint("tenant_id", "case_id", "key", name="kv_items_unk"),
         comment="KV Item can be assign to single one KVS"
     )
     set_auditable(kvitems)
     Index(
         "ix_kv_items_001",
         kvitems.c.tenant_id,
-        kvitems.c.kv_id)
+        kvitems.c.case_id)
 
     # Rules ----------------------------------------------
     rule = Table(
@@ -77,8 +59,6 @@ def core_tables(engine: Engine) -> str:
             "rule_type", String(6), CheckConstraint("rule_type = 'MATRIX' OR rule_type = 'TREE'", name="rules_chk_rule_type"), nullable=False, comment="Type of Rule (MATRIX, TREE)"),
         Column(
             "strategy", String(5), CheckConstraint("strategy = 'EARLY' OR strategy = 'BASE' OR strategy = 'ALL'", name="rules_chk_strategy"), nullable=False, comment="Strategy of rule depending of Type"),
-        Column(
-            "default_kvs_id", String(36), nullable=True, comment="KVS associated when no condition was success"),
         Column(
             "is_active", Boolean, nullable=False, comment="Rule is Active"),
         Column(
@@ -119,10 +99,6 @@ def core_tables(engine: Engine) -> str:
         Column(
             "rule_id", String(36), primary_key=True, comment="Rule ID"),
         Column(
-            "condition_group_id", String(36), nullable=True, comment="Condition Parent ID"),
-        Column(
-            "kvs_id", String(36), nullable=True, comment="KVS associated when condition was ok"),
-        Column(
             "position", Integer, nullable=False, comment="Position"),
         Column(
             "is_active", Boolean, nullable=False, comment="Case is Active"),
@@ -136,20 +112,6 @@ def core_tables(engine: Engine) -> str:
         cases.c.tenant_id,
         cases.c.rule_id)
 
-    # condition group  ----------------------------------------------
-    condition_group = Table(
-        "condition_groups",
-        metadata_obj,
-        Column(
-            "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
-        Column(
-            "id", String(36), primary_key=True, comment="Condition Group ID"),
-        Column(
-            "rule_id", String(36), primary_key=False, nullable=False, comment="Rule ID"),
-        comment="Matrix's Columns. Set expressions to evaluate"
-    )
-    set_auditable(condition_group)
-
     # conditions  ----------------------------------------------
     conditions = Table(
         "conditions",
@@ -159,17 +121,13 @@ def core_tables(engine: Engine) -> str:
         Column(
             "variable", String(50), primary_key=True, nullable=False, comment="Variable Name"),
         Column(
-            "condition_group_id", String(36), primary_key=True, comment="Condition Group ID"),
+            "case_id", String(36), primary_key=True, comment="Case ID"),
+        Column(
+            "rule_id", String(36), primary_key=False, comment="Rule ID"),
         Column(
             "operator", String(10), nullable=False, comment="Operator"),
         Column(
             "value", String(50), nullable=False, comment="Value"),
-        Column(
-            "typeof", String(10), CheckConstraint("typeof = 'STRING' OR typeof = 'NUMERIC' OR typeof = 'DATE' OR typeof = 'TIME' OR typeof = 'DATETIME'", name="conditions_chk_usefor"), nullable=False, comment="Type of Value"),
-        Column(
-            "is_active", Boolean, nullable=False, comment="Condition is Active"),
-        Column(
-            "is_archived", Boolean, nullable=False, comment="Condition is Archived"),
         comment="Matrix's Columns. Set expressions to evaluate"
     )
     set_auditable(conditions)

@@ -15,14 +15,10 @@ class KVItem(Base, TenantSpecific, Auditable):
 
     key: Mapped[str] = mapped_column(primary_key=True, nullable=False)
 
-    kv_id: Mapped[str] = mapped_column(primary_key=True, nullable=False)
+    case_id: Mapped[str] = mapped_column(primary_key=True, nullable=False)
+
+    rule_id: Mapped[str] = mapped_column(nullable=False)
 
     value: Mapped[str] = mapped_column(nullable=False)
 
     calculation: Mapped[str] = mapped_column(nullable=True)
-
-    typeof: Mapped[str] = mapped_column(nullable=True)
-
-    is_active: Mapped[bool] = mapped_column(nullable=False)
-
-    is_archived: Mapped[bool] = mapped_column(nullable=True)

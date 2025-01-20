@@ -4,8 +4,8 @@
 """
 from .update_kvitem_rule_message import UpdateKVItemsRuleRequest, UpdateKVItemsRuleResponse
 from .create_kvitem_rule_message import CreateKVItemsRuleRequest, CreateKVItemsRuleResponse
-from .create_condition_rule_message import CreateConditionsRuleRequest, CreateConditionsRuleResponse
-from .update_condition_rule_message import UpdateConditionsRuleRequest, UpdateConditionsRuleResponse
+from .create_parameters_rule_message import CreateParamtersRuleRequest, CreateParametersRuleResponse
+from .update_parameters_rule_message import UpdateParametersRuleRequest, UpdateParametersRuleResponse
 from .run_rule_message import RunRuleRequest, RunRuleResponse
 from .read_kvs_message import ReadKVSRequest, ReadKVSResponse
 from .create_tenant_message import CreateTenantRequest, CreateTenantResponse

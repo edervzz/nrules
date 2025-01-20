@@ -1,9 +1,9 @@
 """ Create a new workflow """
 import json
 from flask import Blueprint, request, Response, current_app, session
-from webapi.models import NewConditionsRuleModel
-from application.messages import CreateConditionsRuleRequest
-from application.commands import CreateConditionsRuleHandler
+from webapi.models import NewParametersRuleModel
+from application.messages import CreateParamtersRuleRequest
+from application.commands import CreateParametersRuleHandler
 from toolkit import Identification
 
 
@@ -21,15 +21,15 @@ def new_conditions_rule_endpoint(tid=None, rid=None):
     if json_data is None:
         return
 
-    save_condition_rule = NewConditionsRuleModel(json.dumps(json_data))
+    save_condition_rule = NewParametersRuleModel(json.dumps(json_data))
 
-    command = CreateConditionsRuleRequest(
+    command = CreateParamtersRuleRequest(
         rule_id,
         rule_name,
-        save_condition_rule.conditions
+        save_condition_rule.parameters
     )
 
-    CreateConditionsRuleHandler(
+    CreateParametersRuleHandler(
         current_app.config[tid],
         current_app.config["logger"],
         current_app.config[session["localizer"]]

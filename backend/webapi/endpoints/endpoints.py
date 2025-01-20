@@ -19,9 +19,10 @@ from .create_rule import new_rule_bp
 from .update_rule import update_rule_bp
 from .read_all_rule import read_all_rule_bp
 from .create_tenant import new_tenant_bp
-from .create_condition_rule import new_condition_rule_bp
-from .upd_condition_rule import upd_condition_rule_bp
+from .create_parameters_rule import new_condition_rule_bp
+from .upd_parameters_rule import upd_parameters_rule_bp
 from .create_kvitem_rule import new_kvitem_rule_bp
+from .upd_kvitem_rule import upd_kvitem_rule_bp
 
 
 def register_endpoints(app: Flask, prefix: str):
@@ -31,9 +32,10 @@ def register_endpoints(app: Flask, prefix: str):
     app.register_blueprint(update_rule_bp, url_prefix=prefix)
 
     app.register_blueprint(new_kvitem_rule_bp, url_prefix=prefix)
+    app.register_blueprint(upd_kvitem_rule_bp, url_prefix=prefix)
 
     app.register_blueprint(new_condition_rule_bp, url_prefix=prefix)
-    app.register_blueprint(upd_condition_rule_bp, url_prefix=prefix)
+    app.register_blueprint(upd_parameters_rule_bp, url_prefix=prefix)
 
     app.register_blueprint(read_all_rule_bp, url_prefix=prefix)
     app.register_blueprint(read_rule_bp, url_prefix=prefix)
@@ -78,38 +80,12 @@ def register_app_services(app: Flask):
             app.config["logger"] = logging.getLogger(__name__)
 
         es_localizer = Localizer()
-        es_localizer.set_langu("ES")
+        es_localizer.set_langu("es")
         app.config["es_localizer"] = es_localizer
 
         en_localizer = Localizer()
-        en_localizer.set_langu("EN")
+        en_localizer.set_langu("en")
         app.config["en_localizer"] = en_localizer
-
-
-def register_error_handlers(app: Flask):
-    """ Register error handlers 
-        - Bad Request
-        - Conflict 
-        - Not Found 
-    """
-
-    app.register_error_handler(
-        BadRequest,
-        lambda error: Response(
-            response=f'{{"messages":{error.description}}}', status=400, mimetype="application/json")
-    )
-
-    app.register_error_handler(
-        Conflict,
-        lambda error: Response(
-            response=f'{{"messages":{error.description}}}', status=409, mimetype="application/json")
-    )
-
-    app.register_error_handler(
-        NotFound,
-        lambda error: Response(
-            response=f'{{"messages":{error.description}}}', status=404, mimetype="application/json")
-    )
 
 
 def register_request(app: Flask):
@@ -125,8 +101,11 @@ def register_request(app: Flask):
         # Set username
         session["username"] = "eder@mail.com"  # extraer de jwt
         # Set localizer for each request
-        langu = request.headers["Accept-Language"] if "Accept-Language" in request.headers else "ES"
-        langu = f"{langu.lower()}_localizer"
+        langu = request.headers["Accept-Language"] if "Accept-Language" in request.headers else "es"
+        if "es" in langu:
+            langu = "es_localizer"
+        elif "en" in langu:
+            langu = "en_localizer"
         session["localizer"] = langu
         # Set repository by core tenant
         if "/t/" in request.url:
@@ -155,3 +134,29 @@ def register_request(app: Flask):
                 core_adapter = app.config[tid]
                 if isinstance(core_adapter, CoreAdapter):
                     pass
+
+
+def register_error_handlers(app: Flask):
+    """ Register error handlers 
+        - Bad Request
+        - Conflict 
+        - Not Found 
+    """
+
+    app.register_error_handler(
+        BadRequest,
+        lambda error: Response(
+            response=f'{{"messages":{error.description}}}', status=400, mimetype="application/json")
+    )
+
+    app.register_error_handler(
+        Conflict,
+        lambda error: Response(
+            response=f'{{"messages":{error.description}}}', status=409, mimetype="application/json")
+    )
+
+    app.register_error_handler(
+        NotFound,
+        lambda error: Response(
+            response=f'{{"messages":{error.description}}}', status=404, mimetype="application/json")
+    )

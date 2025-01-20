@@ -104,17 +104,9 @@ class Codes:
     en_messages[COND_CREA_015] = "Total of Parameters must be equal to total of Conditions."
     es_messages[COND_CREA_015] = "El total de Parámetros debe ser igual al total de Condiciones."
 
-    COND_CREA_014 = "COND-CREA-014"
-    en_messages[COND_CREA_014] = "Nothing to update."
-    es_messages[COND_CREA_014] = "Nada que actualizar."
-
     COND_CREA_013 = "COND-CREA-013"
     en_messages[COND_CREA_013] = "All parameters to update must be exists."
     es_messages[COND_CREA_013] = "Todos los parametros para actualización, debe existir."
-
-    COND_CREA_012 = "COND-SAVE-012"
-    en_messages[COND_CREA_012] = "Any new parameter must not be exists."
-    es_messages[COND_CREA_012] = "Ningún nuevo parametro debe existir."
 
     COND_CREA_011 = "COND-CREA-011"
     en_messages[COND_CREA_011] = "At least one Parameter must have been created during Rule creation."
@@ -132,17 +124,9 @@ class Codes:
     en_messages[COND_CREA_008] = "Rule not found."
     es_messages[COND_CREA_008] = "Regla no encontrada."
 
-    COND_CREA_007 = "COND-CREA-007"
-    en_messages[COND_CREA_007] = "Rule's ID or Name are mandatory."
-    es_messages[COND_CREA_007] = "Id o nombre de Regla es obligatorio."
-
     COND_CREA_006 = "COND-CREA-006"
     en_messages[COND_CREA_006] = "At least one Case must have been created during Rule creation."
     es_messages[COND_CREA_006] = "Al menos un Caso debío crearse durante la creación de la Regla."
-
-    COND_CREA_005 = "COND-CREA-005"
-    en_messages[COND_CREA_005] = "All Parameters must be unique."
-    es_messages[COND_CREA_005] = "Todos los Parametros deben ser únicos."
 
     COND_CREA_004 = "COND-CREA-004"
     en_messages[COND_CREA_004] = "Type JSON is not available for Conditions."
@@ -160,28 +144,31 @@ class Codes:
     en_messages[COND_CREA_001] = "'Variable' field are mandatory"
     es_messages[COND_CREA_001] = "Campo 'variable' es obligatorio."
 
-    # Update Condition
-    COND_UPD_005 = "COND-UPD-005"
-    en_messages[COND_UPD_005] = "All parameters to update must be exists."
-    es_messages[COND_UPD_005] = "Todos los parametros para actualización, debe existir."
-
-    COND_UPD_004 = "COND-UPD-004"
-    en_messages[COND_UPD_004] = "Total of Parameters must be equal to total of Conditions."
-    es_messages[COND_UPD_004] = "El total de Parámetros debe ser igual al total de Condiciones."
-
-    COND_UPD_003 = "COND-UPD-003"
-    en_messages[COND_UPD_003] = "All Parameters must be unique."
-    es_messages[COND_UPD_003] = "Todos los Parametros deben ser únicos."
-
-    COND_UPD_002 = "COND-UPD-002"
-    en_messages[COND_UPD_002] = "Nothing to update."
-    es_messages[COND_UPD_002] = "Nada que actualizar."
-
-    COND_UPD_001 = "COND-UPD-001"
-    en_messages[COND_UPD_001] = "Rule's ID or Name are mandatory."
-    es_messages[COND_UPD_001] = "Id o nombre de Regla es obligatorio."
-
     # Update Parameter
+    PARAM_UPD_012 = "PARAM-UPD-012"
+    en_messages[PARAM_UPD_012] = "KV Item '{}' not found."
+    es_messages[PARAM_UPD_012] = "KV ITem '{}' no encontrado."
+
+    PARAM_UPD_011 = "PARAM-UPD-011"
+    en_messages[PARAM_UPD_011] = "Condition '{}' not found."
+    es_messages[PARAM_UPD_011] = "La Condición '{}' no encontrada."
+
+    PARAM_UPD_010 = "PARAM-UPD-010"
+    en_messages[PARAM_UPD_010] = "All parameters to update must exists."
+    es_messages[PARAM_UPD_010] = "Todos los parametros para actualización, debe existir."
+
+    PARAM_UPD_009 = "PARAM-UPD-009"
+    en_messages[PARAM_UPD_009] = "All Parameters must be unique."
+    es_messages[PARAM_UPD_009] = "Todos los Parametros deben ser únicos."
+
+    PARAM_UPD_008 = "PARAM-UPD-008"
+    en_messages[PARAM_UPD_008] = "Nothing to update."
+    es_messages[PARAM_UPD_008] = "Nada que actualizar."
+
+    PARAM_UPD_007 = "PARAM-UPD-007"
+    en_messages[PARAM_UPD_007] = "Rule's ID or Name are mandatory."
+    es_messages[PARAM_UPD_007] = "Id o nombre de Regla es obligatorio."
+
     PARAM_UPD_006 = "PARAM-UPD-006"
     en_messages[PARAM_UPD_006] = "Parameter '{}' cannot determine its use for."
     es_messages[PARAM_UPD_006] = "Parámetro '{}' no puede determinarse su uso.."
@@ -203,8 +190,25 @@ class Codes:
     es_messages[PARAM_UPD_002] = "Id Regla o Nombre Regla es obligatorio."
 
     PARAM_UPD_001 = "PARAM-UPD-001"
-    en_messages[PARAM_UPD_001] = "Exists more than one parameter with same key '{}'."
-    es_messages[PARAM_UPD_001] = "Existe mas de una parámetro con la misma key '{}'."
+    en_messages[PARAM_UPD_007] = "Exists more than one parameter with same key '{}'."
+    es_messages[PARAM_UPD_007] = "Existe mas de una parámetro con la misma key '{}'."
+
+    # Create parameter
+    PARAM_CREA_014 = "PARAM-CREA-014"
+    en_messages[PARAM_CREA_014] = "Nothing to update."
+    es_messages[PARAM_CREA_014] = "Nada que actualizar."
+
+    PARAM_CREA_012 = "PARAM-SAVE-012"
+    en_messages[PARAM_CREA_012] = "Any new parameter must not be exists."
+    es_messages[PARAM_CREA_012] = "Ningún nuevo parametro debe existir."
+
+    PARAM_CREA_007 = "PARAM-CREA-007"
+    en_messages[PARAM_CREA_007] = "Rule's ID or Name are mandatory."
+    es_messages[PARAM_CREA_007] = "Id o nombre de Regla es obligatorio."
+
+    PARAM_CREA_005 = "PARAM-CREA-005"
+    en_messages[PARAM_CREA_005] = "All Parameters must be unique."
+    es_messages[PARAM_CREA_005] = "Todos los Parametros deben ser únicos."
 
     # Update Rule
     RU_UPD_011 = "RU-UPD-011"

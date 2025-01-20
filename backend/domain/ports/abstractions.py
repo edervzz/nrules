@@ -36,7 +36,7 @@ class ReaderSingle:
 
     @abstractmethod
     def read(self, _id) -> any:
-        """ read entity by id """
+        """ read entity by pk """
         raise NotImplementedError(__name__)
 
 
@@ -55,6 +55,29 @@ class ReaderByParentID:
     @abstractmethod
     def read_by_parent_id(self, parent_id: int) -> []:
         """ read entities by parent id """
+        raise NotImplementedError(__name__)
+
+
+class ReaderByKey:
+    """ read entity by any key """
+
+    @abstractmethod
+    def read_by_key(self, key) -> any:
+        """ read entity by any key """
+        raise NotImplementedError(__name__)
+
+
+class ReaderByLink:
+    """ read entities by linked element """
+
+    @abstractmethod
+    def read_by_link(self, link_id) -> []:
+        """ read entities by linked element """
+        raise NotImplementedError(__name__)
+
+    @abstractmethod
+    def read_by_link_single(self, link_id, _id) -> any:
+        """ read entity by linked element """
         raise NotImplementedError(__name__)
 
 

@@ -138,11 +138,11 @@
                 }
             }
         },
-        "/nr/api/v1/t/{tid}/rules/{rid}/conditions":{
+        "/nr/api/v1/t/{tid}/rules/{rid}/parameters":{
             "post": {
-                "summary": "Create rule's conditions",
+                "summary": "Create rule's parameters",
                 "tags": [
-                    "Conditions"
+                    "Parameters"
                 ],
                 "consumes": [
                     "application/json"
@@ -163,7 +163,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/NewConditionsRule"
+                            "$ref": "#/definitions/NewParametersRule"
                         }  
                     }
                 ],
@@ -177,9 +177,9 @@
                 }
             },
             "put": {
-                "summary": "Update rule's conditions",
+                "summary": "Update rule's parameters",
                 "tags": [
-                    "Conditions"
+                    "Parameters"
                 ],
                 "consumes": [
                     "application/json"
@@ -200,52 +200,13 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/UpdateConditionsRule"
+                            "$ref": "#/definitions/UpdateParametersRule"
                         }  
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "Rule's conditions updated"
-                    },
-                    "400": {
-                        "description": "Validation errors"
-                    }
-                }
-            }
-        },
-        "/nr/api/v1/t/{tid}/rules/{rid}/kv-items":{
-            "post": {
-                "summary": "Create rule's kv items",
-                "tags": [
-                    "KV Items"
-                ],
-                "consumes": [
-                    "application/json"
-                ],
-
-                "parameters": [
-                    {
-                        "$ref": "#/parameters/TenantID"
-                    },
-                    {
-                        "$ref": "#/parameters/RuleID"
-                    },
-                    {
-                        "$ref": "#/parameters/IdType"
-                    },
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/NewKVItemsRule"
-                        }  
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Rule's kv items saved"
                     },
                     "400": {
                         "description": "Validation errors"
@@ -476,82 +437,41 @@
                 }
             }
         },
-        "NewKVItemsRule":{
+        "NewParametersRule":{
             "type": "object",
             "properties": {
-                "items":{
-                    "type":"array",
+                "input":{
+                    "type": "array",
                     "items": {
-                        "$ref": "#/definitions/KVItemRule"
-                    },
-                    "required": "false"
+                        "$ref": "#/definitions/NewParameter"
+                    }
+                },
+                "outputs":{
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/NewParameter"
+                    }
                 }
             }
         },
-        "NewConditionsRule":{
+        "UpdateParametersRule":{
             "type": "object",
             "properties": {
-                "items":{
-                    "type":"array",
+                "input":{
+                    "type": "array",
                     "items": {
-                        "$ref": "#/definitions/ConditionsRule"
-                    },
-                    "required": "false"
+                        "$ref": "#/definitions/UpdParameter"
+                    }
+                },
+                "outputs":{
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/UpdParameter"
+                    }
                 }
             }
         },
-        "UpdateConditionsRule":{
-            "type": "object",
-            "properties": {
-                "items":{
-                    "type":"array",
-                    "items": {
-                        "$ref": "#/definitions/ConditionsRule"
-                    },
-                    "required": "false"
-                }
-            }
-        },
-        "ConditionsRule": {
-            "type": "object",
-            "properties": {
-                "variable": {
-                    "type": "string",
-                    "minLength": 5,
-                    "maxLength": 50,
-                    "required": true,
-                    "example": "quotation_amount"
-                },
-                "operator": {
-                    "type": "string",
-                    "required": true,
-                    "enum": ["EQ", "NE", "GT", "GE", "LT", "LE", "IN", "NI", "BT"],
-                    "default": "EQ"
-                },
-                "value": {
-                    "type": "string",
-                    "minLength": 5,
-                    "maxLength": 50,
-                    "required": true,
-                    "example": "1000.98"
-                },   
-                "typeof": {
-                    "type": "string",
-                    "required": true,
-                    "enum": ["STRING", "NUMERIC", "DATE", "TIME", "DATETIME"],
-                    "default": "STRING"
-                },  
-                "is_active": {
-                    "type": "boolean",
-                    "default": true
-                },
-                "is_archived": {
-                    "type": "boolean",
-                    "default": false
-                }
-            }    
-        },
-        "KVItemRule": {
+        "NewParameter": {
             "type": "object",
             "properties": {
                 "key": {
@@ -559,34 +479,41 @@
                     "minLength": 5,
                     "maxLength": 50,
                     "required": true,
-                    "example": "total_amount"
+                    "example": "quotation_amount"
                 },
-                "value": {
+                "typeof": {
+                    "type": "string",
+                    "required": false,
+                    "enum": ["STRING", "NUMERIC", "DATE", "TIME", "DATETIME"],
+                    "default": "STRING"
+                }
+            }    
+        },
+        "UpdParameter": {
+            "type": "object",
+            "properties": {
+                "key": {
                     "type": "string",
                     "minLength": 5,
                     "maxLength": 50,
                     "required": true,
-                    "example": "1000.98"
+                    "example": "quotation_amount"
                 },
-                "calculation": {
-                    "type": "string",
-                    "required": true,
-                    "enum": ["ADD", "MOD"],
-                    "default": "ADD"
-                },   
                 "typeof": {
                     "type": "string",
-                    "required": true,
+                    "required": false,
                     "enum": ["STRING", "NUMERIC", "DATE", "TIME", "DATETIME"],
                     "default": "STRING"
-                },  
+                },
                 "is_active": {
                     "type": "boolean",
-                    "default": true
+                    "required": true,
+                    "default": "true"
                 },
                 "is_archived": {
                     "type": "boolean",
-                    "default": false
+                    "required": true,
+                    "default": "false"
                 }
             }    
         },

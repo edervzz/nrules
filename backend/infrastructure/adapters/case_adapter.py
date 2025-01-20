@@ -18,9 +18,8 @@ class CaseAdapter(CaseRepository):
 
     def update(self,  entity: Case):
         element = self.session.query(Case).where(
-            Case.tenant_id == entity.tenant_id,
             Case.rule_id == entity.rule_id,
-            Case.id == entity.expression_id).one_or_none()
+            Case.id == entity.id).one_or_none()
 
         element.position = entity.position
         element.is_active = entity.is_active

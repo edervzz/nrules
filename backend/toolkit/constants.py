@@ -4,6 +4,9 @@
 
 class Constants:
     """ Constants """
+    ADD = "ADD"
+    MOD = ""
+
     INPUT = "INPUT"
     OUTPUT = "OUTPUT"
 

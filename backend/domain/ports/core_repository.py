@@ -5,6 +5,21 @@ from .abstractions import ReaderByParentID, ReaderPagination
 from .abstractions import ReaderSingle, ReaderSingleByExternalID, ReaderByLink
 
 
+class LockRepository(
+        ABC, Creator, ReaderSingle):
+    """_summary_"""
+
+    def __init__(self, engine):
+        ABC.__init__(self)
+        Creator.__init__(self)
+        self.engine = engine
+
+    @abstractmethod
+    def delete(self, _id):
+        """ delete a entity """
+        raise NotImplementedError(__name__)
+
+
 class KVItemRepository(
         ABC, Creator, Updater, ReaderSingle, ReaderByParentID,
         ReaderByLink):

@@ -1,6 +1,14 @@
 """ Keys """
 
 
+class LockKey:
+    """ Lock Key """
+
+    def __init__(self, tablename: str, argument: str):
+        self.tablename = tablename
+        self.argument = argument
+
+
 class KVItemKey:
     """ KV Item Key """
 

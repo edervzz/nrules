@@ -3,7 +3,7 @@ from typing import List
 from application.messages import CreateParamtersRuleRequest
 from domain.entities import Parameter, ParameterKey, Condition, Case, Rule, KVItem
 from domain.ports import CoreRepository
-from toolkit import Validator, Localizer, Codes, Constants
+from toolkit import Validator, Localizer, Codes
 
 
 class CreateParametersRuleBizValidator(Validator):
@@ -48,13 +48,13 @@ class CreateParametersRuleBizValidator(Validator):
                 e_cond.case_id = e_case.id
                 request.conditions.append(e_cond)
 
-        my_kvitems: List[KVItem] = self.repo.kvitem.read_by_rule(rule.id)
+        my_kvitems: List[KVItem] = self.repo.kvitem.read_by_link(rule.id)
         for e_kvitem in request.income_kvitems:
-            # confirm new Conditions must not be exists
+            # confirm new kv items must not be exists
             found = [x for x in my_kvitems if x.key == e_kvitem.key]
             if len(found) > 0:
                 raise self.as_error(self.localizer.get(Codes.PARAM_CREA_012))
-            # for each case add conditions
+            # for each case add kv items
             for e_case in my_cases:
                 e_kvitem.rule_id = rule.id
                 e_kvitem.case_id = e_case.id

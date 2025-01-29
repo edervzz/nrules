@@ -2,8 +2,6 @@
 
 from .update_kvitems_rule_biz_validator import UpdateKVItemsRuleBizValidator
 from .update_kvitems_rule_validator import UpdateKVItemsRuleValidator
-from .create_kvitems_rule_biz_validator import CreateKVItemsRuleBizValidator
-from .create_kvitems_rule_validator import CreateKVItemsRuleValidator
 from .update_parameters_rule_validator import UpdateParametersRuleValidator
 from .update_parameters_rule_biz_validator import UpdateParametersRuleBizValidator
 from .create_parameters_rule_validator import CreateParametersRuleValidator

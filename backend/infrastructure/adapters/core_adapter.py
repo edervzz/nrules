@@ -61,23 +61,23 @@ class CoreAdapter(CoreRepository):
         event.listen(Tag, 'before_insert', self.__before_insert)
         event.listen(Tag, 'before_update', self.__before_update)
 
-        @event.listens_for(self.__session, 'before_commit')
-        def _fn(session: Session):
-            now = datetime.now()
-            lock = Lock()
-            lock.tablename = self.lockobj.tablename
-            lock.argument = self.lockobj.argument
-            lock.username = session["username"]
-            lock.created_at = now
-            my_lock = session.query(Lock).where(
-                Lock.tablename == lock.tablename,
-                Lock.argument == lock.argument,
-            ).one_or_none()
-            if isinstance(my_lock, Lock) and my_lock == lock.username:
-                session.add(lock)
-            else:
-                raise Conflict(
-                    f'[{{"code":"DB-001","message":"This rule is already locked by ""{my_lock.username}"""}}]')
+        # @event.listens_for(self.__session, 'before_commit')
+        # def _fn(s: Session):
+        #     now = datetime.now()
+        #     lock = Lock()
+        #     lock.tablename = self.lockobj.tablename
+        #     lock.argument = self.lockobj.argument
+        #     lock.username = s["username"]
+        #     lock.created_at = now
+        #     my_lock = s.query(Lock).where(
+        #         Lock.tablename == lock.tablename,
+        #         Lock.argument == lock.argument,
+        #     ).one_or_none()
+        #     if isinstance(my_lock, Lock) and my_lock == lock.username:
+        #         s.add(lock)
+        #     else:
+        #         raise Conflict(
+        #             f'[{{"code":"DB-001","message":"This rule is already locked by ""{my_lock.username}"""}}]')
 
         @event.listens_for(Query, 'before_compile', retval=True)
         def _fn(query: Query):

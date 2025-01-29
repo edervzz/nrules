@@ -3,7 +3,6 @@
     Requests and Responses
 """
 from .update_kvitem_rule_message import UpdateKVItemsRuleRequest, UpdateKVItemsRuleResponse
-from .create_kvitem_rule_message import CreateKVItemsRuleRequest, CreateKVItemsRuleResponse
 from .create_parameters_rule_message import CreateParamtersRuleRequest, CreateParametersRuleResponse
 from .update_parameters_rule_message import UpdateParametersRuleRequest, UpdateParametersRuleResponse
 from .run_rule_message import RunRuleRequest, RunRuleResponse

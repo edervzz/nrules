@@ -1,8 +1,7 @@
 """ _module_ """
-from toolkit import Validator, Localizer, Codes, Constants
+from toolkit import Validator, Localizer, Codes
 from application.messages import UpdateKVItemsRuleRequest
-from domain.entities import Parameter
-from domain.validators import ParameterValidator, KVItemValidator
+from domain.validators import KVItemValidator
 
 
 class UpdateKVItemsRuleValidator(Validator):
@@ -22,28 +21,13 @@ class UpdateKVItemsRuleValidator(Validator):
 
         unique_items = set()
         validator_kvi = KVItemValidator(self.localizer, False)
-        validator_param = ParameterValidator(self.localizer)
 
         if not request.income_kvitems is None:
-            for new_kvitem in request.income_kvitems:
-                new_kvitem.key = new_kvitem.key.upper()
+            for kvi in request.income_kvitems:
+                kvi.key = kvi.key.upper()
                 # validate condition
-                validator_kvi.validate_and_throw(new_kvitem)
-                # prepare parameter
-                param = Parameter()
-                param.key = new_kvitem.key
-                param.usefor = Constants.OUTPUT
-                param.typeof = new_kvitem.typeof
-                param.is_active = new_kvitem.is_active
-                param.is_archived = new_kvitem.is_archived
-                # validate parameter
-                validator_param.validate_and_throw(param)
-                # collect parameter
-                request.upd_parameters.append(param)
-                unique_items.add(param.key)
+                validator_kvi.validate_and_throw(kvi)
+                unique_items.add(kvi.key)
 
-        if len(unique_items) != len(request.upd_parameters):
-            raise self.as_error(self.localizer.get(Codes.KVI_CREA_003))
-
-        if len(request.upd_parameters) != len(request.income_kvitems):
-            raise self.as_error(self.localizer.get(Codes.KVI_CREA_004))
+        if len(unique_items) != len(request.income_kvitems):
+            raise self.as_error(self.localizer.get(Codes.KVI_UPD_003))

@@ -1,7 +1,7 @@
 """ Create a new workflow """
 import json
 from flask import Blueprint, request, Response, current_app, session
-from webapi.models import NewKVItemsRuleModel
+from webapi.models import UpdKVItemsRuleModel
 from application.messages import UpdateKVItemsRuleRequest
 from application.commands import UpdateKVItemsRuleHandler
 from toolkit import Identification
@@ -21,7 +21,7 @@ def upd_kvitems_rule_endpoint(tid=None, rid=None):
     if json_data is None:
         return
 
-    save_kvitems_rule = NewKVItemsRuleModel(json.dumps(json_data))
+    save_kvitems_rule = UpdKVItemsRuleModel(json.dumps(json_data))
 
     command = UpdateKVItemsRuleRequest(
         rule_id,

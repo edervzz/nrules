@@ -15,8 +15,6 @@ class UpdateKVItemsRuleRequest:
         self.id = _id
         self.name = name
         self.income_kvitems: List[KVItem] = kv_items
-        self.upd_parameters: List[Parameter] = []
-        self.upd_kvitems: List[KVItem] = []
 
 
 class UpdateKVItemsRuleResponse:

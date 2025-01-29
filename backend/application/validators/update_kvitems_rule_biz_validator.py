@@ -1,9 +1,8 @@
 """ _module_ """
-from typing import List
 from application.messages import UpdateKVItemsRuleRequest
-from domain.entities import Parameter, KVItem, KV, Rule, ParameterKey
+from domain.entities import KVItem, Rule, KVItemKey
 from domain.ports import CoreRepository
-from toolkit import Validator, Localizer, Codes, Constants
+from toolkit import Validator, Localizer, Codes
 
 
 class UpdateKVItemsRuleBizValidator(Validator):
@@ -25,35 +24,11 @@ class UpdateKVItemsRuleBizValidator(Validator):
         if rule is None:
             raise self.as_not_found(self.localizer.get(Codes.RU_READ_002))
 
-        # retrieve parameters
-        my_params: List[Parameter] = self.repo.parameter.read_by_key(
-            ParameterKey(rule_id=rule.id, usefor=Constants.OUTPUT))
-        # prepare and check parameters to update
-        for e_param in request.upd_parameters:
-            e_param.rule_id = rule.id
-            # confirm parameter must exists
-            found = [
-                x for x in my_params if x.key == e_param.key]
-            if len(found) != 1:
+        # prepare and check kvitems to update
+        for e_kvi in request.income_kvitems:
+            key = KVItemKey(e_kvi.case_id, e_kvi.key)
+            kvi_found = self.repo.kvitem.read(key)
+            if not isinstance(kvi_found, KVItem):
                 raise self.as_error(self.localizer.get(Codes.KVI_UPD_003))
 
-        # retrieve kvs
-        my_kvs: List[KV] = self.repo.kvs.read_by_parent_id(rule.id)
-        # retrieve kv items
-        my_kvitems: List[KVItem] = []
-        for e_kv in my_kvs:
-            x_kvis: List[KVItem] = self.repo.kvitem.read_by_parent_id(e_kv.id)
-            if isinstance(x_kvis, list):
-                my_kvitems.extend(x_kvis)
-        # # check kv items to update
-        # for e_kvi in request.income_kvitems:
-        #     # confirm new kvi must not be exists
-        #     found = [x for x in my_kvitems if x.key == e_kvi.key]
-        #     if len(found) == 0:
-        #         raise self.as_error(self.localizer.get(Codes.KVI_UPD_003))
-        #     # for each kvs add kv item
-        #     for e_kvs in my_kvs:
-        #         e_kvi.kv_id = e_kvs.id
-        #         request.upd_kvitems.append(e_kvi)
-
-        # request.income_kvitems = []
+            e_kvi.rule_id = rule.id

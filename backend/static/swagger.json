@@ -214,6 +214,42 @@
                 }
             }
         },
+        "/nr/api/v1/t/{tid}/rules/{rid}/kv-items":{
+            "put": {
+                "summary": "Update KV Items",
+                "tags": ["KV-Items"],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/TenantID"
+                    },
+                    {
+                        "$ref": "#/parameters/RuleID"
+                    },
+                    {
+                        "$ref": "#/parameters/IdType"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NewParametersRule"
+                        }  
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Rule's KV Items saved"
+                    },
+                    "400": {
+                        "description": "Validation errors"
+                    }
+                }
+            }
+        },
         "/tenancy/api/v1/tenants": {
             "post": {
                 "summary": "Create a New Tenant",
@@ -434,6 +470,43 @@
                         "EARLY"
                     ],
                     "default": "BASE"
+                }
+            }
+        },
+        "UpdKVItemsRule":{
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/KVItem"
+            },
+            "minItems": 1
+        },
+        "KVItem":{
+            "type": "object",
+            "properties": {
+                "key":{
+                    "type":"string",
+                    "minLength": 5,
+                    "maxLength": 50,
+                    "required": true,
+                    "example": "key001"
+                },
+                "case_id":{
+                    "type":"string",
+                    "minLength": 36,
+                    "required": true
+                },
+                "value":{
+                    "type":"string",
+                    "maxLength": 500,
+                    "required": true,
+                    "example": "my_value_001"
+                },
+                "calculation":{
+                    "type":"string",
+                    "maxLength": 3,
+                    "required": false,
+                    "enum": ["ADD", "MOD"],
+                    "default": "MOD"
                 }
             }
         },

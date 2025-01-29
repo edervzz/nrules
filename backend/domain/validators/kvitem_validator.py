@@ -1,9 +1,7 @@
 """ _module_ """
 
-from datetime import date
-import json
 from domain.entities import KVItem
-from toolkit import Codes, Localizer, Validator, Constants
+from toolkit import Codes, Localizer, Validator
 
 
 class KVItemValidator(Validator):
@@ -19,15 +17,13 @@ class KVItemValidator(Validator):
 
     def __validate__(self, request: KVItem):
         """ Validate request format """
-
         request.key = request.key.upper().strip()
         request.value = request.value.upper().strip()
-        request.typeof = request.typeof.upper().strip()
 
         if len(request.key) == 0:
             self.add_failure(self.loc.get(Codes.KVI_002))
-        if request.kv_id == 0:
-            self.add_failure(self.loc.get(Codes.KVI_003))
+        if len(request.case_id) == 0:
+            self.add_failure(self.loc.get(Codes.KVI_006))
         if len(request.key) < 5 or len(request.key) > 50:
             self.add_failure(self.loc.get(Codes.KVI_003))
         if len(request.value) > 500:

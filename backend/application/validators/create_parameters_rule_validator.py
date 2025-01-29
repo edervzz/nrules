@@ -46,6 +46,7 @@ class CreateParametersRuleValidator(Validator):
                     # prepare kvitem
                     new_kvitem = KVItem()
                     new_kvitem.key = new_param.key
+                    new_kvitem.case_id = -1
                     new_kvitem.value = ""
                     new_kvitem.calculation = Constants.MOD
                     # validate kvitem

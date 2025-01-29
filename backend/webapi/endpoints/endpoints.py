@@ -21,7 +21,6 @@ from .read_all_rule import read_all_rule_bp
 from .create_tenant import new_tenant_bp
 from .create_parameters_rule import new_condition_rule_bp
 from .upd_parameters_rule import upd_parameters_rule_bp
-from .create_kvitem_rule import new_kvitem_rule_bp
 from .upd_kvitem_rule import upd_kvitem_rule_bp
 
 
@@ -31,7 +30,6 @@ def register_endpoints(app: Flask, prefix: str):
     app.register_blueprint(new_rule_bp, url_prefix=prefix)
     app.register_blueprint(update_rule_bp, url_prefix=prefix)
 
-    app.register_blueprint(new_kvitem_rule_bp, url_prefix=prefix)
     app.register_blueprint(upd_kvitem_rule_bp, url_prefix=prefix)
 
     app.register_blueprint(new_condition_rule_bp, url_prefix=prefix)
@@ -100,6 +98,8 @@ def register_request(app: Flask):
         """ _summary_ """
         # Set username
         session["username"] = "eder@mail.com"  # extraer de jwt
+        # validar token
+
         # Set localizer for each request
         langu = request.headers["Accept-Language"] if "Accept-Language" in request.headers else "es"
         if "es" in langu:

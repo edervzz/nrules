@@ -24,9 +24,13 @@ class Codes:
     es_messages[RUNNER_001] = "Nombre o ID de regla son obligatorios."
 
     # Update KV Items
+    KVI_UPD_004 = "KVI-UPD-004"
+    en_messages[KVI_UPD_004] = "All KV Items must be unique."
+    es_messages[KVI_UPD_004] = "Todos los KV Items deben ser únicos."
+
     KVI_UPD_003 = "KVI-UPD-003"
-    en_messages[KVI_UPD_003] = "All parameters must exists."
-    es_messages[KVI_UPD_003] = "Todos los parámetros deben existir."
+    en_messages[KVI_UPD_003] = "All KV Items must exists."
+    es_messages[KVI_UPD_003] = "Todos los KV Items deben existir."
 
     KVI_UPD_002 = "KVI-UPD-002"
     en_messages[KVI_UPD_002] = "Nothing to update."
@@ -50,8 +54,8 @@ class Codes:
     es_messages[KVI_CREA_004] = "El total de Parámetros debe ser igual al total de KV Items."
 
     KVI_CREA_003 = "KVI-CREA-003"
-    en_messages[KVI_CREA_003] = "All Parameters must be unique."
-    es_messages[KVI_CREA_003] = "Todos los Parametros deben ser únicos."
+    en_messages[KVI_CREA_003] = "All KV Items must be unique."
+    es_messages[KVI_CREA_003] = "Todos los KV Items deben ser únicos."
 
     KVI_CREA_002 = "KVI-CREA-002"
     en_messages[KVI_CREA_002] = "Nothing to update."
@@ -256,6 +260,10 @@ class Codes:
     es_messages[RU_UPD_001] = "Nombre de Regla es obligatorio."
 
     # KV Item
+    KVI_006 = "KVI-006"
+    en_messages[KVI_006] = "Case ID is required."
+    es_messages[KVI_006] = "ID de Caso es requerido."
+
     KVI_005 = "KVI-005"
     en_messages[KVI_005] = "Type Of must not be greater than 50 characteres."
     es_messages[KVI_005] = "Tipo debe tener un máximo de 50 caracteres."

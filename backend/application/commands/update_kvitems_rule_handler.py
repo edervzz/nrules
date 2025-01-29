@@ -29,12 +29,8 @@ class UpdateKVItemsRuleHandler:
 
         self.repo.begin()
 
-        if len(request.upd_parameters) > 0:
-            for e in request.upd_parameters:
-                self.repo.parameter.update(e)
-
-        if len(request.upd_kvitems) > 0:
-            for e in request.upd_kvitems:
+        if len(request.income_kvitems) > 0:
+            for e in request.income_kvitems:
                 self.repo.kvitem.update(e)
 
         self.repo.commit_work()

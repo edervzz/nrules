@@ -30,6 +30,7 @@ class RuleAdapter(RuleRepository):
             return rule
 
     def read_by_external_id(self, external_id) -> Rule:
+        external_id = external_id.upper()
         with Session(self.engine) as session:
             rule = session.query(Rule).where(
                 Rule.name == external_id).one_or_none()

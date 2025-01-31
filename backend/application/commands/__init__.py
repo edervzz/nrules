@@ -1,4 +1,5 @@
 """ Command Handlers """
+from .update_conditions_rule_handler import UpdateConditionsRuleHandler
 from .update_kvitems_rule_handler import UpdateKVItemsRuleHandler
 from .update_parameters_rule_handler import UpdateParamtersRuleHandler
 from .create_parameters_rule_handler import CreateParametersRuleHandler

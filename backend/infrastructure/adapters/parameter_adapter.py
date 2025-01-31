@@ -17,6 +17,8 @@ class ParameterAdapter(ParametersRepository):
             self.session.flush()
 
     def update(self,  entity: Parameter):
+        entity.key = entity.key.upper()
+        entity.usefor = entity.usefor.upper()
         param = self.session.query(Parameter).where(
             Parameter.key == entity.key,
             Parameter.rule_id == entity.rule_id,
@@ -27,6 +29,8 @@ class ParameterAdapter(ParametersRepository):
         param.is_archived = entity.is_archived
 
     def read(self, _id: ParameterKey) -> Parameter:
+        _id.key = _id.key.upper()
+        _id.usefor = _id.usefor.upper()
         with Session(self.engine) as session:
             parameters = session.query(Parameter).where(
                 Parameter.rule_id == _id.rule_id,

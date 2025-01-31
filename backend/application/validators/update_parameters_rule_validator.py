@@ -14,10 +14,10 @@ class UpdateParametersRuleValidator(Validator):
     def __validate__(self, request: UpdateParametersRuleRequest):
         """ validate """
         if request.id == "" and request.name == "":
-            self.as_error(self.localizer.get(Codes.PARAM_UPD_007))
+            self.as_error(self.localizer.get(Codes.PARAM_UPD_001))
 
         if len(request.parameters) == 0:
-            self.as_error(self.localizer.get(Codes.PARAM_UPD_008))
+            self.as_error(self.localizer.get(Codes.PARAM_UPD_002))
 
         unique_items = set()
         validator_param = ParameterValidator(self.localizer, False)
@@ -30,4 +30,4 @@ class UpdateParametersRuleValidator(Validator):
                 unique_items.add(f"{upd_param.key}{upd_param.usefor}")
 
         if len(unique_items) != len(request.parameters):
-            raise self.as_error(self.localizer.get(Codes.PARAM_UPD_009))
+            raise self.as_error(self.localizer.get(Codes.PARAM_UPD_003))

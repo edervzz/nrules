@@ -30,7 +30,7 @@ class UpdateParametersRuleBizValidator(Validator):
             key = ParameterKey(rule.id, e_param.key, e_param.usefor)
             my_param = self.repo.parameter.read(key)
             if not isinstance(my_param, Parameter):
-                raise self.as_error(self.localizer.get(Codes.PARAM_UPD_010))
+                raise self.as_error(self.localizer.get(Codes.PARAM_UPD_004))
 
             my_param.typeof = e_param.typeof
             my_param.is_active = e_param.is_active
@@ -42,11 +42,11 @@ class UpdateParametersRuleBizValidator(Validator):
                     rule.id, e_param.key)
                 if not isinstance(my_condition, Condition):
                     raise self.as_error(self.localizer.get(
-                        Codes.PARAM_UPD_011, e_param.key))
+                        Codes.PARAM_UPD_005, e_param.key))
 
             if e_param.usefor == Constants.OUTPUT:
                 my_kvitem = self.repo.kvitem.read_by_link_single(
                     rule.id, e_param.key)
                 if not isinstance(my_kvitem, KVItem):
                     raise self.as_error(self.localizer.get(
-                        Codes.PARAM_UPD_012, e_param.key))
+                        Codes.PARAM_UPD_006, e_param.key))

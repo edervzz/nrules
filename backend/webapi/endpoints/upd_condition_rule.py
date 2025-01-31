@@ -1,18 +1,18 @@
 """ Create a new workflow """
 import json
 from flask import Blueprint, request, Response, current_app, session
-from webapi.models import NewParametersRuleModel
-from application.messages import CreateParamtersRuleRequest
-from application.commands import CreateParametersRuleHandler
+from webapi.models import UpdConditionsRuleModel
+from application.messages import UpdateConditionsRuleRequest
+from application.commands import UpdateConditionsRuleHandler
 from toolkit import Identification
 
 
-new_parameter_rule_bp = Blueprint("New Conditions by Rule", __name__)
+upd_condition_rule_bp = Blueprint("Update Conditions by Rule", __name__)
 
 
-@new_parameter_rule_bp.post("/t/<tid>/rules/<rid>/parameters")
-def new_parameter_rule_endpoint(tid=None, rid=None):
-    """ New Endpoint """
+@upd_condition_rule_bp.put("/t/<tid>/rules/<rid>/conditions")
+def upd_conditions_rule_endpoint(tid=None, rid=None):
+    """ Update Endpoint """
     Identification.get_tenant_safe(tid)
     id_type = request.args.get("idType", "")
     rule_id, rule_name = Identification.get_object(rid, id_type)
@@ -21,15 +21,15 @@ def new_parameter_rule_endpoint(tid=None, rid=None):
     if json_data is None:
         return
 
-    save_condition_rule = NewParametersRuleModel(json.dumps(json_data))
+    save_kvitems_rule = UpdConditionsRuleModel(json.dumps(json_data))
 
-    command = CreateParamtersRuleRequest(
+    command = UpdateConditionsRuleRequest(
         rule_id,
         rule_name,
-        save_condition_rule.parameters
+        save_kvitems_rule.conditions
     )
 
-    CreateParametersRuleHandler(
+    UpdateConditionsRuleHandler(
         current_app.config[tid],
         current_app.config["logger"],
         current_app.config[session["localizer"]]

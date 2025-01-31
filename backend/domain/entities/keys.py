@@ -12,7 +12,7 @@ class LockKey:
 class KVItemKey:
     """ KV Item Key """
 
-    def __init__(self, case_id: int, key: int):
+    def __init__(self, case_id: int, key: str):
         self.case_id = case_id
         self.key = key
 

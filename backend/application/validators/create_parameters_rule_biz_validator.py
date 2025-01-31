@@ -30,7 +30,7 @@ class CreateParametersRuleBizValidator(Validator):
             key = ParameterKey(rule.id, e_param.key, e_param.usefor)
             found = self.repo.parameter.read(key)
             if isinstance(found, Parameter):
-                raise self.as_error(self.localizer.get(Codes.PARAM_CREA_012))
+                raise self.as_error(self.localizer.get(Codes.PARAM_CREA_003))
 
             e_param.rule_id = rule.id
 
@@ -41,7 +41,7 @@ class CreateParametersRuleBizValidator(Validator):
             # confirm new Conditions must not be exists
             found = [x for x in my_conds if x.variable == e_cond.variable]
             if len(found) > 0:
-                raise self.as_error(self.localizer.get(Codes.PARAM_CREA_012))
+                raise self.as_error(self.localizer.get(Codes.PARAM_CREA_003))
             # for each case add conditions
             for e_case in my_cases:
                 e_cond.rule_id = rule.id
@@ -53,7 +53,7 @@ class CreateParametersRuleBizValidator(Validator):
             # confirm new kv items must not be exists
             found = [x for x in my_kvitems if x.key == e_kvitem.key]
             if len(found) > 0:
-                raise self.as_error(self.localizer.get(Codes.PARAM_CREA_012))
+                raise self.as_error(self.localizer.get(Codes.PARAM_CREA_003))
             # for each case add kv items
             for e_case in my_cases:
                 e_kvitem.rule_id = rule.id

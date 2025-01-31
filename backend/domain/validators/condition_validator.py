@@ -24,25 +24,22 @@ class ConditionValidator(Validator):
         if request.operator == "":
             self.add_failure(self.loc.get(Codes.COND_002))
 
-        if not request.typeof in [Constants.STRING, Constants.NUMERIC, Constants.DATE]:
-            self.add_failure(self.loc.get(Codes.COND_003))
+        # if self.force_conv:
+        #     if request.typeof == Constants.NUMERIC:
+        #         try:
+        #             request.value = str(float(request.value))
+        #         except ValueError:
+        #             self.add_failure(
+        #                 self.loc.get(Codes.COND_004, request.value, Constants.NUMERIC))
 
-        if self.force_conv:
-            if request.typeof == Constants.NUMERIC:
-                try:
-                    request.value = str(float(request.value))
-                except ValueError:
-                    self.add_failure(
-                        self.loc.get(Codes.COND_004, request.value, Constants.NUMERIC))
-
-            if request.typeof == Constants.DATE:
-                dte = request.value.split("-")
-                if len(dte) != 3:
-                    self.add_failure(self.loc.get(
-                        Codes.COND_004, request.value, Constants.DATE))
-                    return
-                try:
-                    request.value = str(date(dte[0], dte[1], dte[2]))
-                except TypeError:
-                    self.add_failure(
-                        self.loc.get(Codes.COND_004, request.value, Constants.DATE))
+        #     if request.typeof == Constants.DATE:
+        #         dte = request.value.split("-")
+        #         if len(dte) != 3:
+        #             self.add_failure(self.loc.get(
+        #                 Codes.COND_004, request.value, Constants.DATE))
+        #             return
+        #         try:
+        #             request.value = str(date(dte[0], dte[1], dte[2]))
+        #         except TypeError:
+        #             self.add_failure(
+        #                 self.loc.get(Codes.COND_004, request.value, Constants.DATE))

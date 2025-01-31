@@ -1,39 +1,24 @@
 """ _module_ """
 import json
 from typing import List
-from domain.entities import Parameter
-from toolkit import Constants
+from domain.entities import Condition
 
 
-class UpdParametersRuleModel:
-    """ Update Parameters Rule Model """
+class UpdConditionsRuleModel:
+    """ Update conditions Rule Model """
 
     def __init__(self, j):
         self.__dict__ = json.loads(j)
-        self.parameters: List[Parameter] = []
+        self.conditions: List[Condition] = []
 
-        raw_conditions = self.__dict__.get("inputs", [])
+        raw_conditions = self.__dict__.get("items", [])
         if isinstance(raw_conditions, list):
             for c in raw_conditions:
-                a_parameter = Parameter()
-                a_parameter.key = c["key"] if "key" in c else ""
-                a_parameter.rule_id = ""
-                a_parameter.usefor = Constants.INPUT
-                a_parameter.typeof = c["typeof"] if "typeof" in c else ""
-                a_parameter.is_active = c["is_active"] if "is_active" in c else True
-                a_parameter.is_archived = c["is_archived"] if "is_archived" in c else False
+                a_condition = Condition()
+                a_condition.variable = c["variable"] if "variable" in c else ""
+                a_condition.case_id = c["case_id"] if "case_id" in c else ""
+                a_condition.rule_id = ""
+                a_condition.operator = c["operator"] if "operator" in c else ""
+                a_condition.value = c["value"] if "value" in c else ""
 
-                self.parameters.append(a_parameter)
-
-        raw_conditions = self.__dict__.get("outputs", [])
-        if isinstance(raw_conditions, list):
-            for c in raw_conditions:
-                a_parameter = Parameter()
-                a_parameter.key = c["key"] if "key" in c else ""
-                a_parameter.rule_id = ""
-                a_parameter.usefor = Constants.OUTPUT
-                a_parameter.typeof = c["typeof"] if "typeof" in c else ""
-                a_parameter.is_active = c["is_active"] if "is_active" in c else True
-                a_parameter.is_archived = c["is_archived"] if "is_archived" in c else False
-
-                self.parameters.append(a_parameter)
+                self.conditions.append(a_condition)

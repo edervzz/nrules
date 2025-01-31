@@ -250,6 +250,42 @@
                 }
             }
         },
+        "/nr/api/v1/t/{tid}/rules/{rid}/conditions":{
+            "put": {
+                "summary": "Update Conditions",
+                "tags": ["KV-Items"],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/TenantID"
+                    },
+                    {
+                        "$ref": "#/parameters/RuleID"
+                    },
+                    {
+                        "$ref": "#/parameters/IdType"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/UpdConditionsRule"
+                        }  
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Rule's Conditions saved"
+                    },
+                    "400": {
+                        "description": "Validation errors"
+                    }
+                }
+            }
+        },
         "/tenancy/api/v1/tenants": {
             "post": {
                 "summary": "Create a New Tenant",
@@ -470,6 +506,36 @@
                         "EARLY"
                     ],
                     "default": "BASE"
+                }
+            }
+        },
+        "UpdConditionsRule":{
+            "type":"array",
+            "items": {
+                "$ref": "#/definitions/Condition",
+                "minItems": 1
+            }
+        },
+        "Condition":{
+            "type":"object",
+            "properties": {
+                "variable":{
+                    "type":"string",
+                    "minLength": 5,
+                    "maxLength": 50,
+                    "required": true,
+                    "example": "var001"
+                },
+                "case_id":{
+                    "type":"string",
+                    "maxLength": 36,
+                    "required": true
+                },
+                "operator":{
+                    "type":"string",
+                    "enum": ["EQ", "NE", "LT", "LE", "GT", "GE", "IN", "NI", "BT"],
+                    "required": true,
+                    "default": "EQ"
                 }
             }
         },

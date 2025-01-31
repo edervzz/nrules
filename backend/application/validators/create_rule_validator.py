@@ -69,7 +69,7 @@ class CreateRuleValidator(Validator):
                 request.kv_items.append(kvi)
 
         if len(unique) != len(request.conditions) + len(request.kv_items):
-            raise self.as_error(self.local.get(Codes.RU_CREA_013))
+            raise self.as_error(self.local.get(Codes.RU_CREA_002))
 
         for e_tag in request.tags:
             e_tag.key = e_tag.key.upper()

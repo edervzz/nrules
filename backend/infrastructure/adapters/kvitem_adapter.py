@@ -18,6 +18,7 @@ class KVItemAdapter(KVItemRepository):
             self.session.flush()
 
     def update(self, entity: KVItem):
+        entity.key = entity.key.upper()
         kvitem = self.session.query(KVItem).where(
             KVItem.case_id == entity.case_id,
             KVItem.key == entity.key).one_or_none()
@@ -26,6 +27,7 @@ class KVItemAdapter(KVItemRepository):
         kvitem.calculation = entity.calculation
 
     def read(self, _id: KVItemKey) -> KVItem:
+        _id.key = _id.key.upper()
         with Session(self.engine) as session:
             rule = session.query(KVItem).where(
                 KVItem.case_id == _id.case_id,
@@ -44,7 +46,8 @@ class KVItemAdapter(KVItemRepository):
                 KVItem.rule_id == link_id).all()
             return conditions
 
-    def read_by_link_single(self, link_id, _id):
+    def read_by_link_single(self, link_id, _id: str):
+        _id = _id.upper()
         with Session(self.engine) as session:
             conditions = session.query(KVItem).where(
                 KVItem.rule_id == link_id,

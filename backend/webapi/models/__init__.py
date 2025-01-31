@@ -7,5 +7,6 @@ from .new_rule import NewRuleModel
 from .rule import RuleModel
 from .new_tenant import NewTenantModel
 from .new_parameters_rule import NewParametersRuleModel
-from .upd_conditions_rule import UpdParametersRuleModel
+from .upd_parameters_rule import UpdParametersRuleModel
 from .upd_kvitems_rule import UpdKVItemsRuleModel
+from .upd_conditions_rule import UpdConditionsRuleModel

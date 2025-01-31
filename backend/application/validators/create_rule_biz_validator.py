@@ -26,4 +26,4 @@ class CreateRuleBizValidator(Validator):
             raise self.as_not_found(self.localizer.get(Codes.RU_READ_002))
 
         if rule is not None:
-            raise self.as_duplicated(self.localizer.get(Codes.RU_CREA_005))
+            raise self.as_duplicated(self.localizer.get(Codes.RU_CREA_001))

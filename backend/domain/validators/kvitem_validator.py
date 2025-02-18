@@ -26,7 +26,7 @@ class KVItemValidator(Validator):
             self.add_failure(self.loc.get(Codes.KVI_006))
         if len(request.key) < 5 or len(request.key) > 50:
             self.add_failure(self.loc.get(Codes.KVI_003))
-        if len(request.value) > 500:
+        if len(request.value) <= 500:
             self.add_failure(self.loc.get(Codes.KVI_004))
 
         request.calculation = "MOD" if request.calculation is None else request.calculation

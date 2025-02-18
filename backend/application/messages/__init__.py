@@ -2,6 +2,8 @@
 
     Requests and Responses
 """
+from .update_case_rule_message import UpdateCaseRuleRequest, UpdateCaseRuleResponse
+from .create_case_rule_message import CreateCaseRuleRequest, CreateCaseRuleResponse
 from .update_conditions_rule_message import UpdateConditionsRuleRequest, UpdateConditionsRuleResponse
 from .update_kvitem_rule_message import UpdateKVItemsRuleRequest, UpdateKVItemsRuleResponse
 from .create_parameters_rule_message import CreateParamtersRuleRequest, CreateParametersRuleResponse

@@ -25,9 +25,26 @@ class Codes:
 
     RU_CREA_006 = "RU-CREA-006"  # todo
     en_messages[RU_CREA_006] = "ExpVal: {}."
-    es_messages[RU_CREA_006] = "ExpVal: {}."
+    es_messages[RU_CREA_006] = "ExpVal: {}."\
 
-    # Update Condition
+    # Update Case ################################################################
+    CASE_UPD_004 = "CASE-UPD-004"
+    en_messages[CASE_UPD_004] = "Case not found."
+    es_messages[CASE_UPD_004] = "No se encontró caso."
+
+    CASE_UPD_003 = "CASE-UPD-003"
+    en_messages[CASE_UPD_003] = "Positions must not be duplicaded."
+    es_messages[CASE_UPD_003] = "Las posiciones no deben duplicarse."
+
+    CASE_UPD_002 = "CASE-UPD-002"
+    en_messages[CASE_UPD_002] = "Position must not be empty."
+    es_messages[CASE_UPD_002] = "La Posición no debe estar vacía."
+
+    CASE_UPD_001 = "CASE-UPD-001"
+    en_messages[CASE_UPD_001] = "Case ID must not be empty."
+    es_messages[CASE_UPD_001] = "ID de Case no debe estar vacío."
+
+    # Update Condition ################################################################
     COND_UPD_003 = "COND-UPD-003"
     en_messages[COND_UPD_003] = "Condition '{}' not found."
     es_messages[COND_UPD_003] = "Condición '{}' no encontrada."
@@ -40,7 +57,7 @@ class Codes:
     en_messages[COND_UPD_001] = "Nothing to update."
     es_messages[COND_UPD_001] = "Nada que actualizar."
 
-    # Update KV Items
+    # Update KV Items ################################################################
     KVI_UPD_003 = "KVI-UPD-003"
     en_messages[KVI_UPD_003] = "All KV Items must exists."
     es_messages[KVI_UPD_003] = "Todos los KV Items deben existir."
@@ -53,7 +70,7 @@ class Codes:
     en_messages[KVI_UPD_001] = "Rule's ID or Name are mandatory."
     es_messages[KVI_UPD_001] = "Id o nombre de Regla es obligatorio."
 
-    # Read KV Item
+    # Read KV Item ################################################################
     KV_READ_003 = "KVI-READ-003"
     en_messages[KV_READ_003] = "KV Items not found."
     es_messages[KV_READ_003] = "No se encontrado Items del KV."
@@ -66,7 +83,7 @@ class Codes:
     en_messages[KV_READ_001] = "KV ID must not be empty."
     es_messages[KV_READ_001] = "KV ID debe proporcionarse."
 
-    # Read Rule
+    # Read Rule ################################################################
     RU_READ_006 = "RU-READ-006"
     en_messages[RU_READ_006] = "Rule's Key is mandatory."
     es_messages[RU_READ_006] = "Clave de búsqueda es obligatorio."

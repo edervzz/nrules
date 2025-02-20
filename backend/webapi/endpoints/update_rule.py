@@ -6,7 +6,7 @@ from application.messages import UpdateRuleRequest
 from application.commands import UpdateRuleHandler
 from toolkit import Identification
 
-update_rule_bp = Blueprint("Update Rule", __name__)
+update_rule_bp = Blueprint("UpdateRule", __name__)
 
 
 @update_rule_bp.put("/t/<tid>/rules/<rid>")

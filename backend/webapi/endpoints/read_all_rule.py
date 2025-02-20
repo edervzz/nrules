@@ -6,7 +6,7 @@ from application.messages import ReadAllRulesRequest
 from application.queries import ReadAllRulesHandler
 from webapi.models import RuleModel
 
-read_all_rule_bp = Blueprint("Read All Rules", __name__)
+read_all_rule_bp = Blueprint("ReadAllRules", __name__)
 
 
 @cross_origin

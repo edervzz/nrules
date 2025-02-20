@@ -7,11 +7,11 @@ from application.commands import UpdateKVItemsRuleHandler
 from toolkit import Identification
 
 
-upd_kvitem_rule_bp = Blueprint("Update KV Items by Rule", __name__)
+upd_kvitem_rule_bp = Blueprint("UpdateKVItemsRule", __name__)
 
 
-@upd_kvitem_rule_bp.put("/t/<tid>/rules/<rid>/kv-items")
-def upd_kvitems_rule_endpoint(tid=None, rid=None):
+@upd_kvitem_rule_bp.put("/t/<tid>/rules/<rid>/cases/<cid>/kv-items")
+def upd_kvitems_rule_endpoint(tid=None, rid=None, cid=None):
     """ Update Endpoint """
     Identification.get_tenant_safe(tid)
     id_type = request.args.get("idType", "")
@@ -21,7 +21,7 @@ def upd_kvitems_rule_endpoint(tid=None, rid=None):
     if json_data is None:
         return
 
-    save_kvitems_rule = UpdKVItemsRuleModel(json.dumps(json_data))
+    save_kvitems_rule = UpdKVItemsRuleModel(json.dumps(json_data), cid)
 
     command = UpdateKVItemsRuleRequest(
         rule_id,

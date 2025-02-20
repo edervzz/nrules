@@ -3,8 +3,8 @@ import json
 from flask import Blueprint, Response, abort, current_app
 from domain.ports import TenancyRepository, CoreRepository
 
-tenancy_migration_bp = Blueprint("Run Tenancy Migration", __name__)
-core_migration_bp = Blueprint("Run Core Migration", __name__)
+tenancy_migration_bp = Blueprint("RunTenancyMigration", __name__)
+core_migration_bp = Blueprint("RunCoreMigration", __name__)
 
 
 @tenancy_migration_bp.post("/tenancy/migration")

@@ -7,7 +7,7 @@ from application.commands import UpdateParamtersRuleHandler
 from toolkit import Identification
 
 
-upd_parameters_rule_bp = Blueprint("Update Conditions by Rule", __name__)
+upd_parameters_rule_bp = Blueprint("UpdateParametersRule", __name__)
 
 
 @upd_parameters_rule_bp.put("/t/<tid>/rules/<rid>/conditions")

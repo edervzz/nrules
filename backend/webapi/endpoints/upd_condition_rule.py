@@ -7,11 +7,11 @@ from application.commands import UpdateConditionsRuleHandler
 from toolkit import Identification
 
 
-upd_condition_rule_bp = Blueprint("Update Conditions by Rule", __name__)
+upd_condition_rule_bp = Blueprint("UpdateConditionsRule", __name__)
 
 
-@upd_condition_rule_bp.put("/t/<tid>/rules/<rid>/conditions")
-def upd_conditions_rule_endpoint(tid=None, rid=None):
+@upd_condition_rule_bp.put("/t/<tid>/rules/<rid>/cases/<cid>/conditions")
+def upd_conditions_rule_endpoint(tid=None, rid=None, cid=None):
     """ Update Endpoint """
     Identification.get_tenant_safe(tid)
     id_type = request.args.get("idType", "")
@@ -21,12 +21,12 @@ def upd_conditions_rule_endpoint(tid=None, rid=None):
     if json_data is None:
         return
 
-    save_kvitems_rule = UpdConditionsRuleModel(json.dumps(json_data))
+    upd_conditions_rule = UpdConditionsRuleModel(json.dumps(json_data), cid)
 
     command = UpdateConditionsRuleRequest(
         rule_id,
         rule_name,
-        save_kvitems_rule.conditions
+        upd_conditions_rule.conditions
     )
 
     UpdateConditionsRuleHandler(

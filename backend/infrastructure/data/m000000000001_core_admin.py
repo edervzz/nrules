@@ -50,7 +50,6 @@ def core_admin(engine: Engine) -> str:
         Column(
             "id", String(80),
             primary_key=True,
-            autoincrement=True,
             comment="ID for idempotency"),
         Column(
             "status", String(3),
@@ -63,11 +62,11 @@ def core_admin(engine: Engine) -> str:
             nullable=False,
             comment=""),
         Column(
-            "headers", String(),
+            "headers", String(80),
             nullable=False,
             comment=""),
         Column(
-            "response", String(),
+            "response", String(80),
             nullable=False,
             comment=""),
         Column(

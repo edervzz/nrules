@@ -8,7 +8,7 @@
     "paths": {
         "/nr/api/v1/t/{tid}/rules": {
             "post": {
-                "summary": "Create a new rule including initial parameters.",
+                "summary": "Create a new rule.",
                 "tags": [
                     "Rules"
                 ],
@@ -89,6 +89,9 @@
                         "$ref": "#/parameters/RuleID"
                     },
                     {
+                        "$ref": "#/parameters/IdType"
+                    },
+                    {
                         "name": "body",
                         "in": "body",
                         "required": true,
@@ -110,7 +113,7 @@
                 }
             },
             "get": {
-                "summary": "Read a rule.",
+                "summary": "Read one rule.",
                 "tags": [
                     "Rules"
                 ],                
@@ -123,6 +126,9 @@
                     },
                     {
                         "$ref": "#/parameters/RuleID"
+                    },
+                    {
+                        "$ref": "#/parameters/IdType"
                     }
                 ],
                 "responses": {
@@ -134,6 +140,75 @@
                     },
                     "409": {
                         "description": "Rule already exists"
+                    }
+                }
+            }
+        },
+        "/nr/api/v1/t/{tid}/rules/{rid}/cases": {
+            "post": {
+                "summary": "Create a new case.",
+                "tags": ["Cases"],
+                "consumes": ["application/json"],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/TenantID"
+                    },
+                    {
+                        "$ref": "#/parameters/RuleID"
+                    },
+                    {
+                        "$ref": "#/parameters/IdType"
+                    },
+                    {
+                        "$ref": "#/parameters/CaseID"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {                            
+                            "$ref": "#/definitions/NewCase"
+                        }    
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Case Created"
+                    },
+                    "400": {
+                        "description": "Validation errors"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update one or more cases.",
+                "tags": ["Cases"],
+                "consumes": ["application/json"],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/TenantID"
+                    },
+                    {
+                        "$ref": "#/parameters/RuleID"
+                    },
+                    {
+                        "$ref": "#/parameters/IdType"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {                            
+                            "$ref": "#/definitions/UpdCaseRule"
+                        }    
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Case Updated"
+                    },
+                    "400": {
+                        "description": "Validation errors"
                     }
                 }
             }
@@ -214,9 +289,9 @@
                 }
             }
         },
-        "/nr/api/v1/t/{tid}/rules/{rid}/kv-items":{
+        "/nr/api/v1/t/{tid}/rules/{rid}/cases/{cid}/kv-items":{
             "put": {
-                "summary": "Update KV Items",
+                "summary": "Update one or more KV Items",
                 "tags": ["KV-Items"],
                 "consumes": [
                     "application/json"
@@ -232,11 +307,14 @@
                         "$ref": "#/parameters/IdType"
                     },
                     {
+                        "$ref": "#/parameters/CaseID"
+                    },
+                    {
                         "name": "body",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/NewParametersRule"
+                            "$ref": "#/definitions/UpdKVItemsRule"
                         }  
                     }
                 ],
@@ -250,10 +328,10 @@
                 }
             }
         },
-        "/nr/api/v1/t/{tid}/rules/{rid}/conditions":{
+        "/nr/api/v1/t/{tid}/rules/{rid}/cases/{cid}/conditions":{
             "put": {
-                "summary": "Update Conditions",
-                "tags": ["KV-Items"],
+                "summary": "Update one or more Conditions",
+                "tags": ["Conditions"],
                 "consumes": [
                     "application/json"
                 ],
@@ -266,6 +344,9 @@
                     },
                     {
                         "$ref": "#/parameters/IdType"
+                    },
+                    {
+                        "$ref": "#/parameters/CaseID"
                     },
                     {
                         "name": "body",
@@ -401,6 +482,27 @@
             "type": "string",
             "required": true
         },
+        "CaseID":{
+            "name": "cid",
+            "description": "Case Identification",
+            "in": "path",
+            "type": "string",
+            "required": true
+        },
+        "ConditionID":{
+            "name": "coi",
+            "description": "Condition Identification",
+            "in": "path",
+            "type": "string",
+            "required": true
+        },
+        "KVItemID":{
+            "name": "kvi",
+            "description": "Kv Item Identification",
+            "in": "path",
+            "type": "string",
+            "required": true
+        },
         "IdType":{
             "name": "idType",
             "description": "Rule Identification Type.",
@@ -428,18 +530,17 @@
     "definitions": {
         "NewRule": {
             "type": "object",
+            "required": ["name", "rule_type", "strategy", "use_default", "parameters"],
             "properties": {
                 "name": {
                     "description": "Rule name.",
                     "type": "string",
-                    "required": true,
                     "minLength": 5,
                     "maxLength": 50,
                     "example": "ru.account.products"
                 },
                 "rule_type": {
                     "description": "Type of rule.",
-                    "required": true,
                     "type": "string",
                     "enum": [
                         "CASE",
@@ -449,7 +550,6 @@
                 },
                 "strategy": {
                     "description": "Type of strategy.",
-                    "required": true,
                     "type": "string",
                     "enum": [
                         "ALL",
@@ -460,31 +560,27 @@
                 },
                 "use_default": {
                     "description": "Use default case.",
-                    "required": false,
                     "type": "boolean"
                 },
                 "parameters": {
-                    "required": true,
                     "type": "array",
                     "items": {
                         "type": "object",
+                        "required": ["key", "typeof", "usefor"],
                         "properties": {
                             "key": {
                                     "type": "string",
                                     "minLength": 5,
                                     "maxLength": 50,
-                                    "required": true,
                                     "example": "quotation_amount"
                             },
                             "typeof": {
                                 "type": "string",
-                                "required": true,
                                 "enum": ["JSON", "STRING", "NUMERIC", "DATE", "TIME", "DATETIME"],
                                 "example": "STRING"
                             },   
                             "usefor": {
                                 "type": "string",
-                                "required": true,
                                 "enum": ["INPUT", "OUTPUT"],
                                 "example": "INPUT"
                             }
@@ -495,10 +591,10 @@
         },
         "UpdateRule": {
             "type": "object",
+            "required": ["strategy"],
             "properties": {
                 "strategy": {
                     "description": "Type of strategy.",
-                    "required": true,
                     "type": "string",
                     "enum": [
                         "ALL",
@@ -509,68 +605,104 @@
                 }
             }
         },
-        "UpdConditionsRule":{
-            "type":"array",
+        "NewCase":{
+            "type": "object",
+            "required": ["id", "position", "is_active", "is_archived"],
+            "properties": {
+                "id":{
+                    "type": "string"
+                },
+                "position":{
+                    "type": "integer"
+                },
+                "is_active": {
+                    "type": "boolean"
+                },
+                "is_archived": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "UpdCaseRule":{
+            "type": "array",
             "items": {
-                "$ref": "#/definitions/Condition",
+                "$ref": "#/definitions/UpdCase",
                 "minItems": 1
             }
         },
-        "Condition":{
+        "UpdCase":{
+            "type": "object",
+            "required": ["id", "position", "is_active", "is_archived"],
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "position":{
+                    "type": "integer"
+                },
+                "is_active": {
+                    "type": "boolean"
+                },
+                "is_archived": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "UpdConditionsRule":{
+            "type":"array",
+            "items": {
+                "$ref": "#/definitions/UpdCondition",
+                "minItems": 1
+            }
+        },
+        "UpdCondition":{
             "type":"object",
+            "required": ["variable", "case_id", "operator"],
             "properties": {
                 "variable":{
                     "type":"string",
                     "minLength": 5,
                     "maxLength": 50,
-                    "required": true,
                     "example": "var001"
-                },
-                "case_id":{
-                    "type":"string",
-                    "maxLength": 36,
-                    "required": true
                 },
                 "operator":{
                     "type":"string",
                     "enum": ["EQ", "NE", "LT", "LE", "GT", "GE", "IN", "NI", "BT"],
-                    "required": true,
                     "default": "EQ"
+                },
+                "value":{
+                    "type":"string",
+                    "minLength": 5,
+                    "maxLength": 50,
+                    "example": "hello world"
                 }
             }
         },
         "UpdKVItemsRule":{
             "type": "array",
             "items": {
-                "$ref": "#/definitions/KVItem"
+                "$ref": "#/definitions/UpdKVItem"
             },
             "minItems": 1
         },
-        "KVItem":{
+        "UpdKVItem":{
             "type": "object",
+            "required": ["key", "case_id", "value", "calculation"],
             "properties": {
                 "key":{
                     "type":"string",
                     "minLength": 5,
                     "maxLength": 50,
-                    "required": true,
                     "example": "key001"
-                },
-                "case_id":{
-                    "type":"string",
-                    "minLength": 36,
-                    "required": true
                 },
                 "value":{
                     "type":"string",
                     "maxLength": 500,
-                    "required": true,
                     "example": "my_value_001"
                 },
                 "calculation":{
                     "type":"string",
                     "maxLength": 3,
-                    "required": false,
                     "enum": ["ADD", "MOD"],
                     "default": "MOD"
                 }
@@ -612,17 +744,16 @@
         },
         "NewParameter": {
             "type": "object",
+            "required": ["key", "typeof"],
             "properties": {
                 "key": {
                     "type": "string",
                     "minLength": 5,
                     "maxLength": 50,
-                    "required": true,
                     "example": "quotation_amount"
                 },
                 "typeof": {
                     "type": "string",
-                    "required": false,
                     "enum": ["STRING", "NUMERIC", "DATE", "TIME", "DATETIME"],
                     "default": "STRING"
                 }
@@ -630,39 +761,36 @@
         },
         "UpdParameter": {
             "type": "object",
+            "required": ["key", "typeof", "is_active", "is_archived"],
             "properties": {
                 "key": {
                     "type": "string",
                     "minLength": 5,
                     "maxLength": 50,
-                    "required": true,
                     "example": "quotation_amount"
                 },
                 "typeof": {
                     "type": "string",
-                    "required": false,
                     "enum": ["STRING", "NUMERIC", "DATE", "TIME", "DATETIME"],
                     "default": "STRING"
                 },
                 "is_active": {
                     "type": "boolean",
-                    "required": true,
                     "default": "true"
                 },
                 "is_archived": {
                     "type": "boolean",
-                    "required": true,
                     "default": "false"
                 }
             }    
         },
         "NewTenant": {
             "type": "object",
+            "required": ["tenant_id", "name", "option_dev", "option_test", "option_prod"],
             "properties": {
                 "tenant_id": {
                     "description": "Tenant ID",
                     "type": "integer",
-                    "required": true,
                     "minimum": 1,
                     "maximum": 99
                 },
@@ -671,7 +799,6 @@
                     "type": "string",
                     "minLength": 5,
                     "maxLength": 50,
-                    "required": true,
                     "example": "t.account.products"
                 },
                 "option_dev": {
@@ -679,7 +806,6 @@
                     "type": "string",
                     "minLength": 5,
                     "maxLength": 500,
-                    "required": true,
                     "example": "bXlzcWwrcHlteXNxbDovL3Jvb3Q6bXlzZWNyZXRwd0Bsb2NhbGhvc3QvZGJuYW1l"
                 },
                 "option_test": {
@@ -687,7 +813,6 @@
                     "type": "string",
                     "minLength": 5,
                     "maxLength": 500,
-                    "required": true,
                     "example": "bXlzcWwrcHlteXNxbDovL3Jvb3Q6bXlzZWNyZXRwd0Bsb2NhbGhvc3QvZGJuYW1l"
                 },
                 "option_prod": {
@@ -695,7 +820,6 @@
                     "type": "string",
                     "minLength": 5,
                     "maxLength": 500,
-                    "required": true,
                     "example": "bXlzcWwrcHlteXNxbDovL3Jvb3Q6bXlzZWNyZXRwd0Bsb2NhbGhvc3QvZGJuYW1l"
                 }
             }

@@ -6,7 +6,7 @@ from application.commands import RunRuleHandler
 from webapi.models import RunRule
 
 
-run_rule_bp = Blueprint("Run Rule", __name__)
+run_rule_bp = Blueprint("RunRule", __name__)
 
 
 @run_rule_bp.post("/t/<tid>/run/rule/<rid>")

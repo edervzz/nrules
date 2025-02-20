@@ -11,7 +11,7 @@ class Lock(Base, TenantSpecific):
         Used for keep rule edition assigned to only one user at time
     """
 
-    __tablename__ = "cases"
+    __tablename__ = "locks"
 
     tablename: Mapped[str] = mapped_column(primary_key=True, nullable=False)
 

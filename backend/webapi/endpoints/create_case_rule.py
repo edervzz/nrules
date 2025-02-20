@@ -1,17 +1,17 @@
 """ Create a new workflow """
 import json
 from flask import Blueprint, request, Response, current_app, session
-from webapi.models import NewParametersRuleModel
-from application.messages import CreateParamtersRuleRequest
-from application.commands import CreateParametersRuleHandler
+from webapi.models import NewCaseModel
+from application.messages import CreateCaseRuleRequest
+from application.commands import CreateCaseRuleHandler
 from toolkit import Identification
 
 
-new_parameter_rule_bp = Blueprint("NewConditionsRule", __name__)
+new_case_rule_bp = Blueprint("NewCasesRule", __name__)
 
 
-@new_parameter_rule_bp.post("/t/<tid>/rules/<rid>/parameters")
-def new_parameter_rule_endpoint(tid=None, rid=None):
+@new_case_rule_bp.post("/t/<tid>/rules/<rid>/cases/<cid>")
+def new_case_rule_endpoint(tid=None, rid=None, cid=None):
     """ New Endpoint """
     Identification.get_tenant_safe(tid)
     id_type = request.args.get("idType", "")
@@ -21,15 +21,15 @@ def new_parameter_rule_endpoint(tid=None, rid=None):
     if json_data is None:
         return
 
-    save_condition_rule = NewParametersRuleModel(json.dumps(json_data))
+    model = NewCaseModel(json.dumps(json_data), cid)
 
-    command = CreateParamtersRuleRequest(
+    command = CreateCaseRuleRequest(
         rule_id,
         rule_name,
-        save_condition_rule.parameters
+        model.case
     )
 
-    CreateParametersRuleHandler(
+    CreateCaseRuleHandler(
         current_app.config[tid],
         current_app.config["logger"],
         current_app.config[session["localizer"]]

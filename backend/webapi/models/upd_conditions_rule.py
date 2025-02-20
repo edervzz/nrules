@@ -7,7 +7,7 @@ from domain.entities import Condition
 class UpdConditionsRuleModel:
     """ Update conditions Rule Model """
 
-    def __init__(self, j):
+    def __init__(self, j, cid):
         self.__dict__ = json.loads(j)
         self.conditions: List[Condition] = []
 
@@ -16,7 +16,7 @@ class UpdConditionsRuleModel:
             for c in raw_conditions:
                 a_condition = Condition()
                 a_condition.variable = c["variable"] if "variable" in c else ""
-                a_condition.case_id = c["case_id"] if "case_id" in c else ""
+                a_condition.case_id = cid
                 a_condition.rule_id = ""
                 a_condition.operator = c["operator"] if "operator" in c else ""
                 a_condition.value = c["value"] if "value" in c else ""

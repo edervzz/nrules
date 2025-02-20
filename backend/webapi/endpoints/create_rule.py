@@ -8,7 +8,7 @@ from application.commands import CreateRuleHandler
 from toolkit import Identification
 
 
-new_rule_bp = Blueprint("New Rule", __name__)
+new_rule_bp = Blueprint("NewRule", __name__)
 
 
 @cross_origin

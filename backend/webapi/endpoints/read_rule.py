@@ -6,7 +6,7 @@ from application.queries import ReadRuleHandler
 from toolkit import Identification
 from webapi.models import RuleModel
 
-read_rule_bp = Blueprint("Read Rule", __name__)
+read_rule_bp = Blueprint("ReadRule", __name__)
 
 
 @read_rule_bp.get("/t/<tid>/rules/<rule_id>")

@@ -5,7 +5,7 @@ from webapi.models import NewTenantModel
 from application.messages import CreateTenantRequest
 from application.commands import CreateTenantHandler
 
-new_tenant_bp = Blueprint("New Tenant", __name__)
+new_tenant_bp = Blueprint("NewTenant", __name__)
 
 
 @new_tenant_bp.post("/tenants")

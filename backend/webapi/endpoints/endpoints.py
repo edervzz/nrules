@@ -107,10 +107,11 @@ def register_request(app: Flask):
         # validar token
 
         # Set localizer for each request
-        langu = request.headers["Accept-Language"] if "Accept-Language" in request.headers else "es"
-        if "es" in langu:
+        langu = request.headers["Accept-Language"] if "Accept-Language" in request.headers else "ES"
+        langu = langu.upper()
+        if "ES" in langu:
             langu = "es_localizer"
-        elif "en" in langu:
+        elif "EN" in langu:
             langu = "en_localizer"
         session["localizer"] = langu
         # Set repository by core tenant

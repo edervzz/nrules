@@ -40,6 +40,14 @@ class CreateRuleHandler:
             for x in request.tags:
                 self.repository.tag.create(x)
 
+        if len(request.conditions) > 0:
+            for x in request.conditions:
+                self.repository.condition.create(x)
+
+        if len(request.kv_items) > 0:
+            for x in request.kv_items:
+                self.repository.kvitem.create(x)
+
         self.repository.commit_work()
 
         return CreateRuleResponse(request.rule.id)

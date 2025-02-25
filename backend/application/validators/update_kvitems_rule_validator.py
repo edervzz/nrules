@@ -24,7 +24,7 @@ class UpdateKVItemsRuleValidator(Validator):
 
         if not request.income_kvitems is None:
             for kvi in request.income_kvitems:
-                kvi.key = kvi.key.upper()
+                kvi.key = kvi.key.lower()
                 # validate condition
                 validator_kvi.validate_and_throw(kvi)
                 unique_items.add(kvi.key)

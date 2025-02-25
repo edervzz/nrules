@@ -36,10 +36,10 @@ class ReadRuleBizValidator(Validator):
                 for case in cases:
                     if isinstance(case, Case):
                         conditions = self.__repository.condition.read_by_parent_id(
-                            case.condition_group_id)
+                            case.id)
                         request.conditions = request.conditions + conditions
                         kvitems = self.__repository.kvitem.read_by_parent_id(
-                            case.kv_storage_id)
+                            case.id)
                         request.kvs_items = request.kvs_items + kvitems
 
         request.rule = rule

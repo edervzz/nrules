@@ -5,10 +5,13 @@
 class Constants:
     """ Constants """
     ADD = "ADD"
-    MOD = ""
+    MOD = "MOD"
 
     INPUT = "INPUT"
     OUTPUT = "OUTPUT"
+
+    CASE = "CASE"
+    TREE = "TREE"
 
     STRING = "STRING"
     NUMERIC = "NUMERIC"

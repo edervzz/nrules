@@ -20,11 +20,11 @@ class UpdateParametersRuleValidator(Validator):
             self.as_error(self.localizer.get(Codes.PARAM_UPD_002))
 
         unique_items = set()
-        validator_param = ParameterValidator(self.localizer, False)
+        validator_param = ParameterValidator(self.localizer)
 
         if not request.parameters is None:
             for upd_param in request.parameters:
-                upd_param.key = upd_param.key.upper()
+                upd_param.key = upd_param.key.lower()
                 # validate parameter
                 validator_param.validate_and_throw(upd_param)
                 unique_items.add(f"{upd_param.key}{upd_param.usefor}")

@@ -25,7 +25,7 @@ class TagAdapter(TagRepository):
         tag.value = entity.value
 
     def read_by_external_id(self, external_id) -> Tag:
-        external_id = external_id.upper()
+        external_id = external_id.lower()
         with Session(self.engine) as session:
             tag = session.query(Tag).where(
                 Tag.key == external_id).one_or_none()

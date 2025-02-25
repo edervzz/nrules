@@ -160,9 +160,6 @@
                         "$ref": "#/parameters/IdType"
                     },
                     {
-                        "$ref": "#/parameters/CaseID"
-                    },
-                    {
                         "name": "body",
                         "in": "body",
                         "required": true,
@@ -504,7 +501,7 @@
             "required": true
         },
         "IdType":{
-            "name": "idType",
+            "name": "ridType",
             "description": "Rule Identification Type.",
             "in": "query",
             "type": "string",
@@ -607,14 +604,8 @@
         },
         "NewCase":{
             "type": "object",
-            "required": ["id", "position", "is_active", "is_archived"],
+            "required": ["is_active", "is_archived"],
             "properties": {
-                "id":{
-                    "type": "string"
-                },
-                "position":{
-                    "type": "integer"
-                },
                 "is_active": {
                     "type": "boolean"
                 },
@@ -649,10 +640,14 @@
             }
         },
         "UpdConditionsRule":{
-            "type":"array",
-            "items": {
-                "$ref": "#/definitions/UpdCondition",
-                "minItems": 1
+            "type": "object",
+            "properties": {
+                "items":{
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/UpdCondition"
+                    }
+                }
             }
         },
         "UpdCondition":{
@@ -679,11 +674,15 @@
             }
         },
         "UpdKVItemsRule":{
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/UpdKVItem"
-            },
-            "minItems": 1
+            "type": "object",
+            "properties": {
+                "items":{
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/UpdKVItem"
+                    }
+                }
+            }
         },
         "UpdKVItem":{
             "type": "object",
@@ -717,7 +716,7 @@
                         "$ref": "#/definitions/NewParameter"
                     }
                 },
-                "outputs":{
+                "output":{
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/NewParameter"

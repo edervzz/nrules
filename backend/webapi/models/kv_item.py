@@ -4,10 +4,9 @@
 class KVItemModel:
     """ KV Item Model """
 
-    def __init__(self, key, kv_id, value, calculation, typeof, is_active):
+    def __init__(self, key, case_id, rule_id, value, calculation):
         self.key = key
-        self.kv_id = kv_id
+        self.case_id = case_id
+        self.rule_id = rule_id
         self.value = value
         self.calculation = calculation
-        self.typeof = typeof
-        self.is_active = is_active

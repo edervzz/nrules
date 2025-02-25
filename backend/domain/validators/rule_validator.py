@@ -1,6 +1,6 @@
 """ _module_ """
 from domain.entities import Rule
-from toolkit import Localizer, Codes, Validator
+from toolkit import Localizer, Codes, Validator, Constants
 
 
 class RuleValidator(Validator):
@@ -12,7 +12,7 @@ class RuleValidator(Validator):
 
     def __validate__(self, request: Rule):
         """ Validate request format """
-        request.name = request.name.upper()
+        request.name = request.name.lower()
         request.rule_type = request.rule_type.upper()
         request.strategy = request.strategy.upper()
 
@@ -25,8 +25,8 @@ class RuleValidator(Validator):
         if request.rule_type is None:
             self.add_failure(self._localizer.get(Codes.RULE_002))
         else:
-            if request.rule_type not in ["MATRIX", "TREE"]:
+            if request.rule_type not in [Constants.CASE, Constants.TREE]:
                 self.add_failure(self._localizer.get(Codes.RULE_003))
-            if request.rule_type == "MATRIX":
-                if request.strategy not in ["EARLY", "BASE", "ALL"]:
+            if request.rule_type == Constants.CASE:
+                if request.strategy not in [Constants.EARLY, Constants.BASE, Constants.ALL]:
                     self.add_failure(self._localizer.get(Codes.RULE_004))

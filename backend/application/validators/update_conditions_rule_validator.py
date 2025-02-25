@@ -24,7 +24,7 @@ class UpdateConditionsRuleValidator(Validator):
 
         if not request.income_conditions is None:
             for cond in request.income_conditions:
-                cond.variable = cond.variable.upper()
+                cond.variable = cond.variable.lower()
                 # validate condition
                 validator.validate_and_throw(cond)
                 unique_items.add(cond.variable)

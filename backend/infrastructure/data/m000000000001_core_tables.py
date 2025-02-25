@@ -20,31 +20,6 @@ def core_tables(engine: Engine) -> str:
         if result is not None:
             return result.id
 
-    # Key-Value Items ----------------------------------------------
-    kvitems = Table(
-        "kv_items",
-        metadata_obj,
-        Column(
-            "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
-        Column(
-            "key", String(50), primary_key=True, comment="Key"),
-        Column(
-            "case_id", String(36), primary_key=True, comment="Case ID"),
-        Column(
-            "rule_id", String(36), primary_key=False, comment="Rule ID"),
-        Column(
-            "value", String(500), nullable=False, comment="Value"),
-        Column(
-            "calculation", String(3), CheckConstraint("calculation = 'ADD' OR calculation = 'MOD' OR calculation = 'FN'", name="kv_items_chk_calculation"), nullable=True, comment="Calculation method"),
-        UniqueConstraint("tenant_id", "case_id", "key", name="kv_items_unk"),
-        comment="KV Item can be assign to single one KVS"
-    )
-    set_auditable(kvitems)
-    Index(
-        "ix_kv_items_001",
-        kvitems.c.tenant_id,
-        kvitems.c.case_id)
-
     # Rules ----------------------------------------------
     rule = Table(
         "rules",
@@ -56,7 +31,7 @@ def core_tables(engine: Engine) -> str:
         Column(
             "name", String(50), nullable=False, unique=True, comment="Rule's Name"),
         Column(
-            "rule_type", String(6), CheckConstraint("rule_type = 'MATRIX' OR rule_type = 'TREE'", name="rules_chk_rule_type"), nullable=False, comment="Type of Rule (MATRIX, TREE)"),
+            "rule_type", String(6), CheckConstraint("rule_type = 'CASE' OR rule_type = 'TREE'", name="rules_chk_rule_type"), nullable=False, comment="Type of Rule (MATRIX, TREE)"),
         Column(
             "strategy", String(5), CheckConstraint("strategy = 'EARLY' OR strategy = 'BASE' OR strategy = 'ALL'", name="rules_chk_strategy"), nullable=False, comment="Strategy of rule depending of Type"),
         Column(
@@ -71,66 +46,6 @@ def core_tables(engine: Engine) -> str:
         "ix_rules_001",
         rule.c.tenant_id,
         rule.c.name)
-
-    # Tags ----------------------------------------------
-    tags = Table(
-        "tags",
-        metadata_obj,
-        Column(
-            "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
-        Column(
-            "rule_id", String(36), primary_key=True, comment="Rule ID"),
-        Column(
-            "key", String(50), primary_key=True, nullable=False, comment="Tag's key"),
-        Column(
-            "value", String(80), nullable=False, comment="Value"),
-        comment="Rule Catalog"
-    )
-    set_auditable(tags)
-
-    # Cases ----------------------------------------------
-    cases = Table(
-        "cases",
-        metadata_obj,
-        Column(
-            "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
-        Column(
-            "id", String(36), primary_key=True, comment="ID"),
-        Column(
-            "rule_id", String(36), primary_key=True, comment="Rule ID"),
-        Column(
-            "position", Integer, nullable=False, comment="Position"),
-        Column(
-            "is_active", Boolean, nullable=False, comment="Case is Active"),
-        Column(
-            "is_archived", Boolean, nullable=False, comment="Case is Archived"),
-        comment="Matrix's Rows. Set execution order"
-    )
-    set_auditable(cases)
-    Index(
-        "ix_cases_001",
-        cases.c.tenant_id,
-        cases.c.rule_id)
-
-    # conditions  ----------------------------------------------
-    conditions = Table(
-        "conditions",
-        metadata_obj,
-        Column(
-            "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
-        Column(
-            "variable", String(50), primary_key=True, nullable=False, comment="Variable Name"),
-        Column(
-            "case_id", String(36), primary_key=True, comment="Case ID"),
-        Column(
-            "rule_id", String(36), primary_key=False, comment="Rule ID"),
-        Column(
-            "operator", String(10), nullable=False, comment="Operator"),
-        Column(
-            "value", String(50), nullable=False, comment="Value"),
-        comment="Matrix's Columns. Set expressions to evaluate"
-    )
-    set_auditable(conditions)
 
     # Parameters ----------------------------------------------
     parameters = Table(
@@ -156,6 +71,99 @@ def core_tables(engine: Engine) -> str:
     Index(
         "ix_parameters_001",
         parameters.c.rule_id)
+
+    # Cases ----------------------------------------------
+    cases = Table(
+        "cases",
+        metadata_obj,
+        Column(
+            "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
+        Column(
+            "id", String(36), primary_key=True, comment="ID"),
+        Column(
+            "rule_id", String(36), primary_key=True, comment="Rule ID"),
+        Column(
+            "position", Integer, nullable=False, comment="Position"),
+        Column(
+            "is_active", Boolean, nullable=False, comment="Case is Active"),
+        Column(
+            "is_archived", Boolean, nullable=False, comment="Case is Archived"),
+        comment="Cases. Set execution order"
+    )
+    set_auditable(cases)
+    Index(
+        "ix_cases_001",
+        cases.c.tenant_id,
+        cases.c.rule_id)
+
+    # Conditions  ----------------------------------------------
+    conditions = Table(
+        "conditions",
+        metadata_obj,
+        Column(
+            "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
+        Column(
+            "variable", String(50), primary_key=True, comment="Variable Name"),
+        Column(
+            "case_id", String(36), primary_key=True, comment="Case ID"),
+        Column(
+            "rule_id", String(36), primary_key=False, comment="Rule ID"),
+        Column(
+            "operator", String(10), nullable=False, comment="Operator"),
+        Column(
+            "value", String(50), nullable=False, comment="Value"),
+        comment="Matrix's Columns. Set expressions to evaluate"
+    )
+    set_auditable(conditions)
+    Index(
+        "ix_conditions_001",
+        conditions.c.rule_id)
+
+    # Key-Value Items ----------------------------------------------
+    kvitems = Table(
+        "kv_items",
+        metadata_obj,
+        Column(
+            "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
+        Column(
+            "key", String(50), primary_key=True, comment="Key"),
+        Column(
+            "case_id", String(36), primary_key=True, comment="Case ID"),
+        Column(
+            "rule_id", String(36), nullable=False, comment="Rule ID"),
+        Column(
+            "value", String(500), nullable=False, comment="Value"),
+        Column(
+            "calculation", String(3), CheckConstraint("calculation = 'ADD' OR calculation = 'MOD' OR calculation = 'FN'", name="kv_items_chk_calculation"), nullable=True, comment="Calculation method"),
+        comment="KV Item can be assign to single one KVS"
+    )
+    set_auditable(kvitems)
+    Index(
+        "ix_kv_items_001",
+        kvitems.c.rule_id)
+    Index(
+        "ix_kv_items_002",
+        kvitems.c.tenant_id,
+        kvitems.c.case_id)
+
+    # Tags ----------------------------------------------
+    tags = Table(
+        "tags",
+        metadata_obj,
+        Column(
+            "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
+        Column(
+            "rule_id", String(36), primary_key=True, comment="Rule ID"),
+        Column(
+            "key", String(50), primary_key=True, nullable=False, comment="Tag's key"),
+        Column(
+            "value", String(80), nullable=False, comment="Value"),
+        comment="Tags Catalog"
+    )
+    set_auditable(tags)
+    Index(
+        "ix_tags_001",
+        tags.c.rule_id)
 
     metadata_obj.create_all(engine)
 

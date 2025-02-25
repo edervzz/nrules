@@ -12,7 +12,7 @@ class NewParametersRuleModel:
         self.__dict__ = json.loads(j)
         self.parameters: List[Parameter] = []
 
-        raw_parameters = self.__dict__.get("inputs", [])
+        raw_parameters = self.__dict__.get("input", [])
         if isinstance(raw_parameters, list):
             for c in raw_parameters:
                 a_param = Parameter()
@@ -24,7 +24,7 @@ class NewParametersRuleModel:
                 a_param.is_archived = False
                 self.parameters.append(a_param)
 
-        raw_parameters = self.__dict__.get("outputs", [])
+        raw_parameters = self.__dict__.get("output", [])
         if isinstance(raw_parameters, list):
             for c in raw_parameters:
                 a_param = Parameter()

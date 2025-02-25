@@ -10,18 +10,18 @@ from toolkit import Identification
 new_case_rule_bp = Blueprint("NewCasesRule", __name__)
 
 
-@new_case_rule_bp.post("/t/<tid>/rules/<rid>/cases/<cid>")
-def new_case_rule_endpoint(tid=None, rid=None, cid=None):
+@new_case_rule_bp.post("/t/<tid>/rules/<rid>/cases")
+def new_case_rule_endpoint(tid=None, rid=None):
     """ New Endpoint """
     Identification.get_tenant_safe(tid)
-    id_type = request.args.get("idType", "")
+    id_type = request.args.get("ridType", "")
     rule_id, rule_name = Identification.get_object(rid, id_type)
 
     json_data = request.get_json(silent=True)
     if json_data is None:
         return
 
-    model = NewCaseModel(json.dumps(json_data), cid)
+    model = NewCaseModel(json.dumps(json_data))
 
     command = CreateCaseRuleRequest(
         rule_id,

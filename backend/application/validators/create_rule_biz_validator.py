@@ -22,8 +22,5 @@ class CreateRuleBizValidator(Validator):
         elif request.rule.name != "":
             rule = self.repo.rule.read_by_external_id(request.rule.name)
 
-        if rule is None:
-            raise self.as_not_found(self.localizer.get(Codes.RU_READ_002))
-
         if rule is not None:
             raise self.as_duplicated(self.localizer.get(Codes.RU_CREA_001))

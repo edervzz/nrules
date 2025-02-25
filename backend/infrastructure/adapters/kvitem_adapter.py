@@ -18,7 +18,7 @@ class KVItemAdapter(KVItemRepository):
             self.session.flush()
 
     def update(self, entity: KVItem):
-        entity.key = entity.key.upper()
+        entity.key = entity.key.lower()
         kvitem = self.session.query(KVItem).where(
             KVItem.case_id == entity.case_id,
             KVItem.key == entity.key).one_or_none()
@@ -27,7 +27,7 @@ class KVItemAdapter(KVItemRepository):
         kvitem.calculation = entity.calculation
 
     def read(self, _id: KVItemKey) -> KVItem:
-        _id.key = _id.key.upper()
+        _id.key = _id.key.lower()
         with Session(self.engine) as session:
             rule = session.query(KVItem).where(
                 KVItem.case_id == _id.case_id,

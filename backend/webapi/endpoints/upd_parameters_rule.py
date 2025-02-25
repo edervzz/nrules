@@ -14,7 +14,7 @@ upd_parameters_rule_bp = Blueprint("UpdateParametersRule", __name__)
 def upd_parameters_rule_endpoint(tid=None, rid=None):
     """ Update Rule's parameters """
     Identification.get_tenant_safe(tid)
-    id_type = request.args.get("idType", "")
+    id_type = request.args.get("ridType", "")
     rule_id, rule_name = Identification.get_object(rid, id_type)
 
     json_data = request.get_json(silent=True)

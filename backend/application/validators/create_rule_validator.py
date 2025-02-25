@@ -18,11 +18,11 @@ class CreateRuleValidator(Validator):
         rule_validator = RuleValidator(self.local)
         rule_validator.validate_and_throw(request.rule)
         # rule
-        request.rule.id = str(uuid.uuid4())
+        request.rule.id = str(uuid.uuid3(uuid.uuid4(), "RULE"))
         request.rule.is_active = True
         request.rule.is_archived = False
         # case
-        request.case_zero.id = str(uuid.uuid4())
+        request.case_zero.id = str(uuid.uuid3(uuid.uuid4(), "CASE"))
         request.case_zero.rule_id = request.rule.id
         request.case_zero.position = 0
         request.case_zero.is_active = True
@@ -48,6 +48,7 @@ class CreateRuleValidator(Validator):
                 onecond = Condition()
                 onecond.variable = e_param.key
                 onecond.case_id = request.case_zero.id
+                onecond.rule_id = request.rule.id
                 onecond.operator = "EQ"
                 onecond.value = ""
                 # validate condition
@@ -60,6 +61,7 @@ class CreateRuleValidator(Validator):
                 kvi = KVItem()
                 kvi.key = e_param.key
                 kvi.case_id = request.case_zero.id
+                kvi.rule_id = request.rule.id
                 kvi.value = ""
                 kvi.calculation = "ADD"
                 # validate kv item
@@ -72,5 +74,5 @@ class CreateRuleValidator(Validator):
             raise self.as_error(self.local.get(Codes.RU_CREA_002))
 
         for e_tag in request.tags:
-            e_tag.key = e_tag.key.upper()
+            e_tag.key = e_tag.key.lower()
             e_tag.rule_id = request.rule.id

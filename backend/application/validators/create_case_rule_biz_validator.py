@@ -43,7 +43,7 @@ class CreateCaseRuleBizValidator(Validator):
                         one_kvi.case_id = request.case.id
                         one_kvi.rule_id = rule.id
                         one_kvi.value = ""
-                        one_kvi.calculation = Constants.ADD
+                        one_kvi.calculation = Constants.MOD
                         request.kvitems.append(one_kvi)
 
             my_cases = self.repo.case.read_by_parent_id(rule.id)

@@ -26,11 +26,15 @@ class RuleAdapter(RuleRepository):
 
     def read(self, _id) -> Rule:
         with Session(self.engine) as session:
-            rule = session.query(Rule).where(Rule.id == _id).one_or_none()
+            if len(_id) == 8:
+                rule = session.query(Rule).where(
+                    Rule.name.ilike(f'%{_id}%')).one_or_none()
+            else:
+                rule = session.query(Rule).where(Rule.id == _id).one_or_none()
             return rule
 
     def read_by_external_id(self, external_id) -> Rule:
-        external_id = external_id.upper()
+        external_id = external_id.lower()
         with Session(self.engine) as session:
             rule = session.query(Rule).where(
                 Rule.name == external_id).one_or_none()
@@ -44,6 +48,20 @@ class RuleAdapter(RuleRepository):
                     Rule).where(Rule.name.ilike(f'%{word}%')).order_by(Rule.name).offset(offset).limit(page_size).all()
                 total = session.query(
                     Rule.id).where(Rule.name.ilike(f'%{word}%')).all()
+            else:
+                rules = session.query(
+                    Rule).order_by(Rule.name).offset(offset).limit(page_size).all()
+                total = session.query(Rule.id).all()
+            return rules, Pagination(page_no, page_size, len(total))
+
+    def read_page_by_short(self, page_no, page_size, short_id):
+        with Session(self.engine) as session:
+            offset = (page_no-1)*page_size
+            if short_id != "":
+                rules = session.query(
+                    Rule).where(Rule.id.ilike(f'{short_id}%')).order_by(Rule.name).offset(offset).limit(page_size).all()
+                total = session.query(
+                    Rule.id).where(Rule.id.ilike(f'{short_id}%')).all()
             else:
                 rules = session.query(
                     Rule).order_by(Rule.name).offset(offset).limit(page_size).all()

@@ -270,8 +270,8 @@ class Codes:
     es_messages[RULE_004] = "La estrategia debe ser EARLY / BASIC / ALL."
 
     RULE_003 = "RULE-003"
-    en_messages[RULE_003] = "Rule Type must be 'MATRIX'."
-    es_messages[RULE_003] = "Tipo Regla deber ser 'MATRIX'."
+    en_messages[RULE_003] = "Rule Type must be 'CASE'."
+    es_messages[RULE_003] = "Tipo Regla deber ser 'CASE'."
 
     RULE_002 = "RULE-002"
     en_messages[RULE_002] = "Rule Type must be provided."

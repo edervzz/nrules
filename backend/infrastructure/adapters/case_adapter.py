@@ -27,8 +27,12 @@ class CaseAdapter(CaseRepository):
 
     def read(self, _id) -> Case:
         with Session(self.engine) as session:
-            condition = session.query(Case).where(
-                Case.id == _id).one_or_none()
+            if len(_id) == 8:
+                condition = session.query(Case).where(
+                    Case.id.ilike(f'{_id}%')).one_or_none()
+            else:
+                condition = session.query(Case).where(
+                    Case.id == _id).one_or_none()
             return condition
 
     def read_by_parent_id(self, parent_id: int) -> List[Case]:

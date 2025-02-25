@@ -28,9 +28,10 @@ class CreateParametersRuleValidator(Validator):
 
         if not request.parameters is None:
             for new_param in request.parameters:
-                new_param.key = new_param.key.upper()
+                new_param.key = new_param.key.lower()
                 # validate parameter
                 validator_param.validate_and_throw(new_param)
+
                 if new_param.usefor == Constants.INPUT:
                     # prepare condition
                     new_condition = Condition()
@@ -42,17 +43,17 @@ class CreateParametersRuleValidator(Validator):
                     # collect parameter
                     request.income_conditions.append(new_condition)
                     unique_conditions.add(new_condition.variable)
-                if new_param.usefor == Constants.OUTPUT:
+                elif new_param.usefor == Constants.OUTPUT:
                     # prepare kvitem
                     new_kvitem = KVItem()
                     new_kvitem.key = new_param.key
-                    new_kvitem.case_id = -1
+                    new_kvitem.case_id = "<uuid>"
                     new_kvitem.value = ""
                     new_kvitem.calculation = Constants.MOD
                     # validate kvitem
                     validator_kvitem.validate_and_throw(new_kvitem)
                     # collect parameter
-                    request.income_kvitems.append(new_condition)
+                    request.income_kvitems.append(new_kvitem)
                     unique_kvitems.add(new_kvitem.key)
 
         if len(unique_conditions) != len(request.income_conditions):

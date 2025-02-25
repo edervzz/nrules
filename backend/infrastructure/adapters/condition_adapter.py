@@ -17,7 +17,7 @@ class ConditionAdapter(ConditionRepository):
             self.session.flush()
 
     def update(self,  entity: Condition):
-        entity.variable = entity.variable.upper()
+        entity.variable = entity.variable.lower()
         condition = self.session.query(Condition).where(
             Condition.variable == entity.variable,
             Condition.case_id == entity.case_id
@@ -27,11 +27,11 @@ class ConditionAdapter(ConditionRepository):
         condition.value = entity.value
 
     def read(self, _id: ConditionKey) -> Condition:
-        _id.variable = _id.variable.upper()
+        _id.variable = _id.variable.lower()
         with Session(self.engine) as session:
             condition = session.query(Condition).where(
                 Condition.variable == _id.variable,
-                Condition.case_id == _id.cas).one_or_none()
+                Condition.case_id == _id.case_id).one_or_none()
             return condition
 
     def read_by_parent_id(self, parent_id: str) -> List[Condition]:
@@ -47,7 +47,7 @@ class ConditionAdapter(ConditionRepository):
             return conditions
 
     def read_by_link_single(self, link_id, _id: str):
-        _id = _id.upper()
+        _id = _id.lower()
         with Session(self.engine) as session:
             conditions = session.query(Condition).where(
                 Condition.rule_id == link_id,

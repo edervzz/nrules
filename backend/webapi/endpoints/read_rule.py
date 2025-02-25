@@ -12,7 +12,7 @@ read_rule_bp = Blueprint("ReadRule", __name__)
 @read_rule_bp.get("/t/<tid>/rules/<rule_id>")
 def read_rules_endpoint(tid=None, rule_id=None):
     """ Read rules Endpoint """
-    id_type = request.args.get("idType", "")
+    id_type = request.args.get("ridType", "")
     rule_id, rule_name = Identification.get_object(rule_id, id_type)
 
     command = ReadRuleRequest(

@@ -4,10 +4,9 @@
 class ConditionModel:
     """ Condition Model """
 
-    def __init__(self, variable, condition_group_id, operator, value,  typeof, is_active):
+    def __init__(self, variable, case_id, rule_id, operator, value):
         self.variable = variable
-        self.condition_group_id = condition_group_id
+        self.case_id = case_id
+        self.rule_id = rule_id
         self.operator = operator
         self.value = value
-        self.typeof = typeof
-        self.is_active = is_active

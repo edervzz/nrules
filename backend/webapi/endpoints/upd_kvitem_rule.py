@@ -14,7 +14,7 @@ upd_kvitem_rule_bp = Blueprint("UpdateKVItemsRule", __name__)
 def upd_kvitems_rule_endpoint(tid=None, rid=None, cid=None):
     """ Update Endpoint """
     Identification.get_tenant_safe(tid)
-    id_type = request.args.get("idType", "")
+    id_type = request.args.get("ridType", "")
     rule_id, rule_name = Identification.get_object(rid, id_type)
 
     json_data = request.get_json(silent=True)

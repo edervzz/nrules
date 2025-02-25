@@ -41,6 +41,10 @@ class RuleRepository(
         Creator.__init__(self)
         self.engine = engine
 
+    @abstractmethod
+    def read_page_by_short(self, page_no: int, page_size: int, short_id: str) -> tuple[list, any]:
+        """ Read page by short ID """
+
 
 class TagRepository(
         ABC, Creator, Updater,

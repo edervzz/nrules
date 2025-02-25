@@ -8,7 +8,7 @@ from domain.entities import Rule, ConditionKey
 class UpdateConditionsRuleBizValidator(Validator):
     """_summary_"""
 
-    def __init__(self, localizer: Localizer, repository: CoreRepository):
+    def __init__(self, repository: CoreRepository, localizer: Localizer):
         super().__init__()
         self.local = localizer
         self.repo = repository

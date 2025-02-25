@@ -13,7 +13,7 @@ run_rule_bp = Blueprint("RunRule", __name__)
 def run_rule_endpoint(tid: int = 0, rid: int = 0):
     """ Run rules Endpoint """
 
-    kvs_id = request.args.get("kvsId", 0)
+    rule_id = request.args.get("ridType", 0)
     json_data = request.json
     if json_data is None:
         return
@@ -28,7 +28,7 @@ def run_rule_endpoint(tid: int = 0, rid: int = 0):
     command = RunRuleRequest(
         rid,
         "",
-        kvs_id,
+        rule_id,
         payload
     )
 

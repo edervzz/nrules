@@ -37,6 +37,7 @@ class CreateParametersRuleBizValidator(Validator):
         # retrieve cases and conditions
         my_cases: List[Case] = self.repo.case.read_by_parent_id(rule.id)
         my_conds: List[Condition] = self.repo.condition.read_by_link(rule.id)
+
         for e_cond in request.income_conditions:
             # confirm new Conditions must not be exists
             found = [x for x in my_conds if x.variable == e_cond.variable]
@@ -44,9 +45,13 @@ class CreateParametersRuleBizValidator(Validator):
                 raise self.as_error(self.localizer.get(Codes.PARAM_CREA_003))
             # for each case add conditions
             for e_case in my_cases:
-                e_cond.rule_id = rule.id
-                e_cond.case_id = e_case.id
-                request.conditions.append(e_cond)
+                new_cond = Condition()
+                new_cond.variable = e_cond.variable
+                new_cond.case_id = e_case.id
+                new_cond.rule_id = rule.id
+                new_cond.operator = e_cond.operator
+                new_cond.value = e_cond.value
+                request.conditions.append(new_cond)
 
         my_kvitems: List[KVItem] = self.repo.kvitem.read_by_link(rule.id)
         for e_kvitem in request.income_kvitems:
@@ -56,6 +61,10 @@ class CreateParametersRuleBizValidator(Validator):
                 raise self.as_error(self.localizer.get(Codes.PARAM_CREA_003))
             # for each case add kv items
             for e_case in my_cases:
-                e_kvitem.rule_id = rule.id
-                e_kvitem.case_id = e_case.id
-                request.kvitems.append(e_kvitem)
+                new_kvi = KVItem()
+                new_kvi.key = e_kvitem.key
+                new_kvi.case_id = e_case.id
+                new_kvi.rule_id = rule.id
+                new_kvi.value = e_kvitem.value
+                new_kvi.calculation = e_kvitem.calculation
+                request.kvitems.append(new_kvi)

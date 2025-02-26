@@ -2,7 +2,7 @@
 from toolkit import Validator, Localizer, Codes
 from application.messages import UpdateConditionsRuleRequest
 from domain.ports import CoreRepository
-from domain.entities import Rule, ConditionKey
+from domain.entities import ConditionKey
 
 
 class UpdateConditionsRuleBizValidator(Validator):

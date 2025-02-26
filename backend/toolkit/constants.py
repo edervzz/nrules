@@ -10,7 +10,7 @@ class Constants:
     INPUT = "INPUT"
     OUTPUT = "OUTPUT"
 
-    CASE = "CASE"
+    TABLE = "TABLE"
     TREE = "TREE"
 
     STRING = "STRING"

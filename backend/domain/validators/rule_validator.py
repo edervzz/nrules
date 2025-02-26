@@ -25,8 +25,8 @@ class RuleValidator(Validator):
         if request.rule_type is None:
             self.add_failure(self._localizer.get(Codes.RULE_002))
         else:
-            if request.rule_type not in [Constants.CASE, Constants.TREE]:
+            if request.rule_type not in [Constants.TABLE, Constants.TREE]:
                 self.add_failure(self._localizer.get(Codes.RULE_003))
-            if request.rule_type == Constants.CASE:
+            if request.rule_type == Constants.TABLE:
                 if request.strategy not in [Constants.EARLY, Constants.BASE, Constants.ALL]:
                     self.add_failure(self._localizer.get(Codes.RULE_004))

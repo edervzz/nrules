@@ -31,7 +31,7 @@ def core_tables(engine: Engine) -> str:
         Column(
             "name", String(50), nullable=False, unique=True, comment="Rule's Name"),
         Column(
-            "rule_type", String(6), CheckConstraint("rule_type = 'CASE' OR rule_type = 'TREE'", name="rules_chk_rule_type"), nullable=False, comment="Type of Rule (MATRIX, TREE)"),
+            "rule_type", String(6), CheckConstraint("rule_type = 'TABLE' OR rule_type = 'TREE'", name="rules_chk_rule_type"), nullable=False, comment="Type of Rule (TABLE, TREE)"),
         Column(
             "strategy", String(5), CheckConstraint("strategy = 'EARLY' OR strategy = 'BASE' OR strategy = 'ALL'", name="rules_chk_strategy"), nullable=False, comment="Strategy of rule depending of Type"),
         Column(

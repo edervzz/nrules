@@ -14,6 +14,7 @@ from .rule_result import RunRuleResult
 from .parameters import Parameter
 from .tags import Tag
 from .lock import Lock
+from .rule_inventory import RuleInventory
 
 
 from .pagination import Pagination

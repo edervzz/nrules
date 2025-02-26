@@ -1,6 +1,6 @@
 """_summary_"""
 from typing import List
-from domain.entities import Case, Condition, KVItem
+from domain.entities import Case, Condition, KVItem, Rule
 
 
 class CreateCaseRuleRequest:
@@ -18,6 +18,8 @@ class CreateCaseRuleRequest:
 
         self.conditions: List[Condition] = []
         self.kvitems: List[KVItem] = []
+
+        self.rule: Rule
 
 
 class CreateCaseRuleResponse:

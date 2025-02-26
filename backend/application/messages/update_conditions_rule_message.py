@@ -1,6 +1,6 @@
 """ Save conditions rules """
 from typing import List
-from domain.entities import Condition
+from domain.entities import Condition, Rule
 
 
 class UpdateConditionsRuleRequest:
@@ -15,6 +15,8 @@ class UpdateConditionsRuleRequest:
         self.id = _id
         self.name = name
         self.income_conditions: List[Condition] = conditions
+
+        self.rule: Rule
 
 
 class UpdateConditionsRuleResponse:

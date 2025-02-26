@@ -33,6 +33,8 @@ class UpdateConditionsRuleHandler:
             for e in request.income_conditions:
                 self.repo.condition.update(e)
 
+        self.repo.rule.update(request.rule)
+
         self.repo.commit_work()
 
         return UpdateConditionsRuleResponse(request.id)

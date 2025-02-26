@@ -41,6 +41,8 @@ class CreateParametersRuleHandler:
             for e in request.kvitems:
                 self.repo.kvitem.create(e)
 
+        self.repo.rule.update(request.rule)
+
         self.repo.commit_work()
 
         return CreateParametersRuleResponse(request.id)

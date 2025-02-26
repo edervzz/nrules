@@ -1,7 +1,6 @@
 """ _module_ """
-from typing import List
 from application.messages import CreateCaseRuleRequest
-from domain.entities import Parameter, Condition, Case, Rule, KVItem
+from domain.entities import Parameter, Condition, Case, KVItem
 from domain.ports import CoreRepository
 from toolkit import Validator, Localizer, Codes, Constants
 
@@ -17,15 +16,15 @@ class CreateCaseRuleBizValidator(Validator):
     def __validate__(self, request: CreateCaseRuleRequest):
         """ validate """
         # retrieve rule
-        rule: Rule = None
+        request.rule = None
         if request.id != "":
-            rule = self.repo.rule.read(request.id)
+            request.rule = self.repo.rule.read(request.id)
         elif request.name != "":
-            rule = self.repo.rule.read_by_external_id(request.name)
-        if rule is None:
+            request.rule = self.repo.rule.read_by_external_id(request.name)
+        if request.rule is None:
             raise self.as_not_found(self.local.get(Codes.RU_READ_002))
         # complete Case with all Conditions and KV Items
-        my_params = self.repo.parameter.read_by_parent_id(rule.id)
+        my_params = self.repo.parameter.read_by_parent_id(request.rule.id)
         if len(my_params) > 0:
             for e in my_params:
                 if isinstance(e, Parameter):
@@ -33,7 +32,7 @@ class CreateCaseRuleBizValidator(Validator):
                         one_condition = Condition()
                         one_condition.variable = e.key
                         one_condition.case_id = request.case.id
-                        one_condition.rule_id = rule.id
+                        one_condition.rule_id = request.rule.id
                         one_condition.operator = Constants.EQUAL
                         one_condition.value = ""
                         request.conditions.append(one_condition)
@@ -41,12 +40,12 @@ class CreateCaseRuleBizValidator(Validator):
                         one_kvi = KVItem()
                         one_kvi.key = e.key
                         one_kvi.case_id = request.case.id
-                        one_kvi.rule_id = rule.id
+                        one_kvi.rule_id = request.rule.id
                         one_kvi.value = ""
                         one_kvi.calculation = Constants.MOD
                         request.kvitems.append(one_kvi)
 
-            my_cases = self.repo.case.read_by_parent_id(rule.id)
+            my_cases = self.repo.case.read_by_parent_id(request.rule.id)
 
             last_case = 0
             if my_cases is not None and len(my_cases) > 0:
@@ -55,4 +54,4 @@ class CreateCaseRuleBizValidator(Validator):
                         last_case = c.position if c.position > last_case else last_case
 
             request.case.position = last_case + 1
-            request.case.rule_id = rule.id
+            request.case.rule_id = request.rule.id

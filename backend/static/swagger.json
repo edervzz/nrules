@@ -364,6 +364,32 @@
                 }
             }
         },
+        "/nr/api/v1/t/{tid}/rules/{rid}/inventory": {
+            "post": {
+                "summary": "Create a rule's version into Inventory.",
+                "tags": ["Inventory"],
+                "consumes": ["application/json"],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/TenantID"
+                    },
+                    {
+                        "$ref": "#/parameters/RuleID"
+                    },
+                    {
+                        "$ref": "#/parameters/IdType"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Inventory Created"
+                    },
+                    "400": {
+                        "description": "Validation errors"
+                    }
+                }
+            }
+        },
         "/tenancy/api/v1/tenants": {
             "post": {
                 "summary": "Create a New Tenant",
@@ -615,10 +641,15 @@
             }
         },
         "UpdCaseRule":{
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/UpdCase",
-                "minItems": 1
+            "type": "object",
+            "properties": {            
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/UpdCase",
+                        "minItems": 1
+                    }
+                }
             }
         },
         "UpdCase":{
@@ -679,7 +710,8 @@
                 "items":{
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/UpdKVItem"
+                        "$ref": "#/definitions/UpdKVItem",
+                        "minItems": 1
                     }
                 }
             }

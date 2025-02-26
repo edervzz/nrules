@@ -1,6 +1,6 @@
 """ Save conditions rules """
 from typing import List
-from domain.entities import Parameter, Condition, KVItem
+from domain.entities import Parameter, Condition, KVItem, Rule
 
 
 class CreateParamtersRuleRequest:
@@ -21,6 +21,8 @@ class CreateParamtersRuleRequest:
 
         self.income_kvitems: List[KVItem] = []
         self.kvitems: List[KVItem] = []
+
+        self.rule: Rule
 
 
 class CreateParametersRuleResponse:

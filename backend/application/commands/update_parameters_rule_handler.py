@@ -33,6 +33,8 @@ class UpdateParamtersRuleHandler:
             for e in request.parameters:
                 self.repo.parameter.update(e)
 
+        self.repo.rule.update(request.rule)
+
         self.repo.commit_work()
 
         return UpdateParametersRuleResponse(request.id)

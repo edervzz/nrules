@@ -1,6 +1,6 @@
 """ Save conditions rules """
 from typing import List
-from domain.entities import Parameter, Condition, KVItem
+from domain.entities import Parameter, Rule
 
 
 class UpdateParametersRuleRequest:
@@ -15,6 +15,8 @@ class UpdateParametersRuleRequest:
         self.id = _id
         self.name = name
         self.parameters: List[Parameter] = parameters
+
+        self.rule: Rule
 
 
 class UpdateParametersRuleResponse:

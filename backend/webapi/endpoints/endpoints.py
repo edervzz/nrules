@@ -25,6 +25,7 @@ from .upd_kvitem_rule import upd_kvitem_rule_bp
 from .upd_condition_rule import upd_condition_rule_bp
 from .create_case_rule import new_case_rule_bp
 from .upd_case_rule import upd_case_rule_bp
+from .create_inventory_rule import new_inventory_rule_bp
 
 
 def register_endpoints(app: Flask, prefix: str):
@@ -43,6 +44,8 @@ def register_endpoints(app: Flask, prefix: str):
 
     app.register_blueprint(new_case_rule_bp, url_prefix=prefix)
     app.register_blueprint(upd_case_rule_bp, url_prefix=prefix)
+
+    app.register_blueprint(new_inventory_rule_bp, url_prefix=prefix)
 
     app.register_blueprint(run_rule_bp, url_prefix=prefix)
 

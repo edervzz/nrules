@@ -17,17 +17,17 @@ class UpdateParametersRuleBizValidator(Validator):
     def __validate__(self, request: UpdateParametersRuleRequest):
         """ validate """
         # retrieve rule
-        rule: Rule = None
+        request.rule = None
         if request.id != "":
-            rule = self.repo.rule.read(request.id)
+            request.rule = self.repo.rule.read(request.id)
         elif request.name != "":
-            rule = self.repo.rule.read_by_external_id(request.name)
-        if rule is None:
+            request.rule = self.repo.rule.read_by_external_id(request.name)
+        if request.rule is None:
             raise self.as_not_found(self.localizer.get(Codes.RU_READ_002))
 
         for e_param in request.parameters:
             # confirm new parameters must exists
-            key = ParameterKey(rule.id, e_param.key, e_param.usefor)
+            key = ParameterKey(request.rule.id, e_param.key, e_param.usefor)
             my_param = self.repo.parameter.read(key)
             if not isinstance(my_param, Parameter):
                 raise self.as_error(self.localizer.get(Codes.PARAM_UPD_004))
@@ -39,14 +39,14 @@ class UpdateParametersRuleBizValidator(Validator):
 
             if e_param.usefor == Constants.INPUT:
                 my_condition = self.repo.condition.read_by_link_single(
-                    rule.id, e_param.key)
+                    request.rule.id, e_param.key)
                 if not isinstance(my_condition, Condition):
                     raise self.as_error(self.localizer.get(
                         Codes.PARAM_UPD_005, e_param.key))
 
             if e_param.usefor == Constants.OUTPUT:
                 my_kvitem = self.repo.kvitem.read_by_link_single(
-                    rule.id, e_param.key)
+                    request.rule.id, e_param.key)
                 if not isinstance(my_kvitem, KVItem):
                     raise self.as_error(self.localizer.get(
                         Codes.PARAM_UPD_006, e_param.key))

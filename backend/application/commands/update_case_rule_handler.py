@@ -30,7 +30,9 @@ class UpdateCaseRuleHandler:
         self.repo.begin()
 
         for c in request.cases:
-            self.repo.case.create(c)
+            self.repo.case.update(c)
+
+        self.repo.rule.update(request.rule)
 
         self.repo.commit_work()
 

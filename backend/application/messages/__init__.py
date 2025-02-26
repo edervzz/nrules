@@ -2,6 +2,7 @@
 
     Requests and Responses
 """
+from .create_inventory_rule_message import CreateInventoryRuleRequest, CreateInventoryRuleResponse
 from .update_case_rule_message import UpdateCaseRuleRequest, UpdateCaseRuleResponse
 from .create_case_rule_message import CreateCaseRuleRequest, CreateCaseRuleResponse
 from .update_conditions_rule_message import UpdateConditionsRuleRequest, UpdateConditionsRuleResponse

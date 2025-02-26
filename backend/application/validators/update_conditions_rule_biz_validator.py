@@ -15,13 +15,13 @@ class UpdateConditionsRuleBizValidator(Validator):
 
     def __validate__(self, request: UpdateConditionsRuleRequest):
         """ validate """
-        rule: Rule = None
+        request.rule = None
         if request.id != "":
-            rule = self.repo.rule.read(request.id)
+            request.rule = self.repo.rule.read(request.id)
         else:
-            rule = self.repo.rule.read_by_external_id(request.name)
+            request.rule = self.repo.rule.read_by_external_id(request.name)
 
-        if rule is None:
+        if request.rule is None:
             raise self.as_not_found(self.local.get(Codes.RU_READ_002))
 
         # check all conditions exists
@@ -32,6 +32,6 @@ class UpdateConditionsRuleBizValidator(Validator):
                 raise self.as_not_found(self.local.get(
                     Codes.COND_UPD_003, cond.variable))
 
-            cond.rule_id = rule.id
+            cond.rule_id = request.rule.id
             cond.value = cond.value
             cond.operator = cond.operator

@@ -33,6 +33,8 @@ class UpdateKVItemsRuleHandler:
             for e in request.income_kvitems:
                 self.repo.kvitem.update(e)
 
+        self.repo.rule.update(request.rule)
+
         self.repo.commit_work()
 
         return UpdateKVItemsRuleResponse(request.id)

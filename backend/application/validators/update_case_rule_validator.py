@@ -21,7 +21,7 @@ class UpdateCaseRuleValidator(Validator):
             if len(e.id) == 0:
                 self.as_error(self.local.get(Codes.CASE_UPD_001))
 
-            if e.position <= 0:
+            if e.position < 0:
                 self.as_error(self.local.get(Codes.CASE_UPD_002))
 
             unique_pos.add(e.position)

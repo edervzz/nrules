@@ -17,24 +17,24 @@ class UpdateRuleBizValidator(Validator):
 
     def __validate__(self, request: UpdateRuleRequest):
         """ Validate request format """
-        rule: Rule = None
+        request.rule = None
         if request.rule.id != "":
-            rule = self.repo.rule.read(request.rule.id)
+            request.rule = self.repo.rule.read(request.rule.id)
         elif request.rule.name != "":
-            rule = self.repo.rule.read_by_external_id(request.rule.name)
-        if rule is None:
+            request.rule = self.repo.rule.read_by_external_id(
+                request.rule.name)
+        if request.rule is None:
             raise self.as_not_found(self.localizer.get(Codes.RU_READ_002))
 
         any_change = False
-        if isinstance(rule, Rule):
-            if rule.strategy != "":
-                if rule.strategy != request.rule.strategy:
-                    rule.strategy = request.rule.strategy
+        if isinstance(request.rule, Rule):
+            if request.rule.strategy != "":
+                if request.rule.strategy != request.rule.strategy:
+                    request.rule.strategy = request.rule.strategy
 
                     rule_validator = RuleValidator(self.localizer)
-                    rule_validator.validate_and_throw(rule)
+                    rule_validator.validate_and_throw(request.rule)
 
-                    request.rule = rule
                     any_change = True
 
         if not any_change:

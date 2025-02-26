@@ -1,5 +1,5 @@
 """ migration file """
-from sqlalchemy import Table, Column, String, DateTime, Integer
+from sqlalchemy import Table, Column, String, DateTime, Float
 
 
 def set_auditable(table: Table):
@@ -32,5 +32,5 @@ def set_version(table: Table):
     """
     table.append_column(
         Column(
-            "version", Integer, comment="Version Object", nullable=False),
+            "version", Float, comment="Version Object", nullable=False),
     )

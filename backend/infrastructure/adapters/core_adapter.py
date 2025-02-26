@@ -151,7 +151,7 @@ class CoreAdapter(CoreRepository):
             target.tenant_id = self.tid
 
         if isinstance(target, Versioned):
-            target.version = 1
+            target.version = 0.1
 
     def __before_update(self, _, __, target):
         """ Hook """
@@ -164,7 +164,7 @@ class CoreAdapter(CoreRepository):
             target.tenant_id = self.tid
 
         if isinstance(target, Versioned):
-            target.version += 1
+            target.version = float(target.version) + 0.1
 
     def next_number(self, class_) -> str:
         return str(uuid.uuid4())

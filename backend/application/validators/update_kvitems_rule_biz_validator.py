@@ -16,12 +16,12 @@ class UpdateKVItemsRuleBizValidator(Validator):
     def __validate__(self, request: UpdateKVItemsRuleRequest):
         """ validate """
         # retrieve rule
-        rule: Rule = None
+        request.rule = None
         if request.id != "":
-            rule = self.repo.rule.read(request.id)
+            request.rule = self.repo.rule.read(request.id)
         elif request.name != "":
-            rule = self.repo.rule.read_by_external_id(request.name)
-        if rule is None:
+            request.rule = self.repo.rule.read_by_external_id(request.name)
+        if request.rule is None:
             raise self.as_not_found(self.localizer.get(Codes.RU_READ_002))
 
         # prepare and check kvitems to update
@@ -31,4 +31,4 @@ class UpdateKVItemsRuleBizValidator(Validator):
             if not isinstance(kvi_found, KVItem):
                 raise self.as_error(self.localizer.get(Codes.KVI_UPD_003))
 
-            e_kvi.rule_id = rule.id
+            e_kvi.rule_id = request.rule.id

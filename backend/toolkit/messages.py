@@ -27,6 +27,11 @@ class Codes:
     en_messages[RU_CREA_006] = "ExpVal: {}."
     es_messages[RU_CREA_006] = "ExpVal: {}."\
 
+    # Inventory ################################################################
+    INV_CREA_001 = "INV-CREA-001"
+    en_messages[INV_CREA_001] = "Rule is not modified."
+    es_messages[INV_CREA_001] = "La Regla no tiene modificaciones."
+
     # Update Case ################################################################
     CASE_UPD_004 = "CASE-UPD-004"
     en_messages[CASE_UPD_004] = "Case not found."

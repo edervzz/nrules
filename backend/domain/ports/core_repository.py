@@ -95,10 +95,10 @@ class CoreRepository:
 
     # "mysql+pymysql://root:my-secret-pw@localhost/nrule-core", echo=True)
     def __init__(self):
-        self.kvitem: KVItemRepository
         self.rule: RuleRepository
-        self.condition: ConditionRepository
         self.case: CaseRepository
+        self.condition: ConditionRepository
+        self.kvitem: KVItemRepository
         self.parameter: ParametersRepository
         self.tag: TagRepository
 

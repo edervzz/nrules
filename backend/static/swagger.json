@@ -390,6 +390,25 @@
                 }
             }
         },
+        "/nr/api/v1/t/{tid}/catalog":{
+            "get": {
+                "summary": "Retrieve catalog used into API.",
+                "tags": ["Catalog"],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/TenantID"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Catalog"
+                    },
+                    "400": {
+                        "description": "Validation errors"
+                    }
+                }
+            }
+        },
         "/tenancy/api/v1/tenants": {
             "post": {
                 "summary": "Create a New Tenant",
@@ -566,10 +585,10 @@
                     "description": "Type of rule.",
                     "type": "string",
                     "enum": [
-                        "CASE",
+                        "TABLE",
                         "TREE"
                     ],
-                    "example": "CASE"
+                    "example": "TABLE"
                 },
                 "strategy": {
                     "description": "Type of strategy.",

@@ -1,5 +1,6 @@
 """ Command Handlers """
 from .create_inventory_rule_handler import CreateInventoryRuleHandler
+from .create_node_rule_handler import CreateNodeRuleHandler
 from .update_case_rule_handler import UpdateCaseRuleHandler
 from .create_case_rule_handler import CreateCaseRuleHandler
 from .update_conditions_rule_handler import UpdateConditionsRuleHandler

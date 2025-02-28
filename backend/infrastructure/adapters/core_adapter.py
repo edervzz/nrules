@@ -6,10 +6,9 @@ from flask import session
 from sqlalchemy import Engine, create_engine, select, event
 from sqlalchemy.orm import Session
 from sqlalchemy.orm import Query
-from werkzeug.exceptions import Conflict
 from domain.entities import Rule, Parameter, Condition, Case, LockKey
 from domain.entities import TenantSpecific, Versioned, Auditable, Migrations
-from domain.entities import KVItem, Tag, Lock
+from domain.entities import KVItem, Tag, Node
 from domain.ports import CoreRepository
 from infrastructure.data import initial, core_tables, core_admin
 from .kvitem_adapter import KVItemAdapter
@@ -19,6 +18,7 @@ from .case_adapter import CaseAdapter
 from .condition_adapter import ConditionAdapter
 from .tag_adapter import TagAdapter
 from .lock_adapter import LockAdapter
+from .node_adapter import NodeAdapter
 
 
 class CoreAdapter(CoreRepository):
@@ -40,6 +40,10 @@ class CoreAdapter(CoreRepository):
         self.rule = RuleAdapter(self.__engine)
         event.listen(Rule, 'before_insert', self.__before_insert)
         event.listen(Rule, 'before_update', self.__before_update)
+
+        self.node = NodeAdapter(self.__engine)
+        event.listen(Node, 'before_insert', self.__before_insert)
+        event.listen(Node, 'before_update', self.__before_update)
 
         self.parameter = ParameterAdapter(self.__engine)
         event.listen(Parameter, 'before_insert', self.__before_insert)
@@ -87,41 +91,47 @@ class CoreAdapter(CoreRepository):
         self.lockobj: LockKey
         self.lock = LockAdapter(self.__engine)
 
-    def begin(self, autoflush=False, lockobj: LockKey = any):
-        self.__session = Session(self.__engine, autoflush=autoflush)
-        self.rule.set_session(self.__session)
-        self.case.set_session(self.__session)
-        self.condition.set_session(self.__session)
-        self.kvitem.set_session(self.__session)
-        self.parameter.set_session(self.__session)
-        self.tag.set_session(self.__session)
+    def begin(self, autoflush=False, is_delegated=False):
+        if not is_delegated:
+            self.__session = Session(self.__engine, autoflush=autoflush)
+            self.rule.set_session(self.__session)
+            self.node.set_session(self.__session)
+            self.case.set_session(self.__session)
+            self.condition.set_session(self.__session)
+            self.kvitem.set_session(self.__session)
+            self.parameter.set_session(self.__session)
+            self.tag.set_session(self.__session)
         # technicall entities -----------
-        self.lockobj = lockobj
-        self.lock.set_session(self.__session)
+        # self.lockobj = lockobj
+        # self.lock.set_session(self.__session)
 
-    def commit_work(self):
-        if self.__session is not None:
-            self.__session.commit()
-            self.rule.set_session(None)
-            self.case.set_session(None)
-            self.condition.set_session(None)
-            self.kvitem.set_session(None)
-            self.parameter.set_session(None)
-            self.tag.set_session(None)
-            # technicall entities -----------
-            self.lock.set_session(None)
+    def commit_work(self, is_delegated=False):
+        if not is_delegated:
+            if self.__session is not None:
+                self.__session.commit()
+                self.rule.set_session(None)
+                self.node.set_session(None)
+                self.case.set_session(None)
+                self.condition.set_session(None)
+                self.kvitem.set_session(None)
+                self.parameter.set_session(None)
+                self.tag.set_session(None)
+                # technicall entities -----------
+                self.lock.set_session(None)
 
-    def rollback_work(self):
-        if self.__session is not None:
-            self.__session.rollback()
-            self.rule.set_session(None)
-            self.case.set_session(None)
-            self.condition.set_session(None)
-            self.kvitem.set_session(None)
-            self.parameter.set_session(None)
-            self.tag.set_session(None)
-            # technicall entities -----------
-            self.lock.set_session(None)
+    def rollback_work(self, is_delegated=False):
+        if not is_delegated:
+            if self.__session is not None:
+                self.__session.rollback()
+                self.rule.set_session(None)
+                self.node.set_session(None)
+                self.case.set_session(None)
+                self.condition.set_session(None)
+                self.kvitem.set_session(None)
+                self.parameter.set_session(None)
+                self.tag.set_session(None)
+                # technicall entities -----------
+                self.lock.set_session(None)
 
     def migrate(self) -> list:
         initial(self.__engine)

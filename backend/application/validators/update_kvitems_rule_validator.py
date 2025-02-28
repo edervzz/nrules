@@ -14,10 +14,10 @@ class UpdateKVItemsRuleValidator(Validator):
     def __validate__(self, request: UpdateKVItemsRuleRequest):
         """ validate """
         if request.id == "" and request.name == "":
-            self.as_error(self.localizer.get(Codes.KVI_UPD_001))
+            raise self.as_error(self.localizer.get(Codes.KVI_UPD_001))
 
         if len(request.income_kvitems) == 0:
-            self.as_error(self.localizer.get(Codes.KVI_UPD_002))
+            raise self.as_error(self.localizer.get(Codes.KVI_UPD_002))
 
         unique_items = set()
         validator_kvi = KVItemValidator(self.localizer, False)

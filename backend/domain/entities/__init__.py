@@ -7,6 +7,7 @@ from .keys import KVItemKey, HistoricalKey, ConditionKey, ParameterKey, LockKey
 from .xobject import XObject
 from .tenants import Tenants
 from .kv_item import KVItem
+from .node import Node
 from .case import Case
 from .condition import Condition
 from .rule import Rule

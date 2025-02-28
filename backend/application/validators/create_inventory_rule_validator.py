@@ -14,4 +14,4 @@ class CreateInventoryRuleValidator(Validator):
     def __validate__(self, request: CreateInventoryRuleRequest):
         """ validate """
         if request.id == "" and request.name == "":
-            self.as_error(self.local.get(Codes.RU_READ_001))
+            raise self.as_error(self.local.get(Codes.RU_READ_001))

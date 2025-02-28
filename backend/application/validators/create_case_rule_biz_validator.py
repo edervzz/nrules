@@ -8,10 +8,11 @@ from toolkit import Validator, Localizer, Codes, Constants
 class CreateCaseRuleBizValidator(Validator):
     """_summary_"""
 
-    def __init__(self, repository: CoreRepository, localizer: Localizer):
+    def __init__(self, repository: CoreRepository, localizer: Localizer, from_node=False):
         super().__init__()
         self.repo = repository
         self.local = localizer
+        self.from_node = from_node
 
     def __validate__(self, request: CreateCaseRuleRequest):
         """ validate """
@@ -23,6 +24,10 @@ class CreateCaseRuleBizValidator(Validator):
             request.rule = self.repo.rule.read_by_external_id(request.name)
         if request.rule is None:
             raise self.as_not_found(self.local.get(Codes.RU_READ_002))
+
+        if not self.from_node and request.rule.rule_type == Constants.TREE:
+            raise self.as_error(self.local.get(Codes.CASE_CREA_001))
+
         # complete Case with all Conditions and KV Items
         my_params = self.repo.parameter.read_by_parent_id(request.rule.id)
         if len(my_params) > 0:
@@ -45,13 +50,13 @@ class CreateCaseRuleBizValidator(Validator):
                         one_kvi.calculation = Constants.MOD
                         request.kvitems.append(one_kvi)
 
-            my_cases = self.repo.case.read_by_parent_id(request.rule.id)
+        my_cases = self.repo.case.read_by_parent_id(request.rule.id)
 
-            last_case = 0
-            if my_cases is not None and len(my_cases) > 0:
-                for c in my_cases:
-                    if isinstance(c, Case):
-                        last_case = c.position if c.position > last_case else last_case
+        last_case = 0
+        if my_cases is not None and len(my_cases) > 0:
+            for c in my_cases:
+                if isinstance(c, Case):
+                    last_case = c.position if c.position > last_case else last_case
 
-            request.case.position = last_case + 1
-            request.case.rule_id = request.rule.id
+        request.case.position = last_case + 1
+        request.case.rule_id = request.rule.id

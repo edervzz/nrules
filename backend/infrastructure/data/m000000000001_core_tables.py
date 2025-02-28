@@ -1,7 +1,7 @@
 """ migration file """
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, Index, Boolean
-from sqlalchemy import MetaData, Table,  CheckConstraint, UniqueConstraint, Engine, select
+from sqlalchemy import Column, Integer, String, Index, Boolean, ForeignKeyConstraint
+from sqlalchemy import MetaData, Table,  CheckConstraint, Engine, select
 from sqlalchemy.orm import Session
 from domain.entities import Migrations
 from .audit import set_auditable, set_version
@@ -65,6 +65,8 @@ def core_tables(engine: Engine) -> str:
             "is_active", Boolean, nullable=False, comment="Parameter is active"),
         Column(
             "is_archived", Boolean, nullable=False, comment="Parameter is archived"),
+        ForeignKeyConstraint(
+            ["tenant_id", "rule_id"], ["rules.tenant_id", "rules.id"]),
         comment="Control which parameters serve as input and output"
     )
     set_auditable(parameters)
@@ -81,13 +83,15 @@ def core_tables(engine: Engine) -> str:
         Column(
             "id", String(36), primary_key=True, comment="ID"),
         Column(
-            "rule_id", String(36), primary_key=True, comment="Rule ID"),
+            "rule_id", String(36), comment="Rule ID"),
         Column(
             "position", Integer, nullable=False, comment="Position"),
         Column(
             "is_active", Boolean, nullable=False, comment="Case is Active"),
         Column(
             "is_archived", Boolean, nullable=False, comment="Case is Archived"),
+        ForeignKeyConstraint(
+            ["tenant_id", "rule_id"], ["rules.tenant_id", "rules.id"]),
         comment="Cases. Set execution order"
     )
     set_auditable(cases)
@@ -107,11 +111,15 @@ def core_tables(engine: Engine) -> str:
         Column(
             "case_id", String(36), primary_key=True, comment="Case ID"),
         Column(
-            "rule_id", String(36), primary_key=False, comment="Rule ID"),
+            "rule_id", String(36), comment="Rule ID"),
         Column(
             "operator", String(10), nullable=False, comment="Operator"),
         Column(
             "value", String(50), nullable=False, comment="Value"),
+        ForeignKeyConstraint(
+            ["tenant_id", "rule_id"], ["rules.tenant_id", "rules.id"]),
+        ForeignKeyConstraint(
+            ["tenant_id", "case_id"], ["cases.tenant_id", "cases.id"]),
         comment="Matrix's Columns. Set expressions to evaluate"
     )
     set_auditable(conditions)
@@ -128,13 +136,17 @@ def core_tables(engine: Engine) -> str:
         Column(
             "key", String(50), primary_key=True, comment="Key"),
         Column(
-            "case_id", String(36), primary_key=True, comment="Case ID"),
+            "case_id", String(36),  primary_key=True, comment="Case ID"),
         Column(
-            "rule_id", String(36), nullable=False, comment="Rule ID"),
+            "rule_id", String(36),  nullable=False, comment="Rule ID"),
         Column(
             "value", String(500), nullable=False, comment="Value"),
         Column(
             "calculation", String(3), CheckConstraint("calculation = 'ADD' OR calculation = 'MOD' OR calculation = 'FN'", name="kv_items_chk_calculation"), nullable=True, comment="Calculation method"),
+        ForeignKeyConstraint(
+            ["tenant_id", "rule_id"], ["rules.tenant_id", "rules.id"]),
+        ForeignKeyConstraint(
+            ["tenant_id", "case_id"], ["cases.tenant_id", "cases.id"]),
         comment="KV Item can be assign to single one KVS"
     )
     set_auditable(kvitems)
@@ -145,6 +157,38 @@ def core_tables(engine: Engine) -> str:
         "ix_kv_items_002",
         kvitems.c.tenant_id,
         kvitems.c.case_id)
+
+    # Node ----------------------------------------------
+    node = Table(
+        "nodes",
+        metadata_obj,
+        Column(
+            "tenant_id", Integer, primary_key=True, comment="Tenant ID"),
+        Column(
+            "id", String(36), primary_key=True, comment="ID"),
+        Column(
+            "rule_id", String(36), primary_key=True, comment="Rule ID"),
+        Column(
+            "case_id", String(36), primary_key=True, comment="Case ID"),
+        Column(
+            "left_node_id", String(36), nullable=True, comment="Left Node ID"),
+        Column(
+            "right_node_id", String(36), nullable=True, comment="Right Node ID"),
+        Column(
+            "is_active", Boolean, nullable=False, comment="Case is Active"),
+        Column(
+            "is_archived", Boolean, nullable=False, comment="Case is Archived"),
+        ForeignKeyConstraint(
+            ["tenant_id", "rule_id"], ["rules.tenant_id", "rules.id"]),
+        ForeignKeyConstraint(
+            ["tenant_id", "case_id"], ["cases.tenant_id", "cases.id"]),
+        comment="Cases. Set execution order"
+    )
+    set_auditable(node)
+    Index(
+        "ix_cases_001",
+        node.c.tenant_id,
+        node.c.rule_id)
 
     # Tags ----------------------------------------------
     tags = Table(
@@ -158,6 +202,8 @@ def core_tables(engine: Engine) -> str:
             "key", String(50), primary_key=True, nullable=False, comment="Tag's key"),
         Column(
             "value", String(80), nullable=False, comment="Value"),
+        ForeignKeyConstraint(
+            ["tenant_id", "rule_id"], ["rules.tenant_id", "rules.id"]),
         comment="Tags Catalog"
     )
     set_auditable(tags)

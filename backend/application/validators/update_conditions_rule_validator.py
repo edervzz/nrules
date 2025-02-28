@@ -14,10 +14,10 @@ class UpdateConditionsRuleValidator(Validator):
     def __validate__(self, request: UpdateConditionsRuleRequest):
         """ validate """
         if request.id == "" and request.name == "":
-            self.as_error(self.localizer.get(Codes.RU_READ_001))
+            raise self.as_error(self.localizer.get(Codes.RU_READ_001))
 
         if len(request.income_conditions) == 0:
-            self.as_error(self.localizer.get(Codes.COND_UPD_001))
+            raise self.as_error(self.localizer.get(Codes.COND_UPD_001))
 
         unique_items = set()
         validator = ConditionValidator(self.localizer, False)

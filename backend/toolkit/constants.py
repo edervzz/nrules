@@ -10,16 +10,18 @@ class Constants:
     INPUT = "INPUT"
     OUTPUT = "OUTPUT"
 
-    TABLE = "TABLE"
+    RULE = "RULE"
     TREE = "TREE"
+    NODE = "NODE"
+    TABLE = "TABLE"
+
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
 
     STRING = "STRING"
     NUMERIC = "NUMERIC"
     DATE = "DATE"
     JSON = "JSON"
-
-    MATRIX = "MATRIX"
-    TREE = "TREE"
 
     EARLY = "EARLY"
     BASE = "BASE"

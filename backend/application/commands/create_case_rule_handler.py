@@ -25,6 +25,7 @@ class CreateCaseRuleHandler:
         # 2. business rule validation
         biz_validator = CreateCaseRuleBizValidator(self.repo, self.local)
         biz_validator.validate_and_throw(request)
+
         self.log.info("business rules validated")
 
         self.repo.begin()

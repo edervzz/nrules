@@ -4,7 +4,7 @@ from application.messages import CreateRuleRequest, CreateRuleResponse
 from application.validators import CreateRuleValidator, CreateRuleBizValidator
 from domain.ports import CoreRepository
 from domain.entities import Rule
-from toolkit import Localizer
+from toolkit import Localizer, Constants
 
 
 class CreateRuleHandler:
@@ -32,6 +32,9 @@ class CreateRuleHandler:
 
         self.repository.rule.create(request.rule)
         self.repository.case.create(request.case_zero)
+
+        if request.rule.rule_type == Constants.TREE:
+            self.repository.node.create(request.node)
 
         for x in request.parameters:
             self.repository.parameter.create(x)

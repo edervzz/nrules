@@ -144,6 +144,40 @@
                 }
             }
         },
+        "/nr/api/v1/t/{tid}/rules/{rid}/nodes":{
+            "post": {
+                "summary": "Create a new node.",
+                "tags": ["Nodes"],
+                "consumes": ["application/json"],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/TenantID"
+                    },
+                    {
+                        "$ref": "#/parameters/RuleID"
+                    },
+                    {
+                        "$ref": "#/parameters/IdType"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {                            
+                            "$ref": "#/definitions/NewNode"
+                        }    
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Case Created"
+                    },
+                    "400": {
+                        "description": "Validation errors"
+                    }
+                }
+            }
+        },
         "/nr/api/v1/t/{tid}/rules/{rid}/cases": {
             "post": {
                 "summary": "Create a new case.",
@@ -644,6 +678,22 @@
                         "EARLY"
                     ],
                     "default": "BASE"
+                }
+            }
+        },
+        "NewNode":{
+            "type": "object",
+            "required": ["is_active", "is_archived"],
+            "properties": {
+                "parent_node_id": {
+                    "type": "string",
+                    "description": "Parent Node ID"
+                },
+                "assign_node_to": {
+                    "type": "string",
+                    "description": "Assign node Left or Right",
+                    "enum": ["LEFT", "RIGHT"],
+                    "default": "RIGHT"
                 }
             }
         },

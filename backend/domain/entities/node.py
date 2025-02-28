@@ -5,7 +5,7 @@ from .base import Base
 from .extra_fields import Auditable, TenantSpecific
 
 
-class Case(Base, TenantSpecific, Auditable):
+class Node(Base, TenantSpecific, Auditable):
     """ Case entity. 
 
         A Case integrate a set of conditions to be commit (condition group)
@@ -13,13 +13,17 @@ class Case(Base, TenantSpecific, Auditable):
         Them depends of strategy of its rule and order (position)
     """
 
-    __tablename__ = "cases"
+    __tablename__ = "nodes"
 
     id: Mapped[str] = mapped_column(primary_key=True, nullable=False)
 
     rule_id: Mapped[str] = mapped_column(primary_key=True, nullable=False)
 
-    position: Mapped[int] = mapped_column(nullable=False)
+    case_id: Mapped[str] = mapped_column(primary_key=True, nullable=False)
+
+    right_node_id: Mapped[str] = mapped_column(nullable=True)
+
+    left_node_id: Mapped[str] = mapped_column(nullable=True)
 
     is_active: Mapped[bool] = mapped_column(nullable=False)
 

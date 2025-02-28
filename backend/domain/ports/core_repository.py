@@ -79,6 +79,17 @@ class ConditionRepository(
         self.engine = engine
 
 
+class NodeRepository(
+        ABC, Creator, Updater,
+        ReaderSingle, ReaderByParentID):
+    """_summary_"""
+
+    def __init__(self, engine):
+        ABC.__init__(self)
+        Creator.__init__(self)
+        self.engine = engine
+
+
 class CaseRepository(
         ABC, Creator, Updater,
         ReaderSingle, ReaderByParentID):
@@ -96,6 +107,7 @@ class CoreRepository:
     # "mysql+pymysql://root:my-secret-pw@localhost/nrule-core", echo=True)
     def __init__(self):
         self.rule: RuleRepository
+        self.node: NodeRepository
         self.case: CaseRepository
         self.condition: ConditionRepository
         self.kvitem: KVItemRepository
@@ -103,15 +115,15 @@ class CoreRepository:
         self.tag: TagRepository
 
     @abstractmethod
-    def begin(self, autoflush=False):
+    def begin(self, autoflush=False, is_delegated=False):
         """ Begin transaction """
 
     @abstractmethod
-    def commit_work(self):
+    def commit_work(self, is_delegated=False):
         """ Commit transaction """
 
     @abstractmethod
-    def rollback_work(self):
+    def rollback_work(self, is_delegated=False):
         """ Rollback transaction """
 
     @abstractmethod

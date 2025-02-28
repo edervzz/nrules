@@ -15,4 +15,4 @@ class ReadRuleValidator(Validator):
         """ Validate request format """
 
         if request.rule_id == "" and request.rule_name == "":
-            self.as_error(self._localizer.get(Codes.RU_READ_001))
+            raise self.as_error(self._localizer.get(Codes.RU_READ_001))

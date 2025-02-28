@@ -1,7 +1,7 @@
 """ _module_ """
 import uuid
 from application.messages import CreateRuleRequest
-from domain.entities import Condition, KVItem
+from domain.entities import Condition, KVItem, Node
 from domain.validators import RuleValidator, ParameterValidator, ConditionValidator, KVItemValidator
 from toolkit import Validator, Constants, Localizer, Codes
 
@@ -18,7 +18,7 @@ class CreateRuleValidator(Validator):
         rule_validator = RuleValidator(self.local)
         rule_validator.validate_and_throw(request.rule)
         # rule
-        request.rule.id = str(uuid.uuid3(uuid.uuid4(), "RULE"))
+        request.rule.id = str(uuid.uuid3(uuid.uuid4(), Constants.RULE))
         request.rule.is_active = True
         request.rule.is_archived = False
         # case
@@ -28,6 +28,16 @@ class CreateRuleValidator(Validator):
         request.case_zero.position = 0
         request.case_zero.is_active = True
         request.case_zero.is_archived = False
+        # node
+        if request.rule.rule_type == Constants.TREE:
+            request.node = Node()
+            request.node.id = str(uuid.uuid3(uuid.uuid4(), Constants.NODE))
+            request.node.case_id = request.case_zero.id
+            request.node.rule_id = request.rule.id
+            request.node.right_node_id = ""
+            request.node.left_node_id = ""
+            request.node.is_active = True
+            request.node.is_archived = False
         # lists of conditions and kv-items
         request.conditions = []
         request.kv_items = []

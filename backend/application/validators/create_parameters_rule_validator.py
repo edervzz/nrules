@@ -15,10 +15,10 @@ class CreateParametersRuleValidator(Validator):
     def __validate__(self, request: CreateParamtersRuleRequest):
         """ validate """
         if request.id == "" and request.name == "":
-            self.as_error(self.localizer.get(Codes.PARAM_CREA_002))
+            raise self.as_error(self.localizer.get(Codes.PARAM_CREA_002))
 
         if len(request.parameters) == 0:
-            self.as_error(self.localizer.get(Codes.PARAM_CREA_004))
+            raise self.as_error(self.localizer.get(Codes.PARAM_CREA_004))
 
         unique_conditions = set()
         unique_kvitems = set()

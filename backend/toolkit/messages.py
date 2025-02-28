@@ -32,6 +32,28 @@ class Codes:
     en_messages[INV_CREA_001] = "Rule is not modified."
     es_messages[INV_CREA_001] = "La Regla no tiene modificaciones."
 
+    # Node ################################################################
+    NODE_CREA_004 = "NODE-CREA-004"
+    en_messages[NODE_CREA_004] = "Nodes only works for rule type 'TREE'."
+    es_messages[NODE_CREA_004] = "Los nodos solo aplican a reglas tipo 'TREE'."
+
+    NODE_CREA_003 = "NODE-CREA-003"
+    en_messages[NODE_CREA_003] = "Parent Node must be exists."
+    es_messages[NODE_CREA_003] = "Nodo padre no encontrado."
+
+    NODE_CREA_002 = "NODE-CREA-002"
+    en_messages[NODE_CREA_002] = "Node Assigment must be 'LEFT' or 'RIGHT'."
+    es_messages[NODE_CREA_002] = "Asignación de Nodo debe ser 'LEFT' o 'RIGHT'."
+
+    NODE_CREA_001 = "NODE-CREA-001"
+    en_messages[NODE_CREA_001] = "Parent Node and assignment is required."
+    es_messages[NODE_CREA_001] = "Nodo padre y asignación es requerido."
+
+    # Create Case ################################################################
+    CASE_CREA_001 = "CASE-CREA-001"
+    en_messages[CASE_CREA_001] = "Rules type TREE cannot create Cases directly."
+    es_messages[CASE_CREA_001] = "Las reglas tipo 'TREE' no pueden crear Casos directamente."
+
     # Update Case ################################################################
     CASE_UPD_004 = "CASE-UPD-004"
     en_messages[CASE_UPD_004] = "Case not found."

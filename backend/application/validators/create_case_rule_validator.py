@@ -14,9 +14,6 @@ class CreateCaseRuleValidator(Validator):
     def __validate__(self, request: CreateCaseRuleRequest):
         """ validate """
         if request.id == "" and request.name == "":
-            self.as_error(self.local.get(Codes.RU_READ_001))
+            raise self.as_error(self.local.get(Codes.RU_READ_001))
 
         request.case.id = str(uuid.uuid4())
-        request.case.position = -1
-        request.case.is_active = True
-        request.case.is_archived = False

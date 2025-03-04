@@ -14,7 +14,6 @@ class NewRuleModel:
         self.rule.name = self.__dict__.get("name", "")
         self.rule.rule_type = self.__dict__.get("rule_type", "")
         self.rule.strategy = self.__dict__.get("strategy", "")
-        self.use_default = self.__dict__.get("use_default", False)
 
         self.parameters: List[Parameter]
         self.tags: List[Tag]

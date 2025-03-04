@@ -12,12 +12,14 @@ interface Props {
     link_new?: string;
     onClickNew?: () => void;
     link_tables?: string;
+    brand?: string;
     title?: string;
 }
 
 export default function Menubar({
     link_new = "/new",
     onClickNew,
+    brand,
     title,
 }: Props) {
     const [showLogout, setShowLogout] = useState(false);
@@ -54,27 +56,14 @@ export default function Menubar({
 
             <Navbar expand="md" className={`bg-body-tertiary`}>
                 <Container fluid="xxl">
-                    <Navbar.Brand>{title}</Navbar.Brand>
+                    <Navbar.Brand>
+                        <Nav.Link className={styles.link} href="/rules">
+                            {brand}
+                        </Nav.Link>
+                    </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
-                            <Nav.Link
-                                className={styles.link}
-                                href={link_new}
-                                onClick={() => onClickNew?.()}
-                            >
-                                {Messages.MENUBAR_NEW_RULE}
-                            </Nav.Link>
-
-                            <NavDropdown title={Messages.MENUBAR_RULES}>
-                                <Nav.Link
-                                    className={styles.link}
-                                    href="/matrix"
-                                >
-                                    {Messages.MENUBAR_MATRIXES}
-                                </Nav.Link>
-                            </NavDropdown>
-
                             <NavDropdown title={<>{Messages.MENUBAR_GO}</>}>
                                 <Nav.Link
                                     className={styles.link}
@@ -99,7 +88,7 @@ export default function Menubar({
                             </NavDropdown>
                         </Nav>
                     </Navbar.Collapse>
-
+                    <span className="fw-bold fs-5 align-bottom">{title}</span>
                     <Navbar.Collapse
                         className="justify-content-end"
                         id="basic-navbar-nav"
@@ -108,17 +97,19 @@ export default function Menubar({
                             <NavDropdown
                                 title={
                                     <>
-                                        <i className="bi bi-building-fill" />
-                                        {tenantData.tenantName}
+                                        <i className="bi bi-stack" />{" "}
+                                        {tenantData.id +
+                                            " - " +
+                                            tenantData.tenantName}
                                     </>
                                 }
                             >
                                 <NavDropdown.ItemText>
-                                    <i className="bi bi-person-circle" />{" "}
-                                    {tenantData.username}
+                                    {tenantData.tenantName}
                                 </NavDropdown.ItemText>
                                 <NavDropdown.ItemText>
-                                    TID: {tenantData.id}
+                                    <i className="bi bi-person-circle" />{" "}
+                                    {tenantData.username}
                                 </NavDropdown.ItemText>
 
                                 <NavDropdown.Divider />
@@ -126,8 +117,8 @@ export default function Menubar({
                                     className={styles.link}
                                     onClick={handleClickLogout}
                                 >
-                                    <i className="bi bi-box-arrow-right"></i>
-                                    {" " + Messages.MENUBAR_SIGN_OUT}
+                                    <i className="bi bi-box-arrow-right"></i>{" "}
+                                    {Messages.MENUBAR_SIGN_OUT}
                                 </NavDropdown.Item>
                             </NavDropdown>
                         </Nav>

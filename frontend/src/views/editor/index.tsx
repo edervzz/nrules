@@ -1,13 +1,13 @@
-import MainContainer from "../../components/MainContainer";
+import Session from "../../components/Session";
 import Menubar from "../../components/Menubar";
 import Messages from "../../locales/Messages";
 import Editor from "./Editor";
 
 export default function EditorView() {
     return (
-        <MainContainer>
-            <Menubar title={Messages.EDITOR}></Menubar>
+        <Session>
+            <Menubar brand={Messages.NRULE} title={Messages.EDITOR}></Menubar>
             <Editor></Editor>
-        </MainContainer>
+        </Session>
     );
 }

@@ -1,19 +1,19 @@
 import { Badge, Col, Container, Row } from "react-bootstrap";
-import Login from "./Login";
+import Login from "../../components/Login";
 import Footer from "../../components/Footer/Footer";
 import { useState } from "react";
-import { LoadingModal } from "../../components/Loading";
+import { LoadingModal } from "../../components/LoadingModal";
 import Messages from "../../locales/Messages";
-import MainContainer from "../../components/MainContainer";
+import Session from "../../components/Session";
 
 export default function LoginView() {
-    const [showLoad, setShowLoad] = useState(false);
+    const [showLoadingModal, setShowLoadingModal] = useState(false);
     const [isFailure, setIsFailure] = useState(false);
     const [messageError, setMessageError] = useState("");
 
     const handleTryConnecting = () => {
         setIsFailure(false);
-        setShowLoad(true);
+        setShowLoadingModal(true);
     };
     const handleFailureConnection = (merr: string) => {
         setIsFailure(true);
@@ -21,13 +21,13 @@ export default function LoginView() {
     };
 
     const handleClose = () => {
-        setShowLoad(false);
+        setShowLoadingModal(false);
     };
 
     return (
-        <MainContainer isLoginPage>
+        <Session isLoginPage>
             <LoadingModal
-                show={showLoad}
+                show={showLoadingModal}
                 title={Messages.MESSAGE_CONNECTING}
                 isFailure={isFailure}
                 messageOnFailure={messageError}
@@ -38,7 +38,7 @@ export default function LoginView() {
                     <Col></Col>
                     <Col sm="6">
                         <p style={{ fontSize: "60px" }}>
-                            NRule{" "}
+                            {Messages.NRULE + " "}
                             <Badge
                                 style={{
                                     fontSize: "20px",
@@ -49,9 +49,6 @@ export default function LoginView() {
                             </Badge>
                         </p>
                         <p style={{ fontSize: "38px", fontWeight: "bold" }}>
-                            {Messages.NRULE_INFO}
-                        </p>
-                        <p style={{ fontSize: "30px" }}>
                             {Messages.NRULE_HELP}
                         </p>
                     </Col>
@@ -82,10 +79,10 @@ export default function LoginView() {
                             {Messages.NRULE_CAPABILITIES}
                         </p>
                         <ul>
+                            <li>Árboles de Decisión</li>
                             <li>Tablas de Decisión</li>
                             <li>Multi Empresa</li>
                             <li>Transporte de Cambios</li>
-                            <li>Despliegues: Dev-Test-Prod</li>
                         </ul>
                     </Col>
                     <Col></Col>
@@ -93,6 +90,6 @@ export default function LoginView() {
                 </Row>
             </Container>
             <Footer></Footer>
-        </MainContainer>
+        </Session>
     );
 }

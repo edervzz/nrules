@@ -69,18 +69,26 @@
     "login_password": "Password",
     "login_login": "Login",
 
+    "toolbar_search": "Search",
+
+    "nrule": "NRule",
     "nrule_info": "A Rule Engine based-on current products on the market",
     "nrule_help": "NRule helps you on daily financial, insurance, logistics process and more.",
     "nrule_specs": "Technical Specs",
     "nrule_capabilities": "Capabilities",
     "nrule_to_start": "To Begin click-on \"New Rule\" y complete de form.",
 
-    "common_matrix":"Matrix",
+    "common_matrix":"Decision Table",
+    "common_tree":"Decision Tree",    
     "common_select_operator": "Select Operator",
     "common_sending": "Sending",
     "common_of": "of",
 
-    "editor": "Editor",  
+    "editor": "Editor",
+    "actions": "Actions",
+    "tables": "Tables",
+    "trees": "Trees",
+    "archived": "Archived",
 
     "equal": "Equal",
     "not_equal": "Not Equal",    

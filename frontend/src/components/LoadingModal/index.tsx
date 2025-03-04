@@ -18,7 +18,7 @@ export function LoadingModal({
     onClose,
 }: PropsLoading) {
     return (
-        <Modal show={show} size="lg" backdrop="static" keyboard={false}>
+        <Modal show={show} size="lg" backdrop="static" keyboard={true}>
             <Modal.Header>
                 <Modal.Title>
                     {isFailure ? Messages.MESSAGE_SOME_WRONG : title}

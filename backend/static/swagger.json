@@ -634,10 +634,6 @@
                     ],
                     "example": "EARLY"
                 },
-                "use_default": {
-                    "description": "Use default case.",
-                    "type": "boolean"
-                },
                 "parameters": {
                     "type": "array",
                     "items": {

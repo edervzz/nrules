@@ -4,6 +4,7 @@ export * from "./CreateRuleDto"
 export * from "./ErrorDto"
 export * from "./ParameterDto"
 export * from "./Case"
+export * from "./TagDto"
 
 export type NewRuleCondition = {
     id:string;

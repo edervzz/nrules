@@ -1,10 +1,10 @@
-import MainContainer from "../../components/MainContainer";
+import Session from "../../components/Session";
 import Menubar from "../../components/Menubar";
 
 export default function TenancyView() {
     return (
-        <MainContainer>
+        <Session>
             <Menubar></Menubar>
-        </MainContainer>
+        </Session>
     );
 }

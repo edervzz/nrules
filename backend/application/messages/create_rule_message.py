@@ -9,7 +9,6 @@ class CreateRuleRequest:
     def __init__(
             self,
             rule: Rule,
-            use_default: bool,
             parameters: List[Parameter],
             tags: List[Tag]
     ):
@@ -20,8 +19,6 @@ class CreateRuleRequest:
         self.tags = tags
 
         self.rule = rule
-
-        self.use_default = use_default
 
         self.case_zero = Case()
 

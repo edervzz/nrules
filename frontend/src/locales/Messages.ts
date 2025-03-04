@@ -70,20 +70,27 @@ export default class Messages{
     static get LOGIN_TENANTID():string { return i18n.t("common:login_tenant_id"); }
     static get LOGIN_USERNAME():string { return i18n.t("common:login_username"); }
     static get LOGIN_PASSWORD():string { return i18n.t("common:login_password"); }
-    static get LOGIN_LOGIN():string { return i18n.t("common:login_login"); }
+    static get LOGIN_LOGIN():string { return i18n.t("common:login_login"); }    
+    static get TOOLBAR_SEARCH(): string {return i18n.t("common:toolbar_search")}
 
+    static get NRULE():string { return i18n.t("common:nrule"); }
     static get NRULE_INFO():string { return i18n.t("common:nrule_info"); }
     static get NRULE_HELP():string { return i18n.t("common:nrule_help"); }
     static get NRULE_SPECS():string { return i18n.t("common:nrule_specs"); }
     static get NRULE_CAPABILITIES():string { return i18n.t("common:nrule_capabilities"); }
     static get NRULE_TO_START():string { return i18n.t("common:nrule_to_start"); }     
     
-    static get COMMON_MATRIX():string { return i18n.t("common:common_matrix"); }
+    static get COMMON_TABLE():string { return i18n.t("common:common_matrix"); }
+    static get COMMON_TREE():string { return i18n.t("common:common_tree"); }
     static get COMMON_SELECT_OPERATOR():string { return i18n.t("common:common_select_operator"); }
     static get COMMON_SENDING():string { return i18n.t("common:common_sending"); }
     static get COMMON_OF():string { return i18n.t("common:common_of"); }
 
     static get EDITOR():string { return i18n.t("common:editor"); }
+    static get ACTIONS():string { return i18n.t("common:actions"); }
+    static get TABLES():string { return i18n.t("common:tables"); }
+    static get TREES():string { return i18n.t("common:trees"); }
+    static get ARCHIVED():string { return i18n.t("common:archived"); }
 
 
 

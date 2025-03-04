@@ -48,7 +48,7 @@
 
     "menubar_new_rule":"Nueva Regla",
     "menubar_rules": "Reglas",
-    "menubar_matrixes":"Matrices",
+    "menubar_matrixes":"Tablas de Decisión",
     "menubar_runner":"Runner",
     "menubar_management":"Administración",
     "menubar_go": "Ir",
@@ -68,19 +68,27 @@
     "login_username": "Usuario",
     "login_password": "Contraseña",
     "login_login": "Inicio de Sesión",
+
+    "toolbar_search": "Buscar",
     
+    "nrule": "NRule",
     "nrule_info": "Un Motor de Reglas diseñado en productos actuales del mercado",
     "nrule_help": "NRule le ayuda en los procesos diarios de servicios financieros, seguros, logística y más.",
     "nrule_specs": "Especificación Técnica",
     "nrule_capabilities": "Capacidades Actuales",
     "nrule_to_start": "Para comenzar seleccione \"Nueva Regla\" y complete el formulario.",
     
-    "common_matrix":"Matrices de Decisión",    
+    "common_matrix":"Tabla de Decisión",    
+    "common_tree":"Árbol de Decisión",    
     "common_select_operator": "Seleccione Operador",
     "common_sending": "Enviando",  
     "common_of": "de",  
 
     "editor": "Editor",  
+    "actions": "Acciones",  
+    "tables": "Tablas",
+    "trees": "Árboles",
+    "archived": "Archivados",
 
     "equal": "Igual",
     "not_equal": "No Igual",

@@ -13,7 +13,6 @@ interface Props {
 
 export default function Login({ onTryConnecting, onFailureConnection }: Props) {
     const [langu, setLangu] = useState(EnvarsLocal.language);
-
     const languRef = useRef<HTMLSelectElement>(null);
     const tidRef = useRef<HTMLInputElement>(null);
     const usernameRef = useRef<HTMLInputElement>(null);
@@ -38,7 +37,7 @@ export default function Login({ onTryConnecting, onFailureConnection }: Props) {
                 username: usernameRef.current?.value,
             };
             EnvarsSession.tenant = tenant;
-            navigate("/home");
+            navigate("/rules");
         } else {
             onFailureConnection(Messages.MESSAGE_ERROR_USR_PWD);
         }

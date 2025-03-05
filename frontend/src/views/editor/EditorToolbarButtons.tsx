@@ -49,7 +49,6 @@ function EditorToolbarButtons({ onAddParameter, onAddRow }: Props) {
                 >
                     <i className="bi bi-plus-lg"></i> {Messages.ROW}
                 </Button>
-
                 <Button
                     onClick={() => setShowAdd("CONDITION")}
                     className="ms-3"
@@ -59,7 +58,6 @@ function EditorToolbarButtons({ onAddParameter, onAddRow }: Props) {
                 >
                     <i className="bi bi-plus-lg"></i> {Messages.CONDITION}
                 </Button>
-
                 <Button
                     onClick={() => setShowAdd("OUTPUT")}
                     name="adfas2"
@@ -69,7 +67,6 @@ function EditorToolbarButtons({ onAddParameter, onAddRow }: Props) {
                 >
                     <i className="bi bi-plus-lg"></i> {Messages.OUTPUT}
                 </Button>
-
                 <Button
                     name="reorder"
                     className="ms-3"

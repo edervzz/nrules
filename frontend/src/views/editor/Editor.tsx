@@ -12,7 +12,7 @@ import {
 import Toolbar from "../../components/Toolbar";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Case, ExpressionDto, OutputDto, ParametersDto } from "../../models";
+import { CaseDto, ConditionDto, KVItemDto, ParametersDto } from "../../models";
 import AddParameter from "./AddParameter";
 import { Rule } from "../../typings";
 import Storage from "../../storage";
@@ -29,7 +29,7 @@ type Props = {};
 function Editor({}: Props) {
     const { id } = useParams();
     const [conditions, setConditions] = useState<ParametersDto[]>([]);
-    const [cases, setCases] = useState<Case[]>([]);
+    const [cases, setCases] = useState<CaseDto[]>([]);
     const [outputs, setOutputs] = useState<ParametersDto[]>([]);
     const [showAddParameter, setShowAddParameter] = useState(false);
     const [checked, setChecked] = useState(true);
@@ -69,7 +69,36 @@ function Editor({}: Props) {
                 />
             )}
 
-            <Toolbar
+            <Container fluid>
+                <Table striped bordered hover responsive size="md" style={{}}>
+                    <thead>
+                        <EditorHeader
+                            conditions={conditions}
+                            outputs={outputs}
+                        ></EditorHeader>
+                        <EditorSubheader
+                            conditions={conditions}
+                            outputs={outputs}
+                        ></EditorSubheader>
+                    </thead>
+
+                    <tbody>
+                        <EditorRows
+                            expressions={conditions}
+                            outputs={outputs}
+                            cases={cases}
+                        ></EditorRows>
+                    </tbody>
+                </Table>
+            </Container>
+        </>
+    );
+}
+
+export default Editor;
+
+{
+    /* <Toolbar
                 fluid
                 title={rule.name}
                 extraItems={[
@@ -151,35 +180,8 @@ function Editor({}: Props) {
                         },
                     }),
                 ]}
-            ></Toolbar>
-
-            <Container fluid>
-                <Table striped bordered hover responsive size="md" style={{}}>
-                    <thead>
-                        <EditorHeader
-                            conditions={conditions}
-                            outputs={outputs}
-                        ></EditorHeader>
-                        <EditorSubheader
-                            conditions={conditions}
-                            outputs={outputs}
-                        ></EditorSubheader>
-                    </thead>
-
-                    <tbody>
-                        <EditorRows
-                            expressions={conditions}
-                            outputs={outputs}
-                            cases={cases}
-                        ></EditorRows>
-                    </tbody>
-                </Table>
-            </Container>
-        </>
-    );
+            ></Toolbar> */
 }
-
-export default Editor;
 
 // {outputs !== undefined &&
 //     outputs!.length > 0 &&

@@ -8,7 +8,7 @@ import {
     Row,
     ToggleButton,
 } from "react-bootstrap";
-import { Case as CaseDto, ParametersDto } from "../../models";
+import { CaseDto as CaseDto, ParametersDto } from "../../models";
 
 type Props = {
     cases: CaseDto[];
@@ -40,7 +40,7 @@ function EditorRows({ cases, expressions, outputs }: Props) {
                 </Container>
             </td>
             {expressions.map((e) => {
-                const expression = c.expressions.filter(
+                const expression = c.conditions.filter(
                     (x) => x.variable == e.key
                 );
                 const oneExpression = expression.pop();
@@ -74,7 +74,7 @@ function EditorRows({ cases, expressions, outputs }: Props) {
                 );
             })}
             {outputs.map((e) => {
-                const out = c.outputs.filter((x) => x.key == e.key);
+                const out = c.kvitems.filter((x) => x.key == e.key);
                 const oneOut = out.pop();
                 if (oneOut === undefined) return <td></td>;
                 return (

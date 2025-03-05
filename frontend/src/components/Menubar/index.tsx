@@ -9,19 +9,13 @@ import { useNavigate } from "react-router-dom";
 import EnvarsSession from "../../envars";
 
 interface Props {
-    link_new?: string;
-    onClickNew?: () => void;
     link_tables?: string;
     brand?: string;
     title?: string;
+    fluid?: boolean | string | "sm" | "md" | "lg" | "xl" | "xxl";
 }
 
-export default function Menubar({
-    link_new = "/new",
-    onClickNew,
-    brand,
-    title,
-}: Props) {
+export default function Menubar({ fluid = "xxl", brand, title }: Props) {
     const [showLogout, setShowLogout] = useState(false);
     const navigate = useNavigate();
 
@@ -55,7 +49,7 @@ export default function Menubar({
             )}
 
             <Navbar expand="md" className={`bg-body-tertiary`}>
-                <Container fluid="xxl">
+                <Container fluid={fluid}>
                     <Navbar.Brand>
                         <Nav.Link className={styles.link} href="/rules">
                             {brand}

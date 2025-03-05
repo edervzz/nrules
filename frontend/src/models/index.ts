@@ -1,9 +1,10 @@
 
 export * from "./TenantDto"
 export * from "./CreateRuleDto"
+export * from "./RuleDto"
 export * from "./ErrorDto"
 export * from "./ParameterDto"
-export * from "./Case"
+export * from "./CaseDto"
 export * from "./TagDto"
 
 export type NewRuleCondition = {

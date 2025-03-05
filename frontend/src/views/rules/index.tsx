@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ReadRuleDto } from "../../models";
+import { RuleDto } from "../../models";
 
 import Session from "../../components/Session";
 import Menubar from "../../components/Menubar";
@@ -14,7 +14,7 @@ import { Button } from "react-bootstrap";
 
 export default function RulesView() {
     // 1. States
-    const [rules, setRules] = useState<ReadRuleDto[]>([]);
+    const [rules, setRules] = useState<RuleDto[]>([]);
     const [showToast, setShowToast] = useState(0);
     const [pagination, setPagination] = useState<Pagination>({
         currentPageNo: 1,

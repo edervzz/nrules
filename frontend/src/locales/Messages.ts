@@ -9,6 +9,7 @@ export default class Messages{
     static get EXPRESSION():string { return i18n.t("common:expression"); }
     static get EXPRESSIONNAME():string { return i18n.t("common:expression_name"); }
     static get ADDEXPRESSION():string { return i18n.t("common:add_expression"); }
+    static get CASES():string { return i18n.t("common:cases"); }
     static get CONDITIONS():string { return i18n.t("common:conditions"); }
     static get CONDITION():string { return i18n.t("common:condition"); }
     static get CONDITIONNAME():string { return i18n.t("common:condition_name"); }
@@ -17,6 +18,7 @@ export default class Messages{
     static get OUTPUT():string { return i18n.t("common:output"); }
     static get OUTPUTNAME():string { return i18n.t("common:output_name"); }
     static get ROW():string { return i18n.t("common:row"); }
+    static get ARCHIVE():string { return i18n.t("common:archive"); }
     static get ADDOUTPUT():string { return i18n.t("common:add_output"); }
     static get NAME():string { return i18n.t("common:name"); }
     static get TYPE():string { return i18n.t("common:type"); }
@@ -87,6 +89,9 @@ export default class Messages{
     static get COMMON_OF():string { return i18n.t("common:common_of"); }
 
     static get EDITOR():string { return i18n.t("common:editor"); }
+    static get DISPLAY():string { return i18n.t("common:display"); }
+    static get UPDATE():string { return i18n.t("common:update"); }
+    static get FINISH():string { return i18n.t("common:finish"); }
     static get ACTIONS():string { return i18n.t("common:actions"); }
     static get TABLES():string { return i18n.t("common:tables"); }
     static get TREES():string { return i18n.t("common:trees"); }

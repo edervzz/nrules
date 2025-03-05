@@ -1,10 +1,10 @@
 import { Button, Container, Table } from "react-bootstrap";
 import Messages from "../../locales/Messages";
-import { ReadRuleDto } from "../../models";
+import { RuleDto } from "../../models";
 
 interface PropsBoard {
     fluid?: boolean | string | "sm" | "md" | "lg" | "xl" | "xxl";
-    rules: ReadRuleDto[];
+    rules: RuleDto[];
 }
 
 function Board({ fluid, rules }: PropsBoard) {
@@ -14,7 +14,7 @@ function Board({ fluid, rules }: PropsBoard) {
                 <thead>
                     <tr>
                         <th>{Messages.NEWRULE_RULENAME}</th>
-                        <th>{Messages.ACTIONS}</th>
+
                         <th colSpan={2}>{Messages.NEWRULE_RULETYPE}</th>
                         <th>{Messages.NEWRULE_RULESTRATEGY}</th>
                         <th>Dev</th>
@@ -49,11 +49,7 @@ function Board({ fluid, rules }: PropsBoard) {
                                     {x.name}
                                 </a>
                             </td>
-                            <td>
-                                <Button variant="primary" size="sm">
-                                    <i className="bi bi-play-fill"></i>
-                                </Button>
-                            </td>
+
                             <td className="">
                                 {x.rule_type == "TREE" && (
                                     <i className="bi bi-diagram-2-fill" />

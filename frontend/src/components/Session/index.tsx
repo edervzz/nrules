@@ -1,4 +1,4 @@
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import EnvarsSession from "../../envars";
 
@@ -14,6 +14,7 @@ interface Props {
  * @returns children
  */
 export default function Session({ children, isLoginPage }: Props) {
+    const [isReady, setIsReady] = useState(false);
     const navigate = useNavigate();
 
     const validate = () => {
@@ -21,10 +22,14 @@ export default function Session({ children, isLoginPage }: Props) {
         if (isLoginPage) {
             if (tenantData.id != 0) {
                 navigate("/rules");
+            } else {
+                setIsReady(true);
             }
         } else {
             if (tenantData == null || tenantData.id == 0) {
                 navigate("/");
+            } else {
+                setIsReady(true);
             }
         }
     };
@@ -33,5 +38,5 @@ export default function Session({ children, isLoginPage }: Props) {
         validate();
     }, []);
 
-    return children;
+    return isReady && children;
 }

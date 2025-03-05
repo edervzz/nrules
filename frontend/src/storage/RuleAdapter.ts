@@ -1,4 +1,4 @@
-import { CreateRuleDto, ReadRuleDto } from "../models";
+import { CreateRuleDto, RuleDto } from "../models";
 import { _CallGet, _CallPost, ResultGetPage, ResultPost } from "./MethodAdapter";
 
 export class RuleAdapter{
@@ -9,17 +9,17 @@ export class RuleAdapter{
         return result;
     }
 
-    async GetRulesPaged(pageno:number = 1, pagesize:number = 10, search:string = ""): Promise<ResultGetPage<ReadRuleDto[]>>{
+    async GetRulesPaged(pageno:number = 1, pagesize:number = 10, search:string = ""): Promise<ResultGetPage<RuleDto[]>>{
         const url = `/rules?pageNo=${pageno}&pageSize=${pagesize}${search==="" ? "" : `&word=${search}`}`
         
-        const result = await _CallGet<ReadRuleDto[]>(url);
+        const result = await _CallGet<RuleDto[]>(url);
         return result;
     }
 
-    async GetRule(ruleid: string): Promise<ResultGetPage<ReadRuleDto>>{
+    async GetRule(ruleid: string): Promise<ResultGetPage<RuleDto>>{
         const url = `/rules/${ruleid}`
         
-        const result = await _CallGet<ReadRuleDto>(url);
+        const result = await _CallGet<RuleDto>(url);
         return result;
     }
 }

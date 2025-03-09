@@ -4,6 +4,8 @@ export * from "./CreateRuleDto"
 export * from "./RuleDto"
 export * from "./ErrorDto"
 export * from "./ParameterDto"
+export * from "./NewCaseDto"
+export * from "./UpdCaseDto"
 export * from "./CaseDto"
 export * from "./TagDto"
 

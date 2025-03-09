@@ -76,39 +76,43 @@ function Toolbar({
                         </Col>
                     )}
 
-                    {extraItems?.map((x) => (
-                        <Col xs="auto" key={x?.toString()}>
+                    {extraItems?.map((x, idx) => (
+                        <Col xs="auto" key={"extra-" + idx}>
                             {x}
                         </Col>
                     ))}
 
-                    <Col></Col>
-
                     {isSearchable && (
-                        <Col xs="3">
-                            <InputGroup>
-                                <Form.Control
-                                    value={wordToSearch}
-                                    onChange={(e) => {
-                                        setWordToSearch(e.currentTarget.value);
-                                    }}
-                                    name="search"
-                                    placeholder={Messages.TOOLBAR_SEARCH}
-                                    aria-label="search"
-                                    aria-describedby="basic-addon1"
-                                    size="sm"
-                                />
-                                <Button
-                                    onClick={() => {
-                                        onSearch!(1, wordToSearch);
-                                    }}
-                                    size="sm"
-                                    variant="primary"
-                                >
-                                    <i className="bi bi-search"></i>
-                                </Button>
-                            </InputGroup>
-                        </Col>
+                        <>
+                            <Col></Col>
+                            <Col xs="4">
+                                <InputGroup>
+                                    <Form.Control
+                                        value={wordToSearch}
+                                        onChange={(e) => {
+                                            setWordToSearch(
+                                                e.currentTarget.value
+                                            );
+                                        }}
+                                        name="search"
+                                        placeholder={Messages.TOOLBAR_SEARCH}
+                                        aria-label="search"
+                                        aria-describedby="basic-addon1"
+                                        size="sm"
+                                    />
+                                    <Button
+                                        onClick={() => {
+                                            onSearch!(1, wordToSearch);
+                                        }}
+                                        size="sm"
+                                        variant="primary"
+                                    >
+                                        <i className="bi bi-search"></i>
+                                    </Button>
+                                </InputGroup>
+                            </Col>
+                            <Col></Col>
+                        </>
                     )}
 
                     {isPaginated && (

@@ -28,7 +28,7 @@ class TagAdapter(TagRepository):
         external_id = external_id.lower()
         with Session(self.engine) as session:
             tag = session.query(Tag).where(
-                Tag.key == external_id).one_or_none()
+                Tag.value == external_id).one_or_none()
             return tag
 
     def read_by_parent_id(self, parent_id) -> List[Tag]:

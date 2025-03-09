@@ -38,6 +38,9 @@ class CreateCaseRuleHandler:
         for k in request.kvitems:
             self.repo.kvitem.create(k)
 
+        for cr in request.cases_reordered:
+            self.repo.case.update(cr)
+
         self.repo.rule.update(request.rule)
 
         self.repo.commit_work()

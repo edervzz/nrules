@@ -16,6 +16,8 @@ class CreateCaseRuleRequest:
         self.name = name
         self.case = case
 
+        self.cases_reordered: List[Case] = []
+
         self.conditions: List[Condition] = []
         self.kvitems: List[KVItem] = []
 

@@ -18,4 +18,4 @@ class Auditable:
 
 class Versioned:
     """" Version field """
-    version: Mapped[float] = mapped_column(nullable=False)
+    version: Mapped[str] = mapped_column(nullable=False)

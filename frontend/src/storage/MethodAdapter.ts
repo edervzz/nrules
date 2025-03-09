@@ -28,6 +28,30 @@ export async function _CallPost<T>(url: string, data: T): Promise<ResultPost>{
 
 }
 
+export async function _CallPut<T>(url: string, data: T): Promise<ResultPost>{
+    try {
+        const res = await axios.put(basepath + url, data, {
+            headers: {
+                "Accept-Language": EnvarsLocal.language,
+            },
+        });
+        
+        return {
+            item: res.headers["item"] || "",
+            ok: true,
+            errorMessage: ""
+        } as ResultPost;
+    } catch (error) {
+        const err = error as AxiosError;
+        return {
+            ok: false,
+            errorMessage: err.message,
+            errorList:  err.response?.data as ErrorDto[]
+        } as ResultPost
+    }
+
+}
+
 export async function _CallGet<T>(url: string): Promise<ResultGetPage<T>>{
     try {        
         const res = await axios.get<T>(basepath + url, {

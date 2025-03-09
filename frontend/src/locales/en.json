@@ -22,6 +22,7 @@
     "tags": "Tags",
     "key": "Key",
     "value": "Value",
+    "bydefault": "By default",
 
     "button_output_default": "Output default",
     "button_output": "Output",

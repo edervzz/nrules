@@ -60,7 +60,7 @@ class CreateRuleValidator(Validator):
                 onecond.variable = e_param.key
                 onecond.case_id = request.case_zero.id
                 onecond.rule_id = request.rule.id
-                onecond.operator = "EQ"
+                onecond.operator = "ELSE"
                 onecond.value = ""
                 # validate condition
                 condition_validator = ConditionValidator(self.local, False)

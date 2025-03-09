@@ -28,7 +28,7 @@ class RuleAdapter(RuleRepository):
         with Session(self.engine) as session:
             if len(_id) == 8:
                 rule = session.query(Rule).where(
-                    Rule.name.ilike(f'%{_id}%')).one_or_none()
+                    Rule.id.ilike(f'{_id}%')).one_or_none()
             else:
                 rule = session.query(Rule).where(Rule.id == _id).one_or_none()
             return rule

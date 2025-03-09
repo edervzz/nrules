@@ -12,6 +12,6 @@ class NewCaseModel:
 
         self.case = Case()
         self.case.id = ""
-        self.case.position = -1
+        self.case.position = self.__dict__.get("position", -1)
         self.case.is_active = self.__dict__.get("is_active", True)
         self.case.is_archived = self.__dict__.get("is_archived", False)

@@ -16,4 +16,9 @@ class CreateCaseRuleValidator(Validator):
         if request.id == "" and request.name == "":
             raise self.as_error(self.local.get(Codes.RU_READ_001))
 
+        if request.case.position == 0:
+            request.case.position = 1
+        if request.case.position >= 9999:
+            request.case.position = -1
+
         request.case.id = str(uuid.uuid4())

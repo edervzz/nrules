@@ -32,5 +32,5 @@ def set_version(table: Table):
     """
     table.append_column(
         Column(
-            "version", Float, comment="Version Object", nullable=False),
+            "version", String(10), comment="Version Object", nullable=False),
     )

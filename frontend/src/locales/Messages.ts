@@ -25,6 +25,7 @@ export default class Messages{
     static get TAGS():string { return i18n.t("common:tags"); }
     static get KEY():string { return i18n.t("common:key"); }
     static get VALUE():string { return i18n.t("common:value"); }
+    static get BYDFAULT():string { return i18n.t("common:bydefault"); }
 
     static get BUTTON_OUTPUT_DEFAULT():string { return i18n.t("common:button_output_default"); }
     static get BUTTON_OUTPUT():string { return i18n.t("common:button_output"); }

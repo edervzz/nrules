@@ -22,6 +22,7 @@
     "tags": "Etiquetas",
     "key": "Llave",
     "value": "Valor",
+    "bydefault": "Por defecto",
 
     "button_output_default": "Salida por defecto",
     "button_output": "Salida",

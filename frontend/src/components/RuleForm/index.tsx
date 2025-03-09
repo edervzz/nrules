@@ -72,7 +72,7 @@ export default function RuleForm({ onSubmit }: Props) {
                         <Form.Group className="mb-3" controlId="ruletype">
                             <Form.Label>{Messages.NEWRULE_RULETYPE}</Form.Label>
                             <Form.Select required={true} ref={typeRef}>
-                                <option selected value={0}>
+                                <option value={0}>
                                     {Messages.NEWRULE_RULETYPE_SELECT}
                                 </option>
                                 <option value={1}>
@@ -90,7 +90,7 @@ export default function RuleForm({ onSubmit }: Props) {
                                 {Messages.NEWRULE_RULESTRATEGY}
                             </Form.Label>
                             <Form.Select required={true} ref={strategyRef}>
-                                <option selected value={1}>
+                                <option value={1}>
                                     {Messages.NEWRULE_RULESTRATEGY_EARLY}
                                 </option>
                             </Form.Select>

@@ -52,11 +52,22 @@ class CreateCaseRuleBizValidator(Validator):
 
         my_cases = self.repo.case.read_by_parent_id(request.rule.id)
 
-        last_case = 0
-        if my_cases is not None and len(my_cases) > 0:
+        if request.case.position == -1:
+            last_case = 0
+            if my_cases is not None and len(my_cases) > 0:
+                for c in my_cases:
+                    if isinstance(c, Case):
+                        last_case = c.position if c.position > last_case else last_case
+
+            request.case.position = last_case + 1
+        else:
+            begin_move = False
             for c in my_cases:
                 if isinstance(c, Case):
-                    last_case = c.position if c.position > last_case else last_case
+                    if c.position == request.case.position:
+                        begin_move = True
+                    if begin_move:
+                        c.position = c.position + 1
+                        request.cases_reordered.append(c)
 
-        request.case.position = last_case + 1
         request.case.rule_id = request.rule.id

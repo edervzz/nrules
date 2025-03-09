@@ -82,7 +82,6 @@ function NewRuleView() {
     return (
         <Session>
             <Menubar
-                link_new="#"
                 brand={Messages.NRULE}
                 title={Messages.NEWRULE_CREA_RULE}
             />

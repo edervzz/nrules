@@ -1,4 +1,4 @@
-import { Button, Container, Table } from "react-bootstrap";
+import { Container, Table } from "react-bootstrap";
 import Messages from "../../locales/Messages";
 import { RuleDto } from "../../models";
 

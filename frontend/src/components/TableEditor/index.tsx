@@ -1,7 +1,14 @@
-import { Button, Container, Form, Table } from "react-bootstrap";
+import {
+    Button,
+    Container,
+    Form,
+    OverlayTrigger,
+    Table,
+    Tooltip,
+} from "react-bootstrap";
 import Messages from "../../locales/Messages";
 import { ParametersDto, CaseDto } from "../../models";
-import { DATE, INPUT, JSON, NUMERIC, OUTPUT, STRING } from "../../tools";
+import { DATE, JSON, NUMERIC, STRING } from "../../tools";
 import { ConditionDto } from "../../models/ConditionDto";
 import { KVItemDto } from "../../models/KVItemDto";
 import { useState } from "react";
@@ -12,7 +19,10 @@ interface Props {
     kvitems: KVItemDto[];
     inputs: ParametersDto[];
     outputs: ParametersDto[];
+    fluid?: boolean | string | "sm" | "md" | "lg" | "xl" | "xxl";
     isUpdate: boolean;
+    hideInactive?: boolean;
+    onSelectedCase: (id: string) => void;
 }
 
 function TableEditor({
@@ -21,73 +31,52 @@ function TableEditor({
     kvitems,
     inputs,
     outputs,
+    fluid = "xxl",
     isUpdate,
+    hideInactive,
+    onSelectedCase,
 }: Props) {
     const [caseActive, setCaseActive] = useState("");
+
+    const selectedCase = (id: string) => {
+        setCaseActive(id);
+        onSelectedCase(id);
+    };
+
+    const deactiveColor = "#ba0012";
+
     return (
-        <Container fluid>
-            <Table striped bordered hover responsive size="md" style={{}}>
+        <Container fluid={fluid}>
+            <Table striped hover responsive size="md" style={{}}>
                 <thead>
-                    {/* <tr>
-                        <th
-                            style={{
-                                minWidth: "200px",
-                            }}
-                            id="actions"
-                            className="fs-6"
-                        >
-                            {Messages.CASES}
-                        </th>
-                        <th
-                            style={{
-                                borderLeft: "3px solid #b25afd",
-                                minWidth: "200px",
-                            }}
-                            className="fs-6"
-                            colSpan={inputs?.length || 0}
-                            id={INPUT}
-                        >
-                            {Messages.CONDITIONS}
-                        </th>
-                        <th
-                            style={{
-                                borderLeft: "3px solid #49e048",
-                                minWidth: "200px",
-                            }}
-                            className="fs-6"
-                            colSpan={outputs?.length || 0}
-                            id={OUTPUT}
-                        >
-                            {Messages.OUTPUTS}
-                        </th>
-                    </tr> */}
                     <tr>
                         <th></th>
+                        <th>#</th>
                         {inputs.map((x) => (
                             <th
                                 style={{
-                                    borderLeft: "3px solid #b25afd",
-                                    backgroundColor: "#e1ddfd",
+                                    borderLeft: "3px solid #6a329f",
+                                    backgroundColor: "#dfbcff",
                                 }}
                                 className="fs-6 fw-medium"
                                 key={x.key}
                             >
                                 {x.key}
-                                {" - "}
+                                <br />
                                 {typeofparam(x.typeof)}
                             </th>
                         ))}
                         {outputs.map((x) => (
                             <th
                                 style={{
-                                    borderLeft: "3px solid #49e048",
-                                    backgroundColor: "#baffb9",
+                                    borderLeft: "3px solid #00cc99",
+                                    backgroundColor: "#c8fff1",
                                 }}
                                 className="fs-6 fw-medium"
                                 key={x.key}
                             >
                                 {x.key}
-                                {" - "}
+                                <br />
                                 {typeofparam(x.typeof)}
                             </th>
                         ))}
@@ -95,30 +84,42 @@ function TableEditor({
                 </thead>
                 <tbody>
                     {cases
-                        .filter((x) => x.position > 0)
+                        .filter(
+                            (x) =>
+                                x.position > 0 &&
+                                (x.is_active || !x.is_active == !hideInactive)
+                        )
                         .map((c, idx) => (
                             <tr key={"case" + idx}>
                                 <td key={"case-data" + idx}>
-                                    <Form.Check
-                                        isValid={c.is_active}
-                                        isInvalid={!c.is_active}
-                                        key={c.id.substring(0, 8)}
-                                        disabled={!isUpdate}
-                                        aria-label={
-                                            "option " + c.id.substring(0, 8)
-                                        }
-                                        label={" " + c.position}
-                                        checked={
-                                            caseActive == c.id.substring(0, 8)
-                                        }
-                                        onClick={(e) =>
-                                            c.id.substring(0, 8) == caseActive
-                                                ? setCaseActive("")
-                                                : setCaseActive(
-                                                      c.id.substring(0, 8)
-                                                  )
-                                        }
-                                    />
+                                    {c.position != 9999 && (
+                                        <Form.Check
+                                            isValid={c.is_active}
+                                            isInvalid={!c.is_active}
+                                            key={c.id}
+                                            disabled={!isUpdate}
+                                            aria-label={"option " + c.id}
+                                            checked={caseActive == c.id}
+                                            onChange={(_) => {}}
+                                            onClick={(_) =>
+                                                c.id == caseActive
+                                                    ? selectedCase("")
+                                                    : selectedCase(c.id)
+                                            }
+                                        />
+                                    )}
+                                </td>
+                                <td
+                                    style={{
+                                        color: c.is_active ? "" : deactiveColor,
+                                        textDecoration: c.is_active
+                                            ? ""
+                                            : "line-through double",
+                                    }}
+                                >
+                                    {c.position == 9999
+                                        ? Messages.BYDFAULT
+                                        : c.position}
                                 </td>
                                 {conditions
                                     .filter(
@@ -127,7 +128,18 @@ function TableEditor({
                                             x.rule_id == c.rule_id
                                     )
                                     .map((i) => (
-                                        <td key={i.variable}>
+                                        <td
+                                            key={i.variable}
+                                            style={{
+                                                borderLeft: "3px solid #6a329f",
+                                                color: c.is_active
+                                                    ? ""
+                                                    : deactiveColor,
+                                                textDecoration: c.is_active
+                                                    ? ""
+                                                    : "line-through double",
+                                            }}
+                                        >
                                             {i.operator + " " + i.value}
                                         </td>
                                     ))}
@@ -138,64 +150,24 @@ function TableEditor({
                                             x.rule_id == c.rule_id
                                     )
                                     .map((i) => (
-                                        <td key={i.key}>{i.value}</td>
+                                        <td
+                                            key={i.key}
+                                            style={{
+                                                borderLeft: "3px solid #00cc99",
+                                                color: c.is_active
+                                                    ? ""
+                                                    : deactiveColor,
+                                                textDecoration: c.is_active
+                                                    ? ""
+                                                    : "line-through double",
+                                            }}
+                                        >
+                                            {i.value}
+                                        </td>
                                     ))}
                             </tr>
                         ))}
                 </tbody>
-                <tfoot
-                    style={{
-                        borderTop: "3px solid #69686e",
-                        backgroundColor: "#baffb9",
-                    }}
-                >
-                    {cases
-                        .filter((x) => x.position == 0)
-                        .map((c, idx) => (
-                            <tr key={"case" + idx}>
-                                <td key={"case-data" + idx}>
-                                    <Form.Check
-                                        key={c.id.substring(0, 8)}
-                                        disabled={!isUpdate}
-                                        aria-label={
-                                            "option " + c.id.substring(0, 8)
-                                        }
-                                        label={"Default"}
-                                        checked={
-                                            caseActive == c.id.substring(0, 8)
-                                        }
-                                        onClick={(e) =>
-                                            c.id.substring(0, 8) == caseActive
-                                                ? setCaseActive("")
-                                                : setCaseActive(
-                                                      c.id.substring(0, 8)
-                                                  )
-                                        }
-                                    />
-                                </td>
-                                {conditions
-                                    .filter(
-                                        (x) =>
-                                            x.case_id == c.id &&
-                                            x.rule_id == c.rule_id
-                                    )
-                                    .map((i) => (
-                                        <td key={i.variable}>
-                                            {i.operator + " " + i.value}
-                                        </td>
-                                    ))}
-                                {kvitems
-                                    .filter(
-                                        (x) =>
-                                            x.case_id == c.id &&
-                                            x.rule_id == c.rule_id
-                                    )
-                                    .map((i) => (
-                                        <td key={i.key}>{i.value}</td>
-                                    ))}
-                            </tr>
-                        ))}
-                </tfoot>
             </Table>
         </Container>
     );

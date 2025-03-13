@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import NewRuleView from "./views/newRule";
+import XTest from "./views/xtest";
 import RulesView from "./views/rules";
 // import TransportsView from "./views/Transports";
 import TenancyView from "./views/tenancy/Tenancy";
@@ -28,5 +29,9 @@ export const router = createBrowserRouter([
     {
         path: "/tenancy",
         element: <TenancyView />,
+    },
+    {
+        path: "/xtest",
+        element: <XTest />,
     },
 ]);

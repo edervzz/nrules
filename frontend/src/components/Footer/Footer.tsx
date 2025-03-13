@@ -1,17 +1,20 @@
 import { Container, Row, Col, Image } from "react-bootstrap";
 
-type Props = {};
+type Props = {
+    fluid?: boolean | string | "sm" | "md" | "lg" | "xl" | "xxl";
+};
 
-function Footer({}: Props) {
+function Footer({ fluid = "xxl" }: Props) {
     return (
         <>
-            <Container fluid="xxl">
+            <Container fluid>
                 <Row>
                     <Col>
                         <hr></hr>
                     </Col>
                 </Row>
-
+            </Container>
+            <Container fluid={fluid}>
                 <Row>
                     <Col>
                         <Image height={110} src="/concredito.png" rounded />

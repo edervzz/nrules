@@ -1,4 +1,5 @@
 # gentera-nrule
+
 https://www.joshwcomeau.com/css/interactive-guide-to-flexbox/
 https://overapi.com/python
 https://overapi.com/regex
@@ -77,6 +78,10 @@ Case( Condition Group ID, KVS ID )
 -   OTEL
 -   CQRS
 -   Multitenancy
+
+## palettes
+
+https://www.color-hex.com/color-palette/1056675
 
 ## Runner
 

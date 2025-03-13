@@ -12,6 +12,7 @@ export default class Messages{
     static get CASES():string { return i18n.t("common:cases"); }
     static get CONDITIONS():string { return i18n.t("common:conditions"); }
     static get CONDITION():string { return i18n.t("common:condition"); }
+    static get DATATYPE():string { return i18n.t("common:datatype"); }
     static get CONDITIONNAME():string { return i18n.t("common:condition_name"); }
     static get ADDCONDITION():string { return i18n.t("common:add_condition"); }
     static get OUTPUTS():string { return i18n.t("common:outputs"); }
@@ -25,7 +26,7 @@ export default class Messages{
     static get TAGS():string { return i18n.t("common:tags"); }
     static get KEY():string { return i18n.t("common:key"); }
     static get VALUE():string { return i18n.t("common:value"); }
-    static get BYDFAULT():string { return i18n.t("common:bydefault"); }
+    static get BYDEFAULT():string { return i18n.t("common:bydefault"); }
 
     static get BUTTON_OUTPUT_DEFAULT():string { return i18n.t("common:button_output_default"); }
     static get BUTTON_OUTPUT():string { return i18n.t("common:button_output"); }
@@ -38,6 +39,10 @@ export default class Messages{
     static get BUTTON_CLOSE():string { return i18n.t("common:button_close"); }
     static get BUTTON_FIRST():string { return i18n.t("common:button_first"); }
     static get BUTTON_LAST():string { return i18n.t("common:button_last"); }
+
+    static get NEWCASE():string { return i18n.t("common:new_case"); }
+    static get NEWCASEPOS():string { return i18n.t("common:new_case_position"); }
+    static get NEWCASEBETWEEN():string { return i18n.t("common:new_case_between"); }
     
     static get NEWRULE_CREA_RULE():string { return i18n.t("common:newrule_create_rule"); }
     static get NEWRULE_RULENAME():string { return i18n.t("common:newrule_rulename"); }
@@ -68,6 +73,7 @@ export default class Messages{
     static get MESSAGE_SOME_WRONG():string { return i18n.t("common:message_some_wrong"); }
     static get MESSAGE_CONNECTING():string { return i18n.t("common:message_connecting"); }
     static get MESSAGE_LOADING():string { return i18n.t("common:message_loading"); }
+    static get MESSAGE_WORKING():string { return i18n.t("common:message_working"); }
     static get MESSAGE_ERROR_USR_PWD():string { return i18n.t("common:message_error_user_pwd"); }
     
     static get LOGIN_TENANTID():string { return i18n.t("common:login_tenant_id"); }

@@ -13,7 +13,6 @@ interface Props {
 
 export default function Login({ onTryConnecting, onFailureConnection }: Props) {
     const [langu, setLangu] = useState(EnvarsLocal.language);
-    const languRef = useRef<HTMLSelectElement>(null);
     const tidRef = useRef<HTMLInputElement>(null);
     const usernameRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
@@ -49,14 +48,13 @@ export default function Login({ onTryConnecting, onFailureConnection }: Props) {
     };
 
     return (
-        <Form onSubmit={handleSubmit}>
-            <Card style={{ width: "18rem" }}>
-                <Card.Body>
+        <Card style={{ width: "300px" }}>
+            <Card.Body>
+                <Form onSubmit={handleSubmit} className="text-center">
                     <Card.Title>{Messages.LOGIN_LOGIN}</Card.Title>
                     <Card.Text>
                         <Form.Select
                             className="mb-2"
-                            ref={languRef}
                             value={langu}
                             onChange={(v) => {
                                 setLangu(v.currentTarget.value);
@@ -89,16 +87,12 @@ export default function Login({ onTryConnecting, onFailureConnection }: Props) {
                             ref={passwordRef}
                         />
                     </Card.Text>
-                    <Container
-                        fluid="xl"
-                        className="d-flex align-items-center justify-content-end"
-                    >
-                        <Button variant="primary" type="submit">
-                            {Messages.BUTTON_CONTINUE}
-                        </Button>
-                    </Container>
-                </Card.Body>
-            </Card>
-        </Form>
+
+                    <Button variant="primary" type="submit">
+                        {Messages.BUTTON_CONTINUE}
+                    </Button>
+                </Form>
+            </Card.Body>
+        </Card>
     );
 }

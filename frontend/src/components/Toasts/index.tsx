@@ -18,6 +18,18 @@ export function ToastLoading({ delayTime = 20000 }: Props) {
     );
 }
 
+export function ToastWorking({ delayTime = 20000 }: Props) {
+    return (
+        <ToastContainer position="top-center">
+            <Toast show={true} delay={delayTime} autohide bg="success">
+                <Toast.Body className="text-white text-center">
+                    {Messages.MESSAGE_WORKING}
+                </Toast.Body>
+            </Toast>
+        </ToastContainer>
+    );
+}
+
 export function ToastError({
     delayTime = 2000,
     message = Messages.MESSAGE_SOME_WRONG,

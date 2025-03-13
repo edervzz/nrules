@@ -55,6 +55,10 @@ class Codes:
     es_messages[CASE_CREA_001] = "Las reglas tipo 'TREE' no pueden crear Casos directamente."
 
     # Update Case ################################################################
+    CASE_UPD_005 = "CASE-UPD-005"
+    en_messages[CASE_UPD_005] = "Case default cannot change position."
+    es_messages[CASE_UPD_005] = "El caso por defecto no puede cambiar de posición."
+
     CASE_UPD_004 = "CASE-UPD-004"
     en_messages[CASE_UPD_004] = "Case not found."
     es_messages[CASE_UPD_004] = "No se encontró caso."

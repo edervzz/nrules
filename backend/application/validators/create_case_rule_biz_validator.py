@@ -67,7 +67,8 @@ class CreateCaseRuleBizValidator(Validator):
                     if c.position == request.case.position:
                         begin_move = True
                     if begin_move:
-                        c.position = c.position + 1
-                        request.cases_reordered.append(c)
+                        if c.position < 9999:
+                            c.position = c.position + 1
+                            request.cases_reordered.append(c)
 
         request.case.rule_id = request.rule.id

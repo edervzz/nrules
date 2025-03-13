@@ -32,11 +32,13 @@ export default function LoginView() {
                 isFailure={isFailure}
                 messageOnFailure={messageError}
                 onClose={handleClose}
-            ></LoadingModal>
-            <Container fluid="xl" className=" justify-content-center">
+            />
+            <Container fluid="xl">
                 <Row>
-                    <Col></Col>
-                    <Col sm="6">
+                    <br></br>
+                </Row>
+                <Row>
+                    <Col xl="8" style={{ backgroundColor: "" }}>
                         <p style={{ fontSize: "60px" }}>
                             {Messages.NRULE + " "}
                             <Badge
@@ -52,21 +54,26 @@ export default function LoginView() {
                             {Messages.NRULE_HELP}
                         </p>
                     </Col>
-                    <Col>
-                        <br></br>
+                    <Col
+                        className="d-flex justify-content-center"
+                        style={{ backgroundColor: "" }}
+                    >
                         <Login
                             onTryConnecting={handleTryConnecting}
                             onFailureConnection={handleFailureConnection}
                         ></Login>
                     </Col>
-                    <Col></Col>
                 </Row>
                 <Row>
-                    <Col></Col>
-                    <Col sm="3" className="text-start">
+                    <br></br>
+                </Row>
+                <Row>
+                    <Col xl="3"></Col>
+                    <Col xl="3">
                         <p style={{ fontSize: "20px" }}>
                             {Messages.NRULE_SPECS}
                         </p>
+                        <br></br>
                         <ul>
                             <li>Clean Architecture</li>
                             <li>Open-API</li>
@@ -74,7 +81,7 @@ export default function LoginView() {
                             <li>React, Bootstrap</li>
                         </ul>
                     </Col>
-                    <Col sm="3">
+                    <Col xl="3">
                         <p style={{ fontSize: "20px" }}>
                             {Messages.NRULE_CAPABILITIES}
                         </p>
@@ -85,8 +92,7 @@ export default function LoginView() {
                             <li>Transporte de Cambios</li>
                         </ul>
                     </Col>
-                    <Col></Col>
-                    <Col></Col>
+                    <Col xl="3"></Col>
                 </Row>
             </Container>
             <Footer></Footer>

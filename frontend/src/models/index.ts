@@ -8,6 +8,8 @@ export * from "./NewCaseDto"
 export * from "./UpdCaseDto"
 export * from "./CaseDto"
 export * from "./TagDto"
+export * from "./NewParameterDto"
+export * from "./NewParametersDto"
 
 export type NewRuleCondition = {
     id:string;

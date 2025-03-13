@@ -33,3 +33,7 @@ class UpdateCaseRuleBizValidator(Validator):
                 if not isinstance(one_case, Case):
                     raise self.as_not_found(
                         self.local.get(Codes.CASE_UPD_004))
+                if one_case.position >= 9999:
+                    if c.position != one_case.position:
+                        raise self.as_not_found(
+                            self.local.get(Codes.CASE_UPD_005))

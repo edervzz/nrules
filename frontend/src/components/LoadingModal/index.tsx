@@ -85,3 +85,40 @@ export function LoadingErrorListModal({
         </Modal>
     );
 }
+
+interface PropsLoadingMini {
+    show: boolean;
+    title: string;
+    isFailure: boolean;
+    messageOnFailure: string;
+    onClose?: () => void;
+}
+
+export function LoadingModalMini({
+    show,
+    title,
+    messageOnFailure,
+    isFailure,
+    onClose,
+}: PropsLoadingMini) {
+    return (
+        <Modal show={show} size="sm" backdrop="static" keyboard={true}>
+            <Modal.Header>
+                <Modal.Title>{title}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <Container className="d-flex justify-content-center">
+                    {!isFailure && <Spinner animation="border" />}
+                    {isFailure && `${messageOnFailure}`}
+                </Container>
+            </Modal.Body>
+            {onClose && (
+                <Modal.Footer>
+                    <Button disabled={!isFailure} onClick={onClose}>
+                        {Messages.BUTTON_CLOSE}
+                    </Button>
+                </Modal.Footer>
+            )}
+        </Modal>
+    );
+}

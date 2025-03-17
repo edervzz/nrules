@@ -5,9 +5,10 @@ import styles from "./Condition.module.css";
 interface Props {
     op: string;
     value: string;
+    onSelect: () => void;
 }
 
-export default function Condition({ op, value }: Props) {
+export default function Condition({ op, value, onSelect }: Props) {
     const [operator, setOperator] = useState(op);
 
     return (
@@ -15,11 +16,11 @@ export default function Condition({ op, value }: Props) {
             <Button
                 size="sm"
                 variant="outline-primary"
-                className={`${styles.myButton}`}
+                onClick={(_) => onSelect()}
             >
                 {op}
             </Button>
-            <Form.Control value={value} />
+            <Form.Control />
         </Stack>
     );
 }

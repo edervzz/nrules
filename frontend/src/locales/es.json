@@ -121,7 +121,7 @@
     "greater_equal_desc": "A mayor igual que B",
     "in_desc": "A pertenece",
     "not_in_desc": "A no pertenece",
-    "between_desc": "A esta entre H y K",
+    "between_desc": "E esta entre A y U",
     "not_between_desc": "A no esta entre H y K",
     "any_desc": "Cualquier valor",
     "else": "Si no"

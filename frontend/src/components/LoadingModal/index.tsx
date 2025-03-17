@@ -3,7 +3,6 @@ import Messages from "../../locales/Messages";
 import { ErrorDto } from "../../models";
 
 interface PropsLoading {
-    show: boolean;
     title: string;
     isFailure: boolean;
     messageOnFailure: string;
@@ -11,14 +10,13 @@ interface PropsLoading {
 }
 
 export function LoadingModal({
-    show,
     title,
     messageOnFailure,
     isFailure,
     onClose,
 }: PropsLoading) {
     return (
-        <Modal show={show} size="lg" backdrop="static" keyboard={true}>
+        <Modal show size="lg" backdrop="static" keyboard={true}>
             <Modal.Header>
                 <Modal.Title>
                     {isFailure ? Messages.MESSAGE_SOME_WRONG : title}

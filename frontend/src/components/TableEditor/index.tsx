@@ -1,17 +1,10 @@
-import {
-    Button,
-    Container,
-    Form,
-    OverlayTrigger,
-    Table,
-    Tooltip,
-} from "react-bootstrap";
+import { Form, Table } from "react-bootstrap";
 import Messages from "../../locales/Messages";
 import { ParametersDto, CaseDto } from "../../models";
-import { DATE, JSON, NUMERIC, STRING, typeofparam } from "../../tools";
+import { typeofparam } from "../../tools";
 import { ConditionDto } from "../../models/ConditionDto";
 import { KVItemDto } from "../../models/KVItemDto";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import Condition from "../Condition";
 
 interface Props {
@@ -20,9 +13,10 @@ interface Props {
     kvitems: KVItemDto[];
     inputs: ParametersDto[];
     outputs: ParametersDto[];
-    isUpdate: boolean;
+    isUpdate?: boolean;
     hideInactive?: boolean;
     onSelectedCase: (id: string) => void;
+    extraItems?: ReactNode[];
 }
 
 function TableEditor({
@@ -31,9 +25,10 @@ function TableEditor({
     kvitems,
     inputs,
     outputs,
-    isUpdate,
+    isUpdate = true,
     hideInactive,
     onSelectedCase,
+    extraItems,
 }: Props) {
     const [caseSelected, setCaseSelected] = useState("");
 
@@ -45,16 +40,19 @@ function TableEditor({
     const deactiveColor = "#ba0012";
 
     return (
-        <Table striped borderless size="sm" responsive="sm">
+        <Table striped borderless size="sm" responsive>
             <thead>
                 <tr>
-                    <th></th>
-                    <th style={{ minWidth: "100px" }}>#</th>
+                    <th style={{ width: "30px" }}>
+                        {extraItems?.map((x) => x)}
+                    </th>
+
                     {inputs.map((x) => (
                         <th
                             key={x.key}
                             className="fs-6 fw-medium"
                             style={{
+                                width: "50px",
                                 borderLeft: "3px solid #6a329f",
                                 backgroundColor: "#dfbcff",
                             }}
@@ -69,6 +67,7 @@ function TableEditor({
                             key={x.key}
                             className="fs-6 fw-medium"
                             style={{
+                                width: "50px",
                                 borderLeft: "3px solid #00cc99",
                                 backgroundColor: "#c8fff1",
                             }}
@@ -78,6 +77,7 @@ function TableEditor({
                             {typeofparam(x.typeof)}
                         </th>
                     ))}
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -89,13 +89,22 @@ function TableEditor({
                     )
                     .map((c, idx) => (
                         <tr key={"case" + idx}>
+                            {/* selector */}
+
                             <td key={"case-data" + idx}>
                                 {
                                     <Form.Check
+                                        className="ms=2"
                                         isValid={c.is_active}
                                         isInvalid={!c.is_active}
                                         key={c.id}
+                                        value={"eder"}
                                         disabled={!isUpdate}
+                                        label={
+                                            c.position == 9999
+                                                ? Messages.BYDEFAULT
+                                                : c.position
+                                        }
                                         aria-label={"option " + c.id}
                                         checked={caseSelected == c.id}
                                         onChange={(_) => {}}
@@ -107,20 +116,7 @@ function TableEditor({
                                     />
                                 }
                             </td>
-                            <td
-                                style={{
-                                    color: c.is_active ? "" : deactiveColor,
-                                    backgroundColor:
-                                        c.position == 9999 ? "#fff2cc" : "",
-                                    textDecoration: c.is_active
-                                        ? ""
-                                        : "line-through double",
-                                }}
-                            >
-                                {c.position == 9999
-                                    ? Messages.BYDEFAULT
-                                    : c.position}
-                            </td>
+
                             {conditions
                                 .filter(
                                     (x) =>
@@ -147,6 +143,7 @@ function TableEditor({
                                         <Condition
                                             op={i.operator}
                                             value={i.value}
+                                            onSelect={() => {}}
                                         ></Condition>
                                     </td>
                                 ))}

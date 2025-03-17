@@ -26,13 +26,16 @@ export default function LoginView() {
 
     return (
         <Session isLoginPage>
-            <LoadingModal
-                show={showLoadingModal}
-                title={Messages.MESSAGE_CONNECTING}
-                isFailure={isFailure}
-                messageOnFailure={messageError}
-                onClose={handleClose}
-            />
+            {/* conditional renders */}
+            {showLoadingModal && (
+                <LoadingModal
+                    title={Messages.MESSAGE_CONNECTING}
+                    isFailure={isFailure}
+                    messageOnFailure={messageError}
+                    onClose={handleClose}
+                />
+            )}
+
             <Container fluid="xl">
                 <Row>
                     <br></br>
@@ -73,7 +76,6 @@ export default function LoginView() {
                         <p style={{ fontSize: "20px" }}>
                             {Messages.NRULE_SPECS}
                         </p>
-                        <br></br>
                         <ul>
                             <li>Clean Architecture</li>
                             <li>Open-API</li>
@@ -86,10 +88,10 @@ export default function LoginView() {
                             {Messages.NRULE_CAPABILITIES}
                         </p>
                         <ul>
-                            <li>Árboles de Decisión</li>
-                            <li>Tablas de Decisión</li>
-                            <li>Multi Empresa</li>
-                            <li>Transporte de Cambios</li>
+                            <li>Decision Trees</li>
+                            <li>Decision Tables</li>
+                            <li>Multi-tenancy</li>
+                            <li>Transports</li>
                         </ul>
                     </Col>
                     <Col xl="3"></Col>

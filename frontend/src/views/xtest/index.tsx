@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Footer from "../../components/Footer/Footer";
 import Menubar from "../../components/Menubar";
-import Condition from "../../components/Condition";
 import Operator from "../../components/Operator";
 
 function XTest() {
@@ -19,7 +18,7 @@ function XTest() {
     return (
         <>
             <Menubar brand="NRule"></Menubar>
-            {show && <Operator></Operator>}
+
             <Footer></Footer>
         </>
     );

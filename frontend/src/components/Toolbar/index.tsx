@@ -48,7 +48,11 @@ function Toolbar({
             : pageSize * currentPageNo;
     return (
         <>
-            <Container fluid={fluid} className="mb-1">
+            <Container
+                fluid={fluid}
+                className="mb-1"
+                style={{ backgroundColor: "white" }}
+            >
                 <Row className="align-items-center">
                     {title && (
                         <Col xs="auto" className="fs-5">
@@ -177,7 +181,7 @@ function Toolbar({
                                     </Button>
 
                                     <Button
-                                        className="ms-1"
+                                        className="ms-1 me-3"
                                         disabled={
                                             (pagination?.nextPageNo || 0) == 0
                                         }

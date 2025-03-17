@@ -13,14 +13,13 @@ import {
     NewParameterDto,
     NewParametersDto,
 } from "../../models";
-import { Button, ButtonGroup } from "react-bootstrap";
+import { Button, ButtonGroup, Container } from "react-bootstrap";
 import TableEditor from "../../components/TableEditor";
 import { INPUT, OUTPUT } from "../../tools";
 import { ConditionDto } from "../../models/ConditionDto";
 import { KVItemDto } from "../../models/KVItemDto";
 import { ToastError, ToastWorking } from "../../components/Toasts";
 import CaseForm from "../../components/CaseForm";
-import Footer from "../../components/Footer/Footer";
 import ConditionForm from "../../components/ConditionForm";
 import KVItemForm from "../../components/KVItemForm";
 
@@ -213,25 +212,13 @@ export default function EditorView() {
         loadRule();
     }, []);
 
-    const extraItems = [
-        <ButtonGroup aria-label="Basic example">
-            <Button
-                size="sm"
-                className="me-1"
-                variant={edit ? "success" : "secondary"}
-                onClick={(_) => handleUpdate()}
-            >
-                <i className={"bi bi-pencil me-1"} />
-                {Messages.UPDATE}
-            </Button>
-        </ButtonGroup>,
+    const caseActions = [
         <ButtonGroup aria-label="Basic example">
             <Button
                 name="adfas"
                 size="sm"
                 variant="primary"
                 className="me-1"
-                disabled={!edit}
                 onClick={(_) => {
                     if (caseActive == "") return;
 
@@ -251,7 +238,6 @@ export default function EditorView() {
                 size="sm"
                 variant="primary"
                 className="me-1"
-                disabled={!edit}
                 onClick={(_) => {
                     if (caseActive == "") return;
 
@@ -266,15 +252,11 @@ export default function EditorView() {
             >
                 <i className="bi bi-arrow-down"></i>
             </Button>
-        </ButtonGroup>,
-
-        <ButtonGroup aria-label="Basic example">
             <Button
                 name="adfas"
                 size="sm"
                 variant="primary"
                 className="me-1"
-                disabled={!edit}
                 onClick={(_) => {
                     if (caseActive == "") return;
 
@@ -290,7 +272,68 @@ export default function EditorView() {
                 <i className="bi bi-check-square"></i>
             </Button>
         </ButtonGroup>,
+    ];
 
+    const extraItems = [
+        <ButtonGroup aria-label="Basic example">
+            <Button
+                name="adfas"
+                size="sm"
+                variant="primary"
+                className="me-1"
+                onClick={(_) => {
+                    if (caseActive == "") return;
+
+                    const caseIndex = cases.findIndex(
+                        (x) => x.id == caseActive
+                    );
+
+                    if (caseIndex > 0) {
+                        handleChangeCase(caseIndex, caseIndex - 1, cases);
+                    }
+                }}
+            >
+                <i className="bi bi-arrow-up"></i>
+            </Button>
+            <Button
+                name="adfas"
+                size="sm"
+                variant="primary"
+                className="me-1"
+                onClick={(_) => {
+                    if (caseActive == "") return;
+
+                    const caseIndex = cases.findIndex(
+                        (x) => x.id == caseActive
+                    );
+
+                    if (caseIndex >= 0) {
+                        handleChangeCase(caseIndex, caseIndex + 1, cases);
+                    }
+                }}
+            >
+                <i className="bi bi-arrow-down"></i>
+            </Button>
+            <Button
+                name="adfas"
+                size="sm"
+                variant="primary"
+                className="me-1"
+                onClick={(_) => {
+                    if (caseActive == "") return;
+
+                    const caseIndex = cases.findIndex(
+                        (x) => x.id == caseActive
+                    );
+
+                    if (caseIndex > -1) {
+                        handleActiveCase(caseIndex, cases);
+                    }
+                }}
+            >
+                <i className="bi bi-check-square"></i>
+            </Button>
+        </ButtonGroup>,
         <ButtonGroup aria-label="Basic example">
             <Button
                 onClick={(_) => setShowCaseForm(true)}
@@ -298,7 +341,6 @@ export default function EditorView() {
                 size="sm"
                 variant="primary"
                 className="me-1"
-                disabled={!edit}
             >
                 <i className="bi bi-plus-lg"></i> {Messages.ROW}
             </Button>
@@ -309,7 +351,6 @@ export default function EditorView() {
                 size="sm"
                 variant="primary"
                 className="me-1"
-                disabled={!edit}
             >
                 <i className="bi bi-plus-lg"></i> {Messages.CONDITION}
             </Button>
@@ -319,9 +360,14 @@ export default function EditorView() {
                 name="adfas2"
                 size="sm"
                 variant="primary"
-                disabled={!edit}
             >
                 <i className="bi bi-plus-lg"></i> {Messages.OUTPUT}
+            </Button>
+        </ButtonGroup>,
+
+        <ButtonGroup aria-label="Basic example">
+            <Button name="adfas" size="sm" variant="primary" className="me-1">
+                <i className="bi bi-fullscreen"></i>
             </Button>
         </ButtonGroup>,
     ];
@@ -349,32 +395,35 @@ export default function EditorView() {
                     onCancel={handleKVItemFormCancel}
                 ></KVItemForm>
             )}
-            <Menubar
-                brand={Messages.NRULE}
-                title={
-                    (edit ? Messages.UPDATE : Messages.DISPLAY) +
-                    ": " +
-                    rule.name
-                }
-            ></Menubar>
 
-            <Toolbar
-                fluid
-                title={rule.id.substring(0, 8)}
-                extraItems={extraItems}
-            />
-
-            <TableEditor
-                cases={cases}
-                conditions={conditions}
-                inputs={inputs}
-                outputs={outputs}
-                kvitems={kvitems}
-                isUpdate={edit}
-                onSelectedCase={(id) => {
-                    setCaseActive(id);
+            <div
+                style={{
+                    position: "sticky",
+                    top: "0px",
+                    zIndex: "1",
                 }}
-            />
+            >
+                <Menubar
+                    fluid="xxl"
+                    brand={Messages.NRULE}
+                    title={Messages.UPDATE + ": " + rule.name}
+                />
+
+                <Toolbar fluid="xxl" extraItems={extraItems} />
+            </div>
+
+            <Container>
+                <TableEditor
+                    cases={cases}
+                    conditions={conditions}
+                    inputs={inputs}
+                    outputs={outputs}
+                    kvitems={kvitems}
+                    onSelectedCase={(id) => {
+                        setCaseActive(id);
+                    }}
+                />
+            </Container>
         </Session>
     );
 }

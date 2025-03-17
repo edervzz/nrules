@@ -48,46 +48,36 @@ export default function Menubar({ fluid = "xxl", brand, title }: Props) {
                 </Modal>
             )}
 
+            {/* <Nav.Link className={styles.link} href="/rules">
+                {brand}
+            </Nav.Link> */}
+
             <Navbar expand="md" className={`bg-body-tertiary`}>
                 <Container fluid={fluid}>
-                    <Navbar.Brand>
-                        <Nav.Link className={styles.link} href="/rules">
-                            {brand}
-                        </Nav.Link>
-                    </Navbar.Brand>
+                    <Navbar.Brand>{title}</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="me-auto">
-                            <NavDropdown title={<>{Messages.MENUBAR_GO}</>}>
-                                <Nav.Link
-                                    className={styles.link}
-                                    href="/runner"
-                                >
-                                    {Messages.MENUBAR_RUNNER}
-                                </Nav.Link>
-                                <NavDropdown.Divider />
-
-                                <NavDropdown.Item
-                                    className={styles.link}
-                                    href="/transports"
-                                >
-                                    {Messages.MENUBAR_TRANSPORTS}
-                                </NavDropdown.Item>
-                                <NavDropdown.Item
-                                    className={styles.link}
-                                    href="/tenancy"
-                                >
-                                    {Messages.MENUBAR_TENANTS}
-                                </NavDropdown.Item>
-                            </NavDropdown>
-                        </Nav>
+                        <Nav className="me-auto"></Nav>
                     </Navbar.Collapse>
-                    <span className="fw-bold fs-5 align-bottom">{title}</span>
+
                     <Navbar.Collapse
                         className="justify-content-end"
                         id="basic-navbar-nav"
                     >
                         <Nav>
+                            <Nav.Link className={styles.link} href="/rules">
+                                {Messages.MENUBAR_RULES}
+                            </Nav.Link>
+                            <Nav.Link className={styles.link} href="/runner">
+                                {Messages.MENUBAR_RUNNER}
+                            </Nav.Link>
+                            <Nav.Link
+                                className={styles.link}
+                                href="/transports"
+                            >
+                                {Messages.MENUBAR_TRANSPORTS}
+                            </Nav.Link>
+
                             <NavDropdown
                                 title={
                                     <>

@@ -73,7 +73,7 @@ export default function RulesView() {
                 ]}
             />
 
-            <Board fluid="xxl" rules={rules} />
+            <Board rules={rules} />
 
             <Footer></Footer>
         </Session>

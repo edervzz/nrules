@@ -1,7 +1,6 @@
 import Session from "../../components/Session";
 import Menubar from "../../components/Menubar";
 import Messages from "../../locales/Messages";
-import Toolbar from "../../components/Toolbar";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Rule } from "../../typings";
@@ -12,8 +11,10 @@ import {
     NewCaseDto,
     NewParameterDto,
     NewParametersDto,
+    UpdConditionDto,
+    UpdItemsConditionDto,
 } from "../../models";
-import { Button, ButtonGroup, Container } from "react-bootstrap";
+import { Container, Nav } from "react-bootstrap";
 import TableEditor from "../../components/TableEditor";
 import { INPUT, OUTPUT } from "../../tools";
 import { ConditionDto } from "../../models/ConditionDto";
@@ -24,9 +25,15 @@ import ConditionForm from "../../components/ConditionForm";
 import KVItemForm from "../../components/KVItemForm";
 
 export default function EditorView() {
-    // 1. States
+    /*
+     * States ---------------------------------------------------------------------
+     */
     const { id } = useParams();
+    const [fullscreen, setFullscreen] = useState<boolean | string>("xxl");
     const [showToast, setShowToast] = useState(0);
+    const [changedConditions, setChangedConditions] = useState<ConditionDto[]>(
+        []
+    );
     const [showCaseForm, setShowCaseForm] = useState(false);
     const [showConditionForm, setShowConditionForm] = useState(false);
     const [showKVItemForm, setShowKVItemForm] = useState(false);
@@ -45,9 +52,39 @@ export default function EditorView() {
         version: 0,
         default_kvs: 0,
     });
-    // 2. Handlers
-    const handleUpdate = () => {
-        setEdit(!edit);
+    /*
+     * Handlers ---------------------------------------------------------------------
+     */
+    const handleChangeCondition = (
+        variable: string,
+        case_id: string,
+        rule_id: string,
+        operator: string,
+        value: string
+    ) => {
+        const conditionsCopy = [...conditions];
+        const idx = conditionsCopy.findIndex(
+            (x) =>
+                x.variable == variable &&
+                x.case_id == case_id &&
+                x.rule_id == rule_id
+        );
+        conditionsCopy[idx].operator = operator;
+        conditionsCopy[idx].value = value;
+        setConditions(conditionsCopy);
+
+        const changedConditionCopy = [...changedConditions];
+        const idxAux = changedConditionCopy.findIndex(
+            (x) =>
+                x.variable == variable &&
+                x.case_id == case_id &&
+                x.rule_id == rule_id
+        );
+
+        if (idxAux == -1) changedConditionCopy.push(conditionsCopy[idx]);
+        else changedConditionCopy[idxAux] = conditionsCopy[idx];
+
+        setChangedConditions(changedConditionCopy);
     };
 
     const handleChangeCase = (
@@ -78,7 +115,8 @@ export default function EditorView() {
             })
             .catch((r) => {
                 setShowToast(2);
-            });
+            })
+            .finally(() => {});
     };
 
     const handleActiveCase = (caseIndex: number, casesCopy: CaseDto[]) => {
@@ -126,10 +164,6 @@ export default function EditorView() {
             });
     };
 
-    const handleCaseFormCancel = () => {
-        setShowCaseForm(false);
-    };
-
     const handleConditionFormSubmit = (name: string, type: string) => {
         const newCondition: NewParameterDto = {
             key: name,
@@ -153,10 +187,6 @@ export default function EditorView() {
             .catch((r) => {
                 setShowToast(2);
             });
-    };
-
-    const handleConditionFormCancel = () => {
-        setShowConditionForm(false);
     };
 
     const handleKVItemFormSubmit = (name: string, type: string) => {
@@ -184,11 +214,9 @@ export default function EditorView() {
             });
     };
 
-    const handleKVItemFormCancel = () => {
-        setShowKVItemForm(false);
-    };
-
-    // functions
+    /*
+     * Functions ---------------------------------------------------------------------
+     */
     const loadRule = () => {
         Storage.Rule.GetRule(id || "").then((res) => {
             res.data && setRule(res.data);
@@ -207,169 +235,124 @@ export default function EditorView() {
         });
     };
 
-    // Effects
+    /*
+     * Effect ---------------------------------------------------------------------
+     */
     useEffect(() => {
         loadRule();
     }, []);
 
-    const caseActions = [
-        <ButtonGroup aria-label="Basic example">
-            <Button
-                name="adfas"
-                size="sm"
-                variant="primary"
-                className="me-1"
-                onClick={(_) => {
-                    if (caseActive == "") return;
-
-                    const caseIndex = cases.findIndex(
-                        (x) => x.id == caseActive
-                    );
-
-                    if (caseIndex > 0) {
-                        handleChangeCase(caseIndex, caseIndex - 1, cases);
-                    }
-                }}
-            >
-                <i className="bi bi-arrow-up"></i>
-            </Button>
-            <Button
-                name="adfas"
-                size="sm"
-                variant="primary"
-                className="me-1"
-                onClick={(_) => {
-                    if (caseActive == "") return;
-
-                    const caseIndex = cases.findIndex(
-                        (x) => x.id == caseActive
-                    );
-
-                    if (caseIndex >= 0) {
-                        handleChangeCase(caseIndex, caseIndex + 1, cases);
-                    }
-                }}
-            >
-                <i className="bi bi-arrow-down"></i>
-            </Button>
-            <Button
-                name="adfas"
-                size="sm"
-                variant="primary"
-                className="me-1"
-                onClick={(_) => {
-                    if (caseActive == "") return;
-
-                    const caseIndex = cases.findIndex(
-                        (x) => x.id == caseActive
-                    );
-
-                    if (caseIndex > -1) {
-                        handleActiveCase(caseIndex, cases);
-                    }
-                }}
-            >
-                <i className="bi bi-check-square"></i>
-            </Button>
-        </ButtonGroup>,
-    ];
-
     const extraItems = [
-        <ButtonGroup aria-label="Basic example">
-            <Button
-                name="adfas"
-                size="sm"
-                variant="primary"
-                className="me-1"
-                onClick={(_) => {
-                    if (caseActive == "") return;
+        <Nav.Link
+            key={1}
+            onClick={(_) => {
+                if (edit && changedConditions.length > 0) {
+                    setShowToast(1);
+                    changedConditions.map((e) => {
+                        const oneCondition: UpdConditionDto = {
+                            operator: e.operator,
+                            value: e.value,
+                            variable: e.variable,
+                        };
+                        const allConditions: UpdItemsConditionDto = {
+                            items: [oneCondition],
+                        };
+                        Storage.Condition.PutCondition(
+                            e.rule_id,
+                            e.case_id,
+                            allConditions
+                        )
+                            .then((res) => {
+                                setShowToast(0);
+                            })
+                            .catch((r) => {
+                                setShowToast(2);
+                            })
+                            .finally(() => {
+                                setEdit(!edit);
+                            });
+                    });
+                } else {
+                    setEdit(!edit);
+                }
+            }}
+        >
+            {edit ? (
+                <i className="bi bi-unlock-fill"></i>
+            ) : (
+                <i className="bi bi-lock-fill"></i>
+            )}
+        </Nav.Link>,
+        <Nav.Link
+            key={2}
+            disabled={edit}
+            onClick={(_) => {
+                if (caseActive == "") return;
 
-                    const caseIndex = cases.findIndex(
-                        (x) => x.id == caseActive
-                    );
+                const caseIndex = cases.findIndex((x) => x.id == caseActive);
+                if (caseIndex > 0 && cases[caseIndex].position != 9999) {
+                    handleChangeCase(caseIndex, caseIndex - 1, cases);
+                }
+            }}
+        >
+            <i className="bi bi-arrow-up"></i>
+        </Nav.Link>,
+        <Nav.Link
+            key={3}
+            disabled={edit}
+            onClick={(_) => {
+                if (caseActive == "") return;
 
-                    if (caseIndex > 0) {
-                        handleChangeCase(caseIndex, caseIndex - 1, cases);
-                    }
-                }}
-            >
-                <i className="bi bi-arrow-up"></i>
-            </Button>
-            <Button
-                name="adfas"
-                size="sm"
-                variant="primary"
-                className="me-1"
-                onClick={(_) => {
-                    if (caseActive == "") return;
+                const caseIndex = cases.findIndex((x) => x.id == caseActive);
+                if (caseIndex >= 0 && caseIndex < cases.length - 2) {
+                    handleChangeCase(caseIndex, caseIndex + 1, cases);
+                }
+            }}
+        >
+            <i className="bi bi-arrow-down"></i>
+        </Nav.Link>,
+        <Nav.Link
+            key={4}
+            disabled={edit}
+            onClick={(_) => {
+                if (caseActive == "") return;
 
-                    const caseIndex = cases.findIndex(
-                        (x) => x.id == caseActive
-                    );
+                const caseIndex = cases.findIndex((x) => x.id == caseActive);
+                if (caseIndex > -1) {
+                    handleActiveCase(caseIndex, cases);
+                }
+            }}
+        >
+            <i className="bi bi-check-square"></i>
+        </Nav.Link>,
 
-                    if (caseIndex >= 0) {
-                        handleChangeCase(caseIndex, caseIndex + 1, cases);
-                    }
-                }}
-            >
-                <i className="bi bi-arrow-down"></i>
-            </Button>
-            <Button
-                name="adfas"
-                size="sm"
-                variant="primary"
-                className="me-1"
-                onClick={(_) => {
-                    if (caseActive == "") return;
+        <Nav.Link
+            key={5}
+            disabled={edit}
+            onClick={(_) => setShowCaseForm(true)}
+        >
+            <i className="bi bi-plus-lg"></i> {Messages.ROW}
+        </Nav.Link>,
 
-                    const caseIndex = cases.findIndex(
-                        (x) => x.id == caseActive
-                    );
+        <Nav.Link
+            key={6}
+            disabled={edit}
+            onClick={() => setShowConditionForm(true)}
+        >
+            <i className="bi bi-plus-lg"></i> {Messages.CONDITION}
+        </Nav.Link>,
 
-                    if (caseIndex > -1) {
-                        handleActiveCase(caseIndex, cases);
-                    }
-                }}
-            >
-                <i className="bi bi-check-square"></i>
-            </Button>
-        </ButtonGroup>,
-        <ButtonGroup aria-label="Basic example">
-            <Button
-                onClick={(_) => setShowCaseForm(true)}
-                name="adfas"
-                size="sm"
-                variant="primary"
-                className="me-1"
-            >
-                <i className="bi bi-plus-lg"></i> {Messages.ROW}
-            </Button>
+        <Nav.Link
+            key={7}
+            disabled={edit}
+            onClick={() => setShowKVItemForm(true)}
+        >
+            <i className="bi bi-plus-lg"></i> {Messages.OUTPUT}
+        </Nav.Link>,
 
-            <Button
-                onClick={() => setShowConditionForm(true)}
-                name="adfas"
-                size="sm"
-                variant="primary"
-                className="me-1"
-            >
-                <i className="bi bi-plus-lg"></i> {Messages.CONDITION}
-            </Button>
-
-            <Button
-                onClick={() => setShowKVItemForm(true)}
-                name="adfas2"
-                size="sm"
-                variant="primary"
-            >
-                <i className="bi bi-plus-lg"></i> {Messages.OUTPUT}
-            </Button>
-        </ButtonGroup>,
-
-        <ButtonGroup aria-label="Basic example">
-            <Button name="adfas" size="sm" variant="primary" className="me-1">
-                <i className="bi bi-fullscreen"></i>
-            </Button>
-        </ButtonGroup>,
+        <Nav.Link key={8} onClick={() => setFullscreen(!fullscreen)}>
+            <i className="bi bi-fullscreen"></i>
+        </Nav.Link>,
     ];
 
     return (
@@ -380,48 +363,42 @@ export default function EditorView() {
                 <CaseForm
                     totalCases={cases.length}
                     onSubmit={handleCaseFormOk}
-                    onCancel={handleCaseFormCancel}
+                    onCancel={() => setShowCaseForm(false)}
                 ></CaseForm>
             )}
             {showConditionForm && (
                 <ConditionForm
                     onSubmit={handleConditionFormSubmit}
-                    onCancel={handleConditionFormCancel}
+                    onCancel={() => setShowConditionForm(false)}
                 ></ConditionForm>
             )}
             {showKVItemForm && (
                 <KVItemForm
                     onSubmit={handleKVItemFormSubmit}
-                    onCancel={handleKVItemFormCancel}
+                    onCancel={() => setShowKVItemForm(false)}
                 ></KVItemForm>
             )}
 
-            <div
-                style={{
-                    position: "sticky",
-                    top: "0px",
-                    zIndex: "1",
-                }}
-            >
-                <Menubar
-                    fluid="xxl"
-                    brand={Messages.NRULE}
-                    title={Messages.UPDATE + ": " + rule.name}
-                />
+            <Menubar
+                fluid={fullscreen}
+                brand={Messages.NRULE}
+                title={rule.name}
+                extraItems={extraItems}
+            />
 
-                <Toolbar fluid="xxl" extraItems={extraItems} />
-            </div>
-
-            <Container>
+            <Container fluid={fullscreen}>
                 <TableEditor
                     cases={cases}
                     conditions={conditions}
                     inputs={inputs}
                     outputs={outputs}
                     kvitems={kvitems}
+                    isEdit={!edit}
                     onSelectedCase={(id) => {
                         setCaseActive(id);
                     }}
+                    onChangeCondition={handleChangeCondition}
+                    onChangeKVItem={(key, case_id, rule_id, valueing) => {}}
                 />
             </Container>
         </Session>

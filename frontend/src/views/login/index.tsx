@@ -36,10 +36,7 @@ export default function LoginView() {
                 />
             )}
 
-            <Container fluid="xl">
-                <Row>
-                    <br></br>
-                </Row>
+            <Container fluid="sm" className="mt-3">
                 <Row>
                     <Col xl="8" style={{ backgroundColor: "" }}>
                         <p style={{ fontSize: "60px" }}>
@@ -96,8 +93,18 @@ export default function LoginView() {
                     </Col>
                     <Col xl="3"></Col>
                 </Row>
+                <div
+                    style={{
+                        position: "fixed",
+                        left: 0,
+                        bottom: 0,
+                        width: "100%",
+                        textAlign: "center",
+                    }}
+                >
+                    <Footer></Footer>
+                </div>
             </Container>
-            <Footer></Footer>
         </Session>
     );
 }

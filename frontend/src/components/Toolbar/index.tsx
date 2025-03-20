@@ -20,7 +20,6 @@ interface Props {
     titleInfo?: ReactNode;
     isPaginated?: boolean;
     pagination?: Pagination;
-
     isSearchable?: boolean;
     onSearch?: (nextPage: number, word: string) => void;
     extraItems?: ReactNode[];
@@ -86,10 +85,11 @@ function Toolbar({
                         </Col>
                     ))}
 
+                    <Col></Col>
+
                     {isSearchable && (
                         <>
-                            <Col></Col>
-                            <Col xs="4">
+                            <Col xs="3">
                                 <InputGroup>
                                     <Form.Control
                                         value={wordToSearch}
@@ -115,7 +115,6 @@ function Toolbar({
                                     </Button>
                                 </InputGroup>
                             </Col>
-                            <Col></Col>
                         </>
                     )}
 

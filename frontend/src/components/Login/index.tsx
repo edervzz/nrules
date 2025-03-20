@@ -50,8 +50,10 @@ export default function Login({ onTryConnecting, onFailureConnection }: Props) {
     return (
         <Card style={{ width: "300px" }}>
             <Card.Body>
-                <Form onSubmit={handleSubmit} className="text-center">
-                    <Card.Title>{Messages.LOGIN_LOGIN}</Card.Title>
+                <Form onSubmit={handleSubmit} className="text-end">
+                    <Card.Title className="text-start">
+                        {Messages.LOGIN_LOGIN}
+                    </Card.Title>
                     <Card.Text>
                         <Form.Select
                             className="mb-2"
@@ -88,9 +90,11 @@ export default function Login({ onTryConnecting, onFailureConnection }: Props) {
                         />
                     </Card.Text>
 
-                    <Button variant="primary" type="submit">
-                        {Messages.BUTTON_CONTINUE}
-                    </Button>
+                    <div className="d-grid">
+                        <Button variant="outline-primary" type="submit">
+                            {Messages.BUTTON_CONTINUE}
+                        </Button>
+                    </div>
                 </Form>
             </Card.Body>
         </Card>

@@ -4,11 +4,11 @@ import styles from "./Operator.module.css";
 import { EQ, NE, LT, LE, GT, GE, IN, EX, BT, NB, ANY } from "../../tools";
 
 type Props = {
-    onCancel: () => void;
-    onSelected: (op: string) => void;
+    onCancel?: () => void;
+    onSelectOperator?: (op: string) => void;
 };
 
-function Operator({ onCancel, onSelected }: Props) {
+function Operator({ onCancel, onSelectOperator }: Props) {
     return (
         <div style={{ fontFamily: "monospace" }}>
             <Modal show size="lg" backdrop="static" keyboard={false}>
@@ -18,7 +18,7 @@ function Operator({ onCancel, onSelected }: Props) {
                         <Row>
                             <Col xs="1">
                                 <Button
-                                    onClick={(_) => onSelected(EQ)}
+                                    onClick={(_) => onSelectOperator?.(EQ)}
                                     variant="outline-primary"
                                     className={`${styles.myButton}`}
                                     size="sm"
@@ -29,7 +29,7 @@ function Operator({ onCancel, onSelected }: Props) {
                             <Col>{Messages.EQUAL_DESC}</Col>
                             <Col xs="1">
                                 <Button
-                                    onClick={(_) => onSelected(IN)}
+                                    onClick={(_) => onSelectOperator?.(IN)}
                                     variant="outline-primary"
                                     className={`${styles.myButton}`}
                                     size="sm"
@@ -42,7 +42,7 @@ function Operator({ onCancel, onSelected }: Props) {
                         <Row className="mt-3">
                             <Col xs="1">
                                 <Button
-                                    onClick={(_) => onSelected(NE)}
+                                    onClick={(_) => onSelectOperator?.(NE)}
                                     variant="outline-primary"
                                     className={`${styles.myButton}`}
                                     size="sm"
@@ -53,7 +53,7 @@ function Operator({ onCancel, onSelected }: Props) {
                             <Col>{Messages.NOT_EQUAL_DESC}</Col>
                             <Col xs="1">
                                 <Button
-                                    onClick={(_) => onSelected(EX)}
+                                    onClick={(_) => onSelectOperator?.(EX)}
                                     variant="outline-primary"
                                     className={`${styles.myButton}`}
                                     size="sm"
@@ -66,7 +66,7 @@ function Operator({ onCancel, onSelected }: Props) {
                         <Row className="mt-3">
                             <Col xs="1">
                                 <Button
-                                    onClick={(_) => onSelected(GT)}
+                                    onClick={(_) => onSelectOperator?.(GT)}
                                     variant="outline-primary"
                                     className={`${styles.myButton}`}
                                     size="sm"
@@ -77,7 +77,7 @@ function Operator({ onCancel, onSelected }: Props) {
                             <Col>{Messages.GREATER_THAN_DESC}</Col>
                             <Col xs="1">
                                 <Button
-                                    onClick={(_) => onSelected(BT)}
+                                    onClick={(_) => onSelectOperator?.(BT)}
                                     variant="outline-primary"
                                     className={`${styles.myButton}`}
                                     size="sm"
@@ -90,7 +90,7 @@ function Operator({ onCancel, onSelected }: Props) {
                         <Row className="mt-3">
                             <Col xs="1">
                                 <Button
-                                    onClick={(_) => onSelected(LT)}
+                                    onClick={(_) => onSelectOperator?.(LT)}
                                     variant="outline-primary"
                                     className={`${styles.myButton}`}
                                     size="sm"
@@ -101,7 +101,7 @@ function Operator({ onCancel, onSelected }: Props) {
                             <Col>{Messages.LESS_THAN_DESC}</Col>
                             <Col xs="1">
                                 <Button
-                                    onClick={(_) => onSelected(NB)}
+                                    onClick={(_) => onSelectOperator?.(NB)}
                                     variant="outline-primary"
                                     className={`${styles.myButton}`}
                                     size="sm"
@@ -114,7 +114,7 @@ function Operator({ onCancel, onSelected }: Props) {
                         <Row className="mt-3">
                             <Col xs="1">
                                 <Button
-                                    onClick={(_) => onSelected(GE)}
+                                    onClick={(_) => onSelectOperator?.(GE)}
                                     variant="outline-primary"
                                     className={`${styles.myButton}`}
                                     size="sm"
@@ -125,7 +125,7 @@ function Operator({ onCancel, onSelected }: Props) {
                             <Col>{Messages.GREATER_EQUAL_DESC}</Col>
                             <Col xs="1">
                                 <Button
-                                    onClick={(_) => onSelected(ANY)}
+                                    onClick={(_) => onSelectOperator?.(ANY)}
                                     variant="outline-primary"
                                     className={`${styles.myButton}`}
                                     size="sm"
@@ -138,7 +138,7 @@ function Operator({ onCancel, onSelected }: Props) {
                         <Row className="mt-3">
                             <Col xs="1">
                                 <Button
-                                    onClick={(_) => onSelected(LE)}
+                                    onClick={(_) => onSelectOperator?.(LE)}
                                     variant="outline-primary"
                                     className={`${styles.myButton}`}
                                     size="sm"
@@ -158,7 +158,9 @@ function Operator({ onCancel, onSelected }: Props) {
                             <Button
                                 variant="secondary"
                                 className="me-2"
-                                onClick={(_) => onCancel}
+                                onClick={(_) => {
+                                    onCancel?.();
+                                }}
                             >
                                 {Messages.BUTTON_CANCEL}
                             </Button>

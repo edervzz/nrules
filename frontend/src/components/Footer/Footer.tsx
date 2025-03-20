@@ -1,20 +1,10 @@
 import { Container, Row, Col, Image } from "react-bootstrap";
 
-type Props = {
-    fluid?: boolean | string | "sm" | "md" | "lg" | "xl" | "xxl";
-};
-
-function Footer({ fluid = "xxl" }: Props) {
+function Footer() {
     return (
         <>
-            <Container fluid>
-                <Row>
-                    <Col>
-                        <hr></hr>
-                    </Col>
-                </Row>
-            </Container>
-            <Container fluid={fluid}>
+            <hr></hr>
+            <Container style={{ width: "100%" }}>
                 <Row>
                     <Col>
                         <Image height={110} src="/concredito.png" rounded />
@@ -25,7 +15,7 @@ function Footer({ fluid = "xxl" }: Props) {
                     <Col>
                         <Image height={110} src="/aterna.png" rounded />
                     </Col>
-                    <Col className="text-center">
+                    <Col>
                         <Image height={110} src="/gentera.png" rounded />
                     </Col>
                     <Col>

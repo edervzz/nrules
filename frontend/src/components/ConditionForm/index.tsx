@@ -4,8 +4,8 @@ import { DATE, NUMERIC, STRING } from "../../tools";
 import { useRef } from "react";
 
 interface Props {
-    onSubmit: (name: string, type: string) => void;
-    onCancel: () => void;
+    onSubmit?: (name: string, type: string) => void;
+    onCancel?: () => void;
 }
 
 const ConditionForm = ({ onSubmit: onOk, onCancel: onNotOk }: Props) => {
@@ -17,7 +17,7 @@ const ConditionForm = ({ onSubmit: onOk, onCancel: onNotOk }: Props) => {
             <Form
                 onSubmit={(e) => {
                     e.preventDefault();
-                    onOk(
+                    onOk?.(
                         nameRef.current?.value || "",
                         typeRef.current?.value || ""
                     );
@@ -53,7 +53,7 @@ const ConditionForm = ({ onSubmit: onOk, onCancel: onNotOk }: Props) => {
                             <Button
                                 variant="secondary"
                                 className="me-2"
-                                onClick={() => onNotOk()}
+                                onClick={() => onNotOk?.()}
                             >
                                 {Messages.BUTTON_CANCEL}
                             </Button>

@@ -25,7 +25,7 @@ class CreateRuleValidator(Validator):
         request.case_zero.id = str(uuid.uuid3(
             uuid.uuid4(), request.rule.rule_type))
         request.case_zero.rule_id = request.rule.id
-        request.case_zero.position = 0
+        request.case_zero.position = 9999
         request.case_zero.is_active = True
         request.case_zero.is_archived = False
         # node

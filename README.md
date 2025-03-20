@@ -7,6 +7,7 @@ https://overapi.com/regex
 -   cockies
 -   local storage
 -   session storage
+-   casos no cubiertos con IA
 
 Tipo de Regla: Match | Tree
 
@@ -81,7 +82,8 @@ Case( Condition Group ID, KVS ID )
 
 ## palettes
 
-https://www.color-hex.com/color-palette/1056675
+https://www.color-hex.com/color-palette/29876
+https://www.color-hex.com/color-palette/97449
 
 ## Runner
 

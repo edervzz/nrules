@@ -10,7 +10,7 @@ import Messages from "../../locales/Messages";
 import Toolbar from "../../components/Toolbar";
 import { ToastError, ToastLoading } from "../../components/Toasts";
 import Board from "../../components/Board";
-import { Button } from "react-bootstrap";
+import { Button, Nav } from "react-bootstrap";
 
 export default function RulesView() {
     // 1. States
@@ -58,24 +58,33 @@ export default function RulesView() {
             {showToast == 1 && <ToastLoading />}
             {showToast == 2 && <ToastError />}
 
-            <Menubar brand={Messages.NRULE} title={Messages.MENUBAR_RULES} />
-
-            <Toolbar
+            <Menubar
+                brand={Messages.NRULE}
+                title={Messages.MENUBAR_RULES}
                 isPaginated
                 pagination={pagination}
                 isSearchable
                 onSearch={(nextPage, word) => handleSearch(nextPage, word)}
                 extraItems={[
-                    <Button size="sm" href="/new">
-                        <i className="bi bi-pencil me-2" />
+                    <Nav.Link key={1} href="/new">
+                        <i id="pencil" className="bi bi-pencil me-2" />
                         {Messages.MENUBAR_NEW_RULE}
-                    </Button>,
+                    </Nav.Link>,
                 ]}
             />
 
             <Board rules={rules} />
-
-            <Footer></Footer>
+            <div
+                style={{
+                    position: "fixed",
+                    left: 0,
+                    bottom: 0,
+                    width: "100%",
+                    textAlign: "center",
+                }}
+            >
+                <Footer></Footer>
+            </div>
         </Session>
     );
 }

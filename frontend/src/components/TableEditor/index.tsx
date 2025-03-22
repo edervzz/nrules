@@ -26,7 +26,8 @@ interface Props {
         key: string,
         case_id: string,
         rule_id: string,
-        value: string
+        value: string,
+        calculation: string
     ) => void;
 }
 
@@ -235,7 +236,8 @@ function TableEditor({
                                                         i.key,
                                                         i.case_id,
                                                         i.rule_id,
-                                                        val
+                                                        val,
+                                                        i.calculation
                                                     )
                                                 }
                                             ></KVItem>

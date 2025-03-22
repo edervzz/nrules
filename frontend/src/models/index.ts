@@ -11,6 +11,7 @@ export * from "./TagDto"
 export * from "./NewParameterDto"
 export * from "./NewParametersDto"
 export * from "./UpdConditionDto"
+export * from "./UpdKVItemDto"
 
 export type NewRuleCondition = {
     id:string;

@@ -32,6 +32,7 @@ interface Props {
 
 export default function Menubar({
     fluid = "xxl",
+    brand,
     title,
     isPaginated = false,
     pagination,
@@ -84,26 +85,18 @@ export default function Menubar({
 
             <Navbar className={`bg-body-tertiary`}>
                 <Container fluid={fluid}>
-                    <Navbar.Brand>
-                        <NavDropdown title={title}>
-                            <NavDropdown.Item href="/rules">
-                                {Messages.MENUBAR_RULES}
-                            </NavDropdown.Item>
-                            <NavDropdown.Item href="/runner">
-                                {Messages.MENUBAR_RUNNER}
-                            </NavDropdown.Item>
-                            <NavDropdown.Item href="/transports">
-                                {Messages.MENUBAR_TRANSPORTS}
-                            </NavDropdown.Item>
-                        </NavDropdown>
-                    </Navbar.Brand>
+                    <Navbar.Brand>{brand}</Navbar.Brand>
 
-                    <Nav
-                        variant="underline"
-                        className="ms-3 me-auto"
-                        navbarScroll
-                    >
-                        {extraItems?.map((x) => x)}
+                    <Nav className="me-auto">
+                        <Nav.Link href="/rules">
+                            {Messages.MENUBAR_RULES}
+                        </Nav.Link>
+                        <Nav.Link href="/runner">
+                            {Messages.MENUBAR_RUNNER}
+                        </Nav.Link>
+                        <Nav.Link href="/transports">
+                            {Messages.MENUBAR_TRANSPORTS}
+                        </Nav.Link>
                     </Nav>
 
                     {isSearchable && (

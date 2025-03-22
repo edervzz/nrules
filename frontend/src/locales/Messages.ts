@@ -82,12 +82,12 @@ export default class Messages{
     static get LOGIN_LOGIN():string { return i18n.t("common:login_login"); }    
     static get TOOLBAR_SEARCH(): string {return i18n.t("common:toolbar_search")}
 
-    static get NRULE():string { return i18n.t("common:nrule"); }
-    static get NRULE_INFO():string { return i18n.t("common:nrule_info"); }
-    static get NRULE_HELP():string { return i18n.t("common:nrule_help"); }
-    static get NRULE_SPECS():string { return i18n.t("common:nrule_specs"); }
-    static get NRULE_CAPABILITIES():string { return i18n.t("common:nrule_capabilities"); }
-    static get NRULE_TO_START():string { return i18n.t("common:nrule_to_start"); }     
+    static get KITE():string { return i18n.t("common:kite"); }
+    static get KITE_INFO():string { return i18n.t("common:kite_info"); }
+    static get KITE_HELP():string { return i18n.t("common:kite_help"); }
+    static get KITE_SPECS():string { return i18n.t("common:kite_specs"); }
+    static get KITE_CAPABILITIES():string { return i18n.t("common:kite_capabilities"); }
+    static get KITE_TO_START():string { return i18n.t("common:kite_to_start"); }     
     
     static get COMMON_TABLE():string { return i18n.t("common:common_matrix"); }
     static get COMMON_TREE():string { return i18n.t("common:common_tree"); }

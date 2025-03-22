@@ -81,10 +81,7 @@ function NewRuleView() {
 
     return (
         <Session>
-            <Menubar
-                brand={Messages.NRULE}
-                title={Messages.NEWRULE_CREA_RULE}
-            />
+            <Menubar brand={Messages.KITE} title={Messages.NEWRULE_CREA_RULE} />
             <LoadingErrorListModal
                 show={showSending}
                 title={Messages.COMMON_SENDING}

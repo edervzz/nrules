@@ -40,7 +40,7 @@ export default function LoginView() {
                 <Row>
                     <Col xl="8" style={{ backgroundColor: "" }}>
                         <p style={{ fontSize: "60px" }}>
-                            {Messages.NRULE + " "}
+                            {Messages.KITE + " "}
                             <Badge
                                 style={{
                                     fontSize: "20px",
@@ -51,7 +51,7 @@ export default function LoginView() {
                             </Badge>
                         </p>
                         <p style={{ fontSize: "38px", fontWeight: "bold" }}>
-                            {Messages.NRULE_HELP}
+                            {Messages.KITE_HELP}
                         </p>
                     </Col>
                     <Col
@@ -71,7 +71,7 @@ export default function LoginView() {
                     <Col xl="3"></Col>
                     <Col xl="3">
                         <p style={{ fontSize: "20px" }}>
-                            {Messages.NRULE_SPECS}
+                            {Messages.KITE_SPECS}
                         </p>
                         <ul>
                             <li>Clean Architecture</li>
@@ -82,7 +82,7 @@ export default function LoginView() {
                     </Col>
                     <Col xl="3">
                         <p style={{ fontSize: "20px" }}>
-                            {Messages.NRULE_CAPABILITIES}
+                            {Messages.KITE_CAPABILITIES}
                         </p>
                         <ul>
                             <li>Decision Trees</li>

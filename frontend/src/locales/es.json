@@ -80,12 +80,12 @@
 
     "toolbar_search": "Buscar",
     
-    "nrule": "NRule",
-    "nrule_info": "Un Motor de Reglas diseñado en productos actuales del mercado",
-    "nrule_help": "NRule le ayuda en los procesos diarios de servicios financieros, seguros, logística y más.",
-    "nrule_specs": "Especificación Técnica",
-    "nrule_capabilities": "Capacidades Actuales",
-    "nrule_to_start": "Para comenzar seleccione \"Nueva Regla\" y complete el formulario.",
+    "kite": "Kite",
+    "kite_info": "Un Motor de Reglas diseñado en productos actuales del mercado",
+    "kite_help": "Kite le ayuda en los procesos diarios de servicios financieros, seguros, logística y más.",
+    "kite_specs": "Especificación Técnica",
+    "kite_capabilities": "Capacidades Actuales",
+    "kite_to_start": "Para comenzar seleccione \"Nueva Regla\" y complete el formulario.",
     
     "common_matrix":"Tabla de Decisión",    
     "common_tree":"Árbol de Decisión",    

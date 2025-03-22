@@ -59,12 +59,8 @@ export default function RulesView() {
             {showToast == 2 && <ToastError />}
 
             <Menubar
-                brand={Messages.NRULE}
+                brand={Messages.KITE}
                 title={Messages.MENUBAR_RULES}
-                isPaginated
-                pagination={pagination}
-                isSearchable
-                onSearch={(nextPage, word) => handleSearch(nextPage, word)}
                 extraItems={[
                     <Nav.Link key={1} href="/new">
                         <i id="pencil" className="bi bi-pencil me-2" />
@@ -72,6 +68,18 @@ export default function RulesView() {
                     </Nav.Link>,
                 ]}
             />
+
+            <Toolbar
+                isPaginated
+                pagination={pagination}
+                isSearchable
+                onSearch={(nextPage, word) => handleSearch(nextPage, word)}
+                extraItems={[
+                    <Button size="sm" href="/new">
+                        {Messages.MENUBAR_NEW_RULE}
+                    </Button>,
+                ]}
+            ></Toolbar>
 
             <Board rules={rules} />
             <div

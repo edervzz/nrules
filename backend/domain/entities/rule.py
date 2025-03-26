@@ -23,6 +23,8 @@ class Rule(Base, TenantSpecific, Auditable, Versioned):
 
     strategy: Mapped[str] = mapped_column(nullable=True)
 
+    # is_check: Mapped[bool] = mapped_column(nullable=True)
+
     is_active: Mapped[bool] = mapped_column(nullable=False)
 
     is_archived: Mapped[bool] = mapped_column(nullable=True)

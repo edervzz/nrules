@@ -35,6 +35,8 @@ def core_tables(engine: Engine) -> str:
         Column(
             "strategy", String(5), CheckConstraint("strategy = 'EARLY' OR strategy = 'BASE' OR strategy = 'ALL'", name="rules_chk_strategy"), nullable=False, comment="Strategy of rule depending of Type"),
         Column(
+            "is_check", Boolean, nullable=False, comment="Rule is Checked"),
+        Column(
             "is_active", Boolean, nullable=False, comment="Rule is Active"),
         Column(
             "is_archived", Boolean, nullable=False, comment="Rule is Archived"),
@@ -85,7 +87,7 @@ def core_tables(engine: Engine) -> str:
         Column(
             "rule_id", String(36), comment="Rule ID"),
         Column(
-            "position", Integer, nullable=False, comment="Position"),
+            "position", Integer, CheckConstraint("position > 0", name="cases_chk_position"), nullable=False, comment="Position"),
         Column(
             "is_active", Boolean, nullable=False, comment="Case is Active"),
         Column(

@@ -22,6 +22,7 @@ export default function Condition({
     const [operator, setOperator] = useState(op);
     const [valueInternal, setValueInternal] = useState(value);
     const [showOperator, setShowOperator] = useState(false);
+    const [textarea, setTextarea] = useState(false);
 
     return (
         <>
@@ -50,6 +51,10 @@ export default function Condition({
                 <Form.Control
                     disabled={isEdit}
                     value={valueInternal}
+                    as={textarea ? "textarea" : "input"}
+                    onDoubleClick={(e) => {
+                        setTextarea(!textarea);
+                    }}
                     onChange={(e) => {
                         setValueInternal(e.currentTarget.value);
                         onChangeCondition(operator, e.currentTarget.value);

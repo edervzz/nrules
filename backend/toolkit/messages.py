@@ -49,6 +49,15 @@ class Codes:
     en_messages[NODE_CREA_001] = "Parent Node and assignment is required."
     es_messages[NODE_CREA_001] = "Nodo padre y asignación es requerido."
 
+    # Check Rule ################################################################
+    CHK_RULE_002 = "CHK-RULE-002"
+    en_messages[CHK_RULE_002] = "Condition {}, cannot used as {}."
+    es_messages[CHK_RULE_002] = "La Condición {}, no puede ser usada como {}."
+
+    CHK_RULE_001 = "CHK-RULE-001"
+    en_messages[CHK_RULE_001] = "Conditions not found."
+    es_messages[CHK_RULE_001] = "No se encontraron condiciones."
+
     # Create Case ################################################################
     CASE_CREA_001 = "CASE-CREA-001"
     en_messages[CASE_CREA_001] = "Rules type TREE cannot create Cases directly."

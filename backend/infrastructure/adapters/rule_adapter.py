@@ -23,6 +23,7 @@ class RuleAdapter(RuleRepository):
             Rule.id == entity.id).one_or_none()
 
         rule.strategy = entity.strategy
+        # rule.is_check = entity.is_check
 
     def read(self, _id) -> Rule:
         with Session(self.engine) as session:

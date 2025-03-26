@@ -32,7 +32,7 @@ export default function EditorView() {
      * States ---------------------------------------------------------------------
      */
     const { id } = useParams();
-    const [fullscreen, setFullscreen] = useState<boolean | string>("xxl");
+    const [fullscreen, setFullscreen] = useState(false);
     const [showToast, setShowToast] = useState(0);
     const [changedConditions, setChangedConditions] = useState<ConditionDto[]>(
         []
@@ -331,9 +331,9 @@ export default function EditorView() {
             }}
         >
             {edit ? (
-                <i className="bi bi-unlock-fill"></i>
+                <i className="bi bi-unlock"></i>
             ) : (
-                <i className="bi bi-lock-fill"></i>
+                <i className="bi bi-lock"></i>
             )}
         </Button>,
         <ButtonGroup aria-label="Basic example">
@@ -426,7 +426,11 @@ export default function EditorView() {
         </ButtonGroup>,
 
         <Button size="sm" key={8} onClick={() => setFullscreen(!fullscreen)}>
-            <i className="bi bi-fullscreen"></i>
+            <i className="bi bi-bug"></i>
+        </Button>,
+
+        <Button size="sm" key={8} onClick={() => setFullscreen(!fullscreen)}>
+            <i className="bi bi-arrows-expand-vertical"></i>
         </Button>,
     ];
 

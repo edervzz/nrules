@@ -1,0 +1,56 @@
+.editor{
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+}
+
+.header{
+    position: sticky;
+    top: 0px;
+    z-index: 2;
+    text-align: center;
+}
+
+.corner_left{
+    width: 50px;
+    position: sticky;
+    top: 0px;
+    left: 0px;
+    z-index: 2;
+    background-color: #ffffff;
+    vertical-align: middle;
+}
+
+.inputs{
+    border-left: 3px solid #7f73ff;
+    background-color: #e1c6fd;
+}
+
+.outputs{
+    border-left: 3px solid #14d0f0;
+    background-color: #b6e4fb;
+}
+
+.caseNumber{
+    position: sticky;
+    left: 0px;
+    z-index: 1;
+    background-color: #ffffff;
+}
+
+.condition{
+    border-left: 3px solid #7f73ff;
+    padding: 5px;
+}
+
+.kvitem{
+    border-left: 3px solid #14d0f0;
+    padding: 5px;
+}
+
+.typeparam{
+    color: #000;
+}
+
+.typeparam:hover{
+    text-decoration: overline;
+}

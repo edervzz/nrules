@@ -31,3 +31,5 @@ from .create_rule_biz_validator import CreateRuleBizValidator
 from .create_tenant_validator import CreateTenantValidator
 from .create_tenant_biz_validator import CreateTenantBizValidator
 from .expression_validator import ExpressionValidator
+from .check_rule_validator import CheckRuleValidator
+from .check_rule_biz_validator import CheckRuleBizValidator

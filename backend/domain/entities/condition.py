@@ -23,3 +23,5 @@ class Condition(Base, TenantSpecific, Auditable):
     operator: Mapped[str] = mapped_column(nullable=False)
 
     value: Mapped[str] = mapped_column(nullable=False)
+
+    # is_ai_gen: Mapped[bool] = mapped_column(nullable=False)

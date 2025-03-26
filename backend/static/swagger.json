@@ -178,6 +178,36 @@
                 }
             }
         },
+        "/nr/api/v1/t/{tid}/rules/{rid}/check":{
+            "post": {
+                "summary": "Check a rule.",
+                "tags": ["Rules"],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/TenantID"
+                    },
+                    {
+                        "$ref": "#/parameters/RuleID"
+                    },
+                    {
+                        "$ref": "#/parameters/IdType"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Rule Checked"
+                    },
+                    "400": {
+                        "description": "Validation errors"
+                    }
+                }
+            }
+        },
         "/nr/api/v1/t/{tid}/rules/{rid}/cases": {
             "post": {
                 "summary": "Create a new case.",

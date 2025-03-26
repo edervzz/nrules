@@ -50,13 +50,17 @@ class Codes:
     es_messages[NODE_CREA_001] = "Nodo padre y asignación es requerido."
 
     # Check Rule ################################################################
+    CHK_RULE_003 = "CHK-RULE-003"
+    en_messages[CHK_RULE_003] = "Case # {}, KV-Item: {}, cannot be used as {}."
+    es_messages[CHK_RULE_003] = "Caso #{}, KV-Item: {}, no puede ser usada como {}."
+
     CHK_RULE_002 = "CHK-RULE-002"
-    en_messages[CHK_RULE_002] = "Condition {}, cannot used as {}."
-    es_messages[CHK_RULE_002] = "La Condición {}, no puede ser usada como {}."
+    en_messages[CHK_RULE_002] = "Case # {}, Condition: {}, cannot be used as {}."
+    es_messages[CHK_RULE_002] = "Caso #{}, Condición: {}, no puede ser usada como {}."
 
     CHK_RULE_001 = "CHK-RULE-001"
-    en_messages[CHK_RULE_001] = "Conditions not found."
-    es_messages[CHK_RULE_001] = "No se encontraron condiciones."
+    en_messages[CHK_RULE_001] = "For check rules must have Cases, Conditions, KV-Items."
+    es_messages[CHK_RULE_001] = "Para verificar regla se deben tener Casos, Condiciones y KV-Items."
 
     # Create Case ################################################################
     CASE_CREA_001 = "CASE-CREA-001"

@@ -10,7 +10,7 @@ from toolkit import Identification
 upd_parameters_rule_bp = Blueprint("UpdateParametersRule", __name__)
 
 
-@upd_parameters_rule_bp.put("/t/<tid>/rules/<rid>/conditions")
+@upd_parameters_rule_bp.put("/t/<tid>/rules/<rid>/parameters")
 def upd_parameters_rule_endpoint(tid=None, rid=None):
     """ Update Rule's parameters """
     Identification.get_tenant_safe(tid)

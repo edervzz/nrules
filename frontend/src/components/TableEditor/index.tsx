@@ -67,9 +67,7 @@ function TableEditor({
                                 <br />
                                 <div
                                     className={`${styles.typeparam}`}
-                                    onDoubleClick={() => {
-                                        console.log("eder");
-                                    }}
+                                    onDoubleClick={() => {}}
                                 >
                                     {typeofparam(x.typeof)}
                                 </div>

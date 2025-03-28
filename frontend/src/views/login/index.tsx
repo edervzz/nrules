@@ -36,40 +36,37 @@ export default function LoginView() {
                 />
             )}
 
-            <Container fluid="sm" className="mt-3">
-                <Row>
-                    <Col xl="8" style={{ backgroundColor: "" }}>
+            <div className="container">
+                <div className="row">
+                    <div className="col col-8" style={{ backgroundColor: "" }}>
                         <p style={{ fontSize: "60px" }}>
                             {Messages.KITE + " "}
-                            <Badge
+                            <span
+                                className="badge text-bg-success"
                                 style={{
                                     fontSize: "20px",
                                 }}
-                                bg="success"
                             >
                                 v0.0.1
-                            </Badge>
+                            </span>
                         </p>
                         <p style={{ fontSize: "38px", fontWeight: "bold" }}>
                             {Messages.KITE_HELP}
                         </p>
-                    </Col>
-                    <Col
-                        className="d-flex justify-content-center"
-                        style={{ backgroundColor: "" }}
-                    >
+                    </div>
+                    <div className="col col-4 " style={{ backgroundColor: "" }}>
                         <Login
                             onTryConnecting={handleTryConnecting}
                             onFailureConnection={handleFailureConnection}
-                        ></Login>
-                    </Col>
-                </Row>
-                <Row>
+                        />
+                    </div>
+                </div>
+                <div className="row">
                     <br></br>
-                </Row>
-                <Row>
-                    <Col xl="3"></Col>
-                    <Col xl="3">
+                </div>
+                <div className="row">
+                    <div className="col col-xl-3"></div>
+                    <div className="col col-xl-3">
                         <p style={{ fontSize: "20px" }}>
                             {Messages.KITE_SPECS}
                         </p>
@@ -79,8 +76,8 @@ export default function LoginView() {
                             <li>Python</li>
                             <li>React, Bootstrap</li>
                         </ul>
-                    </Col>
-                    <Col xl="3">
+                    </div>
+                    <div className="col col-xl-3">
                         <p style={{ fontSize: "20px" }}>
                             {Messages.KITE_CAPABILITIES}
                         </p>
@@ -90,9 +87,9 @@ export default function LoginView() {
                             <li>Multi-tenancy</li>
                             <li>Transports</li>
                         </ul>
-                    </Col>
-                    <Col xl="3"></Col>
-                </Row>
+                    </div>
+                    <div className="col col-xl-3"></div>
+                </div>
                 <div
                     style={{
                         position: "fixed",
@@ -104,7 +101,7 @@ export default function LoginView() {
                 >
                     <Footer></Footer>
                 </div>
-            </Container>
+            </div>
         </Session>
     );
 }

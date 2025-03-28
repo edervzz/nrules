@@ -1,34 +1,32 @@
-import { Container, Row, Col, Image } from "react-bootstrap";
-
 function Footer() {
     return (
         <>
             <hr></hr>
-            <Container style={{ width: "100%" }}>
-                <Row>
-                    <Col>
-                        <Image height={110} src="/concredito.png" rounded />
-                    </Col>
-                    <Col>
-                        <Image height={110} src="/yastas.png" rounded />
-                    </Col>
-                    <Col>
-                        <Image height={110} src="/aterna.png" rounded />
-                    </Col>
-                    <Col>
-                        <Image height={110} src="/gentera.png" rounded />
-                    </Col>
-                    <Col>
-                        <Image height={110} src="/compartamos.png" rounded />
-                    </Col>
-                    <Col>
-                        <Image height={110} src="/fundacion.png" rounded />
-                    </Col>
-                    <Col>
-                        <Image height={110} src="/financiera.png" rounded />
-                    </Col>
-                </Row>
-            </Container>
+            <div className="container">
+                <div className="row">
+                    <div className="col">
+                        <img height={110} src="/concredito.png" />
+                    </div>
+                    <div className="col">
+                        <img height={110} src="/yastas.png" />
+                    </div>
+                    <div className="col">
+                        <img height={110} src="/aterna.png" />
+                    </div>
+                    <div className="col">
+                        <img height={110} src="/gentera.png" />
+                    </div>
+                    <div className="col">
+                        <img height={110} src="/compartamos.png" />
+                    </div>
+                    <div className="col">
+                        <img height={110} src="/fundacion.png" />
+                    </div>
+                    <div className="col">
+                        <img height={110} src="/financiera.png" />
+                    </div>
+                </div>
+            </div>
         </>
     );
 }

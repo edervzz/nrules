@@ -22,4 +22,11 @@ export class RuleAdapter{
         const result = await _CallGet<RuleDto>(url);
         return result;
     }
+
+    async PostCheckRule(ruleid: string): Promise<ResultPost>{
+        const url = `/rules/${ruleid}/check`;
+        
+        const result = await _CallPost(url);
+        return result;
+    }
 }

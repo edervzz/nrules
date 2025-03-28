@@ -18,7 +18,7 @@ class CheckRuleBizValidator(Validator):
     def __validate__(self, request: CheckRuleRequest):
         request.rule = None
         if request.rule_id != "":
-            request.rule = self.repo.rule.read(request.id)
+            request.rule = self.repo.rule.read(request.rule_id)
         elif request.rule_name != "":
             request.rule = self.repo.rule.read_by_external_id(
                 request.rule_name)
@@ -52,24 +52,26 @@ class CheckRuleBizValidator(Validator):
                 case Constants.NUMERIC:
                     if not a_cond.value.isnumeric():
                         thecase = [
-                            c for c in mycases if c.id == a_cond.case_id and c.position < 9999][0]
-                        self.add_failure(self.localizer.get(
-                            Codes.CHK_RULE_002,
-                            f"{thecase.position}",
-                            f"{a_cond.variable} {a_cond.operator} {a_cond.value}",
-                            f"{theparam.typeof}"))
+                            c for c in mycases if c.id == a_cond.case_id and c.position < 9999]
+                        if len(thecase) > 0:
+                            self.add_failure(self.localizer.get(
+                                Codes.CHK_RULE_002,
+                                f"{thecase[0].position}",
+                                f"{a_cond.variable} {a_cond.operator} {a_cond.value}",
+                                f"{theparam.typeof}"))
 
                 case Constants.DATE:
                     try:
                         datetime.datetime.strptime(a_cond.value, formatdate)
                     except ValueError:
                         thecase = [
-                            c for c in mycases if c.id == a_cond.case_id and c.position < 9999][0]
-                        self.add_failure(self.localizer.get(
-                            Codes.CHK_RULE_002,
-                            f"{thecase.position}",
-                            f"{a_cond.variable} {a_cond.operator} {a_cond.value}",
-                            f"{theparam.typeof}"))
+                            c for c in mycases if c.id == a_cond.case_id and c.position < 9999]
+                        if len(thecase) > 0:
+                            self.add_failure(self.localizer.get(
+                                Codes.CHK_RULE_002,
+                                f"{thecase[0].position}",
+                                f"{a_cond.variable} {a_cond.operator} {a_cond.value}",
+                                f"{theparam.typeof}"))
 
         for a_kvi in mykvitems:
             theparam = [

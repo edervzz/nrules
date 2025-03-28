@@ -1,11 +1,12 @@
 import axios, { AxiosError } from "axios";
-import { ErrorDto } from "../models";
+import { ErrorListDto } from "../models";
 import EnvarsSession, { EnvarsLocal } from "../envars";
 
 const basepath = import.meta.env.VITE_API_URL_HOST + "/nr/api/" + import.meta.env.VITE_API_VER + "/t/" + EnvarsSession.tenant.id.toString(); 
 
-export async function _CallPost<T>(url: string, data: T): Promise<ResultPost>{
+export async function _CallPost<T>(url: string, data?: T): Promise<ResultPost>{
     try {
+        
         const res = await axios.post(basepath + url, data, {
             headers: {
                 "Accept-Language": EnvarsLocal.language,
@@ -22,7 +23,7 @@ export async function _CallPost<T>(url: string, data: T): Promise<ResultPost>{
         return {
             ok: false,
             errorMessage: err.message,
-            errorList:  err.response?.data as ErrorDto[]
+            errorList:  err.response?.data as ErrorListDto
         } as ResultPost
     }
 
@@ -46,7 +47,7 @@ export async function _CallPut<T>(url: string, data: T): Promise<ResultPost>{
         return {
             ok: false,
             errorMessage: err.message,
-            errorList:  err.response?.data as ErrorDto[]
+            errorList:  err.response?.data as ErrorListDto
         } as ResultPost
     }
 
@@ -74,7 +75,7 @@ export async function _CallGet<T>(url: string): Promise<ResultGetPage<T>>{
             ok: false,
             status: err.status,
             errorMessage: err.message,
-            errorList:  err.response?.data as ErrorDto[]
+            errorList:  err.response?.data as ErrorListDto
         } as ResultGetPage<T>;
     }
 }
@@ -83,7 +84,7 @@ export type ResultPost= {
     item?: string,
     ok: boolean,
     errorMessage?: string,
-    errorList?: ErrorDto[]
+    errorList?: ErrorListDto
 }
 
 export type ResultGetPage<T> = {
@@ -95,5 +96,5 @@ export type ResultGetPage<T> = {
     totalPages: number,
     totalCount: number,
     errorMessage?: string,
-    errorList?: ErrorDto[]
+    errorList?: ErrorListDto
 }

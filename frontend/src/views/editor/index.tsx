@@ -15,8 +15,9 @@ import {
     UpdItemsConditionDto,
     UpdKVItemDto,
     UpdItemsKVItemDto,
+    ErrorListDto,
 } from "../../models";
-import { Button, ButtonGroup, Container, Nav } from "react-bootstrap";
+import { Button, ButtonGroup, Container, Nav, Table } from "react-bootstrap";
 import TableEditor from "../../components/TableEditor";
 import { INPUT, OUTPUT } from "../../tools";
 import { ConditionDto } from "../../models/ConditionDto";
@@ -34,6 +35,9 @@ export default function EditorView() {
     const { id } = useParams();
     const [fullscreen, setFullscreen] = useState(false);
     const [showToast, setShowToast] = useState(0);
+    const [errorList, setErrorList] = useState<ErrorListDto>({
+        messages: [],
+    });
     const [changedConditions, setChangedConditions] = useState<ConditionDto[]>(
         []
     );
@@ -244,6 +248,21 @@ export default function EditorView() {
             });
     };
 
+    const handleCheckBugs = () => {
+        setShowToast(1);
+        Storage.Rule.PostCheckRule(id || "")
+            .then((res) => {
+                if (res.ok) {
+                    setShowToast(0);
+                } else {
+                    setErrorList(res.errorList || { messages: [] });
+                    setShowToast(2);
+                }
+            })
+            .catch((r) => {})
+            .finally(() => {});
+    };
+
     /*
      * Functions ---------------------------------------------------------------------
      */
@@ -425,7 +444,7 @@ export default function EditorView() {
             </Button>
         </ButtonGroup>,
 
-        <Button size="sm" key={8} onClick={() => setFullscreen(!fullscreen)}>
+        <Button size="sm" key={8} onClick={() => handleCheckBugs()}>
             <i className="bi bi-bug"></i>
         </Button>,
 
@@ -437,7 +456,17 @@ export default function EditorView() {
     return (
         <Session>
             {showToast == 1 && <ToastWorking />}
-            {showToast == 2 && <ToastError />}
+            {errorList.messages.length > 0 && (
+                <ToastError
+                    messages={errorList}
+                    onClose={() =>
+                        setErrorList({
+                            messages: [],
+                        })
+                    }
+                />
+            )}
+
             {showCaseForm && (
                 <CaseForm
                     totalCases={cases.length}
@@ -445,12 +474,14 @@ export default function EditorView() {
                     onCancel={() => setShowCaseForm(false)}
                 ></CaseForm>
             )}
+
             {showConditionForm && (
                 <ConditionForm
                     onSubmit={handleConditionFormSubmit}
                     onCancel={() => setShowConditionForm(false)}
                 ></ConditionForm>
             )}
+
             {showKVItemForm && (
                 <KVItemForm
                     onSubmit={handleKVItemFormSubmit}

@@ -7,8 +7,6 @@ function XTest() {
     const [show, setShow] = useState(true);
 
     const handleSubmit = (name: string, type: string) => {
-        console.log(name, type);
-
         setShow(false);
     };
     const handleCancel = () => {

@@ -1,9 +1,8 @@
-import { Button, Card, Container, Form } from "react-bootstrap";
-import Messages from "../../locales/Messages";
-import { useNavigate } from "react-router-dom";
 import { FormEvent, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { changeLocale } from "../../locales/i18n";
 import { TenantDto } from "../../models";
+import Messages from "../../locales/Messages";
 import EnvarsSession, { EnvarsLocal } from "../../envars";
 
 interface Props {
@@ -48,15 +47,15 @@ export default function Login({ onTryConnecting, onFailureConnection }: Props) {
     };
 
     return (
-        <Card style={{ width: "300px" }}>
-            <Card.Body>
-                <Form onSubmit={handleSubmit} className="text-end">
-                    <Card.Title className="text-start">
+        <div className="card" style={{ width: "250px" }}>
+            <div className="card-body">
+                <form className="text-end" onSubmit={handleSubmit}>
+                    <div className="card-title text-start">
                         {Messages.LOGIN_LOGIN}
-                    </Card.Title>
-                    <Card.Text>
-                        <Form.Select
-                            className="mb-2"
+                    </div>
+                    <div className="card-text">
+                        <select
+                            className="form-select mb-2"
                             value={langu}
                             onChange={(v) => {
                                 setLangu(v.currentTarget.value);
@@ -66,37 +65,38 @@ export default function Login({ onTryConnecting, onFailureConnection }: Props) {
                         >
                             <option value="es">🇲🇽-Español</option>
                             <option value="en">🇺🇸-English</option>
-                        </Form.Select>
+                        </select>
 
-                        <Form.Control
-                            className="mb-2"
+                        <input
+                            className="form-control mb-2"
                             placeholder={Messages.LOGIN_TENANTID}
                             aria-describedby="basic-addon1"
                             ref={tidRef}
                         />
-                        <Form.Control
-                            className="mb-2"
+                        <input
+                            className="form-control mb-2"
                             placeholder={Messages.LOGIN_USERNAME}
                             aria-label="Username"
                             aria-describedby="basic-addon1"
                             ref={usernameRef}
                         />
-                        <Form.Control
+                        <input
+                            className="form-control mb-2"
                             placeholder={Messages.LOGIN_PASSWORD}
                             type="password"
                             id="inputPassword5"
                             aria-describedby="passwordHelpBlock"
                             ref={passwordRef}
                         />
-                    </Card.Text>
+                    </div>
 
                     <div className="d-grid">
-                        <Button variant="outline-primary" type="submit">
+                        <button type="submit" className="btn btn-primary">
                             {Messages.BUTTON_CONTINUE}
-                        </Button>
+                        </button>
                     </div>
-                </Form>
-            </Card.Body>
-        </Card>
+                </form>
+            </div>
+        </div>
     );
 }

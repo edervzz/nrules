@@ -10,7 +10,7 @@ class Localizer:
 
     def get(self, code: str, *params):
         """ retrieve message """
-        if self.langu == "es":
+        if self.langu.upper() == "ES":
             mess = Codes.es_messages[code] if code in Codes.es_messages else code
         else:
             mess = Codes.en_messages[code] if code in Codes.en_messages else code
